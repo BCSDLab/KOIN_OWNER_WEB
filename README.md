@@ -13,6 +13,8 @@ Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.
   - [TypeScript](https://github.com/typescript-cheatsheets/react)
 - Server State Management Library
   - [React-Query](https://react-query-v3.tanstack.com)
+- Schema Validation Layer Library
+  - [Zod](https://zod.dev)
 - Routing Library
   - [React Router v6](https://reactrouter.com/docs/en/v6/getting-started/tutorial)
 - Linting Library
