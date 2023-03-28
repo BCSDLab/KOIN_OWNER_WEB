@@ -9,7 +9,6 @@ const checkEnvVar = (name: string) => {
 };
 
 // API 공통
-export const API_PATH = checkEnvVar('REACT_APP_API_PATH');
+const API_PATH = checkEnvVar('REACT_APP_API_PATH');
 
-// 네이버 지도
-export const NAVER_MAPS_CLIENT_ID = checkEnvVar('REACT_APP_NAVER_MAPS_CLIENT_ID');
+export default API_PATH;
