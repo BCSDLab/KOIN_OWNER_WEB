@@ -1,0 +1,44 @@
+.template {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  margin: auto;
+}
+
+.form {
+  width: 358px;
+  height: 360px;
+  margin-top: 63px;
+  display: flex;
+  flex-direction: column;
+
+  &__input {
+    height: 20px;
+    margin-bottom: 16px;
+    padding: 14px;
+    font-weight: 400;
+    font-size: 14px;
+    border: 1px solid #d2dae2;
+    color: #999999;
+  }
+
+  &__button {
+    height: 48px;
+    background-color: #175c8e;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+  }
+}
