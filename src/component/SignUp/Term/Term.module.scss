@@ -1,0 +1,43 @@
+.term_wrapper {
+  margin-bottom: 40px;
+}
+
+.title {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.content {
+  height: calc(160px - 32px);
+  border: 1px solid #d2dae2;
+  overflow-y: scroll;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.term_check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  label {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #d2dae2;
+  border-radius: 100%;
+  background-size: cover;
+
+  &:checked {
+    border: none;
+    background-image: url("../../../assets/svg/auth/checkbox.svg");
+  }
+}
