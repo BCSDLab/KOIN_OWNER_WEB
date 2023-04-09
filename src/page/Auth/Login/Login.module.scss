@@ -1,3 +1,4 @@
+/* stylelint-disable property-no-vendor-prefix */
 .template {
   display: flex;
   min-height: 100vh;
@@ -9,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 80px;
 }
 
 .logo {
@@ -16,20 +18,59 @@
 }
 
 .form {
-  width: 358px;
+  width: 368px;
   height: 360px;
   margin-top: 63px;
   display: flex;
   flex-direction: column;
 
-  &__input {
-    height: 20px;
+  &__container {
     margin-bottom: 16px;
+    position: relative;
+    width: inherit;
+  }
+
+  &__input {
+    width: 340px;
+    height: 20px;
     padding: 14px;
-    font-weight: 400;
-    font-size: 14px;
     border: 1px solid #d2dae2;
-    color: #999999;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px white inset; // 자동입력 배경 제거
+    }
+
+    &::placeholder {
+      font-weight: 400;
+      font-size: 14px;
+      color: #999999;
+    }
+  }
+
+  &__text {
+    position: absolute;
+    right: 16px;
+    bottom: 14px;
+    font-size: 14px;
+    color: #252525;
+    opacity: 1;
+
+    &--null {
+      opacity: 0.1;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    border: none;
+    background: none;
+    padding: 0;
   }
 
   &__button {
