@@ -6,7 +6,9 @@ interface Button {
   disable?: boolean
 }
 
-export default function CustomButton({ content, type, disable }:Button) {
+export default function CustomButton({
+  content, type, disable,
+}:Button) {
   return (
     <button
       type="button"
