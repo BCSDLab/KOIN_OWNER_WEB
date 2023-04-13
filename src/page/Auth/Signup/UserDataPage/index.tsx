@@ -5,7 +5,7 @@ import styles from './UserData.module.scss';
 
 export default function UserData() {
   return (
-    <section className={styles.page_wrapper}>
+    <section className={styles.form}>
       <UserId />
       <UserPassword />
       <UserEmail />

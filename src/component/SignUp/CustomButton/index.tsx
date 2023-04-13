@@ -13,7 +13,7 @@ export default function CustomButton({
   return (
     <button
       type="button"
-      className={`${type} ${styles.button} ${type === 'large' ? styles.button__large : styles.button__small} ${disable ? styles.button__disable : null}`}
+      className={`${styles[`button--${type}`]} ${disable ? styles['button--disable'] : null}`}
       onClick={event}
     >
       {content}

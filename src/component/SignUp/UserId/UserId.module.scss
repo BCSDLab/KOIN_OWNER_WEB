@@ -1,27 +1,29 @@
-.label {
-  display: block;
-  font-size: 18px;
-}
+.form {
+  &__label {
+    display: block;
+    font-size: 18px;
+  }
 
-.input_wrapper {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 8px;
-}
+  &__input--wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
 
-.id_input {
-  width: calc(100% - 32px - 80px);
-  border: 1px solid #d2dae2;
-  height: calc(48px - 30px);
-  padding: 14px 16px;
-}
+    &__input {
+      width: calc(100% - 32px - 80px);
+      border: 1px solid #d2dae2;
+      height: calc(48px - 30px);
+      padding: 14px 16px;
+    }
+  }
 
-.alert {
-  display: block;
-  margin-top: 8px;
-  margin-left: 8px;
-  color: #858585;
-  font-size: 12px;
+  &__alert {
+    display: block;
+    margin-top: 8px;
+    margin-left: 8px;
+    color: #858585;
+    font-size: 12px;
+  }
 }

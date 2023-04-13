@@ -1,15 +1,5 @@
-.terms_check {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 24px;
-
-  .check_all {
-    display: flex;
-    align-items: center;
-  }
-
-  .checkbox {
+.term--section {
+  &__checkbox {
     appearance: none;
     width: 20px;
     height: 20px;
@@ -23,6 +13,18 @@
       background-image: url("../../../../assets/svg/auth/checkbox.svg");
     }
   }
+}
+
+.agree--all {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
 
   &::after {
     display: block;
@@ -31,9 +33,4 @@
     border-top: 1px solid #eeeeee;
     margin-top: 24px;
   }
-}
-
-.check_wrapper {
-  display: flex;
-  align-items: center;
 }

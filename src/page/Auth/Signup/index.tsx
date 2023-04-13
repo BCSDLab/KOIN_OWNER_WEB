@@ -9,7 +9,7 @@ import Complete from './CompletePage';
 export default function Signup() {
   const [step, setStep] = useState(0);
   return (
-    <section className={styles.page_wrapper}>
+    <section className={styles.page}>
       {step === 0 && <TermsOfService />}
       {step === 1 && <UserData />}
       {step === 2 && <OwnerData />}
