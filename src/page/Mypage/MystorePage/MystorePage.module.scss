@@ -180,10 +180,10 @@
   }
 
   &__icon {
-    display: flex;
+    position: absolute;
+    left: 110px;
+    top: 23px;
     margin-left: 8px;
-    justify-content: center;
-    align-items: center;
   }
 
   &__wrapper {
