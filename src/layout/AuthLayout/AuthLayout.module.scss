@@ -1,3 +1,5 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .template {
   min-height: 100vh;
 }
@@ -8,4 +10,8 @@
   margin-bottom: 80px;
   font-weight: 400;
   color: #252525;
+
+  @include media.media-breakpoint-down(mobile) {
+    margin-bottom: 24px;
+  }
 }
