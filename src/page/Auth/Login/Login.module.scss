@@ -20,12 +20,12 @@
 .form {
   width: 368px;
   height: 360px;
-  margin-top: 63px;
+  margin-top: 47px;
   display: flex;
   flex-direction: column;
 
   &__container {
-    margin-bottom: 16px;
+    margin-top: 16px;
     position: relative;
     width: inherit;
   }
@@ -81,5 +81,66 @@
     font-size: 16px;
     text-align: center;
     border: none;
+  }
+}
+
+.auto-login {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px 0 16px;
+
+  &__text {
+    font-family: NotoSansKR, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #999999;
+  }
+
+  &__checkbox {
+    appearance: none;
+    width: 22px;
+    height: 12px;
+    margin-right: 4px;
+    box-sizing: border-box;
+    background: #eeeeee;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &::after {
+      transition: all 150ms;
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: #858585;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    &:checked {
+      &::after {
+        background: #175c8e;
+        transform: translate(10px, 0);
+      }
+    }
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+
+  &__text {
+    font-size: 12px;
+    color: #999999;
+    padding: 0 16px;
+    border-right: 1px solid #c4c4c4;
+    cursor: pointer;
+
+    &:last-child {
+      border: none;
+    }
   }
 }
