@@ -1,9 +1,11 @@
 .content_wrapper {
   width: 368px;
+  height: 90vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   .check_circle {
     width: 160px;
