@@ -1,4 +1,13 @@
-.page {
+.signup-section {
   width: 368px;
   margin: 0 auto;
+  height: 830px;
+
+  &__logo {
+    width: 100%;
+    top: 0;
+    margin: 0 auto;
+    margin-bottom: 88px;
+  }
+
 }
