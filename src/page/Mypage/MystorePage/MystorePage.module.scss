@@ -169,7 +169,7 @@
 
   &__title {
     margin-top: 24px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     height: 36px;
     font-weight: 500;
     font-size: 24px;
@@ -182,7 +182,7 @@
   &__icon {
     position: absolute;
     left: 110px;
-    top: 23px;
+    top: 26px;
     margin-left: 8px;
   }
 
@@ -198,5 +198,37 @@
     width: 368px;
     height: 331px;
     border: 1px solid #d2dae2;
+  }
+}
+
+.modalBack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 40%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 810px;
+  height: 655px;
+  padding: 40px;
+  text-align: center;
+  background-color: rgb(255 255 255);
+
+  &__modalHeader {
+    font-size: 30px;
+  }
+
+  &__new_menu {
+    font-size: 20px;
   }
 }
