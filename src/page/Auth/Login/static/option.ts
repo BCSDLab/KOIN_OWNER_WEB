@@ -5,12 +5,12 @@ const OPTION = [
   },
   {
     name: '비밀번호 찾기',
-    path: '',
+    path: '/find-password',
   },
   {
     name: '회원가입',
-    path: '',
+    path: '/signup',
   },
-] as const;
+];
 
 export default OPTION;

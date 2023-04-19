@@ -2,11 +2,12 @@
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { Link } from 'react-router-dom';
+import { ReactComponent as Logo } from 'assets/svg/common/koin-logo.svg';
+import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
+import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
+import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import styles from './Login.module.scss';
-import { ReactComponent as Logo } from '../../../assets/svg/common/koin-logo.svg';
-import { ReactComponent as ShowIcon } from '../../../assets/svg/auth/show.svg';
-import { ReactComponent as BlindIcon } from '../../../assets/svg/auth/blind.svg';
-import { ReactComponent as LockIcon } from '../../../assets/svg/auth/lock.svg';
 import OPTION from './static/option';
 
 export default function Login() {
@@ -61,13 +62,16 @@ export default function Login() {
           <div className={styles.option}>
             {isMobile
               ? (
-                <>
+                <Link to={OPTION[1].path} className={styles.option__link}>
                   <LockIcon aria-hidden />
-                  <div className={styles.option__text}>{OPTION[1].name}</div>
-                </>
+                  {OPTION[1].name}
+                </Link>
               )
               : OPTION.map((option) => (
-                <div className={styles.option__text}>{option.name}</div>))}
+                <Link to={option.path} className={styles.option__link}>
+                  {option.name}
+                </Link>
+              ))}
           </div>
         </div>
       </div>
