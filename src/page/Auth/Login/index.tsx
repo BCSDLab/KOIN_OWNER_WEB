@@ -2,27 +2,60 @@
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/svg/common/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
+import { useRef } from 'react';
+import { postlogin } from 'api/auth';
+import { useAuthStore } from 'store/auth';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
+
+interface LoginRef {
+  email: HTMLInputElement | null
+  password: HTMLInputElement | null
+}
 
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { isMobile } = useMediaQuery();
+  const { user: userData, setUser } = useAuthStore();
+  const navigate = useNavigate();
+  const loginRef = useRef<LoginRef>({
+    email: null,
+    password: null,
+  });
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { email, password } = loginRef.current;
+
+    try {
+      const { token } = await postlogin({
+        email: email!.value,
+        password: password!.value,
+      });
+
+      sessionStorage.setItem('token', token);
+      await setUser();
+      navigate('/');
+    } catch (error) { console.log(error); }
+  };
+
+  console.log(userData);
 
   return (
     <div className={styles.template}>
       <div className={styles.contents}>
         <Logo className={styles.logo} />
-        <div className={styles.form}>
+        <form className={styles.form} onSubmit={onSubmit}>
           <div className={styles.form__container}>
             <input
               className={styles.form__input}
               type="text"
+              ref={(inputRef) => { loginRef.current.email = inputRef; }}
               placeholder={isMobile ? '이메일' : '아이디 입력'}
             />
           </div>
@@ -30,6 +63,7 @@ export default function Login() {
             <input
               className={styles.form__input}
               type={isBlind ? 'text' : 'password'}
+              ref={(inputRef) => { loginRef.current.password = inputRef; }}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
             />
             <button
@@ -68,12 +102,12 @@ export default function Login() {
                 </Link>
               )
               : OPTION.map((option) => (
-                <Link to={option.path} className={styles.option__link}>
+                <Link to={option.path} key={option.name} className={styles.option__link}>
                   {option.name}
                 </Link>
               ))}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
