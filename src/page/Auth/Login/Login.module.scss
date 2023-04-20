@@ -107,6 +107,7 @@
     font-size: 16px;
     text-align: center;
     border: none;
+    cursor: pointer;
 
     @include media.media-breakpoint-down(mobile) {
       height: 44px;
