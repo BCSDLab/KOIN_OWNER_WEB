@@ -8,7 +8,7 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import { useRef } from 'react';
-import { postlogin } from 'api/auth';
+import { postLogin } from 'api/auth';
 import { useAuthStore } from 'store/auth';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
@@ -33,12 +33,12 @@ export default function Login() {
     const { email, password } = loginRef.current;
 
     try {
-      const { token } = await postlogin({
+      const { data } = await postLogin({
         email: email!.value,
         password: password!.value,
       });
 
-      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('token', data.token);
       await setUser();
       navigate('/');
     } catch (error) { console.log(error); }
