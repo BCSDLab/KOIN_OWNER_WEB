@@ -8,8 +8,7 @@ export const getUser = async () => {
   try {
     if (token) {
       const authResponse = await getMe(token);
-      console.log(authResponse);
-      return authResponse;
+      return authResponse.data;
     }
   } catch (e) {
     console.log(e);
