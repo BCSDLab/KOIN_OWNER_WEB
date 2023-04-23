@@ -1,18 +1,69 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.section-wrapper {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .signup-section {
   width: 368px;
   position: relative;
   margin: 0 auto;
   height: 830px;
 
+  @include media.media-breakpoint-down(mobile) {
+    width: 78%;
+    height: auto;
+  }
+
   &__logo {
     width: 100%;
     margin: 0 auto;
     margin-bottom: 88px;
+
+    @include media.media-breakpoint-down(mobile) {
+      display: none;
+    }
   }
 
-  &__next-button {
+  &__section-name {
+    display: none;
+
+    @include media.media-breakpoint-down(mobile) {
+      display: block;
+      font-size: 24px;
+      line-height: 36px;
+      margin-bottom: 36px;
+      font-weight: 500;
+    }
+  }
+
+  &__next-button--pc {
     position: absolute;
     width: 100%;
     bottom: 0;
+  }
+
+  &__button-group--mobile {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__button {
+    &--mobile {
+      text-decoration: none;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7941e;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 15px;
+    }
   }
 }

@@ -25,7 +25,8 @@ export default function Term({ id }: any) {
       </div>
       <label htmlFor={id} className={styles.term__agree}>
         <input id={id} type="checkbox" className={styles.term__agree__checkbox} />
-        개인정보 이용약관에 동의합니다.
+        <span className={styles['term__agree__phrase--mobile']}>개인정보 이용약관(필수)</span>
+        <span className={styles['term__agree__phrase--pc']}>개인정보 이용약관에 동의합니다.</span>
       </label>
     </section>
   );

@@ -1,3 +1,5 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .term--section {
   &__checkbox {
     appearance: none;
@@ -21,9 +23,12 @@
   justify-content: center;
   margin-bottom: 24px;
 
-  &__content {
-    display: flex;
-    align-items: center;
+  @include media.media-breakpoint-down(mobile) {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 22px;
+    color: #f7941e;
+    margin-bottom: 18px;
   }
 
   &::after {
@@ -32,5 +37,14 @@
     content: "";
     border-top: 1px solid #eeeeee;
     margin-top: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      margin-top: 18px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
   }
 }

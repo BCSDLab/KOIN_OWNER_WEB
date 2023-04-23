@@ -7,7 +7,8 @@ export default function TermsOfService() {
       <div className={styles['agree--all']}>
         <label htmlFor="terms" className={styles['agree--all__content']}>
           <input id="terms" type="checkbox" className={styles['term--section__checkbox']} />
-          아래 이용약관에 모두 동의합니다.
+          <span className={styles['agree--all__pc--phrase']}>아래 이용약관에&nbsp;</span>
+          모두 동의합니다.
         </label>
       </div>
       <Term id="term1" />

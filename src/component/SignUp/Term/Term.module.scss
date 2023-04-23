@@ -1,10 +1,22 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .term {
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+
+  @include media.media-breakpoint-down(mobile) {
+    margin: 0;
+  }
 
   &__title {
     display: block;
     font-size: 16px;
     margin-bottom: 16px;
+
+    @include media.media-breakpoint-down(mobile) {
+      display: none;
+    }
   }
 
   &__content {
@@ -13,11 +25,23 @@
     overflow-y: scroll;
     padding: 16px;
     margin-bottom: 18px;
+
+    @include media.media-breakpoint-down(mobile) {
+      border: 1px dashed #d2dae2;
+      margin-top: 7px;
+      margin-bottom: 19px;
+      font-size: 10px;
+    }
   }
 
   &__agree {
     display: flex;
     align-items: center;
+    color: #a1a1a1;
+
+    @include media.media-breakpoint-down(mobile) {
+      order: -1;
+    }
 
     &__checkbox {
       appearance: none;
@@ -31,6 +55,20 @@
       &:checked {
         border: none;
         background-image: url("../../../assets/svg/auth/checkbox.svg");
+      }
+    }
+
+    &__phrase--pc {
+      @include media.media-breakpoint-down(mobile) {
+        display: none;
+      }
+    }
+
+    &__phrase--mobile {
+      display: none;
+
+      @include media.media-breakpoint-down(mobile) {
+        display: inline;
       }
     }
   }

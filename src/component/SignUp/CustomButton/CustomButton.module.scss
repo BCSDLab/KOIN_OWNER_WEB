@@ -25,6 +25,16 @@
     }
   }
 
+  &--mobile {
+    width: 48%;
+    height: 44px;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: #175c8e;
+    color: #ffffff;
+    border: none;
+  }
+
   &--disable {
     background-color: #c4c4c4;
   }
