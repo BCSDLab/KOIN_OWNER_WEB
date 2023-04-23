@@ -204,7 +204,7 @@
   &__item {
     box-sizing: border-box;
     width: 368px;
-    height: 331px;
+    height: 301px;
     border: 1px solid #d2dae2;
   }
 }
@@ -254,7 +254,6 @@
   }
 
   &__imgs-setting {
-    // display: flex;
     width: 338px;
   }
 
@@ -265,7 +264,6 @@
     margin-top: 25px;
     font-weight: 700;
     font-size: 18px;
-    line-height: 27px;
     align-items: center;
     color: #175c8e;
   }
@@ -286,7 +284,7 @@
   &__blocks {
     border-left: solid 1px #858585;
     margin-top: 40px;
-    height: 428px;
+    height: 480px;
   }
 
   &__captiontitle {
@@ -294,11 +292,14 @@
     justify-items: center;
   }
 
+  &__info-setting {
+    width: 472px;
+  }
+
   &__menu-input {
     height: 27px;
     width: 390px;
     margin-top: 8px;
-    margin-left: 40px;
     outline: none;
     border: solid 1px #858585;
 
@@ -370,5 +371,24 @@
   &__gear-icon {
     margin-top: 28px;
     margin-left: 190px;
+  }
+
+  &__menuWapper {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 40px;
+    margin-top: 8px;
+    gap: 8px;
+  }
+
+  &__menucategory {
+    display: flex;
+    border: 0.5px solid #898a8d;
+    width: 190px;
+    height: 39px;
+    font-weight: 500;
+    font-size: 15px;
+    justify-content: center;
+    align-items: center;
   }
 }

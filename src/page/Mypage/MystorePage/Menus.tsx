@@ -12,9 +12,6 @@ export default function Menus() {
       <div className={styles.menu__item}>
         <div className={styles.menu__img}>이미지</div>
       </div>
-      <div className={styles.menu__item}>
-        <div className={styles.menu__img}>이미지</div>
-      </div>
     </div>
   );
 }

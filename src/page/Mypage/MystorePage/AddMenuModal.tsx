@@ -5,6 +5,7 @@ import styles from './MystorePage.module.scss';
 type Props = {
   closeModal?: () => void;
 };
+const MenuType = ['이벤트 메뉴', '대표 메뉴', '사이드 메뉴', '세트 메뉴'];
 
 export default function AddMenuModal({ closeModal }: Props) {
   // const { isOpenModal, clickModal, closeModal } = useOpenModal();
@@ -56,7 +57,13 @@ export default function AddMenuModal({ closeModal }: Props) {
               </div>
               <GearIcon className={styles['modalContainer__gear-icon']} />
             </div>
-            <div className={styles.modalContainer__categorys} />
+            <div className={styles.modalContainer__menuWapper}>
+              {MenuType.map((type) => (
+                <div className={styles.modalContainer__menucategory}>
+                  {type}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
