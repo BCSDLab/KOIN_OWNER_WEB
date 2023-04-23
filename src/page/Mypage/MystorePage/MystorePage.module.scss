@@ -227,8 +227,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 810px;
-  height: 655px;
-  text-align: center;
+  height: 715px;
   background-color: rgb(255 255 255);
 
   &__Header {
@@ -284,7 +283,7 @@
   &__blocks {
     border-left: solid 1px #858585;
     margin-top: 40px;
-    height: 480px;
+    height: 520px;
   }
 
   &__captiontitle {
@@ -300,11 +299,13 @@
     height: 27px;
     width: 390px;
     margin-top: 8px;
+    margin-left: 40px;
     outline: none;
-    border: solid 1px #858585;
+    border: 0.5px solid #898a8d;
 
     &::placeholder {
       font-size: 13px;
+      font-weight: 400;
       color: #898a8d;
     }
   }
@@ -321,10 +322,11 @@
     width: 175px;
     margin-right: 8px;
     outline: none;
-    border: solid 1px #858585;
+    border: 0.5px solid #898a8d;
 
     &::placeholder {
       font-size: 13px;
+      font-weight: 400;
       color: #898a8d;
     }
   }
@@ -335,10 +337,11 @@
     width: 175px;
     text-align: right;
     outline: none;
-    border: solid 1px #858585;
+    border: 0.5px solid #898a8d;
 
     &::placeholder {
       font-size: 13px;
+      font-weight: 400;
       color: #898a8d;
     }
   }
@@ -390,5 +393,59 @@
     font-size: 15px;
     justify-content: center;
     align-items: center;
+  }
+
+  &__combo-input {
+    width: 390px;
+    height: 105px;
+    margin: 0 40px;
+    margin-top: 10px;
+    border: 0.5px solid #898a8d;
+    outline: none;
+    resize: none;
+
+    &::placeholder {
+      font-size: 13px;
+      font-weight: 400;
+      color: #898a8d;
+    }
+  }
+
+  &__sumitBtn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    margin-right: 40px;
+    margin-top: 20px;
+  }
+
+  &__sumitBtn-delete {
+    width: 114px;
+    height: 51px;
+    background: #858585;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__sumitBtn-submit {
+    width: 114px;
+    height: 51px;
+    background: #175c8e;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    color: #ffffff;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

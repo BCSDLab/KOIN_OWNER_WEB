@@ -48,21 +48,33 @@ export default function AddMenuModal({ closeModal }: Props) {
                 <div className={styles['modalContainer__addPrice-word']}>가격 추가</div>
               </div>
             </div>
-            <div className={styles.modalContainer__captiontitle}>
-              <div className={styles.modalContainer__settingtitle}>
-                메뉴 카테고리
-              </div>
-              <div className={styles.modalContainer__caption}>
-                (최대 선택 n개)
-              </div>
-              <GearIcon className={styles['modalContainer__gear-icon']} />
-            </div>
-            <div className={styles.modalContainer__menuWapper}>
-              {MenuType.map((type) => (
-                <div className={styles.modalContainer__menucategory}>
-                  {type}
+            <div className={styles.modalContainer__categorypcik}>
+              <div className={styles.modalContainer__captiontitle}>
+                <div className={styles.modalContainer__settingtitle}>
+                  메뉴 카테고리
                 </div>
-              ))}
+                <div className={styles.modalContainer__caption}>
+                  (최대 선택 n개)
+                </div>
+                <GearIcon className={styles['modalContainer__gear-icon']} />
+              </div>
+              <div className={styles.modalContainer__menuWapper}>
+                {MenuType.map((type) => (
+                  <div className={styles.modalContainer__menucategory}>
+                    {type}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={styles.modalContainer__comboinput}>
+              <div className={styles.modalContainer__settingtitle}>
+                메뉴 구성
+              </div>
+              <textarea className={styles['modalContainer__combo-input']} placeholder=" 예) 불족발(소,중,대) + 막국수 + 랜덤 서비스 음료(500ml)" />
+            </div>
+            <div className={styles.modalContainer__sumitBtn}>
+              <button type="button" className={styles['modalContainer__sumitBtn-delete']}>취소</button>
+              <button type="button" className={styles['modalContainer__sumitBtn-submit']}>확인</button>
             </div>
           </div>
         </div>
