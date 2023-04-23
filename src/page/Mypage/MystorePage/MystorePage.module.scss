@@ -280,6 +280,31 @@
     color: #a1a1a1;
   }
 
+  &__addimg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 266px;
+    height: 170px;
+    margin-top: 32px;
+    margin-left: 40px;
+    border: 1px dashed #858585;
+  }
+
+  &__addimg-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  &__addimg-caption {
+    display: flex;
+    margin-top: 16px;
+    align-items: center;
+    text-align: center;
+    color: #a1a1a1;
+  }
+
   &__blocks {
     border-left: solid 1px #858585;
     margin-top: 40px;

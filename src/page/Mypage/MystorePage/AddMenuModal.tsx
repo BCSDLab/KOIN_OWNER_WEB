@@ -1,4 +1,5 @@
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
+import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import styles from './MystorePage.module.scss';
 
@@ -26,6 +27,12 @@ export default function AddMenuModal({ closeModal }: Props) {
               </div>
               <div className={styles.modalContainer__caption}>
                 (최대 이미지 3장)
+              </div>
+            </div>
+            <div className={styles.modalContainer__imgWapper}>
+              <div className={styles.modalContainer__addimg}>
+                <ImgPlusIcon className={styles['modalContainer__addimg-icon']} />
+                <div className={styles['modalContainer__addimg-caption']}>이미지 추가</div>
               </div>
             </div>
           </div>
