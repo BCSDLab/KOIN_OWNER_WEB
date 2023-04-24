@@ -96,7 +96,7 @@
   padding: 45px 31px 40px;
 
   @include media.media-breakpoint-down(mobile) {
-    width: calc(100% - 76px);
+    width: calc(100% - 78px);
     height: calc(125px - 68px);
     padding: 36px 38px 32px;
   }

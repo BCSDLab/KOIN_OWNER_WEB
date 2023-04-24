@@ -26,7 +26,7 @@ export default function Signup() {
             {step < 3 && (
             <section className={styles['signup-section']}>
               <Logo className={styles['signup-section__logo']} />
-              <div>
+              <div className={styles['step-wrapper']}>
                 {step === 0 && <TermsOfService />}
                 {step === 1 && <UserData />}
                 {step === 2 && <OwnerData />}
@@ -48,7 +48,7 @@ export default function Signup() {
                 <br />
                 회원가입
               </span>
-              <div>
+              <div className={styles['step-wrapper']}>
                 {step === 0 && (
                   <>
                     <TermsOfService />

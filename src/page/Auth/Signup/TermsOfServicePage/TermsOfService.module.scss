@@ -1,9 +1,6 @@
 @use "src/utils/styles/mediaQuery" as media;
 
 .term-section {
-  height: 57vh;
-  overflow-y: scroll;
-
   &__checkbox {
     appearance: none;
     width: 20px;
