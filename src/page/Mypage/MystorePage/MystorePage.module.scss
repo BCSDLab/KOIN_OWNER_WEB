@@ -300,6 +300,8 @@
   &__addimg-caption {
     display: flex;
     margin-top: 16px;
+    font-weight: 400;
+    font-size: 16px;
     align-items: center;
     text-align: center;
     color: #a1a1a1;
@@ -335,8 +337,16 @@
     }
   }
 
+  &__size-wapper {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 40px;
+  }
+
   &__info {
     display: flex;
+    width: 431px;
+    align-items: center;
     margin-top: 8px;
   }
 
@@ -369,6 +379,32 @@
       font-weight: 400;
       color: #898a8d;
     }
+  }
+
+  &__singlemenu {
+    display: flex;
+    margin-top: 25px;
+    margin-left: 280px;
+    align-items: center;
+  }
+
+  &__singlemenu-word {
+    width: 55px;
+    height: 27px;
+    font-weight: 400;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #a1a1a1;
+  }
+
+  &__singlemenu-icon {
+    margin-left: 8px;
+  }
+
+  &__cancle-icon {
+    margin-left: 15px;
   }
 
   &__addPrice {

@@ -1,6 +1,8 @@
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
+import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
+import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
 import styles from './MystorePage.module.scss';
 
 type Props = {
@@ -45,10 +47,19 @@ export default function AddMenuModal({ closeModal }: Props) {
               <input className={styles['modalContainer__menu-input']} placeholder="   예) 불족발 + 막국수 저녁 SET" />
             </div>
             <div className={styles.modalContainer__priceinputs}>
-              <div className={styles.modalContainer__settingtitle}>가격</div>
+              <div className={styles.modalContainer__captiontitle}>
+                <div className={styles.modalContainer__settingtitle}>가격</div>
+                <div className={styles.modalContainer__singlemenu}>
+                  <div className={styles['modalContainer__singlemenu-word']}>
+                    단일메뉴
+                  </div>
+                  <CheckCircleIcon className={styles['modalContainer__singlemenu-icon']} />
+                </div>
+              </div>
               <div className={styles.modalContainer__info}>
                 <input className={styles['modalContainer__size-input']} placeholder="   예) 소 (1~2 인분)" />
                 <input className={styles['modalContainer__price-input']} placeholder="원   " />
+                <CancleIcon className={styles['modalContainer__cancle-icon']} />
               </div>
               <div className={styles.modalContainer__addPrice}>
                 <PlusIcon className={styles['modalContainer__addPrice-icon']} />
