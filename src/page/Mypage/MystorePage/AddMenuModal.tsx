@@ -91,8 +91,8 @@ export default function AddMenuModal({ closeModal }: Props) {
               <textarea className={styles['modalContainer__combo-input']} placeholder=" 예) 불족발(소,중,대) + 막국수 + 랜덤 서비스 음료(500ml)" />
             </div>
             <div className={styles.modalContainer__sumitBtn}>
-              <button type="button" className={styles['modalContainer__sumitBtn-delete']}>취소</button>
-              <button type="button" className={styles['modalContainer__sumitBtn-submit']}>확인</button>
+              <button type="button" onClick={closeModal} className={styles['modalContainer__sumitBtn-delete']}>취소</button>
+              <button type="button" onClick={closeModal} className={styles['modalContainer__sumitBtn-submit']}>확인</button>
             </div>
           </div>
         </div>
