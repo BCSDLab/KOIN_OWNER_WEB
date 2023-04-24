@@ -2,27 +2,27 @@
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/svg/common/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import { useRef } from 'react';
-import { postLogin } from 'api/auth';
-import { useAuthStore } from 'store/auth';
+import useAuthStore from 'store/auth';
+import useLogin from 'query/auth';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
 interface LoginRef {
-  email: HTMLInputElement | null
-  password: HTMLInputElement | null
+  email: HTMLInputElement | null;
+  password: HTMLInputElement | null;
 }
 
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { isMobile } = useMediaQuery();
-  const { user: userData, setUser } = useAuthStore();
-  const navigate = useNavigate();
+  const { user: userData } = useAuthStore();
+  const { mutate } = useLogin();
   const loginRef = useRef<LoginRef>({
     email: null,
     password: null,
@@ -31,20 +31,10 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { email, password } = loginRef.current;
-
-    try {
-      const { data } = await postLogin({
-        email: email!.value,
-        password: password!.value,
-      });
-
-      sessionStorage.setItem('token', data.token);
-      await setUser();
-      navigate('/');
-    } catch (error) { console.log(error); }
+    mutate({ email: email!.value, password: password!.value });
   };
 
-  console.log(userData);
+  console.log('userdata:', userData);
 
   return (
     <div className={styles.template}>
