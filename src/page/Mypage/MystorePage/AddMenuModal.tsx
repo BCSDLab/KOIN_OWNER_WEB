@@ -12,7 +12,6 @@ type Props = {
 const MenuType = ['이벤트 메뉴', '대표 메뉴', '사이드 메뉴', '세트 메뉴'];
 
 export default function AddMenuModal({ closeModal }: Props) {
-  // const { isOpenModal, clickModal, closeModal } = useOpenModal();
   return (
     <>
       <div className={styles.modalBack} onClick={closeModal} aria-hidden="true" />
