@@ -1,32 +1,62 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 
+  @include media.media-breakpoint-down(mobile) {
+    gap: 24px;
+  }
+
   &__label {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
+
+    @include media.media-breakpoint-down(mobile) {
+      display: none;
+    }
   }
 
   &__input {
-    width: calc(100% - 32px);
+    width: calc(100% - 34px);
     border: 1px solid #d2dae2;
     padding: 13px 16px;
 
-    &__registration--number {
+    @include media.media-breakpoint-down(mobile) {
+      width: 100%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #d2dae2;
+      color: #d2dae2;
+      padding: 0;
+      font-size: 15px;
+      padding-bottom: 8px;
+
+      &::placeholder {
+        color: #d2dae2;
+      }
+
+      &:focus {
+        border-bottom: 1px solid #252525;
+        color: #252525;
+      }
+    }
+
+    &__registration-number {
       display: flex;
       align-items: center;
 
-      &__first {
+      &--first {
         border: 1px solid #d2dae2;
         font-size: 18px;
         text-align: center;
-        width: calc(88px - 32px);
+        width: calc(88px - 34px);
         padding: 10px 16px;
       }
 
-      &__middle {
+      &--middle {
         border: 1px solid #d2dae2;
         font-size: 18px;
         text-align: center;
@@ -34,7 +64,7 @@
         padding: 10px 26px;
       }
 
-      &__last {
+      &--last {
         border: 1px solid #d2dae2;
         font-size: 18px;
         text-align: center;
@@ -54,22 +84,33 @@
   }
 }
 
-.input--wrapper {
+.input-wrapper {
   display: flex;
   align-items: center;
 }
 
-.file--box {
-  width: calc(368px - 62px);
+.file-box {
+  width: calc(368px - 64px);
   height: calc(218px - 85px);
   border: 1px dashed #d2dae2;
   padding: 45px 31px 40px;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: calc(100% - 76px);
+    height: calc(125px - 68px);
+    padding: 36px 38px 32px;
+  }
 
   &__command {
     text-align: center;
     font-size: 14px;
     display: block;
     margin-top: 21px;
+
+    @include media.media-breakpoint-down(mobile) {
+      font-size: 12px;
+      margin-top: 5px;
+    }
   }
 
   &__information {
@@ -78,9 +119,14 @@
     font-size: 14px;
     display: block;
     color: #858585;
+
+    @include media.media-breakpoint-down(mobile) {
+      margin: 0;
+      font-size: 11px;
+    }
   }
 
-  &__plus--box--image {
+  &__plus-box-image {
     width: 26px;
     height: 26px;
     border: 1px solid #f7941e;
@@ -90,6 +136,11 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 18px;
+      height: 19px;
+    }
 
     &::after {
       display: block;
@@ -110,12 +161,12 @@
   }
 }
 
-.button--wrapper {
+.button-wrapper {
   margin-top: 16px;
   display: flex;
   justify-content: end;
 
-  &__upload--button {
+  &__upload-button {
     display: flex;
     justify-content: center;
     align-items: center;
