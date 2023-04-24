@@ -1,0 +1,77 @@
+.progress-bar {
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  padding-bottom: 4px;
+  border-bottom: 3px solid #f4f4f4;
+
+  &--1 {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #f4f4f4;
+
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      width: 30%;
+      bottom: -3px;
+      border-bottom: 3px solid #f7941e;
+    }
+  }
+
+  &--2 {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #f4f4f4;
+
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      width: 63%;
+      bottom: -3px;
+      border-bottom: 3px solid #f7941e;
+    }
+  }
+
+  &--3 {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 4px;
+    border-bottom: 3px solid #f4f4f4;
+
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      width: 100%;
+      bottom: -3px;
+      border-bottom: 3px solid #f7941e;
+    }
+  }
+
+  &__step-name {
+    font-weight: 500;
+    font-size: 15px;
+    color: #f7941e;
+  }
+
+  &__step {
+    font-size: 15px;
+    color: #d2dae2;
+  }
+}
