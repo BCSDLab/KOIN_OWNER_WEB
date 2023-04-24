@@ -6,8 +6,11 @@ interface Props {
 
 export default function Error(error: Props) {
   return (
-    <div>
-      {error?.message}
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div>
+        에러 발생:
+        {error?.message}
+      </div>
     </div>
   );
 }

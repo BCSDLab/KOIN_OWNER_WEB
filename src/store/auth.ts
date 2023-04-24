@@ -1,9 +1,8 @@
 import { UserResponse } from 'model/auth';
-import { SafeParseReturnType } from 'zod';
 import { create } from 'zustand';
 
 interface AuthStore {
-  user: UserResponse | null | SafeParseReturnType<any, any>;
+  user: UserResponse | null;
   setUser: (auth: UserResponse) => Promise<void>;
 }
 
