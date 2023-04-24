@@ -33,6 +33,10 @@
     background-color: #175c8e;
     color: #ffffff;
     border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &--disable {

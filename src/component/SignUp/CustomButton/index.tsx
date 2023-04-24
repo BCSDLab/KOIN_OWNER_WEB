@@ -1,6 +1,6 @@
 import styles from './CustomButton.module.scss';
 
-interface Button {
+interface ButtonProps {
   content:string,
   type:string,
   disable?: boolean,
@@ -9,7 +9,7 @@ interface Button {
 
 export default function CustomButton({
   content, type, disable, event,
-}:Button) {
+}:ButtonProps) {
   return (
     <button
       type="button"
