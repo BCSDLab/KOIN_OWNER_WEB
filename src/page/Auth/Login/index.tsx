@@ -1,4 +1,3 @@
-// import cn from 'utils/ts/className';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
@@ -28,14 +27,14 @@ export default function Login() {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { email, password } = loginRef.current;
+    const { email, password } = await loginRef.current;
     mutate({ email: email!.value, password: password!.value });
   };
 
   return (
     <div className={styles.template}>
       <div className={styles.contents}>
-        <Logo className={styles.logo} />
+        <Logo className={styles.logo} aria-hidden />
         <form className={styles.form} onSubmit={onSubmit}>
           <div className={styles.form__container}>
             <input
