@@ -9,7 +9,8 @@ import MystorePage from 'page/Mypage/MystorePage';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<DefaultLayout />}>
+      <Route path="/" element={<DefaultLayout />} />
+      <Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/find-password" element={<FindPassword />} />
