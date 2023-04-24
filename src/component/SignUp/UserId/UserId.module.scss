@@ -1,22 +1,9 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .form {
   &__label {
     display: block;
     font-size: 18px;
-  }
-
-  &__input--wrapper {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 8px;
-
-    &__input {
-      width: calc(100% - 32px - 80px);
-      border: 1px solid #d2dae2;
-      height: calc(48px - 30px);
-      padding: 14px 16px;
-    }
   }
 
   &__alert {
@@ -25,5 +12,68 @@
     margin-left: 8px;
     color: #858585;
     font-size: 12px;
+  }
+
+  &__warn {
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+    gap: 7px;
+
+    &--phrase {
+      display: block;
+      color: #f05d3d;
+      font-size: 11px;
+    }
+  }
+}
+
+.input-wrapper {
+  display: flex;
+  width: calc(100% - 2px);
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+
+  &__input {
+    width: calc(100% - 32px - 80px);
+    border: 1px solid #d2dae2;
+    height: calc(48px - 30px);
+    padding: 14px 16px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 100%;
+      padding: 0;
+      padding-bottom: 8px;
+      font-size: 15px;
+      border: none;
+      border-bottom: 1px solid #d2dae2;
+      outline: none;
+
+      &:focus {
+        border-bottom: 1px solid black;
+      }
+    }
+
+    &--warn {
+      width: calc(100% - 32px - 80px);
+      border: 1px solid #d2dae2;
+      height: calc(48px - 30px);
+      padding: 14px 16px;
+
+      @include media.media-breakpoint-down(mobile) {
+        width: 100%;
+        padding: 0;
+        padding-bottom: 8px;
+        font-size: 15px;
+        border: none;
+        border-bottom: 1px solid #f05d3d;
+        outline: none;
+
+        &:focus {
+          border-bottom: 1px solid black;
+        }
+      }
+    }
   }
 }
