@@ -34,7 +34,7 @@ export default function MystorePage() {
             <div className={styles.store__content}>
               <div className={styles.store__detailData}>
                 {storeInfos.map((info) => (
-                  <div className={styles['store__detailData--data']}>{info}</div>
+                  <div key={info} className={styles['store__detailData--data']}>{info}</div>
                 ))}
               </div>
               <div className={styles.store__updateBtn}>가게 정보 수정</div>

@@ -3,13 +3,12 @@ import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
+import MENU_CATEGORY from 'static/menuCategory';
 import styles from './MystorePage.module.scss';
 
 type Props = {
   closeModal?: () => void;
 };
-
-const MenuType = ['이벤트 메뉴', '대표 메뉴', '사이드 메뉴', '세트 메뉴'];
 
 export default function AddMenuModal({ closeModal }: Props) {
   return (
@@ -77,9 +76,9 @@ export default function AddMenuModal({ closeModal }: Props) {
                 <GearIcon className={styles['modalContainer__gear-icon']} />
               </div>
               <div className={styles['modalContainer__menu-categoty-wapper']}>
-                {MenuType.map((type) => (
-                  <div className={styles['modalContainer__menu-categoty-wapper--unit']}>
-                    {type}
+                {MENU_CATEGORY.map((type) => (
+                  <div key={type.title} className={styles['modalContainer__menu-categoty-wapper--unit']}>
+                    {type.title}
                   </div>
                 ))}
               </div>
