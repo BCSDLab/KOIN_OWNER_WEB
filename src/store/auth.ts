@@ -1,31 +1,17 @@
-import { getMe } from 'api/auth';
 import { UserResponse } from 'model/auth';
+import { SafeParseReturnType } from 'zod';
 import { create } from 'zustand';
 
-export const getUser = async () => {
-  const token = sessionStorage.getItem('token');
-
-  try {
-    if (token) {
-      const authResponse = await getMe(token);
-      return authResponse.data;
-    }
-  } catch (e) {
-    console.log(e);
-    sessionStorage.removeItem('token');
-  }
-  return null;
-};
-
 interface AuthStore {
-  user: UserResponse | null;
-  setUser: () => Promise<void>;
+  user: UserResponse | null | SafeParseReturnType<any, any>;
+  setUser: (auth: UserResponse) => Promise<void>;
 }
 
-export const useAuthStore = create<AuthStore>((set) => ({
+const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  setUser: async () => {
-    const auth = await getUser();
+  setUser: async (auth:UserResponse) => {
     set(() => ({ user: auth }));
   },
 }));
+
+export default useAuthStore;
