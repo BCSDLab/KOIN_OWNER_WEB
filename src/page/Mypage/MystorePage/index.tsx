@@ -1,4 +1,4 @@
-import { ReactComponent as MarkIcon } from 'assets/svg/mystore/mark.svg';
+import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
 import useModalOpen from 'utils/hooks/useModalOpen';
 import styles from './MystorePage.module.scss';
 import Menus from './Menus';
@@ -13,16 +13,15 @@ export default function MystorePage() {
     <div className={styles.section}>
       <div className={styles.header}>
         <div className={styles.header__title}>가게정보</div>
-        <div className={styles.header__wrapper}>
-          <div className={styles.header__updateBtn}>메뉴수정</div>
-          <div
-            className={styles.header__addBtn}
+        <div className={styles['header__btn-wrapper']}>
+          <button type="button" className={styles['header__btn-update']}>메뉴수정</button>
+          <button
+            type="button"
+            className={styles['header__btn-add']}
             onClick={clickModal}
-            aria-hidden="true"
           >
             메뉴추가
-          </div>
-
+          </button>
         </div>
       </div>
       <div className={styles.store}>
@@ -34,35 +33,35 @@ export default function MystorePage() {
           <div className={styles.store__content}>
             <div className={styles.store__detailData}>
               {storeInfos.map((info) => (
-                <div className={styles.store__detailDatas}>{info}</div>
+                <div className={styles['store__detailData--data']}>{info}</div>
               ))}
             </div>
             <div className={styles.store__updateBtn}>가게 정보 수정</div>
           </div>
         </div>
         <div className={styles.store__imgs}>
-          <div className={styles.store__mainimg}>메인이미지</div>
+          <div className={styles['store__imgs--main']}>메인이미지</div>
           <div className={styles.store__subimgs}>
-            <div className={styles.store__subimg1}>서브이미지1</div>
-            <div className={styles.store__subimg2}>서브이미지2</div>
+            <div className={styles['store__subimgs--up']}>서브이미지1</div>
+            <div className={styles['store__subimgs--down']}>서브이미지2</div>
           </div>
         </div>
       </div>
       <div className={styles.menu}>
-        <div className={styles.menu__titlepart}>
+        <div className={styles['menu__title-wrapper']}>
           <div className={styles.menu__title}>이벤트 메뉴</div>
-          <MarkIcon className={styles.menu__icon} />
+          <EventMarkIcon className={styles['menu__eventmenu-icon']} />
         </div>
         <Menus />
-        <div className={styles.menu__titlepart}>
+        <div className={styles['menu__title-wrapper']}>
           <div className={styles.menu__title}>대표 메뉴</div>
         </div>
         <Menus />
       </div>
       {isOpenModal && (
-      <AddMenuModal
-        closeModal={closeModal}
-      />
+        <AddMenuModal
+          closeModal={closeModal}
+        />
       )}
     </div>
   );
