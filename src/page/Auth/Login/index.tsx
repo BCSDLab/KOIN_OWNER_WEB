@@ -8,7 +8,6 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import { useRef } from 'react';
-import useAuthStore from 'store/auth';
 import useLogin from 'query/auth';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
@@ -21,7 +20,6 @@ interface LoginRef {
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { isMobile } = useMediaQuery();
-  const { user: userData } = useAuthStore();
   const { mutate } = useLogin();
   const loginRef = useRef<LoginRef>({
     email: null,
@@ -33,8 +31,6 @@ export default function Login() {
     const { email, password } = loginRef.current;
     mutate({ email: email!.value, password: password!.value });
   };
-
-  console.log('userdata:', userData);
 
   return (
     <div className={styles.template}>
