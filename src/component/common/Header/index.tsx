@@ -49,7 +49,9 @@ const useMegaMenu = (category: Category[]) => {
 };
 
 const useMobileSidebar = (pathname: string, isMobile: boolean) => {
-  const [isExpanded,,expandSidebar, hideSidebar] = useBooleanState(false);
+  const {
+    value: isExpanded, setTrue: expandSidebar, setFalse: hideSidebar,
+  } = useBooleanState(false);
 
   useEffect(() => {
     if (!isMobile) {

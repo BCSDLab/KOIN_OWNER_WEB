@@ -7,7 +7,7 @@ export default function useBooleanState(defaultValue?: boolean) {
   const setFalse = useCallback(() => setValue(false), []);
   const changeValue = useCallback(() => setValue((x) => !x), []);
 
-  return [
+  return {
     value, setValue, setTrue, setFalse, changeValue,
-  ] as const;
+  } as const;
 }
