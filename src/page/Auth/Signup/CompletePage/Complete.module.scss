@@ -75,5 +75,9 @@
     &:hover {
       cursor: pointer;
     }
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 82%;
+    }
   }
 }

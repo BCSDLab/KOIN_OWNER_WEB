@@ -1,12 +1,18 @@
 @use "src/utils/styles/mediaQuery" as media;
 
+.back-button {
+  margin-left: 15px;
+}
+
 .section-wrapper {
   display: flex;
   height: 100vh;
   flex-direction: column;
-
-  // align-items: center;
   justify-content: center;
+
+  @include media.media-breakpoint-down(mobile) {
+    height: 95vh;
+  }
 }
 
 .step-wrapper {
