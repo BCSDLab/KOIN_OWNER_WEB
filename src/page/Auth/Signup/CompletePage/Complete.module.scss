@@ -1,4 +1,6 @@
-.content_wrapper {
+@use "src/utils/styles/mediaQuery" as media;
+
+.content-wrapper {
   width: 368px;
   height: 90vh;
   margin: 0 auto;
@@ -7,7 +9,7 @@
   align-items: center;
   justify-content: center;
 
-  .check_circle {
+  .complete-circle {
     width: 160px;
     height: 160px;
     border-radius: 100%;
@@ -16,6 +18,21 @@
     justify-content: center;
     border: 8px solid #f7941e;
     margin-bottom: 72px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 55px;
+      height: 55px;
+      border: 3px solid #f7941e;
+      margin-bottom: 25px;
+    }
+
+    &--check-image {
+      width: 74px;
+
+      @include media.media-breakpoint-down(mobile) {
+        width: 26px;
+      }
+    }
   }
 
   .complete {
@@ -26,9 +43,14 @@
     font-weight: 700;
     color: #175c8e;
     margin-bottom: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
   }
 
-  .complete_text {
+  .complete-text {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -39,7 +61,7 @@
     color: #858585;
   }
 
-  .link_button {
+  .link-button {
     display: flex;
     justify-content: center;
     align-items: center;

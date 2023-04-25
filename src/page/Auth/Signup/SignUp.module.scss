@@ -12,9 +12,9 @@
 .step-wrapper {
   width: calc(100% + 2px);
   height: 551px;
-  overflow-y: scroll;
 
   @include media.media-breakpoint-down(mobile) {
+    overflow-y: scroll;
     height: 50vh;
   }
 }
