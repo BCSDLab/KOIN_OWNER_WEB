@@ -5,7 +5,7 @@
 .header {
   height: 80px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   background: #175c8e;
   color: #fff;
   display: block;
@@ -227,10 +227,8 @@
   }
 
   &__my-info {
-    display: flex;
     margin-right: auto;
     width: 80px;
-    text-decoration: none;
     font-size: 15px;
     font-weight: normal;
     color: black;
@@ -247,6 +245,7 @@
     }
 
     & > a {
+      display: flex;
       color: inherit;
       text-decoration: inherit;
     }
@@ -255,9 +254,7 @@
   &__link {
     margin-right: 15px;
     font-size: 15px;
-    height: 12px;
     color: #252525;
-    text-decoration: none;
     cursor: pointer;
 
     & + & {
@@ -273,7 +270,6 @@
     & > a {
       background-color: transparent;
       color: inherit;
-      text-decoration: inherit;
     }
 
     & > button {
@@ -281,6 +277,7 @@
       border: 0;
       background-color: transparent;
       color: inherit;
+      font-size: inherit;
       text-decoration: inherit;
       cursor: pointer;
     }
