@@ -1,5 +1,5 @@
-import { ReactComponent as LogoIcon } from 'assets/svg/common/coin-logo.svg';
-import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/coin-logo-mobile.svg';
+import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
+import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mobile.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
