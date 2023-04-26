@@ -1,4 +1,4 @@
-import { UserResponse } from 'model/auth';
+import { UserResponse } from 'api/auth/model';
 import { create } from 'zustand';
 
 interface AuthStore {
