@@ -53,9 +53,9 @@
   }
 
   &__input {
-    width: 340px;
+    width: 304px;
     height: 20px;
-    padding: 14px;
+    padding: 14px 50px 14px 14px;
     border: 1px solid #d2dae2;
 
     @include media.media-breakpoint-down(mobile) {
