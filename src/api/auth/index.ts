@@ -1,14 +1,14 @@
+import { accessClient, client } from 'api';
 import {
   LoginParam, LoginResponse, UserResponse,
 } from 'model/auth';
-import authApi from './authApiClient';
 
 export const postLogin = async (param: LoginParam) => {
-  const { data } = await authApi.post<LoginResponse>('/user/login', param);
+  const { data } = await client.post<LoginResponse>('/user/login', param);
   return LoginResponse.parse(data);
 };
 
-export const getMe = async (token: string) => {
-  const { data } = await authApi.get<UserResponse>('/owner', { headers: { Authorization: `Bearer ${token}` } });
+export const getMe = async () => {
+  const { data } = await accessClient.get<UserResponse>('/owner');
   return UserResponse.parse(data);
 };
