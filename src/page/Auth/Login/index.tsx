@@ -59,9 +59,9 @@ export default function Login() {
               {isBlind ? <ShowIcon aria-hidden /> : <BlindIcon aria-hidden />}
             </button>
           </div>
-          <div className={styles['auto-login']}>
-            <input className={styles['auto-login__checkbox']} type="checkbox" />
-            <div className={styles['auto-login__text']}>자동로그인</div>
+          <div className={styles['form__auto-login']}>
+            <input className={styles['form__auto-login__checkbox']} type="checkbox" />
+            <div className={styles['form__auto-login__text']}>자동로그인</div>
           </div>
           <button
             className={cn({
