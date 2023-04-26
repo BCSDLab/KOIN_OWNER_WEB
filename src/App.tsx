@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="/store-info" element={<MystorePage />} />
+        <Route index element={<MystorePage />} />
       </Route>
       <Route>
         <Route path="/login" element={<Login />} />
