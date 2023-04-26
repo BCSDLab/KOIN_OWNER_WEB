@@ -3,12 +3,12 @@ import { create } from 'zustand';
 
 interface AuthStore {
   user: UserResponse | null;
-  setUser: (auth: UserResponse) => Promise<void>;
+  setUser: (auth: UserResponse) => void;
 }
 
 const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  setUser: async (auth:UserResponse) => {
+  setUser: (auth:UserResponse) => {
     set(() => ({ user: auth }));
   },
 }));

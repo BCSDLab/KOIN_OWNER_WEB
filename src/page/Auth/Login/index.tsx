@@ -83,6 +83,7 @@ export default function Login() {
               ? (
                 <Link to={OPTION[1].path} className={styles.option__link}>
                   <LockIcon aria-hidden />
+                  {/* 비밀번호 찾기 */}
                   {OPTION[1].name}
                 </Link>
               )
