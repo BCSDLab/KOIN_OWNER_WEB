@@ -6,6 +6,7 @@ import styles from './AuthLayout.module.scss';
 
 export default function AuthLayout() {
   const { isMobile } = useMediaQuery();
+  const year = new Date().getFullYear();
 
   return (
     <div className={styles.template}>
@@ -18,7 +19,7 @@ export default function AuthLayout() {
       <div className={styles.copyright}>
         {isMobile
           ? 'Copyright @ BCSD Lab All rights reserved.'
-          : 'COPYRIGHT © 2023 BCSD LAB ALL RIGHTS RESERVED.'}
+          : `COPYRIGHT © ${year} BCSD LAB ALL RIGHTS RESERVED.`}
       </div>
     </div>
   );

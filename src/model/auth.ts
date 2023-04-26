@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export interface LoginParam {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 }
 
 export const LoginResponse = z.object({
