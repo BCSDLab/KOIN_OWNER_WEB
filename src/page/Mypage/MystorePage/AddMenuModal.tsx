@@ -43,7 +43,7 @@ export default function AddMenuModal({ closeModal }: Props) {
               <div className={styles['modalContainer__setting-title']}>
                 메뉴명
               </div>
-              <input className={styles['modalContainer__menu-name-input']} placeholder="   예) 불족발 + 막국수 저녁 SET" />
+              <input className={styles['modalContainer__menu-name-input']} placeholder="예) 불족발 + 막국수 저녁 SET" />
             </div>
             <div className={styles['modalContainer__menu-price-setting']}>
               <div className={styles['modalContainer__caption-title']}>
@@ -56,8 +56,8 @@ export default function AddMenuModal({ closeModal }: Props) {
                 </div>
               </div>
               <div className={styles['modalContainer__price-info-inputs']}>
-                <input className={styles['modalContainer__size-input']} placeholder="   예) 소 (1~2 인분)" />
-                <input className={styles['modalContainer__price-input']} placeholder="원   " />
+                <input className={styles['modalContainer__size-input']} placeholder="예) 소 (1~2 인분)" />
+                <input className={styles['modalContainer__price-input']} placeholder="원" />
                 <CancleIcon className={styles['modalContainer__cancle-icon']} />
               </div>
               <div className={styles['modalContainer__add-price']}>
