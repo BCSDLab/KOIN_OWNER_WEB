@@ -188,12 +188,21 @@
     color: #175c8e;
   }
 
-  &__event-menu-icon svg {
+  &__event-menu-icon--mark {
     position: absolute;
     left: 110px;
-    top: 26px;
+    top: 29px;
     margin-left: 8px;
   }
+
+  &__event-menu-icon--star {
+    position: absolute;
+    left: 113px;
+    top: 34px;
+    margin-left: 8px;
+  }
+
+  // 여기부터
 
   &__wrapper {
     display: flex;
@@ -205,8 +214,38 @@
   &__item {
     box-sizing: border-box;
     width: 368px;
-    height: 301px;
+    height: 331px;
     border: 1px solid #d2dae2;
+
+    // background-color: red;
+  }
+
+  &__img {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 39px;
+    width: 180px;
+    height: 180px;
+    background: #175c8e;
+    border: 1px solid #175c8e;
+    border-radius: 100px;
+  }
+
+  &__img--icon {
+    position: absolute;
+    top: 46.15px;
+    left: 62.32px;
+  }
+
+  &__img--caption {
+    position: absolute;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
+    top: 113px;
+    left: 28px;
   }
 }
 
