@@ -7,60 +7,31 @@
   padding-bottom: 4px;
   border-bottom: 3px solid #f4f4f4;
 
-  &--1 {
-    display: flex;
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 48px;
-    padding-bottom: 4px;
-    border-bottom: 3px solid #f4f4f4;
+  &::after {
+    position: absolute;
+    display: block;
+    content: "";
+    width: 0;
+    bottom: -3px;
+    border-bottom: 3px solid #f7941e;
+    transition: 0.3s;
+  }
 
-    &::after {
-      position: absolute;
-      display: block;
-      content: "";
-      width: 30%;
-      bottom: -3px;
-      border-bottom: 3px solid #f7941e;
+  &--1 {
+    &.progress-bar::after {
+      width: 33.33%;
     }
   }
 
   &--2 {
-    display: flex;
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 48px;
-    padding-bottom: 4px;
-    border-bottom: 3px solid #f4f4f4;
-
-    &::after {
-      position: absolute;
-      display: block;
-      content: "";
-      width: 63%;
-      bottom: -3px;
-      border-bottom: 3px solid #f7941e;
+    &.progress-bar::after {
+      width: 66.66%;
     }
   }
 
   &--3 {
-    display: flex;
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
-    margin-bottom: 48px;
-    padding-bottom: 4px;
-    border-bottom: 3px solid #f4f4f4;
-
-    &::after {
-      position: absolute;
-      display: block;
-      content: "";
+    &.progress-bar::after {
       width: 100%;
-      bottom: -3px;
-      border-bottom: 3px solid #f7941e;
     }
   }
 

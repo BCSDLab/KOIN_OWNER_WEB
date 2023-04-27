@@ -53,6 +53,7 @@ export default function Signup() {
                   회원가입
                 </span>
                 <div className={styles['step-wrapper']}>
+                  {step !== 0 && <ProgressBar step={step} />}
                   {step === 0 && (
                   <>
                     <TermsOfService />
@@ -64,7 +65,6 @@ export default function Signup() {
                   )}
                   {step === 1 && (
                   <>
-                    <ProgressBar step={step} />
                     <UserData />
                     <div className={styles['signup-section__button-group--mobile']}>
                       <CustomButton type="large" content="이메일 인증하기" event={() => setStep(step + 1)} />
@@ -73,7 +73,6 @@ export default function Signup() {
                   )}
                   {step === 2 && (
                   <>
-                    <ProgressBar step={step} />
                     <UserEmail />
                     <div className={styles['signup-section__button-group--mobile']}>
                       <CustomButton type="mobile" content="재발송" event={() => { alert('재발송'); }} />
@@ -83,7 +82,6 @@ export default function Signup() {
                   )}
                   {step === 3 && (
                   <>
-                    <ProgressBar step={step} />
                     <OwnerData />
                     <div className={styles['signup-section__button-group--mobile']}>
                       <CustomButton type="large" content="다음" event={() => setStep(step + 1)} />
