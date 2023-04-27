@@ -1,16 +1,16 @@
-import CustomButton from 'component/SignUp/CustomButton';
+import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link } from 'react-router-dom';
-import UserEmail from 'component/SignUp/UserEmail';
-import ProgressBar from 'component/SignUp/ProgressBar';
-import OwnerData from './OwnerDataPage';
-import TermsOfService from './TermsOfServicePage';
-import UserData from './UserDataPage';
+import { ReactComponent as Logo } from 'assets/svg/common/koin-logo.svg';
+import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
+import UserEmail from './component/UserEmail';
+import ProgressBar from './component/ProgressBar';
+import OwnerData from './view/OwnerDataPage';
+import TermsOfService from './view/TermsOfServicePage';
+import UserData from './view/UserDataPage';
 import styles from './SignUp.module.scss';
-import Complete from './CompletePage';
-import { ReactComponent as Logo } from '../../../assets/svg/common/koin-logo.svg';
-import { ReactComponent as Back } from '../../../assets/svg/common/back-arrow.svg';
+import Complete from './view/CompletePage';
 
 export default function Signup() {
   const [step, setStep] = useState(0);

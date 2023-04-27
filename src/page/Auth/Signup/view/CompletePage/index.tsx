@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as Check } from '../../../../assets/svg/auth/check.svg';
+import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
 import styles from './Complete.module.scss';
 
 export default function Complete() {

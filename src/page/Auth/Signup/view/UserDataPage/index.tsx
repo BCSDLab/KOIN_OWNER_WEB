@@ -1,6 +1,6 @@
-import UserEmail from 'component/SignUp/UserEmail';
-import UserId from 'component/SignUp/UserId';
-import UserPassword from 'component/SignUp/UserPassword';
+import UserEmail from 'page/Auth/Signup/component/UserEmail';
+import UserId from 'page/Auth/Signup/component/UserId';
+import UserPassword from 'page/Auth/Signup/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './UserData.module.scss';
 

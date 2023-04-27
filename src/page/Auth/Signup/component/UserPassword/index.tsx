@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import styles from './UserPassword.module.scss';
-import { ReactComponent as Warn } from '../../../assets/svg/auth/warning.svg';
 
 export default function UserPassword() {
   const { isMobile } = useMediaQuery();

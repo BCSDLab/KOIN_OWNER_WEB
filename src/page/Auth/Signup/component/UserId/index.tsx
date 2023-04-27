@@ -1,7 +1,7 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import CustomButton from '../CustomButton';
 import styles from './UserId.module.scss';
-import { ReactComponent as Warn } from '../../../assets/svg/auth/warning.svg';
 
 export default function UserId() {
   const { isMobile } = useMediaQuery();
