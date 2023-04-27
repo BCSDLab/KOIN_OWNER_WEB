@@ -45,7 +45,7 @@
 
     &__checkbox {
       appearance: none;
-      width: 20px;
+      width: 21px;
       height: 20px;
       margin-right: 10px;
       border: 1px solid #d2dae2;
@@ -54,7 +54,7 @@
 
       &:checked {
         border: none;
-        background-image: url("../../../../../assets/svg/auth/check.svg");
+        background-image: url("../../../../../assets/svg/auth/checkbox.svg");
       }
     }
 
