@@ -133,11 +133,14 @@
       display: none;
     }
 
-    &__text {
+    &__label {
       font-family: NotoSansKR, sans-serif;
       font-weight: 400;
       font-size: 12px;
+      display: flex;
+      align-items: center;
       color: #999999;
+      cursor: pointer;
     }
 
     &__checkbox {

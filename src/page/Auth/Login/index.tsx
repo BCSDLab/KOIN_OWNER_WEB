@@ -60,8 +60,10 @@ export default function Login() {
             </button>
           </div>
           <div className={styles['form__auto-login']}>
-            <input className={styles['form__auto-login__checkbox']} type="checkbox" />
-            <div className={styles['form__auto-login__text']}>자동로그인</div>
+            <label className={styles['form__auto-login__label']} htmlFor="auto-login">
+              <input className={styles['form__auto-login__checkbox']} type="checkbox" id="auto-login" />
+              자동로그인
+            </label>
           </div>
           <button
             className={cn({
