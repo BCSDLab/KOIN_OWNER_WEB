@@ -1,4 +1,5 @@
 export interface MenuSample {
+  img: string | null;
   name: string;
   option_price: {
     option: string | null;
@@ -9,6 +10,7 @@ export interface MenuSample {
 
 const MENU_SAMPLE: MenuSample[] = [
   {
+    img: null,
     name: '족발 + 막국수 저녁 Set',
     option_price: [
       {

@@ -220,7 +220,7 @@
     // background-color: red;
   }
 
-  &__img {
+  &__empty-img {
     position: relative;
     margin: 0 auto;
     margin-top: 39px;
@@ -231,13 +231,13 @@
     border-radius: 100px;
   }
 
-  &__img--icon {
+  &__empty-img--icon {
     position: absolute;
     top: 46.15px;
     left: 62.32px;
   }
 
-  &__img--caption {
+  &__empty-img--caption {
     position: absolute;
     color: #ffffff;
     font-size: 14px;
@@ -246,6 +246,34 @@
     text-align: center;
     top: 113px;
     left: 28px;
+  }
+
+  &__name {
+    display: block;
+    height: 30px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: center;
+    color: #252525;
+    margin: 0 auto;
+    margin-top: 12px;
+  }
+
+  &__price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  &__price--unit {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #f7941e;
   }
 }
 
