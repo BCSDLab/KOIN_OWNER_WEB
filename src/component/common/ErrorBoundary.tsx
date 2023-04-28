@@ -2,7 +2,6 @@
 import React, { ReactNode } from 'react';
 
 export interface Props {
-  fallback: React.ElementType;
   message?: string;
   children?: ReactNode;
 }
@@ -29,9 +28,12 @@ class ErrorBoundary extends React.Component<Props, State> {
 
     if (hasError) {
       return (
-        <this.props.fallback
-          message={message}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div>
+            에러 발생:
+            {message}
+          </div>
+        </div>
       );
     }
     return children;
