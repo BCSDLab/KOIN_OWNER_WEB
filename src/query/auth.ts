@@ -5,7 +5,7 @@ import useAuthStore from 'store/auth';
 
 const useLogin = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuthStore();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const { mutate, error, isError } = useMutation(postLogin, {
     onSuccess: async ({ token }) => {
