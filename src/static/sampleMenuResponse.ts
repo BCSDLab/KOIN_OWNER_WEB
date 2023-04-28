@@ -11,6 +11,44 @@ export interface MenuSample {
 const MENU_SAMPLE: MenuSample[] = [
   {
     img: null,
+    name: '족발 + 막국수 아침 Set',
+    option_price: [
+      {
+        option: '소',
+        price: 22000,
+      },
+      {
+        option: '중',
+        price: 34000,
+      },
+      {
+        option: '대',
+        price: 44000,
+      },
+    ],
+    single_price: null,
+  },
+  {
+    img: null,
+    name: '족발 + 막국수 점심 Set',
+    option_price: [
+      {
+        option: '소',
+        price: 22000,
+      },
+      {
+        option: '중',
+        price: 34000,
+      },
+      {
+        option: '대',
+        price: 44000,
+      },
+    ],
+    single_price: null,
+  },
+  {
+    img: null,
     name: '족발 + 막국수 저녁 Set',
     option_price: [
       {
