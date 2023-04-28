@@ -14,7 +14,7 @@ export default function MystorePage() {
     <div className={styles.container}>
       <div className={styles.section}>
         <div className={styles.header}>
-          <div className={styles.header__title}>가게정보</div>
+          <h1 className={styles.header__title}>가게정보</h1>
           <div className={styles['header__btn-wrapper']}>
             <button type="button" className={styles['header__btn-update']}>메뉴수정</button>
             <button
@@ -29,23 +29,23 @@ export default function MystorePage() {
         <div className={styles.store}>
           <div className={styles.store__info}>
             <div className={styles.store__top}>
-              <div className={styles.store__title}>가장 맛있는 족발</div>
+              <h1 className={styles.store__title}>가장 맛있는 족발</h1>
               <div className={styles.store__keywords}>#키워드</div>
             </div>
             <div className={styles.store__content}>
-              <div className={styles.store__detailData}>
+              <div className={styles['store__detail-data']}>
                 {storeInfos.map((info) => (
-                  <div key={info} className={styles['store__detailData--data']}>{info}</div>
+                  <div key={info} className={styles['store__detail-data--data']}>{info}</div>
                 ))}
               </div>
-              <div className={styles.store__updateBtn}>가게 정보 수정</div>
+              <button type="button" className={styles['store__update-btn']}>가게 정보 수정</button>
             </div>
           </div>
           <div className={styles.store__imgs}>
             <div className={styles['store__imgs--main']}>메인이미지</div>
             <div className={styles.store__subimgs}>
-              <div className={styles['store__subimgs--up']}>서브이미지1</div>
-              <div className={styles['store__subimgs--down']}>서브이미지2</div>
+              <div className={styles['store__subimgs--top']}>서브이미지1</div>
+              <div className={styles['store__subimgs--bottom']}>서브이미지2</div>
             </div>
           </div>
         </div>
