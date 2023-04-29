@@ -1,14 +1,14 @@
-import { UserResponse } from 'api/auth/model';
+import { NullableUser } from 'api/auth/model';
 import { create } from 'zustand';
 
 interface AuthStore {
-  user: UserResponse | null;
-  setUser: (auth: UserResponse) => void;
+  user: NullableUser;
+  setUser: (auth: NullableUser) => void;
 }
 
 const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  setUser: (auth:UserResponse) => {
+  setUser: (auth) => {
     set(() => ({ user: auth }));
   },
 }));

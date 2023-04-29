@@ -36,3 +36,7 @@ export const UserResponse = z.object({
 });
 
 export type UserResponse = z.infer<typeof UserResponse>;
+
+export const nullableUser = z.nullable(UserResponse);
+
+export type NullableUser = z.infer<typeof nullableUser>;
