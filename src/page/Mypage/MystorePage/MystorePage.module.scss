@@ -231,8 +231,7 @@
     margin-top: 39px;
     width: 180px;
     height: 180px;
-    background: #175c8e;
-    border: 1px solid #175c8e;
+    border: 3px solid #175c8e;
     border-radius: 100px;
   }
 
@@ -244,7 +243,7 @@
 
   &__empty-img--caption {
     position: absolute;
-    color: #ffffff;
+    color: #175c8e;
     font-size: 14px;
     font-weight: 500;
     line-height: 21px;
