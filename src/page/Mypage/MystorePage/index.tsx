@@ -5,7 +5,7 @@ import styles from './MystorePage.module.scss';
 import Menus from './Menus';
 import AddMenuModal from './AddMenuModal';
 
-const storeInfos = ['전화번호', '운영 시간', '휴무일', '주소정보', '배달 금액', '가게 정보'];
+const STOREINFOS = ['전화번호', '운영 시간', '휴무일', '주소정보', '배달 금액', '가게 정보'];
 
 export default function MystorePage() {
   const { isOpenModal, clickModal, closeModal } = useModalOpen();
@@ -34,7 +34,7 @@ export default function MystorePage() {
             </div>
             <div className={styles.store__content}>
               <div className={styles['store__detail-data']}>
-                {storeInfos.map((info) => (
+                {STOREINFOS.map((info) => (
                   <div key={info} className={styles['store__detail-data--data']}>{info}</div>
                 ))}
               </div>

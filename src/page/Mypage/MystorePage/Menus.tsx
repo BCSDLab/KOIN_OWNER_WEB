@@ -3,9 +3,9 @@ import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './MystorePage.module.scss';
 
 export default function Menus() {
-  function addComma(value: number) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
+  // function addComma(value: number) {
+  //   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  // }
 
   return (
     <div className={styles.menu__wrapper}>
@@ -20,7 +20,7 @@ export default function Menus() {
             <div className={styles.menu__price}>
               {menu.option_price.map((option) => (
                 <span className={styles['menu__price--unit']} key={option.option}>
-                  {option.price !== null ? `${option.option}:${addComma(option.price)}` : `${option.option}`}
+                  {option.price !== null ? `${option.option}:${option.price.toLocaleString()}` : `${option.option}`}
                 </span>
               ))}
             </div>

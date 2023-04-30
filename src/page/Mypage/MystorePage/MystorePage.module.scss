@@ -146,8 +146,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 437.61px;
-    height: 288.02px;
+    margin-top: 18.94px;
+    margin-left: 18px;
+    width: 397.35px;
+    height: 266.11px;
+    border: solid 1px #d2dae2;
   }
 
   &__subimgs {
@@ -164,6 +167,7 @@
     align-items: center;
     width: 176px;
     height: 144px;
+    border: solid 1px #d2dae2;
   }
 
   &__subimgs--bottom {
@@ -172,6 +176,7 @@
     align-items: center;
     width: 176px;
     height: 144px;
+    border: solid 1px #d2dae2;
   }
 }
 
@@ -281,7 +286,7 @@
   }
 }
 
-.modalBack {
+.modal-back {
   position: fixed;
   top: 0;
   left: 0;
@@ -293,7 +298,7 @@
   align-items: center;
 }
 
-.modalContainer {
+.modal {
   position: fixed;
   top: 50%;
   left: 50%;
