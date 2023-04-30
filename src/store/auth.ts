@@ -1,9 +1,9 @@
-import { NullableUser } from 'api/auth/model';
+import { User } from 'model/auth';
 import { create } from 'zustand';
 
 interface AuthStore {
-  user: NullableUser;
-  setUser: (auth: NullableUser) => void;
+  user: User;
+  setUser: (auth: User) => void;
 }
 
 const useAuthStore = create<AuthStore>((set) => ({
