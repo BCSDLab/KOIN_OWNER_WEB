@@ -1,5 +1,4 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
-import { ReactComponent as Star } from 'assets/svg/mystore/star.svg';
 import useModalOpen from 'utils/hooks/useModalOpen';
 import styles from './MystorePage.module.scss';
 import Menus from './Menus';
@@ -51,10 +50,9 @@ export default function MystorePage() {
         </div>
         <div className={styles.menu}>
           <div className={styles['menu__title-wrapper']}>
-            <div className={styles.menu__title}>이벤트 메뉴</div>
-            <div>
+            <div className={styles.menu__title}>
+              이벤트 메뉴
               <EventMarkIcon className={styles['menu__event-menu-icon--mark']} />
-              <Star className={styles['menu__event-menu-icon--star']} />
             </div>
           </div>
           <Menus />

@@ -199,20 +199,8 @@
   }
 
   &__event-menu-icon--mark {
-    position: absolute;
-    left: 110px;
-    top: 29px;
     margin-left: 8px;
   }
-
-  &__event-menu-icon--star {
-    position: absolute;
-    left: 113px;
-    top: 34px;
-    margin-left: 8px;
-  }
-
-  // 여기부터
 
   &__wrapper {
     display: flex;
