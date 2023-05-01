@@ -1,13 +1,14 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
-import useModalOpen from 'utils/hooks/useModalOpen';
+// import useModalOpen from 'utils/hooks/useModalOpen';
+import MY_STORE_INFO from 'static/myStoreInfo';
 import styles from './MystorePage.module.scss';
 import Menus from './Menus';
-import AddMenuModal from './AddMenuModal';
 
-const STOREINFOS = ['전화번호', '운영 시간', '휴무일', '주소정보', '배달 금액', '가게 정보'];
+// import AddMenuModal from './AddMenuModal';
+import StoreInfo from './StoreInfo';
 
 export default function MystorePage() {
-  const { isOpenModal, clickModal, closeModal } = useModalOpen();
+  // const { isOpenModal, clickModal, closeModal } = useModalOpen();
 
   return (
     <div className={styles.container}>
@@ -19,35 +20,13 @@ export default function MystorePage() {
             <button
               type="button"
               className={styles['header__btn-add']}
-              onClick={clickModal}
+              // onClick={clickModal}
             >
               메뉴추가
             </button>
           </div>
         </div>
-        <div className={styles.store}>
-          <div className={styles.store__info}>
-            <div className={styles.store__top}>
-              <h1 className={styles.store__title}>가장 맛있는 족발</h1>
-              <div className={styles.store__keywords}>#키워드</div>
-            </div>
-            <div className={styles.store__content}>
-              <div className={styles['store__detail-data']}>
-                {STOREINFOS.map((info) => (
-                  <div key={info} className={styles['store__detail-data--data']}>{info}</div>
-                ))}
-              </div>
-              <button type="button" className={styles['store__update-btn']}>가게 정보 수정</button>
-            </div>
-          </div>
-          <div className={styles.store__imgs}>
-            <div className={styles['store__imgs--main']}>메인이미지</div>
-            <div className={styles.store__subimgs}>
-              <div className={styles['store__subimgs--top']}>서브이미지1</div>
-              <div className={styles['store__subimgs--bottom']}>서브이미지2</div>
-            </div>
-          </div>
-        </div>
+        <StoreInfo storeInfo={MY_STORE_INFO[0]} />
         <div className={styles.menu}>
           <div className={styles['menu__title-wrapper']}>
             <div className={styles.menu__title}>
@@ -61,11 +40,11 @@ export default function MystorePage() {
           </div>
           <Menus />
         </div>
-        {isOpenModal && (
+        {/* {isOpenModal && (
         <AddMenuModal
           closeModal={closeModal}
         />
-        )}
+        )} */}
       </div>
     </div>
   );

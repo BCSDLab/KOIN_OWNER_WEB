@@ -3,7 +3,7 @@ import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
-import MENU_CATEGORY from 'static/menuCategory';
+// import MENU_CATEGORY from 'static/menuCategory';
 import styles from './MystorePage.module.scss';
 
 type Props = {
@@ -76,11 +76,11 @@ export default function AddMenuModal({ closeModal }: Props) {
                 <GearIcon className={styles['modal__gear-icon']} />
               </div>
               <div className={styles['modal__menu-categoty-wapper']}>
-                {MENU_CATEGORY.map((type) => (
+                {/* {MENU_CATEGORY.map((type) => (
                   <div key={type.title} className={styles['modal__menu-categoty-wapper--unit']}>
                     {type.title}
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
             <div className={styles['modal__menu-combo-setting']}>

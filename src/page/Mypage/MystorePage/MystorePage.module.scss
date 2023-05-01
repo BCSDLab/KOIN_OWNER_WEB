@@ -109,12 +109,29 @@
     flex-direction: column;
   }
 
-  &__detail-data--data {
+  &__detail-data-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  &__detail-data--data-title {
     height: 27px;
+    font-weight: 400;
+    font-size: 15px;
     margin-top: 8px;
     margin-left: 2px;
     margin-right: 16px;
     color: #858585;
+  }
+
+  &__detail-data--data {
+    position: absolute;
+    left: 83px;
+    font-weight: 400;
+    font-size: 15px;
+    width: 450px;
+    color: #252525;
   }
 
   &__update-btn {

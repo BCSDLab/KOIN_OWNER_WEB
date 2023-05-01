@@ -3,10 +3,6 @@ import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './MystorePage.module.scss';
 
 export default function Menus() {
-  // function addComma(value: number) {
-  //   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  // }
-
   return (
     <div className={styles.menu__wrapper}>
       {MENU_SAMPLE.map((menu) => (menu.img === null ? (

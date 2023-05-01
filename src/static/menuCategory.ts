@@ -1,26 +1,76 @@
-export interface MenuCategory {
-  title: string;
-  id: number;
+// export interface MenuCategory {
+//   title: string;
+//   id: number;
+// }
+
+export interface MenuSample {
+  img: string | null;
+  name: string;
+  option_price: {
+    option: string | null;
+    price: number | null;
+  }[];
+  single_price: number | null;
 }
 
-const MENU_CATEGORY: MenuCategory[] = [
+export interface Menu {
+  id: number;
+  name: string;
+  menus: MenuSample[];
+}
+
+const MENU_CATEGORYS: Menu[] = [
   {
-    title: '이벤트 메뉴',
     id: 1,
+    name: '이벤트 메뉴',
+    menus: [
+      {
+        img: null,
+        name: '족발 + 막국수 아침 Set',
+        option_price: [
+          {
+            option: '소',
+            price: 22000,
+          },
+          {
+            option: '중',
+            price: 34000,
+          },
+          {
+            option: '대',
+            price: 44000,
+          },
+        ],
+        single_price: null,
+      },
+    ],
   },
   {
-    title: '대표 메뉴',
     id: 2,
-  },
-  {
-    title: '사이드 메뉴',
-    id: 3,
-  },
-  {
-    title: '세트 메뉴',
-    id: 4,
+    name: '대표 메뉴',
+    menus: [
+      {
+        img: null,
+        name: '족발 + 막국수 아침 Set',
+        option_price: [
+          {
+            option: '소',
+            price: 22000,
+          },
+          {
+            option: '중',
+            price: 34000,
+          },
+          {
+            option: '대',
+            price: 44000,
+          },
+        ],
+        single_price: null,
+      },
+    ],
   },
 
 ];
-
-export default MENU_CATEGORY;
+// export default MENU_CATEGORY;
+export default MENU_CATEGORYS as Menu[];
