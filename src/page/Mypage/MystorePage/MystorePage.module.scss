@@ -165,16 +165,16 @@
 
   &__imgs {
     display: flex;
+    align-items: center;
+    padding-left: 40px;
   }
 
   &__imgs--main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 18.94px;
-    margin-left: 18px;
-    width: 397.35px;
-    height: 266.11px;
+    width: 368px;
+    height: 257px;
     border: solid 1px #d2dae2;
   }
 
@@ -184,6 +184,8 @@
     width: 176px;
     justify-content: center;
     align-items: center;
+    gap: 13px;
+    margin-left: 18px;
   }
 
   &__subimgs--top {
@@ -191,7 +193,7 @@
     justify-content: center;
     align-items: center;
     width: 176px;
-    height: 144px;
+    height: 121px;
     border: solid 1px #d2dae2;
   }
 
@@ -200,7 +202,7 @@
     justify-content: center;
     align-items: center;
     width: 176px;
-    height: 144px;
+    height: 121px;
     border: solid 1px #d2dae2;
   }
 }
