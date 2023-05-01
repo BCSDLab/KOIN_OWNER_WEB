@@ -1,0 +1,3 @@
+@use "./mixin.scss";
+@include mixin.font-face("NotoSansKR", "/assets/fonts/NotoSansKR-Regular", 400);
+@include mixin.font-face("NotoSansKR", "/assets/fonts/NotoSansKR-Medium", 500);

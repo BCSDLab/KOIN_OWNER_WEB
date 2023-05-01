@@ -5,7 +5,7 @@
 .header {
   height: 80px;
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   background: #175c8e;
   color: #fff;
   display: block;
@@ -70,6 +70,7 @@
     float: right;
     text-align: right;
     line-height: 1.35;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     color: #a0d2f6;
     padding: 0 20px;
@@ -89,6 +90,7 @@
     & > button {
       color: inherit;
       text-decoration: none;
+      font-family: "Noto Sans CJK KR", sans-serif;
       font-size: 15px;
       background-color: #175c8e;
       border: none;
@@ -214,6 +216,7 @@
 
   &__greet {
     font-size: 16px;
+    font-family: "Noto Sans CJK KR", sans-serif;
     display: block;
     max-width: 240px;
     text-align: left;
@@ -227,10 +230,9 @@
   }
 
   &__my-info {
-    display: flex;
     margin-right: auto;
     width: 80px;
-    text-decoration: none;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     font-weight: normal;
     color: black;
@@ -242,11 +244,11 @@
       height: 24px;
       margin-right: 4px;
       content: "";
-      background: url("http://static.koreatech.in/assets/img/ic-bottom_myinfo.png")
-        center/24px 24px;
+      background: url("http://static.koreatech.in/assets/img/ic-bottom_myinfo.png") center/24px 24px;
     }
 
     & > a {
+      display: flex;
       color: inherit;
       text-decoration: inherit;
     }
@@ -254,10 +256,9 @@
 
   &__link {
     margin-right: 15px;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
-    height: 12px;
     color: #252525;
-    text-decoration: none;
     cursor: pointer;
 
     & + & {
@@ -273,7 +274,6 @@
     & > a {
       background-color: transparent;
       color: inherit;
-      text-decoration: inherit;
     }
 
     & > button {
@@ -281,6 +281,8 @@
       border: 0;
       background-color: transparent;
       color: inherit;
+      font-size: inherit;
+      font-family: inherit;
       text-decoration: inherit;
       cursor: pointer;
     }
@@ -290,6 +292,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     font-weight: normal;
     color: #252525;
@@ -306,6 +309,7 @@
     padding: 5px 16px;
     margin-top: 8px;
     margin-bottom: 8px;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     font-weight: normal;
     color: #858585;
@@ -324,6 +328,7 @@
     display: block;
     padding: 8px 20px;
     width: 50%;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     background: #fff;
     box-sizing: border-box;
@@ -405,6 +410,7 @@
     padding: 0 20px;
     height: 80px;
     font-weight: 700;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 17px;
     text-align: left;
     line-height: 1;
@@ -446,6 +452,7 @@
   &__link {
     line-height: 2;
     display: block;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 13px;
     padding-bottom: 10px;
     color: rgb(255 255 255);

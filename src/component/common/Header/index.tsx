@@ -1,6 +1,7 @@
-import { ReactComponent as LogoIcon } from 'assets/svg/common/coin-logo.svg';
-import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/coin-logo-mobile.svg';
+import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
+import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mobile.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
+import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CATEGORY, { Category, SubMenu } from 'static/category';
@@ -49,7 +50,9 @@ const useMegaMenu = (category: Category[]) => {
 };
 
 const useMobileSidebar = (pathname: string, isMobile: boolean) => {
-  const [isExpanded,,expandSidebar, hideSidebar] = useBooleanState(false);
+  const {
+    value: isExpanded, setTrue: expandSidebar, setFalse: hideSidebar,
+  } = useBooleanState(false);
 
   useEffect(() => {
     if (!isMobile) {
@@ -148,7 +151,7 @@ function Header() {
                       type="button"
                       onClick={hideSidebar}
                     >
-                      <img src="http://static.koreatech.in/assets/img/arrow_left.png" alt="go back" title="go back" />
+                      <BackArrowIcon title="뒤로 가기 버튼" />
                     </button>
                     <div className={styles.mobileheader__greet}>
                       {/* Auth 완료시 수정 필요 */}
