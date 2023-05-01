@@ -5,7 +5,7 @@ export interface OpenInfo {
   open_time: string;
 }
 
-export interface MySotreInfo {
+export interface MyStoreInfo {
   address: string;
   delivery: boolean;
   deliveryPrice: number;
@@ -16,10 +16,9 @@ export interface MySotreInfo {
   pay_bank: boolean;
   pay_card: boolean;
   phone: string;
-
 }
 
-const MY_STORE_INFO: MySotreInfo[] = [{
+const MY_STORE_INFO: MyStoreInfo = {
   address: '천안시 동남구 충절로 880 가동 1층',
   delivery: true,
   deliveryPrice: 0,
@@ -37,6 +36,6 @@ const MY_STORE_INFO: MySotreInfo[] = [{
   pay_bank: true,
   pay_card: true,
   phone: '041-523-5849',
-}];
+};
 
 export default MY_STORE_INFO;

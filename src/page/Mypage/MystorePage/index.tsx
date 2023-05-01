@@ -1,5 +1,5 @@
-import MY_STORE_INFO from 'static/myStoreInfo';
-import MENU_CATEGORYS from 'static/menuCategory';
+import MY_STORE_INFO from 'model/storeInfo/myStoreInfo';
+import MENU_CATEGORYS from 'model/storeInfo/menuCategory';
 import styles from './MystorePage.module.scss';
 import Menus from './Menus';
 
@@ -21,9 +21,9 @@ export default function MystorePage() {
             </button>
           </div>
         </div>
-        <StoreInfo storeInfo={MY_STORE_INFO[0]} />
+        <StoreInfo storeInfo={MY_STORE_INFO} />
         <div className={styles.menu}>
-          <Menus menus={MENU_CATEGORYS} />
+          <Menus categories={MENU_CATEGORYS} />
         </div>
       </div>
     </div>

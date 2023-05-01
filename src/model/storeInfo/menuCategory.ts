@@ -1,20 +1,19 @@
-export interface MenuSample {
+export interface Menu {
   img: string | null;
   name: string;
   option_price: {
     option: string | null;
     price: number | null;
   }[];
-  single_price: number | null;
 }
 
-export interface Menu {
+export interface MenuCategories {
   id: number;
   name: string;
-  menus: MenuSample[];
+  menus: Menu[];
 }
 
-const MENU_CATEGORYS: Menu[] = [
+const MENU_CATEGORYS: MenuCategories[] = [
   {
     id: 1,
     name: '이벤트 메뉴',
@@ -36,7 +35,6 @@ const MENU_CATEGORYS: Menu[] = [
             price: 44000,
           },
         ],
-        single_price: null,
       },
     ],
   },
@@ -61,11 +59,10 @@ const MENU_CATEGORYS: Menu[] = [
             price: 44000,
           },
         ],
-        single_price: null,
       },
     ],
   },
 
 ];
 // export default MENU_CATEGORY;
-export default MENU_CATEGORYS as Menu[];
+export default MENU_CATEGORYS as MenuCategories[];

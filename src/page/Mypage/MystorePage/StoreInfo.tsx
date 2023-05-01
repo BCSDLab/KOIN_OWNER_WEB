@@ -1,9 +1,9 @@
 // import MY_STORE_INFO from 'static/myStoreInfo';
 
-import { MySotreInfo } from 'static/myStoreInfo';
+import { MyStoreInfo } from 'model/storeInfo/myStoreInfo';
 import styles from './MystorePage.module.scss';
 
-export default function StoreInfo({ storeInfo }: { storeInfo: MySotreInfo }) {
+export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfo }) {
   return (
     <div className={styles.store}>
       <div className={styles.store__info}>
