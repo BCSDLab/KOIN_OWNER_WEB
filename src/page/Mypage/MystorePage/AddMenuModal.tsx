@@ -75,13 +75,7 @@ export default function AddMenuModal({ closeModal }: Props) {
                 </div>
                 <GearIcon className={styles['modal__gear-icon']} />
               </div>
-              <div className={styles['modal__menu-categoty-wapper']}>
-                {/* {MENU_CATEGORY.map((type) => (
-                  <div key={type.title} className={styles['modal__menu-categoty-wapper--unit']}>
-                    {type.title}
-                  </div>
-                ))} */}
-              </div>
+              <div className={styles['modal__menu-categoty-wapper']} />
             </div>
             <div className={styles['modal__menu-combo-setting']}>
               <div className={styles['modal__setting-title']}>
