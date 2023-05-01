@@ -1,4 +1,5 @@
 import MY_STORE_INFO from 'static/myStoreInfo';
+import MENU_CATEGORYS from 'static/menuCategory';
 import styles from './MystorePage.module.scss';
 import Menus from './Menus';
 
@@ -22,7 +23,7 @@ export default function MystorePage() {
         </div>
         <StoreInfo storeInfo={MY_STORE_INFO[0]} />
         <div className={styles.menu}>
-          <Menus />
+          <Menus menus={MENU_CATEGORYS} />
         </div>
       </div>
     </div>

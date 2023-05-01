@@ -1,8 +1,3 @@
-// export interface MenuCategory {
-//   title: string;
-//   id: number;
-// }
-
 export interface MenuSample {
   img: string | null;
   name: string;
@@ -26,7 +21,7 @@ const MENU_CATEGORYS: Menu[] = [
     menus: [
       {
         img: null,
-        name: '족발 + 막국수 아침 Set',
+        name: '족발 + 막국수 이벤트 Set',
         option_price: [
           {
             option: '소',
@@ -51,7 +46,7 @@ const MENU_CATEGORYS: Menu[] = [
     menus: [
       {
         img: null,
-        name: '족발 + 막국수 아침 Set',
+        name: '족발 + 막국수 대표 Set',
         option_price: [
           {
             option: '소',
