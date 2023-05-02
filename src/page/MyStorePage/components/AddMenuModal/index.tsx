@@ -36,7 +36,7 @@ export default function AddMenuModal({ closeModal }: Props) {
               </div>
             </div>
           </div>
-          <div className={styles.modalContainer__fence} />
+          <div className={styles.modal__fence} />
           <div className={styles['modal__info-setting']}>
             <div className={styles['modal__menu-name-setting']}>
               <div className={styles['modal__setting-title']}>
