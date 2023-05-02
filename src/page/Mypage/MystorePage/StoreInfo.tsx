@@ -40,7 +40,7 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfo }) {
             <div className={styles['store__detail-data-wrapper']}>
               <div className={styles['store__detail-data--data-title']}>배달금액</div>
               <div className={styles['store__detail-data--data']}>
-                {`${storeInfo.deliveryPrice}원`}
+                {`${storeInfo.delivery_price}원`}
               </div>
             </div>
             <div className={styles['store__detail-data-wrapper']}>

@@ -8,7 +8,7 @@ export interface OpenInfo {
 export interface MyStoreInfo {
   address: string;
   delivery: boolean;
-  deliveryPrice: number;
+  delivery_price: number;
   description: string;
   id: number;
   name: string;
@@ -21,7 +21,7 @@ export interface MyStoreInfo {
 const MY_STORE_INFO: MyStoreInfo = {
   address: '천안시 동남구 충절로 880 가동 1층',
   delivery: true,
-  deliveryPrice: 0,
+  delivery_price: 0,
   description: '3대째 다져온 고집스러운 맛',
   id: 1,
   name: '가장 맛있는 족발',
