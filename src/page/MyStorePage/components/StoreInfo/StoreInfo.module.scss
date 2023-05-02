@@ -47,29 +47,6 @@
     margin-top: 8px;
   }
 
-  &__detail {
-    display: flex;
-    align-items: center;
-  }
-
-  &__detail-title {
-    height: 27px;
-    width: 83px;
-    font-weight: 400;
-    font-size: 15px;
-    margin-top: 8px;
-    color: #858585;
-    font-family: "Noto Sans CJK KR", sans-serif;
-  }
-
-  &__detail-data {
-    font-weight: 400;
-    font-size: 15px;
-    width: 290px;
-    color: #252525;
-    font-family: "Noto Sans CJK KR", sans-serif;
-  }
-
   &__update-btn {
     display: flex;
     justify-content: center;
@@ -133,5 +110,28 @@
     width: 176px;
     height: 121px;
     border: solid 1px #d2dae2;
+  }
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+
+  &__title {
+    height: 27px;
+    width: 83px;
+    font-weight: 400;
+    font-size: 15px;
+    margin-top: 8px;
+    color: #858585;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+
+  &__data {
+    font-weight: 400;
+    font-size: 15px;
+    width: 290px;
+    color: #252525;
+    font-family: "Noto Sans CJK KR", sans-serif;
   }
 }

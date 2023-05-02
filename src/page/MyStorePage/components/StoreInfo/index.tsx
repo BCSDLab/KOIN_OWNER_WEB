@@ -10,39 +10,39 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfo }) {
           <div className={styles.store__keywords}>#키워드</div>
         </div>
         <div className={styles.store__content}>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>전화번호</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>전화번호</div>
+            <div className={styles.detail__data}>
               {storeInfo.phone}
             </div>
           </div>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>운영시간</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>운영시간</div>
+            <div className={styles.detail__data}>
               {`${storeInfo.open[0].open_time}~${storeInfo.open[0].close_time}`}
             </div>
           </div>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>휴무일</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>휴무일</div>
+            <div className={styles.detail__data}>
               {storeInfo.open[0].day_of_week}
             </div>
           </div>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>주소정보</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>주소정보</div>
+            <div className={styles.detail__data}>
               {storeInfo.address}
             </div>
           </div>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>배달금액</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>배달금액</div>
+            <div className={styles.detail__data}>
               {`${storeInfo.delivery_price}원`}
             </div>
           </div>
-          <div className={styles.store__detail}>
-            <div className={styles['store__detail-title']}>기타 정보</div>
-            <div className={styles['store__detail-data']}>
+          <div className={styles.detail}>
+            <div className={styles.detail__title}>기타 정보</div>
+            <div className={styles.detail__data}>
               {storeInfo.description}
             </div>
           </div>
