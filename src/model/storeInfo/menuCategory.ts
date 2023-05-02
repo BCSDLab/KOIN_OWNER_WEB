@@ -64,5 +64,5 @@ const MENU_CATEGORYS: MenuCategories[] = [
   },
 
 ];
-// export default MENU_CATEGORY;
+
 export default MENU_CATEGORYS as MenuCategories[];

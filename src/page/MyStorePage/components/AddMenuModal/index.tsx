@@ -3,8 +3,7 @@ import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
-// import MENU_CATEGORY from 'static/menuCategory';
-import styles from './MystorePage.module.scss';
+import styles from './AddMenuModal.module.scss';
 
 type Props = {
   closeModal?: () => void;
@@ -15,8 +14,8 @@ export default function AddMenuModal({ closeModal }: Props) {
     <>
       <div className={styles['modal-back']} onClick={closeModal} aria-hidden="true" />
       <div className={styles.modal}>
-        <div className={styles.modal__Header}>
-          <div className={styles.modal__Title}>
+        <div className={styles.modal__header}>
+          <div className={styles.modal__title}>
             메뉴 추가
           </div>
         </div>

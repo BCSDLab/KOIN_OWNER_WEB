@@ -1,7 +1,5 @@
-// import MY_STORE_INFO from 'static/myStoreInfo';
-
 import { MyStoreInfo } from 'model/storeInfo/myStoreInfo';
-import styles from './MystorePage.module.scss';
+import styles from './StoreInfo.module.scss';
 
 export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfo }) {
   return (

@@ -1,11 +1,10 @@
 import MY_STORE_INFO from 'model/storeInfo/myStoreInfo';
 import MENU_CATEGORYS from 'model/storeInfo/menuCategory';
-import styles from './MystorePage.module.scss';
-import Menus from './Menus';
+import Menus from './components/Menus';
+import StoreInfo from './components/StoreInfo';
+import styles from './MyStorePage.module.scss';
 
-import StoreInfo from './StoreInfo';
-
-export default function MystorePage() {
+export default function MyStorePage() {
   return (
     <div className={styles.container}>
       <div className={styles.section}>

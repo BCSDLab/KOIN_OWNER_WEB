@@ -1,0 +1,145 @@
+.store {
+  display: flex;
+  height: 305px;
+  border-bottom: 1px solid #d2dae2;
+
+  &__info {
+    position: relative;
+    width: 537px;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 47px;
+    align-items: center;
+    color: #252525;
+    margin-right: 8px;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+
+  &__keywords {
+    margin-left: 8px;
+    box-sizing: border-box;
+    width: 75px;
+    height: 24px;
+    border: 1px solid #f7941e;
+    border-radius: 13.5px;
+    color: #f7941e;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__detail-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__detail-data-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  &__detail-data--data-title {
+    height: 27px;
+    font-weight: 400;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-left: 2px;
+    margin-right: 16px;
+    color: #858585;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+
+  &__detail-data--data {
+    position: absolute;
+    left: 83px;
+    font-weight: 400;
+    font-size: 15px;
+    width: 450px;
+    color: #252525;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+
+  &__update-btn {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 140px;
+    height: 43px;
+    bottom: 24px;
+    right: 0;
+    border: none;
+    background: #f7941e;
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 18px;
+    align-items: center;
+    color: #ffffff;
+    font-family: "Noto Sans CJK KR", sans-serif;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__imgs {
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+  }
+
+  &__imgs--main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 368px;
+    height: 257px;
+    border: solid 1px #d2dae2;
+  }
+
+  &__subimgs {
+    display: flex;
+    flex-direction: column;
+    width: 176px;
+    justify-content: center;
+    align-items: center;
+    gap: 13px;
+    margin-left: 18px;
+  }
+
+  &__subimgs--top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 176px;
+    height: 121px;
+    border: solid 1px #d2dae2;
+  }
+
+  &__subimgs--bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 176px;
+    height: 121px;
+    border: solid 1px #d2dae2;
+  }
+}

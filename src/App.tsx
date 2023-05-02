@@ -1,11 +1,10 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword';
 import AuthLayout from 'layout/AuthLayout';
-import MystorePage from 'page/Mypage/MystorePage';
+import MystorePage from 'page/MyStorePage';
 
 function App() {
   return (

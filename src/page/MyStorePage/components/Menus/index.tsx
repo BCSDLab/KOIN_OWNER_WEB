@@ -1,7 +1,7 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
 import { Menu, MenuCategories } from 'model/storeInfo/menuCategory';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
-import styles from './MystorePage.module.scss';
+import styles from './Menus.module.scss';
 
 export default function Menus({ categories }: { categories:MenuCategories[] }) {
   return (
