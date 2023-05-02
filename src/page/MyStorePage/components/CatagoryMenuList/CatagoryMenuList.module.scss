@@ -1,9 +1,11 @@
-.menu {
+.category-menu-list {
   &__title-wrapper {
     display: flex;
     position: relative;
   }
+}
 
+.category {
   &__title {
     margin-top: 24px;
     margin-bottom: 10px;
@@ -19,7 +21,9 @@
   &__event-menu-icon--mark {
     margin-left: 8px;
   }
+}
 
+.menu {
   &__wrapper {
     display: flex;
     flex-wrap: wrap;

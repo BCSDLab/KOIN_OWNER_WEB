@@ -5,12 +5,12 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: 117px;
   border-bottom: 2px solid #175c8e;
 
   &__title {
+    margin-right: auto;
     height: 47px;
     font-size: 36px;
     font-weight: 500;
@@ -46,6 +46,7 @@
     width: 112px;
     height: 48px;
     border: 1px solid #175c8e;
+    margin-left: 16px;
     font-size: 18px;
     font-weight: 400;
     color: #ffffff;
