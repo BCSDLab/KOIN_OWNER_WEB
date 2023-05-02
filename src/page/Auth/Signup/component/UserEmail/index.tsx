@@ -1,5 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import CustomButton from '../CustomButton';
+import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import styles from './UserEmail.module.scss';
 
 export default function UserEmail() {

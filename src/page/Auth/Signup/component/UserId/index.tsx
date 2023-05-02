@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
-import CustomButton from '../CustomButton';
+import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import styles from './UserId.module.scss';
 
 export default function UserId() {

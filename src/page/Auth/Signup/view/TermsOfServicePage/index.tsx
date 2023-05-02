@@ -1,4 +1,4 @@
-import Term from '../../component/Term';
+import Term from 'page/Auth/Signup/component/Term';
 import styles from './TermsOfService.module.scss';
 
 export default function TermsOfService() {
