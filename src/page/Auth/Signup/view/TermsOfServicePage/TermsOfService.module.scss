@@ -48,3 +48,28 @@
     align-items: center;
   }
 }
+
+.buttons {
+  @include media.media-breakpoint-down(mobile) {
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0;
+  }
+
+  &__mobile-button {
+    @include media.media-breakpoint-down(mobile) {
+      text-decoration: none;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7941e;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 15px;
+    }
+  }
+}

@@ -2,7 +2,10 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import styles from './UserEmail.module.scss';
 
-export default function UserEmail() {
+type ButtonClickEvent = {
+  clickEvent?: () => void | null
+};
+export default function UserEmail({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   return (
     !isMobile
@@ -18,18 +21,24 @@ export default function UserEmail() {
         </div>
       )
       : (
-        <div className={styles['email-check']}>
-          <span className={styles['email-check__phrase']}>
-            <span className={styles['email-check__phrase--user-email']}>abcd123@koreatech.ac.kr</span>
+        <>
+          <div className={styles['email-check']}>
+            <span className={styles['email-check__phrase']}>
+              <span className={styles['email-check__phrase--user-email']}>abcd123@koreatech.ac.kr</span>
             &nbsp;으로
-            <br />
-            발송된 인증번호 6자리를 입력해 주세요
-          </span>
-          <div className={styles['email-check__input--wrapper']}>
-            <input className={styles['email-check__input']} type="password" placeholder="인증번호 입력" />
+              <br />
+              발송된 인증번호 6자리를 입력해 주세요
+            </span>
+            <div className={styles['email-check__input--wrapper']}>
+              <input className={styles['email-check__input']} type="password" placeholder="인증번호 입력" />
+            </div>
+            <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
-          <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-        </div>
+          <div className={styles.buttons}>
+            <CustomButton type="mobile" content="재발송" onClick={() => { alert('재발송'); }} />
+            <CustomButton type="mobile" content="다음" onClick={clickEvent} />
+          </div>
+        </>
       )
   );
 }

@@ -12,7 +12,6 @@
   align-items: center;
 
   @include media.media-breakpoint-down(mobile) {
-    height: 95vh;
     align-items: start;
   }
 }
@@ -20,11 +19,6 @@
 .step-wrapper {
   width: calc(100% + 2px);
   height: 551px;
-
-  @include media.media-breakpoint-down(mobile) {
-    overflow-y: scroll;
-    height: 50vh;
-  }
 }
 
 .signup-section {
@@ -37,6 +31,7 @@
   @include media.media-breakpoint-down(mobile) {
     width: 78%;
     height: 78%;
+    margin-bottom: 60px;
   }
 
   &__logo {

@@ -20,6 +20,15 @@ export default function Signup() {
     setStep(0);
   }, [isMobile]);
 
+  const PC_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
+    <UserData clickEvent={() => setStep(step + 1)} />,
+    <OwnerData />];
+
+  const MOBILE_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
+    <UserData clickEvent={() => setStep(step + 1)} />,
+    <UserEmail clickEvent={() => setStep(step + 1)} />,
+    <OwnerData clickEvent={() => setStep(step + 1)} />];
+
   return (
     <div className={styles['section-wrapper']}>
       {!isMobile
@@ -29,12 +38,10 @@ export default function Signup() {
               <section className={styles['signup-section']}>
                 <Logo className={styles['signup-section__logo']} />
                 <div className={styles['step-wrapper']}>
-                  {step === 0 && <TermsOfService />}
-                  {step === 1 && <UserData />}
-                  {step === 2 && <OwnerData />}
+                  {PC_STEPS[step]}
                 </div>
                 <div className={styles['signup-section__next-button--pc']}>
-                  <CustomButton type="large" disable content="다음" event={() => setStep(step + 1)} />
+                  <CustomButton type="large" disable content="다음" onClick={() => setStep(step + 1)} />
                 </div>
               </section>
             )}
@@ -54,39 +61,8 @@ export default function Signup() {
                 </span>
                 <div className={styles['step-wrapper']}>
                   {step !== 0 && <ProgressBar step={step} />}
-                  {step === 0 && (
-                  <>
-                    <TermsOfService />
-                    <div className={styles['signup-section__button-group--mobile']}>
-                      <Link to="/login" className={styles['signup-section__button--mobile']}>취소</Link>
-                      <CustomButton type="mobile" content="확인" event={() => setStep(step + 1)} />
-                    </div>
-                  </>
-                  )}
-                  {step === 1 && (
-                  <>
-                    <UserData />
-                    <div className={styles['signup-section__button-group--mobile']}>
-                      <CustomButton type="large" content="이메일 인증하기" event={() => setStep(step + 1)} />
-                    </div>
-                  </>
-                  )}
-                  {step === 2 && (
-                  <>
-                    <UserEmail />
-                    <div className={styles['signup-section__button-group--mobile']}>
-                      <CustomButton type="mobile" content="재발송" event={() => { alert('재발송'); }} />
-                      <CustomButton type="mobile" content="다음" event={() => setStep(step + 1)} />
-                    </div>
-                  </>
-                  )}
-                  {step === 3 && (
-                  <>
-                    <OwnerData />
-                    <div className={styles['signup-section__button-group--mobile']}>
-                      <CustomButton type="large" content="다음" event={() => setStep(step + 1)} />
-                    </div>
-                  </>
+                  {step < 4 && (
+                    MOBILE_STEPS[step]
                   )}
                 </div>
               </section>

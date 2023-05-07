@@ -4,17 +4,17 @@ interface ButtonProps {
   content:string,
   type:string,
   disable?: boolean,
-  event?: () => void
+  onClick?: () => void
 }
 
 export default function CustomButton({
-  content, type, disable, event,
+  content, type, disable, onClick,
 }:ButtonProps) {
   return (
     <button
       type="button"
       className={`${styles[`button--${type}`]} ${disable ? styles['button--disable'] : null}`}
-      onClick={event}
+      onClick={onClick}
     >
       {content}
     </button>
