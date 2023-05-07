@@ -1,7 +1,7 @@
-import Term from 'page/Auth/Signup/component/Term';
 import { Link } from 'react-router-dom';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import Terms from 'page/Auth/Signup/constant/terms';
 import styles from './TermsOfService.module.scss';
 
 type ButtonClickEvent = {
@@ -20,8 +20,19 @@ export default function TermsOfService({ clickEvent }:ButtonClickEvent) {
             모두 동의합니다.
           </label>
         </div>
-        <Term id="term1" />
-        <Term id="term2" />
+        {Terms.map((term) => (
+          <div className={styles.term} key={term.id}>
+            <span className={styles.term__title}>{term.title}</span>
+            <div className={styles.term__content}>
+              {term.text}
+            </div>
+            <label htmlFor={term.id} className={styles.term__agree}>
+              <input id={term.id} type="checkbox" className={styles.term__agree__checkbox} />
+              <span className={styles['term__agree__phrase--mobile']}>개인정보 이용약관(필수)</span>
+              <span className={styles['term__agree__phrase--pc']}>{`${term.title}에 동의합니다`}</span>
+            </label>
+          </div>
+        ))}
       </section>
       {isMobile && (
         <div className={styles.buttons}>

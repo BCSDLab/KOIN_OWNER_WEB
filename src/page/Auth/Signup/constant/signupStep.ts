@@ -1,4 +1,4 @@
-const STEPS:String[] = [
+const STEPS:string[] = [
   '기본정보 입력',
   '계정인증',
   '사업자 인증',
