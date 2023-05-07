@@ -1,17 +1,19 @@
 @use "src/utils/styles/mediaQuery" as media;
 
 .back-button {
+  margin-top: 30px;
   margin-left: 15px;
 }
 
 .section-wrapper {
   display: flex;
-  height: 100vh;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   @include media.media-breakpoint-down(mobile) {
     height: 95vh;
+    align-items: start;
   }
 }
 
@@ -27,10 +29,10 @@
 
 .signup-section {
   width: 368px;
-  height: 75vh;
   position: relative;
   margin: 0 auto;
   margin-top: 5%;
+  margin-bottom: 163px;
 
   @include media.media-breakpoint-down(mobile) {
     width: 78%;

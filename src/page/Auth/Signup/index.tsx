@@ -2,7 +2,7 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from 'assets/svg/common/koin-logo.svg';
+import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import UserEmail from './component/UserEmail';
 import ProgressBar from './component/ProgressBar';
