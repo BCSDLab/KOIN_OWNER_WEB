@@ -3,7 +3,7 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
-  clickEvent?: () => void;
+  clickEvent: () => void;
 };
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
@@ -51,11 +51,9 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           )}
         </div>
       </section>
-      {isMobile && (
       <div className={styles.buttons}>
-        <CustomButton type="large" content="확인" onClick={clickEvent} />
+        <CustomButton type="large" content={isMobile ? '확인' : '다음'} onClick={clickEvent} />
       </div>
-      )}
     </>
   );
 }

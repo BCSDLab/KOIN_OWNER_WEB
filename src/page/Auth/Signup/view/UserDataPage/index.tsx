@@ -11,15 +11,15 @@ type ButtonClickEvent = {
 export default function UserData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   return (
-    <section className={styles.form}>
-      <UserId />
-      <UserPassword />
-      {!isMobile && <UserEmail />}
-      {isMobile && (
-        <div className={styles.buttons}>
-          <CustomButton type="large" content="이메일 인증하기" onClick={() => clickEvent()} />
-        </div>
-      )}
-    </section>
+    <>
+      <section className={styles.form}>
+        <UserId />
+        <UserPassword />
+        {!isMobile && <UserEmail />}
+      </section>
+      <div className={styles.buttons}>
+        <CustomButton type="large" content={isMobile ? '이메일 인증하기' : '다음'} onClick={() => clickEvent()} />
+      </div>
+    </>
   );
 }

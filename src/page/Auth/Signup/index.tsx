@@ -1,4 +1,3 @@
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
@@ -21,7 +20,7 @@ export default function Signup() {
 
   const PC_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
     <UserData clickEvent={() => setStep(step + 1)} />,
-    <OwnerData />];
+    <OwnerData clickEvent={() => setStep(step + 1)} />];
 
   const MOBILE_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
     <UserData clickEvent={() => setStep(step + 1)} />,
@@ -38,9 +37,6 @@ export default function Signup() {
                 <Logo className={styles['signup-section__logo']} />
                 <div className={styles['step-wrapper']}>
                   {PC_STEPS[step]}
-                </div>
-                <div className={styles['signup-section__next-button--pc']}>
-                  <CustomButton type="large" disable content="다음" onClick={() => setStep(step + 1)} />
                 </div>
               </section>
             )}

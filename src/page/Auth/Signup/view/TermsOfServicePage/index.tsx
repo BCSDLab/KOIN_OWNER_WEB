@@ -34,12 +34,16 @@ export default function TermsOfService({ clickEvent }:ButtonClickEvent) {
           </div>
         ))}
       </section>
-      {isMobile && (
-        <div className={styles.buttons}>
-          <Link to="/login" className={styles['buttons__mobile-button']}>취소</Link>
-          <CustomButton type="mobile" content="확인" onClick={() => clickEvent()} />
-        </div>
-      )}
+
+      <div className={styles.buttons}>
+        {isMobile ? (
+          <>
+            <Link to="/login" className={styles['buttons__mobile-button']}>취소</Link>
+            <CustomButton type="mobile" content="확인" onClick={() => clickEvent()} />
+          </>
+        )
+          : <CustomButton type="large" disable content="다음" onClick={() => clickEvent()} />}
+      </div>
     </>
   );
 }

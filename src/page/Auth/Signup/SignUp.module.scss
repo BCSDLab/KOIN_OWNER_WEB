@@ -18,7 +18,15 @@
 
 .step-wrapper {
   width: calc(100% + 2px);
-  height: 551px;
+  height: 681px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include media.media-breakpoint-down(mobile) {
+    height: auto;
+    width: 100%;
+  }
 }
 
 .signup-section {
@@ -30,8 +38,9 @@
 
   @include media.media-breakpoint-down(mobile) {
     width: 78%;
-    height: 78%;
+    height: 80vh;
     margin-bottom: 60px;
+    overflow-y: scroll;
   }
 
   &__logo {
