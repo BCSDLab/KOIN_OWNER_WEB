@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
+import { Link } from 'react-router-dom';
 import UserEmail from './component/UserEmail';
 import ProgressBar from './component/ProgressBar';
 import OwnerData from './view/OwnerDataPage';
@@ -45,9 +46,12 @@ export default function Signup() {
         )
         : (
           <>
+
             {step < 4 && (
             <>
-              <div className={styles['back-button']}><Back onClick={() => setStep(step - 1)} /></div>
+              {step === 0 ? <Link to="/login" className={styles['back-button']}><Back /></Link>
+                : <div className={styles['back-button']}><Back onClick={() => setStep(step - 1)} /></div>}
+
               <section className={styles['signup-section']}>
                 <span className={styles['signup-section__section-name']}>
                   사장님용
