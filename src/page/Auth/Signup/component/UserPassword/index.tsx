@@ -9,7 +9,7 @@ export default function UserPassword() {
     <div className={styles.form}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
       <div className={styles['form__input--wrapper']}>
-        <input className={styles.form__input} placeholder={`비밀번호${!isMobile ? ' 입력 (필수)' : ''}`} type="password" />
+        <input className={styles.form__input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type="password" />
         {!isMobile && (
         <button className={styles['form__visible--button']} type="button">
           <VisibleImage />
@@ -18,7 +18,7 @@ export default function UserPassword() {
         <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>
       </div>
       <div className={styles['form__input--wrapper']}>
-        <input className={styles.form__input} placeholder={`비밀번호 확인${!isMobile ? ' 입력 (필수)' : ''}`} type="password" />
+        <input className={styles.form__input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type="password" />
         {!isMobile && (
         <button className={styles['form__visible--button']} type="button">
           <VisibleImage />
