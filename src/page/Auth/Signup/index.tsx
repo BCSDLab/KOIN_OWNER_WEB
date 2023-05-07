@@ -1,7 +1,6 @@
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import UserEmail from './component/UserEmail';
@@ -52,7 +51,7 @@ export default function Signup() {
           <>
             {step < 4 && (
             <>
-              <Link to="/login" className={styles['back-button']}><Back /></Link>
+              <div className={styles['back-button']}><Back onClick={() => setStep(step - 1)} /></div>
               <section className={styles['signup-section']}>
                 <span className={styles['signup-section__section-name']}>
                   사장님용
