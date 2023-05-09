@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import ErrorBoundary from 'component/common/ErrorBoundary';
+import ErrorBoundary from 'component/common/ErrorBoundary/ErrorBoundary';
 import styles from './AuthLayout.module.scss';
 
 export default function AuthLayout() {
