@@ -5,6 +5,7 @@ import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword';
 import AuthLayout from 'layout/AuthLayout';
 import MystorePage from 'page/MyStorePage';
+import StoreReg from 'page/Auth/StoreReg';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/find-password" element={<FindPassword />} />
+        <Route path="/store-registration" element={<StoreReg />} />
       </Route>
     </Routes>
   );
