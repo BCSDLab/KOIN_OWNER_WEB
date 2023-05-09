@@ -5,10 +5,10 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import styles from './UserData.module.scss';
 
-type ButtonClickEvent = {
+type ButtonClickEventProps = {
   clickEvent: () => void;
 };
-export default function UserData({ clickEvent }:ButtonClickEvent) {
+export default function UserData({ clickEvent }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   return (
     <>

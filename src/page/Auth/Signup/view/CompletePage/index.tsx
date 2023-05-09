@@ -4,7 +4,7 @@ import styles from './Complete.module.scss';
 
 export default function Complete() {
   return (
-    <div className={styles['content-wrapper']}>
+    <div className={styles.content}>
       <div className={styles['complete-circle']}><Check className={styles['complete-circle--check-image']} /></div>
       <span className={styles.complete}>가입 신청 완료</span>
       <div className={styles['complete-text']}>

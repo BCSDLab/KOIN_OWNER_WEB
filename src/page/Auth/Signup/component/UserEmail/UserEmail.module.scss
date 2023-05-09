@@ -6,7 +6,7 @@
     font-size: 18px;
   }
 
-  &__input--wrapper {
+  &__input {
     width: calc(100% - 2px);
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@
     gap: 8px;
   }
 
-  &__input {
+  .input {
     width: calc(100% - 32px);
     border: 1px solid #d2dae2;
     height: calc(48px - 30px);

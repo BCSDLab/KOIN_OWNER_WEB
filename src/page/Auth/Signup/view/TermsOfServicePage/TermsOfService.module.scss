@@ -1,6 +1,6 @@
 @use "src/utils/styles/mediaQuery" as media;
 
-.term-section {
+.section {
   &__checkbox {
     appearance: none;
     width: 21px;
@@ -15,14 +15,9 @@
       background-image: url("../../../../../assets/svg/auth/checkbox.svg");
     }
   }
-
-  &__next-button--pc {
-    width: 100%;
-    margin-top: 89px;
-  }
 }
 
-.agree--all {
+.agree-all {
   display: flex;
   flex-direction: column;
   justify-content: center;

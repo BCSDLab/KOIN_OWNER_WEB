@@ -84,7 +84,7 @@
   }
 }
 
-.input-wrapper {
+.input {
   display: flex;
   align-items: center;
 }
@@ -161,12 +161,12 @@
   }
 }
 
-.button-wrapper {
+.button {
   margin-top: 16px;
   display: flex;
   justify-content: end;
 
-  &__upload-button {
+  &--upload {
     display: flex;
     justify-content: center;
     align-items: center;

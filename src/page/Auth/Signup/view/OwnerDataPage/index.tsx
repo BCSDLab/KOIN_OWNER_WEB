@@ -17,7 +17,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         <div>
           <span className={styles.form__label}>사업자등록번호</span>
           {!isMobile ? (
-            <div className={styles['input-wrapper']}>
+            <div className={styles.input}>
               <div className={`${styles['form__input__registration-number']}`}>
                 <input className={`${styles['form__input__registration-number--first']}`} type="text" maxLength={3} />
               </div>
@@ -42,8 +42,8 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
             </span>
           </div>
           {!isMobile && (
-          <div className={styles['button-wrapper']}>
-            <label htmlFor="upload_button" className={styles['button-wrapper__upload-button']}>
+          <div className={styles.button}>
+            <label htmlFor="upload_button" className={styles['button--upload']}>
               <span>내 pc</span>
               <input id="upload_button" type="file" />
             </label>

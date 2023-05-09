@@ -5,7 +5,7 @@
   margin-left: 15px;
 }
 
-.section-wrapper {
+.page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,20 +16,7 @@
   }
 }
 
-.step-wrapper {
-  width: calc(100% + 2px);
-  height: 681px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  @include media.media-breakpoint-down(mobile) {
-    height: auto;
-    width: 100%;
-  }
-}
-
-.signup-section {
+.section {
   width: 368px;
   position: relative;
   margin: 0 auto;
@@ -41,6 +28,19 @@
     height: 80vh;
     margin-bottom: 60px;
     overflow-y: scroll;
+  }
+
+  &__steps {
+    width: calc(100% + 2px);
+    height: 681px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    @include media.media-breakpoint-down(mobile) {
+      height: auto;
+      width: 100%;
+    }
   }
 
   &__logo {
@@ -55,7 +55,7 @@
     }
   }
 
-  &__section-name {
+  &__name {
     display: none;
 
     @include media.media-breakpoint-down(mobile) {
@@ -64,36 +64,6 @@
       line-height: 36px;
       margin-bottom: 36px;
       font-weight: 500;
-    }
-  }
-
-  &__next-button--pc {
-    width: 100%;
-    margin-top: 89px;
-  }
-
-  &__button-group--mobile {
-    @include media.media-breakpoint-down(mobile) {
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      background-color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  &__button {
-    &--mobile {
-      text-decoration: none;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f7941e;
-      color: #ffffff;
-      font-weight: 500;
-      font-size: 15px;
     }
   }
 }

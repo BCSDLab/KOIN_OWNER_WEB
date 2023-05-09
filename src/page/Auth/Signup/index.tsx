@@ -19,24 +19,28 @@ export default function Signup() {
     setStep(0);
   }, [isMobile]);
 
-  const PC_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
+  const PC_STEPS = [
+    <TermsOfService clickEvent={() => setStep(step + 1)} />,
     <UserData clickEvent={() => setStep(step + 1)} />,
-    <OwnerData clickEvent={() => setStep(step + 1)} />];
+    <OwnerData clickEvent={() => setStep(step + 1)} />,
+  ];
 
-  const MOBILE_STEPS = [<TermsOfService clickEvent={() => setStep(step + 1)} />,
+  const MOBILE_STEPS = [
+    <TermsOfService clickEvent={() => setStep(step + 1)} />,
     <UserData clickEvent={() => setStep(step + 1)} />,
     <UserEmail clickEvent={() => setStep(step + 1)} />,
-    <OwnerData clickEvent={() => setStep(step + 1)} />];
+    <OwnerData clickEvent={() => setStep(step + 1)} />,
+  ];
 
   return (
-    <div className={styles['section-wrapper']}>
+    <div className={styles.page}>
       {!isMobile
         ? (
           <>
             {step < 3 && (
-              <section className={styles['signup-section']}>
-                <Logo className={styles['signup-section__logo']} />
-                <div className={styles['step-wrapper']}>
+              <section className={styles.section}>
+                <Logo className={styles.section__logo} />
+                <div className={styles.section__steps}>
                   {PC_STEPS[step]}
                 </div>
               </section>
@@ -49,16 +53,22 @@ export default function Signup() {
 
             {step < 4 && (
             <>
-              {step === 0 ? <Link to="/login" className={styles['back-button']}><Back /></Link>
-                : <div className={styles['back-button']}><Back onClick={() => setStep(step - 1)} /></div>}
-
-              <section className={styles['signup-section']}>
-                <span className={styles['signup-section__section-name']}>
+              {step === 0 ? (
+                <Link to="/login" className={styles['back-button']}>
+                  <Back />
+                </Link>
+              ) : (
+                <div className={styles['back-button']}>
+                  <Back onClick={() => setStep(step - 1)} />
+                </div>
+              )}
+              <section className={styles.section}>
+                <span className={styles.section__name}>
                   사장님용
                   <br />
                   회원가입
                 </span>
-                <div className={styles['step-wrapper']}>
+                <div className={styles.section__steps}>
                   {step !== 0 && <ProgressBar step={step} />}
                   {step < 4 && (
                     MOBILE_STEPS[step]

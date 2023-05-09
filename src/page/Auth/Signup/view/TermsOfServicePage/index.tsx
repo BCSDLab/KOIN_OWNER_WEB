@@ -4,19 +4,19 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import Terms from 'page/Auth/Signup/constant/terms';
 import styles from './TermsOfService.module.scss';
 
-type ButtonClickEvent = {
+type ButtonClickEventProps = {
   clickEvent: () => void;
 };
 
-export default function TermsOfService({ clickEvent }:ButtonClickEvent) {
+export default function TermsOfService({ clickEvent }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   return (
     <>
-      <section className={styles['term-section']}>
-        <div className={styles['agree--all']}>
-          <label htmlFor="terms" className={styles['agree--all__content']}>
-            <input id="terms" type="checkbox" className={styles['term-section__checkbox']} />
-            <span className={styles['agree--all__pc--phrase']}>아래 이용약관에&nbsp;</span>
+      <section className={styles.section}>
+        <div className={styles['agree-all']}>
+          <label htmlFor="terms" className={styles['agree-all__content']}>
+            <input id="terms" type="checkbox" className={styles.section__checkbox} />
+            <span className={styles['agree-all__pc--phrase']}>아래 이용약관에&nbsp;</span>
             모두 동의합니다.
           </label>
         </div>
@@ -28,7 +28,7 @@ export default function TermsOfService({ clickEvent }:ButtonClickEvent) {
             </div>
             <label htmlFor={term.id} className={styles.term__agree}>
               <input id={term.id} type="checkbox" className={styles.term__agree__checkbox} />
-              <span className={styles['term__agree__phrase--mobile']}>개인정보 이용약관(필수)</span>
+              <span className={styles['term__agree__phrase--mobile']}>{`${term.title}(필수)`}</span>
               <span className={styles['term__agree__phrase--pc']}>{`${term.title}에 동의합니다`}</span>
             </label>
           </div>
