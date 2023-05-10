@@ -1,0 +1,151 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.section {
+  &__checkbox {
+    appearance: none;
+    width: 21px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #d2dae2;
+    border-radius: 100%;
+    background-size: cover;
+
+    &:checked {
+      border: none;
+      background-image: url("../../../../../assets/svg/auth/checkbox.svg");
+    }
+  }
+}
+
+.agree-all {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 24px;
+
+  @include media.media-breakpoint-down(mobile) {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 22px;
+    color: #f7941e;
+    margin-bottom: 18px;
+  }
+
+  &::after {
+    display: block;
+    width: 100%;
+    content: "";
+    border-top: 1px solid #eeeeee;
+    margin-top: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      margin-top: 18px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.buttons {
+  width: 100%;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  &__mobile-button {
+    @include media.media-breakpoint-down(mobile) {
+      text-decoration: none;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7941e;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 15px;
+    }
+  }
+}
+
+.term {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+
+  @include media.media-breakpoint-down(mobile) {
+    margin: 0;
+  }
+
+  &__title {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 16px;
+
+    @include media.media-breakpoint-down(mobile) {
+      display: none;
+    }
+  }
+
+  &__content {
+    height: calc(160px - 32px);
+    border: 1px solid #d2dae2;
+    overflow-y: scroll;
+    padding: 16px;
+    margin-bottom: 18px;
+    white-space: pre-line;
+
+    @include media.media-breakpoint-down(mobile) {
+      border: 1px dashed #d2dae2;
+      margin-top: 7px;
+      margin-bottom: 19px;
+      font-size: 10px;
+    }
+  }
+
+  &__agree {
+    display: flex;
+    align-items: center;
+    color: #a1a1a1;
+
+    @include media.media-breakpoint-down(mobile) {
+      order: -1;
+    }
+
+    &__checkbox {
+      appearance: none;
+      width: 21px;
+      height: 20px;
+      margin-right: 10px;
+      border: 1px solid #d2dae2;
+      border-radius: 100%;
+      background-size: cover;
+
+      &:checked {
+        border: none;
+        background-image: url("../../../../../assets/svg/auth/checkbox.svg");
+      }
+    }
+
+    &__phrase--pc {
+      @include media.media-breakpoint-down(mobile) {
+        display: none;
+      }
+    }
+
+    &__phrase--mobile {
+      display: none;
+
+      @include media.media-breakpoint-down(mobile) {
+        display: inline;
+      }
+    }
+  }
+}
