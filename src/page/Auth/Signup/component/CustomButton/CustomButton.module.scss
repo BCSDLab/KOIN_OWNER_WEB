@@ -10,6 +10,10 @@
     &:hover {
       cursor: pointer;
     }
+
+    &:disabled {
+      background-color: #c4c4c4;
+    }
   }
 
   &--small {
@@ -22,6 +26,10 @@
 
     &:hover {
       cursor: pointer;
+    }
+
+    &:disabled {
+      background-color: #c4c4c4;
     }
   }
 
@@ -37,9 +45,9 @@
     &:hover {
       cursor: pointer;
     }
-  }
 
-  &--disable {
-    background-color: #c4c4c4;
+    &:disabled {
+      background-color: #c4c4c4;
+    }
   }
 }

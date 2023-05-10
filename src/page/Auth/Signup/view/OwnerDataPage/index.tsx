@@ -52,7 +52,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         </div>
       </section>
       <div className={styles.buttons}>
-        <CustomButton type="large" content={isMobile ? '확인' : '다음'} onClick={clickEvent} />
+        <CustomButton buttonType="large" content={isMobile ? '확인' : '다음'} onClick={clickEvent} />
       </div>
     </>
   );

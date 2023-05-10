@@ -2,19 +2,20 @@ import styles from './CustomButton.module.scss';
 
 interface ButtonProps {
   content:string,
-  type:string,
+  buttonType:string,
   disable?: boolean,
   onClick?: () => void
 }
 
 export default function CustomButton({
-  content, type, disable, onClick,
+  content, buttonType, disable, onClick,
 }:ButtonProps) {
   return (
     <button
       type="button"
-      className={`${styles[`button--${type}`]} ${disable ? styles['button--disable'] : null}`}
+      className={`${styles[`button--${buttonType}`]}`}
       onClick={onClick}
+      disabled={!!disable}
     >
       {content}
     </button>

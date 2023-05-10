@@ -12,7 +12,7 @@ export default function UserId() {
           <span className={styles.form__label}>아이디</span>
           <div className={styles['input-block']}>
             <input className={styles['input-block__input']} id="id-input" placeholder="이메일 형식 아이디 입력(필수)" />
-            <CustomButton content="중복확인" type="small" />
+            <CustomButton content="중복확인" buttonType="small" />
           </div>
           <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>
         </div>
