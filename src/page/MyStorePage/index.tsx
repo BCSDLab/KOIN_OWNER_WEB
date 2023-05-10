@@ -1,10 +1,16 @@
 import MY_STORE_INFO from 'model/storeInfo/myStoreInfo';
-import MENU_CATEGORYS from 'model/storeInfo/menuCategory';
-import CatagoryMenuList from './components/CatagoryMenuList';
+// import MENU_CATEGORYS from 'model/storeInfo/menuCategory';
+// import useMenuCategories from 'query/menuCategory';
+// import useAuthStore from 'store/auth';
+// import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/StoreInfo';
 import styles from './MyStorePage.module.scss';
 
 export default function MyStorePage() {
+  // const user = useAuthStore((state) => state.user);
+  // console.log(user);
+
+  // console.log(useMenuCategories());
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -18,12 +24,12 @@ export default function MyStorePage() {
         </button>
       </div>
       <StoreInfo storeInfo={MY_STORE_INFO} />
-      {MENU_CATEGORYS.map((category) => (
+      {/* {MENU_CATEGORYS.map((category) => (
         <CatagoryMenuList
           menus={category.menus}
           name={category.name}
         />
-      ))}
+      ))} */}
     </div>
   );
 }

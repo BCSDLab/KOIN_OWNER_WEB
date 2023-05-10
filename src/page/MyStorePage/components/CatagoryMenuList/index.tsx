@@ -1,13 +1,13 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
-import { Menu } from 'model/storeInfo/menuCategory';
-import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
+// import { Menu } from 'model/storeInfo/menuCategory';
+// import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 
 interface Props {
   name: string;
-  menus: Menu[];
+  // menus: Menu[];
 }
-export default function CatagoryMenuList({ menus, name }: Props) {
+export default function CatagoryMenuList({ name }: Props) {
   return (
     <div>
       <div className={styles.category__title}>
@@ -16,7 +16,7 @@ export default function CatagoryMenuList({ menus, name }: Props) {
           <EventMarkIcon className={styles['category__event-mark']} />) : null}
       </div>
       <div className={styles.menu__wrapper}>
-        {menus.map((menu) => (menu.img === null ? (
+        {/* {menus.map((menu) => (menu.img === null ? (
           <div key={menu.img} className={styles.menu__item}>
             <div className={styles['menu__empty-img']}>
               <CUTLERY className={styles['menu__empty-img-icon']} />
@@ -35,7 +35,7 @@ export default function CatagoryMenuList({ menus, name }: Props) {
             </div>
           </div>
         ) : (<img src={menu.img} alt="menu" className={styles.menu__img} />)
-        ))}
+        ))} */}
       </div>
     </div>
   );
