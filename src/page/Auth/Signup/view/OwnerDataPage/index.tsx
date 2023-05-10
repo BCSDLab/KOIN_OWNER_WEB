@@ -18,14 +18,14 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           <span className={styles.form__label}>사업자등록번호</span>
           {!isMobile ? (
             <div className={styles.input}>
-              <div className={`${styles['form__input__registration-number']}`}>
-                <input className={`${styles['form__input__registration-number--first']}`} type="text" maxLength={3} />
+              <div className={styles['form__input__registration-number']}>
+                <input className={styles['form__input__registration-number--first']} type="text" maxLength={3} />
               </div>
-              <div className={`${styles['form__input__registration-number']}`}>
-                <input className={`${styles['form__input__registration-number--middle']}`} type="text" maxLength={2} />
+              <div className={styles['form__input__registration-number']}>
+                <input className={styles['form__input__registration-number--middle']} type="text" maxLength={2} />
               </div>
               <div>
-                <input className={`${styles['form__input__registration-number--last']}`} type="text" maxLength={5} />
+                <input className={styles['form__input__registration-number--last']} type="text" maxLength={5} />
               </div>
             </div>
           )
