@@ -69,9 +69,11 @@ export default function Signup() {
                   회원가입
                 </span>
                 <div className={styles.section__steps}>
-                  {step !== 0 && <ProgressBar step={step} />}
                   {step < 4 && (
-                    MOBILE_STEPS[step]
+                    <>
+                      {step > 0 && <ProgressBar step={step} />}
+                      {MOBILE_STEPS[step]}
+                    </>
                   )}
                 </div>
               </section>
