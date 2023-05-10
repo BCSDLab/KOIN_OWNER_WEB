@@ -1,0 +1,54 @@
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  padding-bottom: 4px;
+  border-bottom: 3px solid #f4f4f4;
+
+  &__step {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__active {
+    &--1 {
+      position: absolute;
+      border-bottom: 3px solid #f7941e;
+      transition: 0.3s;
+      width: 33.33%;
+      bottom: -3px;
+    }
+
+    &--2 {
+      position: absolute;
+      border-bottom: 3px solid #f7941e;
+      transition: 0.3s;
+      width: 66.66%;
+      bottom: -3px;
+    }
+
+    &--3 {
+      position: absolute;
+      border-bottom: 3px solid #f7941e;
+      transition: 0.3s;
+      width: 100%;
+      bottom: -3px;
+    }
+  }
+
+  &__step-name {
+    display: block;
+    font-weight: 500;
+    font-size: 15px;
+    color: #f7941e;
+  }
+
+  &__step-level {
+    display: block;
+    font-size: 15px;
+    color: #d2dae2;
+  }
+}
