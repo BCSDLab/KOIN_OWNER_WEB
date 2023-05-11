@@ -1,5 +1,5 @@
 import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
-import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mobile.svg';
+import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-logo.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import React, { useEffect, useState } from 'react';
@@ -118,7 +118,7 @@ function Header() {
               )}
               <span className={styles.mobileheader__title}>
                 {isMain ? (
-                  <LogoMobileIcon title="코인 로고" />
+                  <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)
                   .find((subMenuValue) => subMenuValue.link === pathname)
