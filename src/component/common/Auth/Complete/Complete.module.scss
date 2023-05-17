@@ -1,0 +1,81 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.content {
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__complete {
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 8px solid #f7941e;
+    margin-bottom: 72px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 55px;
+      height: 55px;
+      border: 3px solid #f7941e;
+      margin-bottom: 25px;
+    }
+
+    &--check-image {
+      width: 74px;
+
+      @include media.media-breakpoint-down(mobile) {
+        width: 26px;
+      }
+    }
+  }
+
+  &__title {
+    display: block;
+    width: 216px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #175c8e;
+    margin-bottom: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 80px;
+    color: #858585;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 368px;
+    height: 48px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #175c8e;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 82%;
+    }
+  }
+}
