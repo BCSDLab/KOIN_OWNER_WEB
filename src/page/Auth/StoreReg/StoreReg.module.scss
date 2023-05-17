@@ -1,4 +1,119 @@
 .chevron-left {
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 42px;
+}
+
+.content {
+  display: flex;
+  margin: 0 auto;
+  width: 297px;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  &__img {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #858585;
+    align-items: center;
+    padding: 57px 60px 54px;
+    margin-bottom: 32px;
+
+    div {
+      margin-top: 13px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #858585;
+    }
+  }
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #175c8e;
+
+    &:last-of-type {
+      margin-bottom: 32px;
+    }
+  }
+
+  &__input {
+    border: 0.5px solid #898a8d;
+    width: 205px;
+    height: 21px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      padding: 8px 40px;
+      background-color: #175c8e;
+      font-weight: 500;
+      font-size: 15px;
+      color: #ffffff;
+    }
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  &__checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #858585;
+    box-sizing: content-box;
+
+    input[type="checkbox"]:checked + span {
+      color: #f7941e;
+    }
+  }
+
+  &__checkbox-input {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 1px solid #858585;
+    margin-right: 8px;
+    background-size: cover;
+    cursor: pointer;
+
+    &:checked {
+      border: none;
+      background-image: url("../../../assets/svg/storereg/mobile-checked.svg");
+    }
+  }
+
+  &__info {
+    display: flex;
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 25px;
+  }
+
+  &__title {
+    width: 70px;
+    font-weight: 500;
+    color: #175c8e;
+  }
 }
