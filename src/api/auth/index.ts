@@ -1,9 +1,7 @@
 import { accessClient, client } from 'api';
-import {
-  LoginParam, LoginResponse, UserResponse,
-} from 'api/auth/model';
+import { LoginResponse, LoginSchemaType, UserResponse } from 'api/auth/model';
 
-export const postLogin = async (param: LoginParam) => {
+export const postLogin = async (param: LoginSchemaType) => {
   const { data } = await client.post<LoginResponse>('/user/login', param);
   return LoginResponse.parse(data);
 };
