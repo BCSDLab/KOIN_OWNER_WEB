@@ -16,12 +16,11 @@ import OPTION from './static/option';
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { isMobile } = useMediaQuery();
-  const { mutate } = useLogin();
+  const { mutate, isError } = useLogin();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
   });
@@ -30,8 +29,6 @@ export default function Login() {
     console.log(data);
     mutate({ email: data.email, password: data.password });
   };
-
-  console.log(errors);
 
   return (
     <div className={styles.template}>
@@ -42,7 +39,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: true,
+                [styles['form__input--error']]: isError,
               })}
               type="text"
               {...register('email', { required: true })}
@@ -53,7 +50,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: true,
+                [styles['form__input--error']]: isError,
               })}
               type={isBlind ? 'text' : 'password'}
               {...register('password', { required: true })}
@@ -68,6 +65,9 @@ export default function Login() {
             </button>
           </div>
           <div className={styles['form__auto-login']}>
+            {isError && (
+            <div className={styles['form__error-message']}>아이디 또는 비밀번호를 잘못 입력했습니다</div>
+            )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
               <input className={styles['form__auto-login__checkbox']} type="checkbox" id="auto-login" />
               자동로그인
