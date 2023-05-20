@@ -10,6 +10,7 @@ import useLogin from 'query/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, LoginSchemaType } from 'api/auth/model';
+import { useState } from 'react';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
@@ -17,6 +18,7 @@ export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { isMobile } = useMediaQuery();
   const { mutate, isError } = useLogin();
+  const [error, setError] = useState<Object>();
 
   const {
     register,
@@ -26,23 +28,26 @@ export default function Login() {
   });
 
   const onSubmit: SubmitHandler<LoginSchemaType> = (data) => {
-    console.log(data);
     mutate({ email: data.email, password: data.password });
+  };
+
+  const onError = (errors: Object) => {
+    setError(errors);
   };
 
   return (
     <div className={styles.template}>
       <div className={styles.contents}>
         <Logo className={styles.logo} aria-hidden />
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
           <div className={styles.form__container}>
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isError,
+                [styles['form__input--error']]: isError || !!error,
               })}
               type="text"
-              {...register('email', { required: true })}
+              {...register('email')}
               placeholder={isMobile ? '이메일' : '아이디 입력'}
             />
           </div>
@@ -50,10 +55,10 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isError,
+                [styles['form__input--error']]: isError || !!error,
               })}
               type={isBlind ? 'text' : 'password'}
-              {...register('password', { required: true })}
+              {...register('password')}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
             />
             <button
@@ -65,7 +70,7 @@ export default function Login() {
             </button>
           </div>
           <div className={styles['form__auto-login']}>
-            {isError && (
+            {(isError || !!error) && (
             <div className={styles['form__error-message']}>아이디 또는 비밀번호를 잘못 입력했습니다</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
