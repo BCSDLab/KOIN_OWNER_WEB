@@ -54,6 +54,17 @@
     padding: 8px 12px;
   }
 
+  &__label-link {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 58px;
+    height: 29px;
+    color: #ffffff;
+    background-color: #175c8e;
+  }
+
   &__button {
     display: flex;
     justify-content: flex-end;

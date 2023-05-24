@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import PreviousStep from 'component/common/Auth/PreviousStep';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import ProgressBar from 'component/common/Auth/ProgressBar';
@@ -5,6 +6,7 @@ import { ReactComponent as EmptyImgIcon } from 'assets/svg/storereg/mobile-empty
 import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
+import { Link } from 'react-router-dom';
 import styles from './StoreReg.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 
@@ -54,10 +56,15 @@ export default function StoreReg() {
                     배달금액
                     <input type="text" id="delivery-cost" className={styles.form__input} />
                   </label>
-                  <label htmlFor="operate-time" className={styles.form__label}>
+                  <label className={styles.form__label}>
                     운영시간
                     <span>00:00~24:00</span>
-                    <input type="button" value="수정" id="operate-time" />
+                    <Link
+                      to="/operate-time"
+                      className={styles['form__label-link']}
+                    >
+                      수정
+                    </Link>
                   </label>
                   <label htmlFor="extra-info" className={styles.form__label}>
                     기타정보
