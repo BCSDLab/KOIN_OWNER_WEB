@@ -3,7 +3,7 @@ import styles from './PreviousStep.module.scss';
 
 interface PreviousStepProps {
   step: number;
-  clickBackArrow: () => void;
+  clickBackArrow?: () => void;
 }
 
 export default function PreviousStep({ step, clickBackArrow }: PreviousStepProps) {
