@@ -1,8 +1,3 @@
-.chevron-left {
-  margin-top: 30px;
-  margin-bottom: 42px;
-}
-
 .content {
   display: flex;
   margin: 0 auto;
@@ -40,6 +35,11 @@
     font-weight: 500;
     font-size: 14px;
     color: #175c8e;
+
+    span {
+      width: 160px;
+      color: #858585;
+    }
 
     &:last-of-type {
       margin-bottom: 32px;

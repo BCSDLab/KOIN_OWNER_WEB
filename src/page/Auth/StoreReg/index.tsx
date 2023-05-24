@@ -3,26 +3,24 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import ProgressBar from 'component/common/Auth/ProgressBar';
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/storereg/mobile-empty-img.svg';
 import Complete from 'component/common/Auth/Complete';
+import SubTitle from 'component/common/Auth/SubTitle';
+import useStepStore from 'store/useStepStore';
 import styles from './StoreReg.module.scss';
-import useClickArrow from './hooks/useClickArrow';
 import PROGRESS_TITLE from './constant/progress';
-import StoreRegSubTitle from './component/StoreRegSubTitle';
 
 const TOTAL_STEP = 3;
 export default function StoreReg() {
   const { isMobile } = useMediaQuery();
-  const { step, setStep, clickBackArrow } = useClickArrow();
+  const { step, setStep, clickBackArrow } = useStepStore();
   return (
     <div>
       {isMobile ? (
         <>
-          <div className={styles['chevron-left']}>
-            <PreviousStep step={step} clickBackArrow={clickBackArrow} />
-          </div>
+          <PreviousStep step={step} clickBackArrow={clickBackArrow} />
           <div className={styles.content}>
             {step === 0 && (
               <>
-                <StoreRegSubTitle title="가게 등록" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
+                <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <div className={styles.form__img}>
@@ -45,7 +43,7 @@ export default function StoreReg() {
             )}
             {step === 1 && (
               <>
-                <StoreRegSubTitle title="가게 등록" topText="등록 하시려는 업체의" bottomText="세부 정보를 입력해 주세요." />
+                <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="세부 정보를 입력해 주세요." />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <label htmlFor="phone" className={styles.form__label}>
@@ -56,11 +54,10 @@ export default function StoreReg() {
                     배달금액
                     <input type="text" id="delivery-cost" className={styles.form__input} />
                   </label>
-                  <label htmlFor="delivery-cost" className={styles.form__label}>
+                  <label htmlFor="operate-time" className={styles.form__label}>
                     운영시간
                     <span>00:00~24:00</span>
-                    {' '}
-                    <input type="button" value="수정" />
+                    <input type="button" value="수정" id="operate-time" />
                   </label>
                   <label htmlFor="extra-info" className={styles.form__label}>
                     기타정보
@@ -88,7 +85,7 @@ export default function StoreReg() {
             )}
             {step === 2 && (
               <>
-                <StoreRegSubTitle title="가게 등록" topText="입력하신 정보가 맞습니까?" bottomText="" />
+                <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <div className={styles.form__info}>
