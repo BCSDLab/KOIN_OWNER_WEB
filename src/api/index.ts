@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import API_PATH from 'config/constants';
 import { RefreshParams, RefreshResponse } from './auth/model';
 
@@ -34,12 +34,12 @@ accessClient.interceptors.response.use(
       originalRequest._retry = true;
 
       const refreshToken = localStorage.getItem('refresh_token');
-      console.log(refreshToken);
+
       if (refreshToken) {
-        return client.post<RefreshResponse, RefreshResponse, RefreshParams>('/user/refresh', { refresh_token: refreshToken })
-          .then(({ token }) => {
-            originalRequest.headers.authorization = `Bearer ${token}`;
-            sessionStorage.setItem('access_token', token);
+        return client.post<RefreshResponse, AxiosResponse<RefreshResponse>, RefreshParams>('/user/refresh', { refresh_token: refreshToken })
+          .then(({ data }) => {
+            originalRequest.headers.authorization = `Bearer ${data.token}`;
+            sessionStorage.setItem('access_token', data.token);
             // 추후 refreshToken 또한 set
             return accessClient(originalRequest);
           }).catch(() => {
