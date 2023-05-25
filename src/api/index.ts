@@ -15,14 +15,13 @@ const accessClient = axios.create({
 });
 
 accessClient.interceptors.request.use(
-  async (config) => {
-    const accessToken = localStorage.getItem('access_token');
+  (config) => {
+    const accessToken = sessionStorage.getItem('access_token');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  (error) => Promise.reject(error),
 );
 
 accessClient.interceptors.response.use(
@@ -31,20 +30,20 @@ accessClient.interceptors.response.use(
     const originalRequest = error.config;
 
     // accessToken만료시 새로운 accessToken으로 재요청 => 다시 getme
-    if (error.resopnse.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refreshToken = localStorage.getItem('refresh_token');
-
+      console.log(refreshToken);
       if (refreshToken) {
-        client.post<RefreshParams, RefreshResponse>('/user/refresh', refreshToken)
+        return client.post<RefreshResponse, RefreshResponse, RefreshParams>('/user/refresh', { refresh_token: refreshToken })
           .then(({ token }) => {
             originalRequest.headers.authorization = `Bearer ${token}`;
-            localStorage.setItem('access_token', token);
-
+            sessionStorage.setItem('access_token', token);
+            // 추후 refreshToken 또한 set
             return accessClient(originalRequest);
           }).catch(() => {
-            localStorage.removeItem('access_token');
+            sessionStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
 
             return Promise.reject(error);
