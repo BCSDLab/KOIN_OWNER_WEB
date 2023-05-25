@@ -13,7 +13,7 @@ const useLogin = () => {
       email: variables.email, password: variables.password,
     }),
     onSuccess: async (data, variables) => {
-      if (data.token) { localStorage.setItem('access_token', data.token); }
+      if (data.token) { sessionStorage.setItem('access_token', data.token); }
       if (variables.isAutoLogin) {
         localStorage.setItem('refresh_token', data.refresh_token);
       }
@@ -22,7 +22,7 @@ const useLogin = () => {
       navigate('/');
     },
     onError: () => {
-      localStorage.removeItem('access_token');
+      sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
     },
 
