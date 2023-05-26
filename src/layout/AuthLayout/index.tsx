@@ -1,12 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import useMediaQuery from 'utils/hooks/useMediaQuery';
 import ErrorBoundary from 'component/common/ErrorBoundary/ErrorBoundary';
+import Copyright from 'component/common/Copyright/Copyright';
 import styles from './AuthLayout.module.scss';
 
 export default function AuthLayout() {
-  const { isMobile } = useMediaQuery();
-  const year = new Date().getFullYear();
-
   return (
     <div className={styles.template}>
       <ErrorBoundary
@@ -14,11 +11,7 @@ export default function AuthLayout() {
       >
         <Outlet />
       </ErrorBoundary>
-      <div className={styles.copyright}>
-        {isMobile
-          ? 'Copyright @ BCSD Lab All rights reserved.'
-          : `COPYRIGHT © ${year} BCSD LAB ALL RIGHTS RESERVED.`}
-      </div>
+      <Copyright />
     </div>
   );
 }

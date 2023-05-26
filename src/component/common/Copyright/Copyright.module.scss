@@ -1,0 +1,17 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.copyright {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 6vh;
+  font-weight: 400;
+  color: #252525;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  @include media.media-breakpoint-down(mobile) {
+    margin-bottom: 3vh;
+  }
+}
