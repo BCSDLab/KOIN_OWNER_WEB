@@ -1,17 +1,19 @@
 import Header from 'component/common/Header';
-import {
-  Outlet, redirect,
-} from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { getMe } from 'api/auth';
 import useUserStore from 'store/user';
 
 export default function DefaultLayout() {
   const setUser = useUserStore((state) => state.setUser);
+  const navigate = useNavigate();
 
   const getUser = async () => {
-    const user = await getMe();
-    if (!user) redirect('/login');
-    setUser(user);
+    try {
+      const user = await getMe();
+      setUser(user);
+    } catch {
+      navigate('/login');
+    }
   };
   getUser();
 
