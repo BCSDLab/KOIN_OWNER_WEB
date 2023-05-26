@@ -16,7 +16,7 @@ import OPTION from './static/option';
 
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
-  const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState();
+  const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState(true);
   const { isMobile } = useMediaQuery();
   const { mutate, isError } = useLogin();
   const [error, setError] = useState<Object>();
@@ -79,6 +79,7 @@ export default function Login() {
                 className={styles['form__auto-login__checkbox']}
                 type="checkbox"
                 id="auto-login"
+                defaultChecked
                 onChange={changeIsAutoLogin}
               />
               자동로그인
