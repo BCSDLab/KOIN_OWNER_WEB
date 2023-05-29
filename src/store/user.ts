@@ -3,12 +3,12 @@ import { create } from 'zustand';
 
 interface UserStore {
   user: User;
-  setUser: (auth: User) => void;
+  setUserStore: (auth: User) => void;
 }
 
 const useUserStore = create<UserStore>((set) => ({
   user: null,
-  setUser: (auth) => {
+  setUserStore: (auth) => {
     set(() => ({ user: auth }));
   },
 }));
