@@ -1,18 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
-import { getMe, postLogin } from 'api/auth';
+import { postLogin } from 'api/auth';
 import { LoginClient } from 'model/auth';
-import { useNavigate } from 'react-router-dom';
-import useUserStore from 'store/user';
+import useSetUser from 'utils/hooks/user';
 
 const useLogin = () => {
-  const navigate = useNavigate();
-  const setUser = useUserStore((state) => state.setUser);
+  const { setUser } = useSetUser();
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginClient) => postLogin({
       email: variables.email, password: variables.password,
     }),
-    onSuccess: async (data, variables) => {
+    onSuccess: (data, variables) => {
       if (data.token) { sessionStorage.setItem('access_token', data.token); }
 
       if (variables.isAutoLogin) {
@@ -21,15 +19,12 @@ const useLogin = () => {
         localStorage.removeItem('refresh_token');
       }
 
-      const user = await getMe();
-      setUser(user);
-      navigate('/');
+      setUser();
     },
     onError: () => {
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
     },
-
   });
 
   return { mutate, error: error as { message: string }, isError };
