@@ -21,8 +21,9 @@ const useLogin = () => {
         localStorage.removeItem('refresh_token');
       }
 
-      setUser();
-      navigate('/');
+      setUser()
+        .then(() => navigate('/'))
+        .catch(() => navigate('/login'));
     },
     onError: () => {
       sessionStorage.removeItem('access_token');

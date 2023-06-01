@@ -23,6 +23,7 @@ export type RefreshParams = z.infer<typeof RefreshParams>;
 
 export const RefreshResponse = z.object({
   token: z.string(),
+  refresh_token: z.string(),
 });
 
 export type RefreshResponse = z.infer<typeof RefreshResponse>;

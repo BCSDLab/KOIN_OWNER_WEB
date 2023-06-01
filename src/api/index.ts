@@ -29,7 +29,7 @@ accessClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // accessToken만료시 새로운 accessToken으로 재요청 => 다시 getme
+    // accessToken만료시 새로운 accessToken으로 재요청
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -40,7 +40,7 @@ accessClient.interceptors.response.use(
           .then(({ data }) => {
             originalRequest.headers.authorization = `Bearer ${data.token}`;
             sessionStorage.setItem('access_token', data.token);
-            // 추후 refreshToken 또한 set
+            localStorage.setItem('refresh_token', data.refresh_token);
             return accessClient(originalRequest);
           }).catch(() => {
             sessionStorage.removeItem('access_token');

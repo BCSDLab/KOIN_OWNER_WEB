@@ -9,7 +9,7 @@ const useSetUser = () => {
     setUserStore(user);
   };
 
-  return setUser;
+  return { setUser };
 };
 
 export default useSetUser;

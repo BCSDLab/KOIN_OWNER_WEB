@@ -9,11 +9,7 @@ export default function DefaultLayout() {
   const { setUser } = useSetUser();
 
   setUser()
-    .catch(() => {
-      navigate('/login');
-    });
-
-  setUser();
+    .catch(() => navigate('/login'));
 
   return (
     <div>
