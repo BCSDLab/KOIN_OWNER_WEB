@@ -20,10 +20,8 @@ const useLogin = () => {
       } else {
         localStorage.removeItem('refresh_token');
       }
-
-      setUser()
-        .then(() => navigate('/'))
-        .catch(() => navigate('/login'));
+      setUser();
+      navigate('/');
     },
     onError: () => {
       sessionStorage.removeItem('access_token');
