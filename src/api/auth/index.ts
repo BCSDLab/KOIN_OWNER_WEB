@@ -8,6 +8,8 @@ export const postLogin = async (param: LoginParams) => {
   return LoginResponse.parse(data);
 };
 
+export const postLogout = () => accessClient.post('/user/logout');
+
 export const getMe = async () => {
   const { data } = await accessClient.get<UserResponse>('/owner');
   return UserResponse.parse(data);
