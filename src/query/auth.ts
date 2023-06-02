@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { postLogin } from 'api/auth';
 import { LoginClient } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
-import useSetUser from 'utils/hooks/user';
+import useUser from 'utils/hooks/user';
 
 const useLogin = () => {
-  const { setUser } = useSetUser();
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const { mutate, error, isError } = useMutation({
