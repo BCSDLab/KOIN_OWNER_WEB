@@ -20,7 +20,6 @@ accessClient.interceptors.request.use(
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-    console.log('request전 기본 요청');
     return config;
   },
 );
@@ -44,12 +43,10 @@ accessClient.interceptors.response.use(
           originalRequest.headers.authorization = `Bearer ${data.token}`;
           sessionStorage.setItem('access_token', data.token);
           localStorage.setItem('refresh_token', data.refresh_token);
-          console.log('response후 다시 요청');
           return accessClient(originalRequest);
         }).catch(() => {
           sessionStorage.removeItem('access_token');
           localStorage.removeItem('refresh_token');
-          console.log('여기까지 오나?');
           return Promise.reject(error);
         });
       }
