@@ -1,41 +1,60 @@
-export interface OpenInfo {
-  close_time: string;
-  closed: boolean;
-  day_of_week: string;
-  open_time: string;
-}
+import z from 'zod';
 
-export interface MyStoreInfo {
-  address: string;
-  delivery: boolean;
-  delivery_price: number;
-  description: string;
+export const MyShop = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type MyShop = z.infer<typeof MyShop>;
+
+export const MyShopList = z.object({
+  count: z.number(),
+  shops: z.array(MyShop),
+});
+
+export type MyShopList = z.infer<typeof MyShopList>;
+
+export const OpenInfo = z.object({
+  day_of_week: z.string(),
+  closed: z.boolean(),
+  open_time: z.string(),
+  close_time: z.string(),
+});
+
+export type OpenInfo = z.infer<typeof OpenInfo>;
+
+export const ShopCategory = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type ShopCategory = z.infer<typeof ShopCategory>;
+
+export const MenuCategory = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
+export type MenuCategory = z.infer<typeof MenuCategory>;
+
+export const MyStoreInfoRes = z.object({
+  id: z.number(),
+  name: z.string(),
+  phone: z.string(),
+  address: z.string(),
+  description: z.string(),
+  delivery: z.boolean(),
+  delivery_price: z.number(),
+  pay_card: z.boolean(),
+  pay_bank: z.boolean(),
+  open: z.array(OpenInfo),
+  image_urls: z.array(z.string()),
+  shop_categories: z.array(ShopCategory),
+  menu_categories: z.array(MenuCategory),
+});
+
+export type MyStoreInfoRes = z.infer<typeof MyStoreInfoRes>;
+
+export interface MyStoreParam {
   id: number;
-  name: string;
-  open: OpenInfo[],
-  pay_bank: boolean;
-  pay_card: boolean;
-  phone: string;
 }
-
-const MY_STORE_INFO: MyStoreInfo = {
-  address: '천안시 동남구 충절로 880 가동 1층',
-  delivery: true,
-  delivery_price: 0,
-  description: '3대째 다져온 고집스러운 맛',
-  id: 1,
-  name: '가장 맛있는 족발',
-  open: [
-    {
-      close_time: '00:00',
-      closed: false,
-      day_of_week: '매주 화요일',
-      open_time: '16:00',
-    },
-  ],
-  pay_bank: true,
-  pay_card: true,
-  phone: '041-523-5849',
-};
-
-export default MY_STORE_INFO;

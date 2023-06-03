@@ -1,16 +1,29 @@
-import MY_STORE_INFO from 'model/storeInfo/myStoreInfo';
-// import MENU_CATEGORYS from 'model/storeInfo/menuCategory';
-// import useMenuCategories from 'query/menuCategory';
-// import useAuthStore from 'store/auth';
-// import CatagoryMenuList from './components/CatagoryMenuList';
-import StoreInfo from './components/StoreInfo';
+import useMyStore from 'query/shop';
+// import useMyStoreInfo from 'query/shopInfo';
+import React from 'react';
+import useAuthStore from 'store/auth';
 import styles from './MyStorePage.module.scss';
 
 export default function MyStorePage() {
-  // const user = useAuthStore((state) => state.user);
-  // console.log(user);
+  console.log(useAuthStore((state) => state.user));
+  const MyStoreTest = useMyStore();
+  const shopId = MyStoreTest.data?.shops[0].id;
+  console.log('shopId: ', shopId);
 
-  // console.log(useMenuCategories());
+  // let MyStoreInfo = null;
+  // if (typeof shopId === 'number') {
+  //   MyStoreInfo = useMyStoreInfo(shopId);
+  // }
+  // console.log('MyStoreInfo: ', MyStoreInfo);
+
+  // const MyStoreInfo = useConditionalMyStoreInfo(shopId);
+  // console.log('MyStoreInfo: ', MyStoreInfo);
+
+  // const MyStoreInfo = useMyStoreInfo(testId);
+  // console.log('MyStoreInfo: ', MyStoreInfo);
+  // testId가 num일때만 api를 호출할 수 있어야해
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -23,8 +36,8 @@ export default function MyStorePage() {
           메뉴추가
         </button>
       </div>
-      <StoreInfo storeInfo={MY_STORE_INFO} />
-      {/* {MENU_CATEGORYS.map((category) => (
+      {/* <StoreInfo storeInfo={} />
+      {MENU_CATEGORYS.map((category) => (
         <CatagoryMenuList
           menus={category.menus}
           name={category.name}
@@ -32,4 +45,10 @@ export default function MyStorePage() {
       ))} */}
     </div>
   );
+  // function useConditionalMyStoreInfo(testId: number | undefined) {
+  //   if (typeof testId === 'number') {
+  //     return useMyStoreInfo(testId);
+  //   }
+  //   return null;
+  // }
 }

@@ -19,4 +19,17 @@ accessClient.interceptors.request.use((config) => {
   return config;
 });
 
-export { client, accessClient };
+const searchApi = axios.create({
+  baseURL: `${API_PATH}`,
+  timeout: 2000,
+});
+
+searchApi.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem('token');
+    if (config.headers && token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+);
+
+export { client, accessClient, searchApi };
