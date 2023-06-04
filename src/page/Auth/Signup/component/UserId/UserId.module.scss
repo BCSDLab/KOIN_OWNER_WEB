@@ -11,7 +11,11 @@
     margin-top: 8px;
     margin-left: 8px;
     color: #858585;
-    font-size: 12px;
+    font-size: 11px;
+
+    @include media.media-breakpoint-down(mobile) {
+      margin: 0;
+    }
   }
 
   &__warn {
@@ -21,9 +25,15 @@
     gap: 7px;
 
     &--phrase {
+      margin-top: 8px;
+      margin-left: 8px;
       display: block;
       color: #f05d3d;
       font-size: 11px;
+
+      @include media.media-breakpoint-down(mobile) {
+        margin: 0;
+      }
     }
   }
 }
@@ -31,9 +41,19 @@
 .input-block {
   display: flex;
   width: calc(100% - 2px);
-  justify-content: space-between;
   gap: 16px;
+  justify-content: space-between;
   margin-top: 8px;
+
+  @include media.media-breakpoint-down(mobile) {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__input-elements {
+    display: flex;
+    align-items: end;
+  }
 
   &__input {
     width: calc(100% - 32px - 80px);
