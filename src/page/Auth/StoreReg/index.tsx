@@ -7,12 +7,16 @@ import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import { Link } from 'react-router-dom';
+import STORE_CATEGORY from 'static/storeCategory';
+import cn from 'utils/ts/className';
+import { useState } from 'react';
 import styles from './StoreReg.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 
-const TOTAL_STEP = 3;
+const TOTAL_STEP = 4;
 export default function StoreReg() {
   const { isMobile } = useMediaQuery();
+  const [isSelected, setIsSelected] = useState('');
   const { step, setStep, clickBackArrow } = useStepStore();
   return (
     <div>
@@ -21,6 +25,34 @@ export default function StoreReg() {
           <PreviousStep step={step} clickBackArrow={clickBackArrow} />
           <div className={styles.content}>
             {step === 0 && (
+              <>
+                <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
+                <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
+                <div className={styles['mobile-category']}>
+                  <div className={styles['mobile-category__title']}>카테고리를 골라주세요.</div>
+                  <div className={styles['mobile-category__wrapper']}>
+                    {STORE_CATEGORY.map((value) => (
+                      <button
+                        className={cn({
+                          [styles['mobile-category__menu']]: true,
+                          [styles['mobile-category__menu--selected']]: value.title === isSelected,
+                        })}
+                        type="button"
+                        onClick={() => setIsSelected(value.title)}
+                        key={value.tag}
+                      >
+                        <img className={styles['mobile-category__image']} src={value.image} alt="category_img" />
+                        <span className={styles['mobile-category__type']}>{value.title}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className={styles['mobile-category__button']}>
+                    <button type="button" onClick={() => setStep(step + 1)}>다음</button>
+                  </div>
+                </div>
+              </>
+            )}
+            {step === 1 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
@@ -43,7 +75,7 @@ export default function StoreReg() {
                 </div>
               </>
             )}
-            {step === 1 && (
+            {step === 2 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="세부 정보를 입력해 주세요." />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
@@ -90,11 +122,15 @@ export default function StoreReg() {
                 </div>
               </>
             )}
-            {step === 2 && (
+            {step === 3 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
+                  <div className={styles.form__info}>
+                    <span className={styles.form__title}>카테고리</span>
+                    <span className={styles.form__value}>족발</span>
+                  </div>
                   <div className={styles.form__info}>
                     <span className={styles.form__title}>가게명</span>
                     <span className={styles.form__value}>가장 맛있는 족발</span>
@@ -143,7 +179,7 @@ export default function StoreReg() {
                 </div>
               </>
             )}
-            {step > 2 && (
+            {step > 3 && (
               <Complete title="가게 등록 완료" textTop="가게 등록이 완료되었습니다." textBottom="업체 정보 수정은 내 상점에서 가능합니다." link="/" buttonText="메인 화면 바로가기" />
             )}
           </div>
