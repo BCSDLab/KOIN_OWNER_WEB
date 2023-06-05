@@ -17,7 +17,7 @@ export default function UserEmail({ clickEvent }:ButtonClickEvent) {
             <input className={styles.input} type="text" placeholder="인증번호" />
           </div>
           <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-          <CustomButton buttonType="large" content="인증번호 발송" />
+          <CustomButton buttonSize="large" content="인증번호 발송" />
         </div>
       )
       : (
@@ -35,8 +35,8 @@ export default function UserEmail({ clickEvent }:ButtonClickEvent) {
             <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
           <div className={styles.buttons}>
-            <CustomButton buttonType="mobile" content="재발송" onClick={() => { alert('재발송'); }} />
-            <CustomButton buttonType="mobile" content="다음" onClick={clickEvent} />
+            <CustomButton buttonSize="mobile" content="재발송" onClick={() => { alert('재발송'); }} />
+            <CustomButton buttonSize="mobile" content="다음" onClick={clickEvent} />
           </div>
         </>
       )
