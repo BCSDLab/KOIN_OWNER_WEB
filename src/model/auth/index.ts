@@ -5,6 +5,6 @@ export const User = z.nullable(UserResponse);
 
 export type User = z.infer<typeof User>;
 
-export interface LoginClient extends LoginParams {
+export interface LoginForm extends LoginParams {
   isAutoLogin: boolean;
 }
