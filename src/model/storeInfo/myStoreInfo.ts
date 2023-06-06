@@ -17,8 +17,8 @@ export type MyShopList = z.infer<typeof MyShopList>;
 export const OpenInfo = z.object({
   day_of_week: z.string(),
   closed: z.boolean(),
-  open_time: z.string(),
-  close_time: z.string(),
+  open_time: z.string().nullable(),
+  close_time: z.string().nullable(),
 });
 
 export type OpenInfo = z.infer<typeof OpenInfo>;

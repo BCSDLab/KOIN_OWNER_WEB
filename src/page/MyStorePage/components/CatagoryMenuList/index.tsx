@@ -1,41 +1,44 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
-// import { Menu } from 'model/storeInfo/menuCategory';
-// import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
+import { MenuCategory } from 'model/storeInfo/menuCategory';
+import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 
-interface Props {
-  name: string;
-  // menus: Menu[];
-}
-export default function CatagoryMenuList({ name }: Props) {
+export default function CatagoryMenuList({ menus }: { menus: MenuCategory }) {
   return (
     <div>
       <div className={styles.category__title}>
-        {name}
-        {name === '이벤트 메뉴' ? (
+        {menus.name}
+        {menus.name === '이벤트 메뉴' ? (
           <EventMarkIcon className={styles['category__event-mark']} />) : null}
       </div>
       <div className={styles.menu__wrapper}>
-        {/* {menus.map((menu) => (menu.img === null ? (
-          <div key={menu.img} className={styles.menu__item}>
+        {menus.menus.map((menu) => (menu.image_urls?.length === 0 ? (
+          <div key={menu.id} className={styles.menu__item}>
             <div className={styles['menu__empty-img']}>
               <CUTLERY className={styles['menu__empty-img-icon']} />
               <span className={styles['menu__empty-img-caption']}>이미지 준비 중입니다.</span>
             </div>
             <div>
-              <span className={styles.menu__name} key={name}>{menu.name}</span>
+              <span className={styles.menu__name} key={menu.name}>{menu.name}</span>
               <div className={styles.menu__price}>
-                {menu.option_price.map((option) => (
+                {menu.option_prices && menu.option_prices.map((option) => (
                   <span className={styles['menu__price-unit']} key={option.option}>
-                    {option.price !== null
-                      ? `${option.option}:${option.price.toLocaleString()}` : `${option.option}`}
+                    {`${option.option}:${option.price.toLocaleString()}원`}
                   </span>
                 ))}
+                {menu.single_price && (
+                  <span className={styles['menu__price-unit']}>
+                    {`${menu.single_price.toLocaleString()}원`}
+                  </span>
+                )}
               </div>
             </div>
           </div>
-        ) : (<img src={menu.img} alt="menu" className={styles.menu__img} />)
-        ))} */}
+        ) : (
+          menu.image_urls.map((url) => (
+            <img key={url} src={url} alt="menu" className={styles.menu__img} />
+          ))
+        )))}
       </div>
     </div>
   );

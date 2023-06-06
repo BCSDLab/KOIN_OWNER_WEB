@@ -6,22 +6,21 @@ export const MenuBase = z.object({
   image_urls: z.array(z.string()),
   is_hidden: z.boolean(),
   is_single: z.boolean(),
-  is_signature: z.boolean(),
   description: z.string().nullable(),
 });
 
 export type MenuBase = z.infer<typeof MenuBase>;
 
 export const SinglePriceMenu = MenuBase.extend({
-  sigle_price: z.number(),
-  option_price: z.null(),
+  single_price: z.number(),
+  option_prices: z.null(),
 });
 
 export type SinglePriceMenu = z.infer<typeof SinglePriceMenu>;
 
 export const MultiPriceMenu = MenuBase.extend({
-  sigle_price: z.null(),
-  option_price: z.array(
+  single_price: z.null(),
+  option_prices: z.array(
     z.object({
       option: z.string(),
       price: z.number(),
@@ -43,9 +42,9 @@ export const MenuCategory = z.object({
 
 export type MenuCategory = z.infer<typeof MenuCategory>;
 
-export const MenuCategories = z.object({
+export const MenuInfoRes = z.object({
   count: z.number(),
-  menu_categorie: z.array(MenuCategory),
+  menu_categories: z.array(MenuCategory),
 });
 
-export type MenuCategories = z.infer<typeof MenuCategories>;
+export type MenuInfoRes = z.infer<typeof MenuInfoRes>;
