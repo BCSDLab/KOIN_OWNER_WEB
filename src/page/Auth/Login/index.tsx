@@ -18,8 +18,10 @@ export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState(true);
   const { isMobile } = useMediaQuery();
-  const { mutate, isError } = useLogin();
-  const [error, setError] = useState<Object>();
+  const { mutate, isError: isServerError } = useLogin();
+  const [isFormError, setIsFormError] = useState(false);
+
+  const isError = isServerError || isFormError;
 
   const {
     register,
@@ -32,8 +34,8 @@ export default function Login() {
     mutate({ email: data.email, password: data.password, isAutoLogin });
   };
 
-  const onError = (errors: Object) => {
-    setError(errors);
+  const onError = () => {
+    setIsFormError(true);
   };
 
   return (
@@ -45,7 +47,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isError || !!error,
+                [styles['form__input--error']]: isServerError || !!isFormError,
               })}
               type="text"
               placeholder={isMobile ? '이메일' : '아이디 입력'}
@@ -56,7 +58,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isError || !!error,
+                [styles['form__input--error']]: isServerError || !!isFormError,
               })}
               type={isBlind ? 'text' : 'password'}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
@@ -71,7 +73,7 @@ export default function Login() {
             </button>
           </div>
           <div className={styles['form__auto-login']}>
-            {(isError || !!error) && (
+            {(isError || !!isFormError) && (
             <div className={styles['form__error-message']}>아이디 또는 비밀번호를 잘못 입력했습니다</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
