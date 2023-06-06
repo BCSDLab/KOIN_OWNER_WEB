@@ -1,22 +1,8 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as VisibleImage } from 'assets/svg/auth/visible.svg';
 import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
-import { useRef } from 'react';
+import useVisible from 'page/Auth/Signup/hooks/useVisible';
 import styles from './UserPassword.module.scss';
-
-const useVisible = () => {
-  const visibility = useRef<HTMLInputElement>(null);
-  const setVisible = () => {
-    if (visibility.current) {
-      if (visibility.current.type === 'password') {
-        visibility.current.type = 'text';
-      } else {
-        visibility.current.type = 'password';
-      }
-    }
-  };
-  return { visibility, setVisible };
-};
 
 export default function UserPassword() {
   const { isMobile } = useMediaQuery();
