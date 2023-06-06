@@ -3,37 +3,18 @@ import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler } from 'react-hook-form';
+import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useEmailDataCheck';
 import styles from './UserId.module.scss';
 
-const REG_EX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-type FormData = {
+type EmailForm = {
   email:string
 };
-
-const useEmailDuplicateCheck = () => {
-  const {
-    register: emailRegister,
-    handleSubmit: emailHandleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-  const emailDuplicateRegister = emailRegister('email', {
-    required: { value: true, message: '이메일을 입력해주세요.' },
-    pattern: {
-      value: REG_EX,
-      message: '유효한 이메일 주소를 입력해주세요.',
-    },
-  });
-  return {
-    emailHandleSubmit, errors, emailDuplicateRegister,
-  };
-};
-
 export default function UserId() {
   const { isMobile } = useMediaQuery();
   const [isUsable, setUsable] = useState<boolean | null>(null);
   const { emailHandleSubmit, errors, emailDuplicateRegister } = useEmailDuplicateCheck();
-  const onSubmit:SubmitHandler<FormData> = (data) => {
+  const onSubmit:SubmitHandler<EmailForm> = (data) => {
     console.log('이메일 중복 체크', data);
     setUsable(!isUsable);
   };
@@ -66,7 +47,7 @@ export default function UserId() {
         <form className={styles['input-block']} onSubmit={emailHandleSubmit(onSubmit)}>
           <div className={styles['input-block__input-elements']}>
             <input
-              className={styles[`${(isUsable !== null) ? 'input-block__input' : 'input-block__input--warn'}`]}
+              className={styles['input-block__input']}
               id="id-input"
               placeholder="이메일"
               type="text"
