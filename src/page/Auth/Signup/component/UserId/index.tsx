@@ -10,6 +10,7 @@ import styles from './UserId.module.scss';
 type EmailForm = {
   email:string
 };
+
 export default function UserId() {
   const { isMobile } = useMediaQuery();
   const [isUsable, setUsable] = useState<boolean | null>(null);
@@ -19,58 +20,36 @@ export default function UserId() {
     setUsable(!isUsable);
   };
   return (
-    !isMobile
-      ? (
-        <form className={styles.form} onSubmit={emailHandleSubmit(onSubmit)}>
-          <span className={styles.form__label}>아이디</span>
-          <div className={styles['input-block']}>
-            <input
-              className={styles['input-block__input']}
-              id="id-input"
-              type="text"
-              placeholder="이메일 형식 아이디 입력(필수)"
-              {...emailDuplicateRegister}
-            />
-            <CustomButton content="중복확인" buttonSize="small" submit />
-          </div>
-          {errors.email && <span className={styles['form__warn--phrase']}>{errors.email.message}</span>}
-          { isUsable !== null
-            && (
-            <>
-              {isUsable && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
-              {!isUsable && <span className={styles['form__warn--phrase']}>이미 가입된 이메일입니다.</span>}
-            </>
-            )}
-        </form>
-      )
-      : (
-        <form className={styles['input-block']} onSubmit={emailHandleSubmit(onSubmit)}>
-          <div className={styles['input-block__input-elements']}>
-            <input
-              className={styles['input-block__input']}
-              id="id-input"
-              placeholder="이메일"
-              type="text"
-              {...emailDuplicateRegister}
-            />
-            <CustomButton content="중복확인" buttonSize="small" submit />
-          </div>
-          <div className={styles.form__warn}>
-            {errors.email && <span className={styles['form__warn--phrase']}>{errors.email.message}</span>}
-            { isUsable !== null
+    <form className={styles.form} onSubmit={emailHandleSubmit(onSubmit)}>
+      {!isMobile && <span className={styles.form__label}>아이디</span>}
+      <div className={styles['input-block']}>
+        <input
+          className={styles['input-block__input']}
+          id="id-input"
+          type="text"
+          placeholder={isMobile ? '이메일' : '이메일 형식 아이디 입력(필수)'}
+          {...emailDuplicateRegister}
+        />
+        <CustomButton content="중복확인" buttonSize="small" submit />
+      </div>
+      {errors.email && (
+      <div className={styles.form__warn}>
+        <Warn />
+        <span className={styles['form__warn--phrase']}>{errors.email.message}</span>
+      </div>
+      )}
+      { (isUsable !== null && !errors.email)
             && (
             <>
               {isUsable && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
               {!isUsable && (
-              <>
+              <div className={styles.form__warn}>
                 <Warn />
                 <span className={styles['form__warn--phrase']}>이미 가입된 이메일입니다.</span>
-              </>
+              </div>
               )}
             </>
             )}
-          </div>
-        </form>
-      )
+    </form>
   );
 }
