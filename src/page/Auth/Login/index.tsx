@@ -47,7 +47,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isServerError || !!isFormError,
+                [styles['form__input--error']]: isError,
               })}
               type="text"
               placeholder={isMobile ? '이메일' : '아이디 입력'}
@@ -58,7 +58,7 @@ export default function Login() {
             <input
               className={cn({
                 [styles.form__input]: true,
-                [styles['form__input--error']]: isServerError || !!isFormError,
+                [styles['form__input--error']]: isError,
               })}
               type={isBlind ? 'text' : 'password'}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
