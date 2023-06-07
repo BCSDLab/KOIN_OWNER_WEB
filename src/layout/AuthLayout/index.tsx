@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import ErrorBoundary from 'component/common/ErrorBoundary/ErrorBoundary';
-import Copyright from 'component/common/Copyright/Copyright';
+import ErrorBoundary from 'component/common/ErrorBoundary';
+import Copyright from 'component/common/Copyright';
 import styles from './AuthLayout.module.scss';
 
 export default function AuthLayout() {
