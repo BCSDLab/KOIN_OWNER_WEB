@@ -1,35 +1,37 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as VisibleImage } from 'assets/svg/auth/visible.svg';
+import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
+import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
-import useVisible from 'page/Auth/Signup/hooks/useVisible';
+// import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
+import useBooleanState from 'utils/hooks/useBooleanState';
 import styles from './UserPassword.module.scss';
 
 export default function UserPassword() {
   const { isMobile } = useMediaQuery();
-  const { visibility: passwordVisibility, setVisible: setPasswordVisibility } = useVisible();
-  const { visibility: checkVisibility, setVisible: setCheckVisibility } = useVisible();
+  const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   return (
     <div className={styles.form}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
       <div className={styles.form__input}>
-        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type="password" ref={passwordVisibility} />
+        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} />
         {!isMobile && (
-        <button className={styles['form__visible--button']} type="button" onClick={setPasswordVisibility}>
-          <VisibleImage />
+        <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
+          {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
         <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>
       </div>
       <div className={styles.form__input}>
-        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type="password" ref={checkVisibility} />
+        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} />
         {!isMobile && (
-        <button className={styles['form__visible--button']} type="button" onClick={setCheckVisibility}>
-          <VisibleImage />
+        <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
+          {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
         <div className={styles.form__warn}>
           <Warn />
-          <span className={styles['form__warn--phrase']}>비밀번호가 일치하지 않습니다.</span>
+          {/* {errors && <span
+            className={styles['form__warn--phrase']}>{errors.root?.message}</span>} */}
         </div>
       </div>
     </div>
