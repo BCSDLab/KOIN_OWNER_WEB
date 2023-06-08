@@ -9,7 +9,7 @@ import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import useLogin from 'query/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginParams } from 'api/auth/model';
+import { PostLoginParams } from 'api/auth/model';
 import { useState } from 'react';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
@@ -26,11 +26,11 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-  } = useForm<LoginParams>({
-    resolver: zodResolver(LoginParams),
+  } = useForm<PostLoginParams>({
+    resolver: zodResolver(PostLoginParams),
   });
 
-  const onSubmit: SubmitHandler<LoginParams> = (data) => {
+  const onSubmit: SubmitHandler<PostLoginParams> = (data) => {
     mutate({ email: data.email, password: data.password, isAutoLogin });
   };
 
