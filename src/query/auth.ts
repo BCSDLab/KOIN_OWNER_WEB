@@ -2,10 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { postLogin } from 'api/auth';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
-import useUser from 'utils/hooks/user';
 
 const useLogin = () => {
-  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const { mutate, error, isError } = useMutation({
@@ -20,7 +18,6 @@ const useLogin = () => {
       } else {
         localStorage.removeItem('refresh_token');
       }
-      setUser();
       navigate('/');
     },
     onError: () => {
