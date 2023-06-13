@@ -1,11 +1,11 @@
 import z from 'zod';
 
-export const PostLoginParams = z.object({
+export const LoginParams = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
-export type PostLoginParams = z.infer<typeof PostLoginParams>;
+export type LoginParams = z.infer<typeof LoginParams>;
 
 export const LoginResponse = z.object({
   refresh_token: z.string(),
