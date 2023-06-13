@@ -18,7 +18,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
         {!isMobile && <UserEmail />}
       </section>
       <div className={styles.buttons}>
-        <CustomButton buttonType="large" content={isMobile ? '이메일 인증하기' : '다음'} onClick={() => clickEvent()} />
+        <CustomButton buttonSize="large" content={isMobile ? '이메일 인증하기' : '다음'} onClick={() => clickEvent()} />
       </div>
     </>
   );
