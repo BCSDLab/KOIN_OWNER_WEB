@@ -18,8 +18,7 @@ const refresh = (config: InternalAxiosRequestConfig) => {
   const refreshToken = localStorage.getItem('refresh_token');
 
   if (refreshToken) {
-    return client.post<
-    RefreshResponse, AxiosResponse<RefreshResponse>, RefreshParams>(
+    return client.post<RefreshResponse, AxiosResponse<RefreshResponse>, RefreshParams>(
       '/user/refresh',
       { refresh_token: refreshToken },
     ).then(({ data }) => {
