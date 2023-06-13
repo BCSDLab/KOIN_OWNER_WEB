@@ -1,3 +1,4 @@
+import ErrorBoundary from 'component/common/ErrorBoundary';
 import Header from 'component/common/Header';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
@@ -29,7 +30,9 @@ export default function DefaultLayout() {
       {user && (
         <>
           <Header />
-          <Outlet />
+          <ErrorBoundary message="에러가 발생했습니다.">
+            <Outlet />
+          </ErrorBoundary>
         </>
       )}
     </div>

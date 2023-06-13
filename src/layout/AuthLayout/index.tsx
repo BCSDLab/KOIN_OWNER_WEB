@@ -18,9 +18,7 @@ export default function AuthLayout() {
 
   return (
     <div className={styles.template}>
-      <ErrorBoundary
-        message="사용자를 로드하는데 실패했습니다."
-      >
+      <ErrorBoundary message="사용자를 로드하는데 실패했습니다.">
         <Outlet />
       </ErrorBoundary>
       <Copyright />
