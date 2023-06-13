@@ -1,9 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import ErrorBoundary from 'component/common/ErrorBoundary';
 import Copyright from 'component/common/Copyright';
+import useUserStore from 'store/user';
 import styles from './AuthLayout.module.scss';
 
 export default function AuthLayout() {
+  const navigate = useNavigate();
+  const { user, setUser } = useUserStore();
+  setUser();
+  if (user) {
+    navigate('/', { replace: true });
+  }
   return (
     <div className={styles.template}>
       <ErrorBoundary

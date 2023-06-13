@@ -2,9 +2,11 @@ import { useMutation } from '@tanstack/react-query';
 import { postLogin } from 'api/auth';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
+import usePrevPathStore from 'store/path';
 
 const useLogin = () => {
   const navigate = useNavigate();
+  const { prevPath } = usePrevPathStore((state) => state);
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -18,7 +20,7 @@ const useLogin = () => {
       } else {
         localStorage.removeItem('refresh_token');
       }
-      navigate('/');
+      navigate(prevPath, { replace: true });
     },
     onError: () => {
       sessionStorage.removeItem('access_token');

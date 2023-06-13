@@ -3,7 +3,7 @@ import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mo
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import CATEGORY from 'static/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
@@ -36,18 +36,16 @@ function Header() {
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
 
-  const isMain = true; // pathname === '/';
-  const navigate = useNavigate();
+  const isMain = true;
   const [userInfo] = useState<{ name: string; } | null>(null);
   const removeUser = useUserStore((state) => state.removeUser);
 
   const logout = () => {
     postLogout()
       .then(() => {
-        removeUser();
-        sessionStorage.removeItem('session_token');
+        sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        navigate('/login', { replace: true });
+        removeUser();
       });
   };
 
