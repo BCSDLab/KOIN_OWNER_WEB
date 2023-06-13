@@ -10,7 +10,9 @@ const string = (value: string) => value;
 
 const typeConverter = { number, string };
 
-const checkEnv = (key:string, type: 'number' | 'string') => {
+function checkEnv(key: string, type: 'string'): string;
+function checkEnv(key: string, type: 'number'): number;
+function checkEnv(key:string, type: 'number' | 'string') {
   const value = process.env[key];
   if (value !== undefined) {
     const result = typeConverter[type](value);
@@ -20,7 +22,7 @@ const checkEnv = (key:string, type: 'number' | 'string') => {
     throw new Error(`process.env.${key}에 적절한 값을 설정하지 않았습니다`);
   }
   throw new Error(`process.env.${key}에 할당할 값이 없습니다`);
-};
+}
 
 const API_PATH = checkEnv('REACT_APP_API_PATH', 'string');
 
