@@ -17,8 +17,6 @@ const useLogin = () => {
 
       if (variables.isAutoLogin) {
         localStorage.setItem('refresh_token', data.refresh_token);
-      } else {
-        localStorage.removeItem('refresh_token');
       }
       navigate(prevPath, { replace: true });
     },
