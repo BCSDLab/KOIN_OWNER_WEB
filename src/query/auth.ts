@@ -26,7 +26,7 @@ const useLogin = () => {
     },
   });
 
-  return { mutate, error: error as { message: string }, isError };
+  return { login: mutate, error, isError };
 };
 
 export default useLogin;

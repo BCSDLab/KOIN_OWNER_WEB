@@ -18,7 +18,7 @@ export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState(true);
   const { isMobile } = useMediaQuery();
-  const { mutate, isError: isServerError } = useLogin();
+  const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
 
   const isError = isServerError || isFormError;
@@ -31,7 +31,7 @@ export default function Login() {
   });
 
   const onSubmit: SubmitHandler<PostLoginParams> = (data) => {
-    mutate({ email: data.email, password: data.password, isAutoLogin });
+    login({ email: data.email, password: data.password, isAutoLogin });
   };
 
   const onError = () => {
