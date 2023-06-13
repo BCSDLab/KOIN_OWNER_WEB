@@ -58,7 +58,7 @@ accessClient.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      refresh(originalRequest);
+      return refresh(originalRequest);
     }
     return Promise.reject(error);
   },
