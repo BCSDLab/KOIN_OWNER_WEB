@@ -1,14 +1,29 @@
-/* eslint-disable no-console */
-const checkEnvVar = (name: string) => {
-  const envVar = process.env[name];
-  if (!envVar) {
-    console.error(`환경변수 파일에 ${name}가 존재하지 않습니다!`);
-    return '';
+const number = (value: string) => {
+  const result = Number(value);
+  if (!Number.isNaN(result)) {
+    return result;
   }
-  return envVar;
+  return null;
 };
 
-// API 공통
-const API_PATH = checkEnvVar('REACT_APP_API_PATH');
+const string = (value: string) => value;
+
+const typeConverter = { number, string };
+
+function checkEnv(key: string, type: 'string'): string;
+function checkEnv(key: string, type: 'number'): number;
+function checkEnv(key:string, type: 'number' | 'string') {
+  const value = process.env[key];
+  if (value !== undefined) {
+    const result = typeConverter[type](value);
+    if (result !== undefined) {
+      return result;
+    }
+    throw new Error(`process.env.${key}에 적절한 값을 설정하지 않았습니다`);
+  }
+  throw new Error(`process.env.${key}에 할당할 값이 없습니다`);
+}
+
+const API_PATH = checkEnv('REACT_APP_API_PATH', 'string');
 
 export default API_PATH;

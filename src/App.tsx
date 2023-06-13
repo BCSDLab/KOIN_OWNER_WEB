@@ -4,13 +4,13 @@ import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword';
 import AuthLayout from 'layout/AuthLayout';
-import MystorePage from 'page/MyStorePage';
+import MyStorePage from 'page/MyStorePage';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<MystorePage />} />
+        <Route path="/" element={<MyStorePage />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
