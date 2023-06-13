@@ -9,7 +9,7 @@ import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
 import { postLogout } from 'api/auth';
-import useUser from 'utils/hooks/user';
+import useUserStore from 'store/user';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -39,12 +39,14 @@ function Header() {
   const isMain = true; // pathname === '/';
   const navigate = useNavigate();
   const [userInfo] = useState<{ name: string; } | null>(null);
-  const { removeUser } = useUser();
+  const removeUser = useUserStore((state) => state.removeUser);
 
   const logout = () => {
     postLogout()
       .then(() => {
         removeUser();
+        sessionStorage.removeItem('session_token');
+        localStorage.removeItem('refresh_token');
         navigate('/login', { replace: true });
       });
   };
