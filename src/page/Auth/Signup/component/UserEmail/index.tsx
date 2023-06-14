@@ -1,5 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import { useState } from 'react';
 import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
@@ -7,6 +8,7 @@ type ButtonClickEvent = {
 };
 export default function UserEmail({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
+  const [isOpen, setOpen] = useState(false);
   return (
     !isMobile
       ? (
@@ -14,10 +16,14 @@ export default function UserEmail({ clickEvent }:ButtonClickEvent) {
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" />
-            <input className={styles.input} type="text" placeholder="인증번호" />
+            {isOpen && <input className={styles.input} type="text" placeholder="인증번호" />}
           </div>
           <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-          <CustomButton buttonSize="large" content="인증번호 발송" />
+          <CustomButton
+            buttonSize="large"
+            content={isOpen ? '인증번호 재발송' : '인증번호발송'}
+            onClick={() => setOpen(true)}
+          />
         </div>
       )
       : (

@@ -11,7 +11,7 @@ export default function UserPassword() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const { passwordRegister, passwordConfirmRegister, errors } = usePasswordConfirm();
   return (
-    <div className={styles.form}>
+    <form className={styles.form}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
       <div className={styles.form__input}>
         <input
@@ -19,6 +19,7 @@ export default function UserPassword() {
           placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'}
           type={isBlind ? 'password' : 'text'}
           {...passwordRegister}
+          autoComplete="off"
         />
         {!isMobile && (
         <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
@@ -34,7 +35,7 @@ export default function UserPassword() {
 
       </div>
       <div className={styles.form__input}>
-        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} {...passwordConfirmRegister} />
+        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} {...passwordConfirmRegister} autoComplete="off" />
         {!isMobile && (
         <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
           {isBlind ? <BlindIcon /> : <ShowIcon />}
@@ -47,6 +48,6 @@ export default function UserPassword() {
           </div>
         )}
       </div>
-    </div>
+    </form>
   );
 }
