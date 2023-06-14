@@ -10,7 +10,6 @@ export default function UserPassword() {
   const { isMobile } = useMediaQuery();
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const { passwordRegister, passwordConfirmRegister, errors } = usePasswordConfirm();
-  console.log(errors.password?.message);
   return (
     <div className={styles.form}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
