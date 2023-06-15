@@ -57,7 +57,6 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
               <button type="button" className={styles['mobilestore__update-btn']}>가게 정보 수정</button>
             </div>
           </div>
-
         </div>
       ) : (
         <div className={styles.store}>
