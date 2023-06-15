@@ -13,12 +13,20 @@ export default function CatagoryMenuList({ menus }: { menus: MenuCategory }) {
       </div>
       <div className={styles['menu__slide-wrapper']}>
         <div className={styles.menu__content}>
-          {menus.menus.map((menu) => (menu.image_urls?.length === 0 ? (
+          {menus.menus.map((menu) => (
             <div key={menus.id} className={styles.menu__item}>
-              <div className={styles['menu__empty-img']}>
-                <CUTLERY className={styles['menu__empty-img-icon']} />
-                <span className={styles['menu__empty-img-caption']}>이미지 준비 중입니다.</span>
-              </div>
+              {menu.image_urls?.length === 0 ? (
+                <div className={styles['menu__non-img-border']}>
+                  <div className={styles['menu__empty-img']}>
+                    <CUTLERY className={styles['menu__empty-img-icon']} />
+                    <span className={styles['menu__empty-img-caption']}>이미지 준비 중입니다.</span>
+                  </div>
+                </div>
+              ) : (
+                <div className={styles['menu__img-border']}>
+                  <img src={menu.image_urls[0]} alt="menu" className={styles.menu__imgs} />
+                </div>
+              )}
               <div>
                 <span className={styles.menu__name} key={menu.name}>{menu.name}</span>
                 <div className={styles.menu__price}>
@@ -35,11 +43,7 @@ export default function CatagoryMenuList({ menus }: { menus: MenuCategory }) {
                 </div>
               </div>
             </div>
-          ) : (
-            menu.image_urls.map((url) => (
-              <img key={url} src={url} alt="menu" className={styles.menu__img} />
-            ))
-          )))}
+          ))}
         </div>
       </div>
     </div>

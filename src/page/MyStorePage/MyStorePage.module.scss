@@ -4,7 +4,6 @@
 }
 
 .mobileheader {
-  min-width: 360px;
   display: flex;
   padding: 20px;
   align-items: center;
@@ -24,7 +23,7 @@
   }
 
   &__btn-update {
-    width: 82px;
+    width: 75px;
     height: 38px;
     border: 1px solid #175c8e;
     font-size: 14px;
@@ -42,7 +41,7 @@
   }
 
   &__btn-add {
-    width: 82px;
+    width: 75px;
     height: 38px;
     border: 1px solid #175c8e;
     margin-left: 16px;
