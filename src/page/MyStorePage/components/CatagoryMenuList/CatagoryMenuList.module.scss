@@ -50,7 +50,6 @@
   }
 
   &__non-img-border {
-    position: relative;
     margin: 0 auto;
     margin-top: 16px;
     width: 336px;
@@ -59,8 +58,13 @@
   }
 
   &__img-border {
-    position: relative;
     margin: 0 auto;
+    margin-top: 16px;
+    width: 336px;
+    height: 223px;
+  }
+
+  &__menu-img {
     width: 336px;
     height: 223px;
   }

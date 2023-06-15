@@ -24,7 +24,7 @@ export default function CatagoryMenuList({ menus }: { menus: MenuCategory }) {
                 </div>
               ) : (
                 <div className={styles['menu__img-border']}>
-                  <img src={menu.image_urls[0]} alt="menu" className={styles.menu__imgs} />
+                  <img src={menu.image_urls[0]} alt="menu" className={styles['menu__menu-img']} />
                 </div>
               )}
               <div>

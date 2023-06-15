@@ -164,6 +164,11 @@
     border: solid 1px #d2dae2;
   }
 
+  &__imgs-main-pic {
+    width: 368px;
+    height: 257px;
+  }
+
   &__subimgs {
     display: flex;
     flex-direction: column;
@@ -183,6 +188,11 @@
     border: solid 1px #d2dae2;
   }
 
+  &__subimgs-top-pic {
+    width: 176px;
+    height: 121px;
+  }
+
   &__subimgs-bottom {
     display: flex;
     justify-content: center;
@@ -190,6 +200,11 @@
     width: 176px;
     height: 121px;
     border: solid 1px #d2dae2;
+  }
+
+  &__subimgs-bottom-pic {
+    width: 176px;
+    height: 121px;
   }
 }
 
