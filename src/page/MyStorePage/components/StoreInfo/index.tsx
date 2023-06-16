@@ -10,7 +10,9 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
       {isMobile ? (
         <div className={styles.mobilestore}>
           <div className={styles.mobilestore__imgs}>
-            <div className={styles['mobilestore__imgs-main']}>메인이미지</div>
+            <div className={styles['mobilestore__imgs-main']}>
+              <img src={storeInfo.image_urls[0]} alt="main" className={styles['mobilestore__imgs-main-pic']} />
+            </div>
           </div>
           <div className={styles.mobilestore__info}>
             <div className={styles.mobilestore__title}>
@@ -106,10 +108,16 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
             </div>
           </div>
           <div className={styles.store__imgs}>
-            <div className={styles['store__imgs-main']}>메인이미지</div>
+            <div className={styles['store__imgs-main']}>
+              <img src={storeInfo.image_urls[0]} alt="main" className={styles['store__imgs-main-pic']} />
+            </div>
             <div className={styles.store__subimgs}>
-              <div className={styles['store__subimgs-top']}>서브이미지1</div>
-              <div className={styles['store__subimgs-bottom']}>서브이미지2</div>
+              <div className={styles['store__subimgs-top']}>
+                <img src={storeInfo.image_urls[1]} alt="main" className={styles['store__subimgs-top-pic']} />
+              </div>
+              <div className={styles['store__subimgs-bottom']}>
+                <img src={storeInfo.image_urls[2]} alt="main" className={styles['store__subimgs-bottom-pic']} />
+              </div>
             </div>
           </div>
         </div>
