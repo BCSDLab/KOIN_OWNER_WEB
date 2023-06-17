@@ -17,12 +17,12 @@ const TOTAL_STEP = 4;
 export default function StoreReg() {
   const { isMobile } = useMediaQuery();
   const [isSelected, setIsSelected] = useState('');
-  const { step, setStep, clickBackArrow } = useStepStore();
+  const { step, setStep, decreaseStep } = useStepStore();
   return (
     <div>
       {isMobile ? (
         <>
-          <PreviousStep step={step} clickEvent={clickBackArrow} />
+          <PreviousStep step={step} clickEvent={decreaseStep} />
           <div className={styles.content}>
             {step === 0 && (
               <>
