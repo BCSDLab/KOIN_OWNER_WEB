@@ -7,7 +7,7 @@ import styles from './OperateTime.module.scss';
 
 export default function OperateTime() {
   const { isMobile } = useMediaQuery();
-  const { step } = useStepStore();
+  const step = useStepStore((state) => state.step);
 
   return (
     <div>
