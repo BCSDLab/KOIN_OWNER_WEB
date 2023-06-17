@@ -180,7 +180,7 @@ export default function StoreReg() {
               </>
             )}
             {step > 3 && (
-              <Complete title="가게 등록 완료" textTop="가게 등록이 완료되었습니다." textBottom="업체 정보 수정은 내 상점에서 가능합니다." link="/" buttonText="메인 화면 바로가기" />
+              <Complete title="가게 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/" linkText="메인 화면 바로가기" />
             )}
           </div>
         </>

@@ -4,13 +4,13 @@ import styles from './Complete.module.scss';
 
 interface CompleteProps {
   title: string;
-  textTop: string;
-  textBottom: string;
+  topText: string;
+  bottomText: string;
   link: string;
-  buttonText: string;
+  linkText: string;
 }
 export default function Complete({
-  title, textTop, textBottom, link, buttonText,
+  title, topText, bottomText, link, linkText,
 }: CompleteProps) {
   return (
     <div className={styles.content}>
@@ -20,13 +20,13 @@ export default function Complete({
       <span className={styles.content__title}>{title}</span>
       <div className={styles.content__text}>
         <span>
-          {textTop}
+          {topText}
         </span>
         <span>
-          {textBottom}
+          {bottomText}
         </span>
       </div>
-      <Link to={link} className={styles.content__button}>{buttonText}</Link>
+      <Link to={link} className={styles.content__link}>{linkText}</Link>
     </div>
   );
 }
