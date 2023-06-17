@@ -1,5 +1,5 @@
 .mobilestore {
-  height: 540px;
+  height: 570px;
   border-bottom: 1px solid #d2dae2;
 
   &__imgs {
@@ -42,17 +42,40 @@
     font-family: "Noto Sans CJK KR", sans-serif;
   }
 
-  &__keywords {
-    margin-left: 8px;
+  &__keyword-part {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+
+  &__small-keywords {
+    margin-right: 8px;
     box-sizing: border-box;
-    width: 70px;
-    height: 20px;
+    width: 75px;
+    height: 24px;
     border: 1px solid #f7941e;
     border-radius: 13.5px;
     color: #f7941e;
     font-family: "Noto Sans", sans-serif;
     font-weight: 500;
-    font-size: 10px;
+    font-size: 12px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__large-keywords {
+    margin-right: 8px;
+    box-sizing: border-box;
+    width: 97px;
+    height: 24px;
+    border: 1px solid #f7941e;
+    border-radius: 13.5px;
+    color: #f7941e;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -104,14 +127,31 @@
     line-height: 47px;
     align-items: center;
     color: #252525;
-    margin-right: 8px;
+    margin-right: 16px;
     font-family: "Noto Sans CJK KR", sans-serif;
   }
 
-  &__keywords {
-    margin-left: 8px;
+  &__small-keywords {
+    margin-right: 8px;
     box-sizing: border-box;
     width: 75px;
+    height: 24px;
+    border: 1px solid #f7941e;
+    border-radius: 13.5px;
+    color: #f7941e;
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__large-keywords {
+    margin-right: 8px;
+    box-sizing: border-box;
+    width: 97px;
     height: 24px;
     border: 1px solid #f7941e;
     border-radius: 13.5px;

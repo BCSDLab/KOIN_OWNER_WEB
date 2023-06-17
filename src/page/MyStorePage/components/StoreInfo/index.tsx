@@ -17,7 +17,11 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
           <div className={styles.mobilestore__info}>
             <div className={styles.mobilestore__title}>
               <h1 className={styles.mobilestore__name}>{storeInfo.name}</h1>
-              <div className={styles.mobilestore__keywords}>#키워드</div>
+            </div>
+            <div className={styles['mobilestore__keyword-part']}>
+              {storeInfo.delivery && (<div className={styles['store__small-keywords']}>#배달 가능</div>)}
+              {storeInfo.pay_card && (<div className={styles['store__small-keywords']}>#카드 가능</div>)}
+              {storeInfo.pay_bank && (<div className={styles['store__large-keywords']}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               <div className={styles.detail}>
@@ -65,7 +69,9 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
           <div className={styles.store__info}>
             <div className={styles.store__title}>
               <h1 className={styles.store__name}>{storeInfo.name}</h1>
-              <div className={styles.store__keywords}>#키워드</div>
+              {storeInfo.delivery && (<div className={styles['store__small-keywords']}>#배달 가능</div>)}
+              {storeInfo.pay_card && (<div className={styles['store__small-keywords']}>#카드 가능</div>)}
+              {storeInfo.pay_bank && (<div className={styles['store__large-keywords']}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               <div className={styles.detail}>
