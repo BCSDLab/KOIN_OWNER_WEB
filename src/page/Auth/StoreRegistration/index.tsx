@@ -7,9 +7,9 @@ import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import { Link } from 'react-router-dom';
-import STORE_CATEGORY from 'static/storeCategory';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
+import useStoreCategory from 'query/storeCategory';
 import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 
@@ -18,6 +18,8 @@ export default function StoreReg() {
   const { isMobile } = useMediaQuery();
   const [isSelected, setIsSelected] = useState('');
   const { step, setStep, decreaseStep } = useStepStore();
+  const { categoryList } = useStoreCategory();
+
   return (
     <div>
       {isMobile ? (
@@ -31,18 +33,18 @@ export default function StoreReg() {
                 <div className={styles['mobile-category']}>
                   <div className={styles['mobile-category__title']}>카테고리를 골라주세요.</div>
                   <div className={styles['mobile-category__wrapper']}>
-                    {STORE_CATEGORY.map((value) => (
+                    {categoryList?.shop_categories.slice(1).map((value) => (
                       <button
                         className={cn({
                           [styles['mobile-category__menu']]: true,
-                          [styles['mobile-category__menu--selected']]: value.title === isSelected,
+                          [styles['mobile-category__menu--selected']]: value.name === isSelected,
                         })}
                         type="button"
-                        onClick={() => setIsSelected(value.title)}
-                        key={value.tag}
+                        onClick={() => setIsSelected(value.name)}
+                        key={value.id}
                       >
-                        <img className={styles['mobile-category__image']} src={value.image} alt="category_img" />
-                        <span className={styles['mobile-category__type']}>{value.title}</span>
+                        <img className={styles['mobile-category__image']} src={value.image_url} alt="category_img" />
+                        <span className={styles['mobile-category__type']}>{value.name}</span>
                       </button>
                     ))}
                   </div>
