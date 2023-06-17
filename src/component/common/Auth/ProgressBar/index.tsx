@@ -7,7 +7,7 @@ interface ProgressBarProps {
 }
 
 export default function ProgressBar({ step, total, progressTitle }: ProgressBarProps) {
-  const calculateWidth = () => ((step + 1) / total) * 100;
+  const calculateWidth = ((step + 1) / total) * 100;
 
   return (
     <div className={styles.progress}>
@@ -18,7 +18,7 @@ export default function ProgressBar({ step, total, progressTitle }: ProgressBarP
       <div className={styles.progress__bar}>
         <span
           className={styles['progress__bar--filled']}
-          style={{ width: `${calculateWidth()}%` }}
+          style={{ width: `${calculateWidth}%` }}
         />
       </div>
     </div>
