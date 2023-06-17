@@ -2,73 +2,22 @@ import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
 import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mobile.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CATEGORY, { Category, SubMenu } from 'static/category';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import CATEGORY from 'static/category';
 import cn from 'utils/ts/className';
-import useBooleanState from 'utils/hooks/useBooleanState';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
+import { postLogout } from 'api/auth';
+import useUserStore from 'store/user';
 import styles from './Header.module.scss';
+import useMobileSidebar from './hooks/useMobileSidebar';
+import useMegaMenu from './hooks/useMegaMenu';
 
 const ID: { [key: string]: string; } = {
   PANEL: 'megamenu-panel',
   LABEL1: 'megamenu-label-1',
   LABEL2: 'megamenu-label-2',
-};
-
-const useMegaMenu = (category: Category[]) => {
-  const [panelMenuList, setPanelMenuList] = useState<SubMenu[] | null>();
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const createOnChangeMenu = (title: string) => () => {
-    const selectedSubMenu = category
-      .find((categoryInfo) => categoryInfo.title === title)?.submenu ?? null;
-    setPanelMenuList(selectedSubMenu);
-    setIsExpanded(true);
-  };
-  const onFocusPanel = () => {
-    setIsExpanded(true);
-  };
-  const hideMegaMenu = (
-    event: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>,
-  ) => {
-    if (event.type === 'mouseout') {
-      const { currentTarget } = event;
-      currentTarget.blur();
-    }
-    setIsExpanded(false);
-  };
-
-  return {
-    panelMenuList,
-    isExpanded,
-    createOnChangeMenu,
-    onFocusPanel,
-    hideMegaMenu,
-  };
-};
-
-const useMobileSidebar = (pathname: string, isMobile: boolean) => {
-  const {
-    value: isExpanded, setTrue: expandSidebar, setFalse: hideSidebar,
-  } = useBooleanState(false);
-
-  useEffect(() => {
-    if (!isMobile) {
-      hideSidebar();
-    }
-  }, [hideSidebar, isMobile]);
-
-  useEffect(() => {
-    hideSidebar();
-  }, [hideSidebar, pathname]);
-
-  return {
-    isExpanded,
-    expandSidebar,
-    hideSidebar,
-  };
 };
 
 function Header() {
@@ -87,10 +36,18 @@ function Header() {
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
 
-  const isMain = true; // pathname === '/';
-  const navigate = useNavigate();
-  // Auth 완료 되면 추후에 수정 필요
+  const isMain = true;
   const [userInfo] = useState<{ name: string; } | null>(null);
+  const removeUser = useUserStore((state) => state.removeUser);
+
+  const logout = () => {
+    postLogout()
+      .then(() => {
+        sessionStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        removeUser();
+      });
+  };
 
   return (
     <header
@@ -165,10 +122,7 @@ function Header() {
                         </Link>
                       </li>
                       <li className={styles.mobileheader__link}>
-                        <button
-                          type="button"
-                          onClick={() => navigate('/login', { replace: true })}
-                        >
+                        <button type="button" onClick={logout}>
                           로그아웃
                         </button>
                       </li>
@@ -285,7 +239,7 @@ function Header() {
                 </Link>
               </li>
               <li className={styles['header__auth-link']}>
-                <button type="button" onClick={() => navigate('/login', { replace: true })}>
+                <button type="button" onClick={logout}>
                   로그아웃
                 </button>
               </li>

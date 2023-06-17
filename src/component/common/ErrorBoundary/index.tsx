@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unused-prop-types */
 import React, { ReactNode } from 'react';
+import { ReactComponent as ErrorIcon } from 'assets/svg/error/error.svg';
+import styles from './ErrorBoundary.module.scss';
 
 export interface Props {
   message?: string;
@@ -28,9 +30,9 @@ class ErrorBoundary extends React.Component<Props, State> {
 
     if (hasError) {
       return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div>
-            에러 발생:
+        <div className={styles.error}>
+          <div className={styles.error__contents}>
+            <ErrorIcon className={styles.error__icon} />
             {message}
           </div>
         </div>

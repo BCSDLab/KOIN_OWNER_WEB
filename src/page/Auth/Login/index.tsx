@@ -6,50 +6,63 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
-import { useRef } from 'react';
 import useLogin from 'query/auth';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LoginParams } from 'api/auth/model';
+import { useState } from 'react';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
-interface LoginRef {
-  email: HTMLInputElement | null;
-  password: HTMLInputElement | null;
-}
-
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
+  const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState(true);
   const { isMobile } = useMediaQuery();
-  const { mutate } = useLogin();
-  const loginRef = useRef<LoginRef>({
-    email: null,
-    password: null,
+  const { login, isError: isServerError } = useLogin();
+  const [isFormError, setIsFormError] = useState(false);
+
+  const isError = isServerError || isFormError;
+
+  const {
+    register,
+    handleSubmit,
+  } = useForm<LoginParams>({
+    resolver: zodResolver(LoginParams),
   });
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { email, password } = await loginRef.current;
-    mutate({ email: email!.value, password: password!.value });
+  const onSubmit: SubmitHandler<LoginParams> = (data) => {
+    login({ email: data.email, password: data.password, isAutoLogin });
+  };
+
+  const onError = () => {
+    setIsFormError(true);
   };
 
   return (
     <div className={styles.template}>
       <div className={styles.contents}>
         <Logo className={styles.logo} aria-hidden />
-        <form className={styles.form} onSubmit={onSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit, onError)}>
           <div className={styles.form__container}>
             <input
-              className={styles.form__input}
+              className={cn({
+                [styles.form__input]: true,
+                [styles['form__input--error']]: isError,
+              })}
               type="text"
-              ref={(inputRef) => { loginRef.current.email = inputRef; }}
               placeholder={isMobile ? '이메일' : '아이디 입력'}
+              {...register('email')}
             />
           </div>
           <div className={styles.form__container}>
             <input
-              className={styles.form__input}
+              className={cn({
+                [styles.form__input]: true,
+                [styles['form__input--error']]: isError,
+              })}
               type={isBlind ? 'text' : 'password'}
-              ref={(inputRef) => { loginRef.current.password = inputRef; }}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
+              {...register('password')}
             />
             <button
               type="button"
@@ -60,26 +73,34 @@ export default function Login() {
             </button>
           </div>
           <div className={styles['form__auto-login']}>
+            {(isError || !!isFormError) && (
+            <div className={styles['form__error-message']}>아이디 또는 비밀번호를 잘못 입력했습니다</div>
+            )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
-              <input className={styles['form__auto-login__checkbox']} type="checkbox" id="auto-login" />
+              <input
+                className={styles['form__auto-login__checkbox']}
+                type="checkbox"
+                id="auto-login"
+                defaultChecked
+                onChange={changeIsAutoLogin}
+              />
               자동로그인
             </label>
           </div>
           <button
             className={cn({
               [styles.form__button]: true,
-              [styles['form__button--mobile']]: true,
+              [styles['form__button--login']]: true,
             })}
             type="submit"
           >
             로그인
           </button>
-          { isMobile
-            ? (
-              <button className={styles.form__button} type="button">
-                회원가입
-              </button>
-            ) : null}
+          {isMobile && (
+          <button className={styles.form__button} type="button">
+            회원가입
+          </button>
+          )}
           <div className={styles.option}>
             {isMobile
               ? (
