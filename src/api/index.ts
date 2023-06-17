@@ -63,4 +63,17 @@ accessClient.interceptors.response.use(
   },
 );
 
-export { client, accessClient };
+const categoryApi = axios.create({
+  baseURL: `${API_PATH}`,
+  timeout: 2000,
+});
+
+categoryApi.interceptors.request.use(
+  (config) => {
+    const token = sessionStorage.getItem('token');
+    if (config.headers && token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+);
+
+export { client, accessClient, categoryApi };
