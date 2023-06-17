@@ -67,9 +67,9 @@ export default function OperateTime() {
                 </tr>
               </tbody>
             </table>
-            <div className={styles.table__button}>
+            <div className={styles.table__link}>
               <Link to="/store-registration">
-                <button type="button" onClick={() => step + 1}>다음</button>
+                다음
               </Link>
             </div>
           </div>

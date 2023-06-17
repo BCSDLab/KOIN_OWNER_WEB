@@ -38,13 +38,14 @@
     }
   }
 
-  &__button {
+  &__link {
     display: flex;
     justify-content: flex-end;
     margin-top: 70px;
     margin-right: 36px;
 
-    button {
+    a {
+      text-decoration: none;
       padding: 8px 40px;
       background-color: #175c8e;
       font-weight: 500;
