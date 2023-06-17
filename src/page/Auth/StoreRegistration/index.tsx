@@ -22,7 +22,7 @@ export default function StoreReg() {
     <div>
       {isMobile ? (
         <>
-          <PreviousStep step={step} clickBackArrow={clickBackArrow} />
+          <PreviousStep step={step} clickEvent={clickBackArrow} />
           <div className={styles.content}>
             {step === 0 && (
               <>
