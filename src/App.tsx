@@ -5,8 +5,8 @@ import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword';
 import AuthLayout from 'layout/AuthLayout';
 import MystorePage from 'page/MyStorePage';
-import StoreReg from 'page/Auth/StoreReg';
-import OperateTime from 'page/Auth/StoreReg/component/OperateTime';
+import StoreRegistration from 'page/Auth/StoreRegistration';
+import OperateTime from 'page/Auth/StoreRegistration/component/OperateTime';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/find-password" element={<FindPassword />} />
-        <Route path="/store-registration" element={<StoreReg />} />
+        <Route path="/store-registration" element={<StoreRegistration />} />
         <Route path="/operate-time" element={<OperateTime />} />
       </Route>
     </Routes>

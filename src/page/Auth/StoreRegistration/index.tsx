@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import STORE_CATEGORY from 'static/storeCategory';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
-import styles from './StoreReg.module.scss';
+import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 
 const TOTAL_STEP = 4;
