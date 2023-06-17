@@ -125,6 +125,7 @@ export default function StoreReg() {
             {step === 3 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
+                <div className={styles.margin} />
                 <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <div className={styles.form__info}>
