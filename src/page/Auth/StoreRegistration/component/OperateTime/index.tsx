@@ -32,37 +32,85 @@ export default function OperateTime() {
               <tbody>
                 <tr className={styles.table__data}>
                   <td>월</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>화</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>수</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>목</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>금</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>토</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
                 <tr className={styles.table__data}>
                   <td>일</td>
-                  <td>11:00~21:00</td>
+                  <td>
+                    {' '}
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
                   <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
                 </tr>
               </tbody>
