@@ -10,15 +10,15 @@
 
   &__bar {
     height: 3px;
-    background-color: #e5e5e5;
-    position: relative;
+    width: 100%;
+    border: none;
+  }
 
-    &--filled {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      background-color: #f7941e;
-    }
+  &__bar::-webkit-progress-bar {
+    background-color: #e5e5e5;
+  }
+
+  &__bar::-webkit-progress-value {
+    background-color: #f7941e;
   }
 }
