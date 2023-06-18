@@ -14,7 +14,7 @@ import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 
 const TOTAL_STEP = 4;
-export default function StoreReg() {
+export default function StoreRegistration() {
   const { isMobile } = useMediaQuery();
   const [selectedCategory, setSelectedCategory] = useState('');
   const { step, setStep, decreaseStep } = useStepStore();
