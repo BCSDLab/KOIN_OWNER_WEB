@@ -16,7 +16,7 @@ import PROGRESS_TITLE from './constant/progress';
 const TOTAL_STEP = 4;
 export default function StoreReg() {
   const { isMobile } = useMediaQuery();
-  const [isSelected, setIsSelected] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const { step, setStep, decreaseStep } = useStepStore();
   const { categoryList } = useStoreCategory();
 
@@ -37,10 +37,10 @@ export default function StoreReg() {
                       <button
                         className={cn({
                           [styles['mobile-category__menu']]: true,
-                          [styles['mobile-category__menu--selected']]: value.name === isSelected,
+                          [styles['mobile-category__menu--selected']]: value.name === selectedCategory,
                         })}
                         type="button"
-                        onClick={() => setIsSelected(value.name)}
+                        onClick={() => setSelectedCategory(value.name)}
                         key={value.id}
                       >
                         <img className={styles['mobile-category__image']} src={value.image_url} alt="category_img" />
