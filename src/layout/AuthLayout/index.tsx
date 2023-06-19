@@ -12,7 +12,7 @@ export default function AuthLayout() {
   useEffect(() => {
     setUser();
     if (user) {
-      navigate('/store-registration', { replace: true });
+      navigate('/', { replace: true });
     }
   }, [setUser, user, navigate]);
 
