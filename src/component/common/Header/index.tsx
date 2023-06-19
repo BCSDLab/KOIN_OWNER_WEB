@@ -2,7 +2,6 @@ import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
 import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-logo.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
-import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CATEGORY from 'static/category';
 import cn from 'utils/ts/className';
@@ -37,8 +36,7 @@ function Header() {
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
   const isMain = true;
-  const [userInfo] = useState<{ name: string; } | null>(null);
-  const removeUser = useUserStore((state) => state.removeUser);
+  const { user, removeUser } = useUserStore();
   const setStep = useStepStore((state) => state.setStep);
 
   const logout = () => {
@@ -113,8 +111,7 @@ function Header() {
                       <BackArrowIcon title="뒤로 가기 버튼" />
                     </button>
                     <div className={styles.mobileheader__greet}>
-                      {/* Auth 완료시 수정 필요 */}
-                      {userInfo?.name}
+                      {user?.name}
                       <span>님, 안녕하세요!</span>
                     </div>
                     <ul className={styles['mobileheader__auth-menu']}>
