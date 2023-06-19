@@ -14,7 +14,7 @@ export default function CatagoryMenuList({ menus }: { menus: MenuCategory }) {
       <div className={styles['menu__slide-wrapper']}>
         <div className={styles.menu__content}>
           {menus.menus.map((menu) => (
-            <div key={menus.id} className={styles.menu__item}>
+            <div key={menu.name} className={styles.menu__item}>
               {menu.image_urls?.length === 0 ? (
                 <div className={styles['menu__non-img-border']}>
                   <div className={styles['menu__empty-img']}>

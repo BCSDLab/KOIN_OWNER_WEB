@@ -26,7 +26,7 @@ export default function MyStorePage() {
           )}
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
-              key={category.name}
+              key={category.id}
               menus={category}
             />
           ))}

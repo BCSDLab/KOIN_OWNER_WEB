@@ -1,11 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyStore, getMyStoreInfo, getMenuInfo } from 'api/store';
-import useAuthStore from 'store/auth';
 
 const useMyShop = () => {
-  const { data: myStore } = useQuery(['myStore'], getMyStore, {
-    enabled: !!useAuthStore.getState().user?.shops,
-  });
+  const { data: myStore } = useQuery(['myStore'], getMyStore);
 
   const shopId = myStore?.shops[0].id;
 
