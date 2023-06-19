@@ -6,7 +6,6 @@ import { ReactComponent as EmptyImgIcon } from 'assets/svg/storereg/mobile-empty
 import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
-import { Link } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
 import useStoreCategory from 'query/storeCategory';
@@ -93,12 +92,12 @@ export default function StoreRegistration() {
                   <label className={styles.form__label}>
                     운영시간
                     <span>00:00~24:00</span>
-                    <Link
-                      to="/operate-time"
-                      className={styles['form__label-link']}
+                    <button
+                      type="button"
+                      className={styles['form__label-button']}
                     >
                       수정
-                    </Link>
+                    </button>
                   </label>
                   <label htmlFor="extra-info" className={styles.form__label}>
                     기타정보

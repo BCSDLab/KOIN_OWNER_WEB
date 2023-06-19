@@ -2,7 +2,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import PreviousStep from 'component/common/Auth/PreviousStep';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
-import { Link } from 'react-router-dom';
 import styles from './OperateTime.module.scss';
 
 export default function OperateTime() {
@@ -14,9 +13,9 @@ export default function OperateTime() {
       {isMobile ? (
         <>
           <div className={styles['chevron-left']}>
-            <Link to="/store-registration">
+            <button type="button">
               <PreviousStep step={step} />
-            </Link>
+            </button>
           </div>
           <div className={styles.content}>
             <SubTitle topTitle="가게 등록" bottomTitle="" topText="시간 설정" bottomText="" />
@@ -116,9 +115,9 @@ export default function OperateTime() {
               </tbody>
             </table>
             <div className={styles.table__link}>
-              <Link to="/store-registration">
+              <button type="button">
                 다음
-              </Link>
+              </button>
             </div>
           </div>
         </>

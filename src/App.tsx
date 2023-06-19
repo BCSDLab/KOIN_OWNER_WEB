@@ -5,7 +5,7 @@ import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword';
 import AuthLayout from 'layout/AuthLayout';
 import MyStorePage from 'page/MyStorePage';
-import StoreRegistration from 'page/Auth/StoreRegistration';
+import StoreRegistration from 'page/StoreRegistration';
 
 function App() {
   return (
