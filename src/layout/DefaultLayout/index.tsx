@@ -26,12 +26,14 @@ export default function DefaultLayout() {
 
   return (
     <div>
-      {user && location.pathname !== '/store-registration' && (
-        <Header />
+      {user && (
+      <>
+        {location.pathname !== '/store-registration' && <Header />}
+        <ErrorBoundary message="에러가 발생했습니다.">
+          <Outlet />
+        </ErrorBoundary>
+      </>
       )}
-      <ErrorBoundary message="에러가 발생했습니다.">
-        <Outlet />
-      </ErrorBoundary>
     </div>
   );
 }
