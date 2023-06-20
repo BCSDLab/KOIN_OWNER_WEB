@@ -4,16 +4,19 @@ import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import styles from './OperateTime.module.scss';
 
-export default function OperateTime() {
+interface OperateTimeProps {
+  clickEvent: React.Dispatch<React.SetStateAction<boolean>>
+}
+export default function OperateTime({ clickEvent }: OperateTimeProps) {
   const { isMobile } = useMediaQuery();
   const step = useStepStore((state) => state.step);
 
   return (
     <div>
       {isMobile ? (
-        <>
+        <div className={styles.mobile}>
           <div className={styles['chevron-left']}>
-            <button type="button">
+            <button type="button" className={styles.mobile__button} onClick={() => clickEvent(false)}>
               <PreviousStep step={step} />
             </button>
           </div>
@@ -114,13 +117,13 @@ export default function OperateTime() {
                 </tr>
               </tbody>
             </table>
-            <div className={styles.table__link}>
-              <button type="button">
+            <div className={styles.table__button}>
+              <button type="button" onClick={() => clickEvent(false)}>
                 다음
               </button>
             </div>
           </div>
-        </>
+        </div>
       ) : (<div>Desktop</div>)}
     </div>
   );

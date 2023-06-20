@@ -1,3 +1,17 @@
+.mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+
+  &__button {
+    background-color: transparent;
+  }
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -38,14 +52,13 @@
     }
   }
 
-  &__link {
+  &__button {
     display: flex;
     justify-content: flex-end;
     margin-top: 70px;
     margin-right: 13px;
 
-    a {
-      text-decoration: none;
+    button {
       padding: 8px 40px;
       background-color: #175c8e;
       font-weight: 500;

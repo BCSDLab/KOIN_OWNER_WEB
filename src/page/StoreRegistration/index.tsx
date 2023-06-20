@@ -9,8 +9,10 @@ import useStepStore from 'store/useStepStore';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
 import useStoreCategory from 'query/storeCategory';
+import { createPortal } from 'react-dom';
 import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
+import OperateTime from './component/OperateTime';
 
 const TOTAL_STEP = 4;
 export default function StoreRegistration() {
@@ -18,6 +20,7 @@ export default function StoreRegistration() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const { step, setStep, decreaseStep } = useStepStore();
   const { categoryList } = useStoreCategory();
+  const [showOperateTime, setShowOperateTime] = useState(false);
 
   return (
     <div>
@@ -95,9 +98,12 @@ export default function StoreRegistration() {
                     <button
                       type="button"
                       className={styles['form__label-button']}
+                      onClick={() => setShowOperateTime(true)}
                     >
                       수정
                     </button>
+                    {showOperateTime
+                    && createPortal(<OperateTime clickEvent={setShowOperateTime} />, document.body)}
                   </label>
                   <label htmlFor="extra-info" className={styles.form__label}>
                     기타정보
@@ -121,6 +127,7 @@ export default function StoreRegistration() {
                     <button type="button" onClick={() => setStep(step + 1)}>다음</button>
                   </div>
                 </div>
+
               </>
             )}
             {step === 3 && (
