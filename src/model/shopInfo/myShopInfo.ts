@@ -37,7 +37,7 @@ export const MenuCategory = z.object({
 
 export type MenuCategory = z.infer<typeof MenuCategory>;
 
-export const MyStoreInfoRes = z.object({
+export const MyShopInfoRes = z.object({
   id: z.number(),
   name: z.string(),
   phone: z.string(),
@@ -53,8 +53,8 @@ export const MyStoreInfoRes = z.object({
   menu_categories: z.array(MenuCategory),
 });
 
-export type MyStoreInfoRes = z.infer<typeof MyStoreInfoRes>;
+export type MyShopInfoRes = z.infer<typeof MyShopInfoRes>;
 
-export interface MyStoreParam {
+export interface MyShopParam {
   id: number;
 }

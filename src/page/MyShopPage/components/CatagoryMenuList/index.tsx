@@ -1,5 +1,5 @@
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
-import { MenuCategory } from 'model/storeInfo/menuCategory';
+import { MenuCategory } from 'model/shopInfo/menuCategory';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { getMyStore, getMyStoreInfo, getMenuInfo } from 'api/store';
+import { getMyShop, getMyShopInfo, getMenuInfo } from 'api/shop';
 
 const useMyShop = () => {
-  const { data: myStore } = useQuery(['myStore'], getMyStore);
+  const { data: myShop } = useQuery(['myShop'], getMyShop);
 
-  const shopId = myStore?.shops[0].id;
+  const shopId = myShop?.shops[0].id;
 
-  const { data: shopData } = useQuery(['myShopInfo', shopId], () => getMyStoreInfo({ id: shopId! }), {
+  const { data: shopData } = useQuery(['myShopInfo', shopId], () => getMyShopInfo({ id: shopId! }), {
     enabled: !!shopId,
   });
 

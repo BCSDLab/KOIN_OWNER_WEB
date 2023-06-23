@@ -1,10 +1,10 @@
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CatagoryMenuList from './components/CatagoryMenuList';
-import StoreInfo from './components/StoreInfo';
-import styles from './MyStorePage.module.scss';
+import StoreInfo from './components/ShopInfo';
+import styles from './MyShopPage.module.scss';
 
-export default function MyStorePage() {
+export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const { shopData, menuData } = useMyShop();
   return (
@@ -22,7 +22,7 @@ export default function MyStorePage() {
             </button>
           </div>
           {shopData && (
-          <StoreInfo storeInfo={shopData} />
+          <StoreInfo shopInfo={shopData} />
           )}
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
@@ -44,7 +44,7 @@ export default function MyStorePage() {
             </button>
           </div>
           {shopData && (
-          <StoreInfo storeInfo={shopData} />
+          <StoreInfo shopInfo={shopData} />
           )}
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
