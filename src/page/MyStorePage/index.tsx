@@ -27,7 +27,7 @@ export default function MyStorePage() {
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.id}
-              menus={category}
+              menuCategory={category}
             />
           ))}
         </>
@@ -49,7 +49,7 @@ export default function MyStorePage() {
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.name}
-              menus={category}
+              menuCategory={category}
             />
           ))}
         </div>

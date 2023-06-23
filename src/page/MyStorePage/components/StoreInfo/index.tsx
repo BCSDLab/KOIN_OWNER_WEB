@@ -33,7 +33,9 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
               <div className={styles.detail}>
                 <div className={styles.detail__title}>운영시간</div>
                 <div className={styles.detail__data}>
-                  {`${storeInfo.open[0].open_time}~${storeInfo.open[0].close_time}`}
+                  {(storeInfo.open[0].open_time && storeInfo.open[0].close_time) ? (
+                    `${storeInfo.open[0].open_time}~${storeInfo.open[0].close_time}`
+                  ) : `${'미등록'}`}
                 </div>
               </div>
               <div className={styles.detail}>
@@ -83,7 +85,9 @@ export default function StoreInfo({ storeInfo }: { storeInfo: MyStoreInfoRes }) 
               <div className={styles.detail}>
                 <div className={styles.detail__title}>운영시간</div>
                 <div className={styles.detail__data}>
-                  {`${storeInfo.open[0].open_time}~${storeInfo.open[0].close_time}`}
+                  {(storeInfo.open[0].open_time && storeInfo.open[0].close_time) ? (
+                    `${storeInfo.open[0].open_time}~${storeInfo.open[0].close_time}`
+                  ) : `${'미등록'}`}
                 </div>
               </div>
               <div className={styles.detail}>
