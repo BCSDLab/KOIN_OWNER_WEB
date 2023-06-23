@@ -19,9 +19,9 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               <h1 className={styles.mobilestore__name}>{shopInfo.name}</h1>
             </div>
             <div className={styles['mobilestore__keyword-part']}>
-              {shopInfo.delivery && (<div className={styles['store__small-keywords']}>#배달 가능</div>)}
-              {shopInfo.pay_card && (<div className={styles['store__small-keywords']}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles['store__large-keywords']}>#계좌이체 가능</div>)}
+              {shopInfo.delivery && (<div className={styles.mobilestore__keywords}>#배달 가능</div>)}
+              {shopInfo.pay_card && (<div className={styles.mobilestore__keywords}>#카드 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles.mobilestore__keywords}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               <div className={styles.detail}>
@@ -71,9 +71,9 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
           <div className={styles.store__info}>
             <div className={styles.store__title}>
               <h1 className={styles.store__name}>{shopInfo.name}</h1>
-              {shopInfo.delivery && (<div className={styles['store__small-keywords']}>#배달 가능</div>)}
-              {shopInfo.pay_card && (<div className={styles['store__small-keywords']}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles['store__large-keywords']}>#계좌이체 가능</div>)}
+              {shopInfo.delivery && (<div className={styles.store__keywords}>#배달 가능</div>)}
+              {shopInfo.pay_card && (<div className={styles.store__keywords}>#카드 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles.store__keywords}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               <div className={styles.detail}>

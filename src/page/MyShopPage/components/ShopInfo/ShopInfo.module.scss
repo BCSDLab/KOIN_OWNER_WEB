@@ -48,27 +48,11 @@
     margin-top: 10px;
   }
 
-  &__small-keywords {
+  &__keywords {
     margin-right: 8px;
     box-sizing: border-box;
-    width: 75px;
-    height: 24px;
-    border: 1px solid #f7941e;
-    border-radius: 13.5px;
-    color: #f7941e;
-    font-family: "Noto Sans", sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    text-align: center;
-  }
-
-  &__large-keywords {
-    margin-right: 8px;
-    box-sizing: border-box;
-    width: 97px;
+    padding: 10px;
+    width: auto;
     height: 24px;
     border: 1px solid #f7941e;
     border-radius: 13.5px;
@@ -131,27 +115,11 @@
     font-family: "Noto Sans CJK KR", sans-serif;
   }
 
-  &__small-keywords {
+  &__keywords {
     margin-right: 8px;
     box-sizing: border-box;
-    width: 75px;
-    height: 24px;
-    border: 1px solid #f7941e;
-    border-radius: 13.5px;
-    color: #f7941e;
-    font-family: "Noto Sans", sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    text-align: center;
-  }
-
-  &__large-keywords {
-    margin-right: 8px;
-    box-sizing: border-box;
-    width: 97px;
+    padding: 10px;
+    width: auto;
     height: 24px;
     border: 1px solid #f7941e;
     border-radius: 13.5px;
