@@ -173,7 +173,6 @@
     align-items: center;
     width: 368px;
     height: 257px;
-    border: solid 1px #d2dae2;
   }
 
   &__imgs-main-pic {
@@ -191,30 +190,15 @@
     margin-left: 18px;
   }
 
-  &__subimgs-top {
+  &__subimg {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 176px;
     height: 121px;
-    border: solid 1px #d2dae2;
   }
 
-  &__subimgs-top-pic {
-    width: 176px;
-    height: 121px;
-  }
-
-  &__subimgs-bottom {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 176px;
-    height: 121px;
-    border: solid 1px #d2dae2;
-  }
-
-  &__subimgs-bottom-pic {
+  &__subimgs-pic {
     width: 176px;
     height: 121px;
   }

@@ -122,11 +122,11 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               <img src={shopInfo.image_urls[0]} alt="main" className={styles['store__imgs-main-pic']} />
             </div>
             <div className={styles.store__subimgs}>
-              <div className={styles['store__subimgs-top']}>
-                <img src={shopInfo.image_urls[1]} alt="main" className={styles['store__subimgs-top-pic']} />
+              <div className={styles.store__subimg}>
+                <img src={shopInfo.image_urls[1]} alt="main" className={styles['store__subimgs-pic']} />
               </div>
-              <div className={styles['store__subimgs-bottom']}>
-                <img src={shopInfo.image_urls[2]} alt="main" className={styles['store__subimgs-bottom-pic']} />
+              <div className={styles.store__subimg}>
+                <img src={shopInfo.image_urls[2]} alt="main" className={styles['store__subimgs-pic']} />
               </div>
             </div>
           </div>
