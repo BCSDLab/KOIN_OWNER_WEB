@@ -5,6 +5,34 @@ import styles from './ShopInfo.module.scss';
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
   const { isMobile } = useMediaQuery();
 
+  const content = [
+    {
+      title: '전화번호',
+      data: shopInfo.phone,
+    },
+    {
+      title: '운영시간',
+      data: (shopInfo.open[0].open_time && shopInfo.open[0].close_time) ? (
+        `${shopInfo.open[0].open_time}~${shopInfo.open[0].close_time}`
+      ) : `${'미등록'}`,
+    },
+    {
+      title: '휴무일',
+      data: shopInfo.open[0].day_of_week,
+    },
+    {
+      title: '주소정보',
+      data: shopInfo.address,
+    }, {
+      title: '배달금액',
+      data: `${shopInfo.delivery_price}원`,
+    },
+    {
+      title: '기타 정보',
+      data: shopInfo.description,
+    },
+
+  ];
   return (
     <div>
       {isMobile ? (
@@ -24,44 +52,14 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               {shopInfo.pay_bank && (<div className={styles.mobilestore__keywords}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>전화번호</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.phone}
+              {content.map((item) => (
+                <div className={styles.detail}>
+                  <div className={styles.detail__title}>{item.title}</div>
+                  <div className={styles.detail__data}>
+                    {item.data}
+                  </div>
                 </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>운영시간</div>
-                <div className={styles.detail__data}>
-                  {(shopInfo.open[0].open_time && shopInfo.open[0].close_time) ? (
-                    `${shopInfo.open[0].open_time}~${shopInfo.open[0].close_time}`
-                  ) : `${'미등록'}`}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>휴무일</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.open[0].day_of_week}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>주소정보</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.address}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>배달금액</div>
-                <div className={styles.detail__data}>
-                  {`${shopInfo.delivery_price}원`}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>기타 정보</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.description}
-                </div>
-              </div>
+              ))}
               <button type="button" className={styles['mobilestore__update-btn']}>가게 정보 수정</button>
             </div>
           </div>
@@ -76,44 +74,14 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               {shopInfo.pay_bank && (<div className={styles.store__keywords}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>전화번호</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.phone}
+              {content.map((item) => (
+                <div className={styles.detail}>
+                  <div className={styles.detail__title}>{item.title}</div>
+                  <div className={styles.detail__data}>
+                    {item.data}
+                  </div>
                 </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>운영시간</div>
-                <div className={styles.detail__data}>
-                  {(shopInfo.open[0].open_time && shopInfo.open[0].close_time) ? (
-                    `${shopInfo.open[0].open_time}~${shopInfo.open[0].close_time}`
-                  ) : `${'미등록'}`}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>휴무일</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.open[0].day_of_week}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>주소정보</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.address}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>배달금액</div>
-                <div className={styles.detail__data}>
-                  {`${shopInfo.delivery_price}원`}
-                </div>
-              </div>
-              <div className={styles.detail}>
-                <div className={styles.detail__title}>기타 정보</div>
-                <div className={styles.detail__data}>
-                  {shopInfo.description}
-                </div>
-              </div>
+              ))}
               <button type="button" className={styles['store__update-btn']}>가게 정보 수정</button>
             </div>
           </div>
