@@ -8,7 +8,12 @@ const useMyShop = () => {
 
   const { data: myShop } = useQuery(['myShop', myShopQueryKey], getMyShopList);
 
-  const shopId = myShop?.shops[0].id;
+  const selectedShopId = (idx:number) => {
+    if (myShop?.shops.length === 0) return null;
+    return myShop?.shops[idx].id;
+  }; // shops가 있을때 인자로 가진 인덱스의 가게 id를 리턴
+
+  const shopId = selectedShopId(0);
 
   const { data: shopData } = useQuery(['myShopInfo', shopId], () => getShopInfo({ id: shopId! }), {
     enabled: !!shopId,
