@@ -5,12 +5,8 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { SubmitHandler } from 'react-hook-form';
 import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useEmailDataCheck';
 import { useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/UserData';
+import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import styles from './UserId.module.scss';
-
-type EmailForm = {
-  email:string
-};
 
 interface EmailInputProps {
   setId: (data:RegisterData) => void,
@@ -21,7 +17,7 @@ export default function UserId({ setId, userData }:EmailInputProps) {
   const { isMobile } = useMediaQuery();
   const [isUsable, setUsable] = useState<boolean | null>(null);
   const { emailHandleSubmit, errors, emailDuplicateRegister } = useEmailDuplicateCheck();
-  const onSubmit:SubmitHandler<EmailForm> = (data) => {
+  const onSubmit:SubmitHandler<RegisterData> = (data) => {
     console.log('이메일 중복 체크', data.email);
     setId({ ...userData, email: data.email });
     setUsable(!isUsable);

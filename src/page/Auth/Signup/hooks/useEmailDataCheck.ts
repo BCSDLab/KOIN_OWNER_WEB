@@ -1,18 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
+import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 
 const REG_EX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-
-type EmailForm = {
-  email:string
-};
 
 export default function useEmailDuplicateCheck() {
   const {
     register: emailRegister,
     handleSubmit: emailHandleSubmit,
     formState: { errors },
-  } = useForm<EmailForm>();
+  } = useForm<RegisterData>();
   const emailDuplicateRegister = emailRegister('email', {
     required: { value: true, message: '이메일을 입력해주세요.' },
     pattern: {

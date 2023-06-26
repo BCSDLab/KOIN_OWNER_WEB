@@ -4,7 +4,7 @@ import UserPassword from 'page/Auth/Signup/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/UserData';
+import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
@@ -22,7 +22,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
     <>
       <section className={styles.form}>
         <UserId setId={setData} userData={userData} />
-        <UserPassword />
+        <UserPassword setPassword={setData} userData={userData} />
         {!isMobile && <UserEmail />}
       </section>
       <div className={styles.buttons}>
