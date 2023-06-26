@@ -1,8 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMyShopList, getShopInfo, getMenuInfoList } from 'api/shop';
 
+// 스토어에 저장되어이쓴 정보를 가져온다.
+import useUserStore from 'store/user';
+
 const useMyShop = () => {
-  const { data: myShop } = useQuery(['myShop'], getMyShopList);
+  const userQueryKey = useUserStore.getState().user?.company_number;
+
+  const { data: myShop } = useQuery(['myShop', userQueryKey], getMyShopList);
 
   const shopId = myShop?.shops[0].id;
 
