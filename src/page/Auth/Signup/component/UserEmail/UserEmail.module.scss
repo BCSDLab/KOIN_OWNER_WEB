@@ -20,6 +20,11 @@
     height: calc(48px - 30px);
     padding: 14px 16px;
 
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
     @include media.media-breakpoint-down(mobile) {
       width: 100%;
       margin-top: 31px;

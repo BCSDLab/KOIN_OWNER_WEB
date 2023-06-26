@@ -1,22 +1,29 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
-import { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SubmitHandler } from 'react-hook-form';
 import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useEmailDataCheck';
+import { useState } from 'react';
+import { RegisterData } from 'page/Auth/Signup/types/UserData';
 import styles from './UserId.module.scss';
 
 type EmailForm = {
   email:string
 };
 
-export default function UserId() {
+interface EmailInputProps {
+  setId: (data:RegisterData) => void,
+  userData?: RegisterData
+}
+
+export default function UserId({ setId, userData }:EmailInputProps) {
   const { isMobile } = useMediaQuery();
   const [isUsable, setUsable] = useState<boolean | null>(null);
   const { emailHandleSubmit, errors, emailDuplicateRegister } = useEmailDuplicateCheck();
   const onSubmit:SubmitHandler<EmailForm> = (data) => {
-    console.log('이메일 중복 체크', data);
+    console.log('이메일 중복 체크', data.email);
+    setId({ ...userData, email: data.email });
     setUsable(!isUsable);
   };
   return (
