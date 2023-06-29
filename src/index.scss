@@ -12,6 +12,7 @@ body {
 
   @include media.media-breakpoint-down(mobile) {
     min-width: 320px;
+    min-height: 100%;
   }
 }
 
@@ -22,5 +23,6 @@ html {
 }
 
 button {
+  border: none;
   font-family: NotoSansKR, sans-serif;
 }

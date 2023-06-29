@@ -10,30 +10,29 @@ export default function DefaultLayout() {
   const navigate = useNavigate();
   const { user, setUser } = useUserStore((state) => state);
   const setPrevPath = usePrevPathStore((state) => state.setPrevPath);
-  const { handleErrorBoundary } = useErrorBoundary();
   const location = useLocation();
+  const { handleErrorBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (!user) {
       setUser()
         .catch(handleErrorBoundary)
         .catch(() => {
-          setPrevPath(location.pathname);
+          setPrevPath('/store-registration');
           navigate('/login', { replace: true });
         });
     }
-  }, [handleErrorBoundary, setUser, setPrevPath,
-    location.pathname, navigate, user]);
+  }, [handleErrorBoundary, setUser, setPrevPath, navigate, user]);
 
   return (
     <div>
       {user && (
-        <>
-          <Header />
-          <ErrorBoundary message="에러가 발생했습니다.">
-            <Outlet />
-          </ErrorBoundary>
-        </>
+      <>
+        {location.pathname !== '/store-registration' && <Header />}
+        <ErrorBoundary message="에러가 발생했습니다.">
+          <Outlet />
+        </ErrorBoundary>
+      </>
       )}
     </div>
   );
