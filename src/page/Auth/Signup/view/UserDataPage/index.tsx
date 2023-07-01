@@ -15,11 +15,11 @@ type ButtonClickEventProps = {
 export default function UserData({ clickEvent }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const [userData, setData] = useState<RegisterData>({});
-  const { isDone, checkNext } = useCheckNext();
+  const { isDone, checkNextStep } = useCheckNext();
 
   useEffect(() => {
-    checkNext(userData);
-  }, [userData, checkNext]);
+    checkNextStep(userData);
+  }, [userData, checkNextStep]);
 
   return (
     <>

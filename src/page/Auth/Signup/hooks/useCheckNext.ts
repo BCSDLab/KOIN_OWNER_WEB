@@ -1,21 +1,15 @@
 import { useState } from 'react';
-import { z } from 'zod';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterParam } from 'api/auth/model';
 
-export default function useCheckNext() {
+export default function useCheckNextStep() {
   const [isDone, setDone] = useState(false);
 
-  const User = z.object({
-    email: z.string(),
-    password: z.string(),
-    isAuthentication: z.boolean(),
-  });
-
-  const checkNext = (userData:RegisterData) => {
-    if (User.safeParse(userData).success) {
+  const checkNextStep = (userData:RegisterData) => {
+    if (RegisterParam.safeParse(userData).success) {
       setDone(true);
     }
   };
 
-  return { isDone, checkNext };
+  return { isDone, checkNextStep };
 }
