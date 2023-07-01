@@ -5,19 +5,22 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
   clickEvent: () => void;
 };
+
 export default function UserData({ clickEvent }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
-  const [isDone, setDone] = useState(false);
-  console.log(setDone);
-  const [userData, setData] = useState<RegisterData>();
+  const [userData, setData] = useState<RegisterData>({});
+  const { isDone, checkNext } = useCheckNext();
+
   useEffect(() => {
-    console.log(userData, setDone, 'asdf');
-  }, [userData]);
+    checkNext(userData);
+  }, [userData, checkNext]);
+
   return (
     <>
       <section className={styles.form}>

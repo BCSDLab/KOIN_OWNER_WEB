@@ -21,7 +21,7 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
   const { authInput, checkAuthNumber } = useAuthCheck();
   const onSubmit:SubmitHandler<RegisterData> = (data) => {
     setOpen(true);
-    console.log(data.email, setOpen);
+    console.log(data.email);
   };
   const compareAuthNumber = () => {
     // 인증 번호 입력
