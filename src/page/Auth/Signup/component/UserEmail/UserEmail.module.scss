@@ -6,11 +6,27 @@
     font-size: 18px;
   }
 
+  &__warn {
+    display: flex;
+    align-items: center;
+    margin-top: 9px;
+    margin-bottom: 16px;
+    gap: 7px;
+    height: 11px;
+
+    &--phrase {
+      display: block;
+      color: #f05d3d;
+      font-size: 11px;
+    }
+  }
+
   &__input {
     width: calc(100% - 2px);
     display: flex;
     flex-direction: column;
     margin-top: 8px;
+    margin-bottom: 16px;
     gap: 8px;
   }
 

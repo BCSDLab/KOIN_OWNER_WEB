@@ -23,7 +23,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
       <section className={styles.form}>
         <UserId setId={setData} userData={userData} />
         <UserPassword setPassword={setData} userData={userData} />
-        {!isMobile && <UserEmail />}
+        {!isMobile && <UserEmail setAuthenticate={setData} userData={userData} />}
       </section>
       <div className={styles.buttons}>
         <CustomButton buttonSize="large" content={isMobile ? '이메일 인증하기' : '다음'} onClick={() => clickEvent()} disable={!isDone} />

@@ -1,30 +1,70 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { SubmitHandler } from 'react-hook-form';
+import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useEmailDataCheck';
+import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
-  clickEvent?: () => void | null
+  clickEvent?: () => void | null,
+  userData?: RegisterData,
+  setAuthenticate?: (data:RegisterData) => void
 };
-export default function UserEmail({ clickEvent }:ButtonClickEvent) {
+export default function UserEmail({ clickEvent, userData, setAuthenticate }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const [isOpen, setOpen] = useState(false);
+  const { emailHandleSubmit, errors, emailDuplicateRegister } = useEmailDuplicateCheck();
+  const { authInput, checkAuthNumber } = useAuthCheck();
+  const onSubmit:SubmitHandler<RegisterData> = (data) => {
+    setOpen(true);
+    console.log(data.email, setOpen);
+  };
+  const compareAuthNumber = () => {
+    // 인증 번호 입력
+    if (checkAuthNumber('123456')) {
+      if (setAuthenticate) {
+        setAuthenticate({ ...userData, isAuthentication: true });
+      }
+    } else {
+      alert('not match');
+    }
+  };
   return (
     !isMobile
       ? (
-        <div className={styles['email-check']}>
+        <form className={styles['email-check']} onSubmit={emailHandleSubmit(onSubmit)}>
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
-            <input className={styles.input} type="text" placeholder="이메일 입력@example.com" />
-            {isOpen && <input className={styles.input} type="text" placeholder="인증번호" />}
+            <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} />
+            {isOpen && <input className={styles.input} type="number" placeholder="인증번호" ref={authInput} />}
           </div>
-          <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-          <CustomButton
-            buttonSize="large"
-            content={isOpen ? '인증번호 재발송' : '인증번호발송'}
-            onClick={() => setOpen(true)}
-          />
-        </div>
+          {errors.email && (
+            <div className={styles['email-check__warn']}>
+              <Warn />
+              <span className={styles['email-check__warn--phrase']}>{errors.email.message}</span>
+            </div>
+          )}
+          {isOpen ? (
+            <>
+              <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
+              <CustomButton
+                buttonSize="large"
+                content="인증완료"
+                onClick={compareAuthNumber}
+              />
+            </>
+          ) : (
+            <CustomButton
+              buttonSize="large"
+              content="인증번호발송"
+              submit
+            />
+          )}
+        </form>
       )
       : (
         <>
