@@ -1,16 +1,32 @@
 import z from 'zod';
 
-export interface LoginParam {
-  email: string;
-  password: string;
-}
+export const LoginParams = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+export type LoginParams = z.infer<typeof LoginParams>;
 
 export const LoginResponse = z.object({
+  refresh_token: z.string(),
   token: z.string(),
   user_type: z.string(),
 });
 
 export type LoginResponse = z.infer<typeof LoginResponse>;
+
+export const RefreshParams = z.object({
+  refresh_token: z.string(),
+});
+
+export type RefreshParams = z.infer<typeof RefreshParams>;
+
+export const RefreshResponse = z.object({
+  token: z.string(),
+  refresh_token: z.string(),
+});
+
+export type RefreshResponse = z.infer<typeof RefreshResponse>;
 
 export const UserFile = z.object({
   file_name: z.string(),

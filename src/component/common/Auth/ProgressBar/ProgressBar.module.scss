@@ -1,0 +1,24 @@
+.progress {
+  font-weight: 500;
+  font-size: 15px;
+
+  &__title {
+    display: flex;
+    color: #f7941e;
+    justify-content: space-between;
+  }
+
+  &__bar {
+    height: 3px;
+    width: 100%;
+    border: none;
+  }
+
+  &__bar::-webkit-progress-bar {
+    background-color: #e5e5e5;
+  }
+
+  &__bar::-webkit-progress-value {
+    background-color: #f7941e;
+  }
+}

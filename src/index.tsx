@@ -4,6 +4,7 @@ import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ZodError } from 'zod';
+import ErrorBoundary from 'component/common/ErrorBoundary';
 import App from './App';
 
 const root = ReactDOM.createRoot(
@@ -27,11 +28,11 @@ const queryClient = new QueryClient({
 });
 
 root.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient}>
+    <ErrorBoundary message="에러가 발생했습니다.">
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>,
+    </ErrorBoundary>
+  </QueryClientProvider>,
 );
