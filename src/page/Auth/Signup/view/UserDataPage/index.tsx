@@ -19,6 +19,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
 
   useEffect(() => {
     checkNextStep(userData);
+    console.log(userData);
   }, [userData, checkNextStep]);
 
   return (

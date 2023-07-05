@@ -13,8 +13,8 @@ import Complete from './view/CompletePage';
 
 export default function Signup() {
   const [step, setStep] = useState(0);
-
   const { isMobile } = useMediaQuery();
+
   useEffect(() => {
     setStep(0);
   }, [isMobile]);

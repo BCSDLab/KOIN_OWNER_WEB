@@ -22,8 +22,19 @@ export default function UserId({ setId, userData }:EmailInputProps) {
     setId({ ...userData, email: data.email });
     setUsable(!isUsable);
   };
+  const mobileSubmit:SubmitHandler<RegisterData> = (data) => {
+    if (isMobile) {
+      console.log('이메일 중복 체크', data.email);
+      setId({ ...userData, email: data.email });
+      setUsable(!isUsable);
+    }
+  };
   return (
-    <form className={styles.form} onSubmit={emailHandleSubmit(onSubmit)}>
+    <form
+      className={styles.form}
+      onChange={emailHandleSubmit(mobileSubmit)}
+      onSubmit={emailHandleSubmit(onSubmit)}
+    >
       {!isMobile && <span className={styles.form__label}>아이디</span>}
       <div className={styles['input-block']}>
         <input
