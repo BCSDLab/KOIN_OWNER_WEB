@@ -33,8 +33,16 @@ export default function Signup() {
   };
 
   const goPrev = () => {
-    decreaseStep();
-    setRegisterStep(registerStep - 1);
+    if (registerStep === 2) {
+      setRegisterStep(1);
+      setStep(1);
+    } else if (step === 2) {
+      setStep(1);
+      setRegisterStep(1);
+    } else {
+      setRegisterStep(registerStep - 1);
+      decreaseStep();
+    }
   };
 
   const STEPS = [
