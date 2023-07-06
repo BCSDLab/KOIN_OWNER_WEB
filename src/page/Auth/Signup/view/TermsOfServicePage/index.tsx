@@ -3,12 +3,12 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import TERMS from 'page/Auth/Signup/constant/terms';
 import { useEffect, useState } from 'react';
+
 import styles from './TermsOfService.module.scss';
 
 type ButtonClickEventProps = {
   clickEvent: () => void;
 };
-
 const useTermCheck = () => {
   const [isUserTermAgree, setUserTermAgree] = useState(false);
   const [isKoinTermAgree, setKoinTermAgree] = useState(false);

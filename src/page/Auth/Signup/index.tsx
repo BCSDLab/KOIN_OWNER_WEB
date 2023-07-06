@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'component/common/ProgressBar';
-import UserEmail from './component/UserEmail';
+import useStepStore from 'store/useStepStore';
 import OwnerData from './view/OwnerDataPage';
 import TermsOfService from './view/TermsOfServicePage';
 import UserData from './view/UserDataPage';
@@ -12,24 +12,35 @@ import styles from './SignUp.module.scss';
 import Complete from './view/CompletePage';
 
 export default function Signup() {
-  const [step, setStep] = useState(0);
+  const {
+    step, setStep, increaseStep, decreaseStep,
+  } = useStepStore();
   const { isMobile } = useMediaQuery();
-
+  const [registerStep, setRegisterStep] = useState(0);
   useEffect(() => {
     setStep(0);
-  }, [isMobile]);
+    setRegisterStep(0);
+  }, [isMobile, setStep]);
+  useEffect(() => {
+    console.log(step);
+    console.log(registerStep);
+  }, [step, registerStep]);
 
-  const PC_STEPS = [
-    <TermsOfService clickEvent={() => setStep(step + 1)} />,
-    <UserData clickEvent={() => setStep(step + 1)} />,
-    <OwnerData clickEvent={() => setStep(step + 1)} />,
-  ];
+  const goNext = () => {
+    console.log('asdf');
+    increaseStep();
+    setRegisterStep(registerStep + 1);
+  };
 
-  const MOBILE_STEPS = [
-    <TermsOfService clickEvent={() => setStep(step + 1)} />,
-    <UserData clickEvent={() => setStep(step + 1)} />,
-    <UserEmail clickEvent={() => setStep(step + 1)} />,
-    <OwnerData clickEvent={() => setStep(step + 1)} />,
+  const goPrev = () => {
+    decreaseStep();
+    setRegisterStep(registerStep - 1);
+  };
+
+  const STEPS = [
+    <TermsOfService clickEvent={goNext} />,
+    <UserData clickEvent={goNext} />,
+    <OwnerData clickEvent={goNext} />,
   ];
 
   return (
@@ -37,29 +48,28 @@ export default function Signup() {
       {!isMobile
         ? (
           <>
-            {step < 3 && (
+            {registerStep < 3 && (
               <section className={styles.section}>
                 <Logo className={styles.section__logo} />
                 <div className={styles.section__steps}>
-                  {PC_STEPS[step]}
+                  {STEPS[registerStep]}
                 </div>
               </section>
             )}
-            {step === 3 && <Complete />}
+            {registerStep === 3 && <Complete />}
           </>
         )
         : (
           <>
-
-            {step < 4 && (
+            {registerStep < 3 && (
             <>
-              {step === 0 ? (
+              {registerStep === 0 ? (
                 <Link to="/login" className={styles['back-button']}>
                   <Back />
                 </Link>
               ) : (
                 <div className={styles['back-button']}>
-                  <Back onClick={() => setStep(step - 1)} />
+                  <Back onClick={goPrev} />
                 </div>
               )}
               <section className={styles.section}>
@@ -69,17 +79,17 @@ export default function Signup() {
                   회원가입
                 </span>
                 <div className={styles.section__steps}>
-                  {step < 4 && (
+                  {registerStep < 3 && (
                     <>
-                      {step > 0 && <ProgressBar step={step} />}
-                      {MOBILE_STEPS[step]}
+                      {registerStep > 0 && <ProgressBar step={step} />}
+                      {STEPS[registerStep]}
                     </>
                   )}
                 </div>
               </section>
             </>
             )}
-            {step === 4 && <Complete />}
+            {registerStep === 3 && <Complete />}
           </>
         )}
     </div>
