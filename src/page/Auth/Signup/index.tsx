@@ -22,6 +22,7 @@ export default function Signup() {
     setRegisterStep(0);
   }, [isMobile, setStep]);
   useEffect(() => {
+    console.log(registerStep, step);
   }, [step, registerStep]);
 
   const goNext = () => {

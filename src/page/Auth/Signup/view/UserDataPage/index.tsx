@@ -28,9 +28,15 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const [userData, setData] = useState<RegisterData>({});
   const { isDone, checkNextStep } = useCheckNextStep();
-  const { increaseStep } = useStepStore();
+  const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);
   const { isFilled, checkEmailStep } = useCheckEmailStep();
+
+  useEffect(() => {
+    if (step === 1) {
+      setRegisterStep(0);
+    }
+  }, [step]);
 
   useEffect(() => {
     if (isMobile) {
