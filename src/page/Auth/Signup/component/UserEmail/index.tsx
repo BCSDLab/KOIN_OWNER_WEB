@@ -11,8 +11,8 @@ import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
   clickEvent?: () => void | null,
-  userData?: RegisterData,
-  setAuthenticate?: (data:RegisterData) => void
+  userData: RegisterData,
+  setAuthenticate: (data:RegisterData) => void
 };
 export default function UserEmail({ clickEvent, userData, setAuthenticate }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
@@ -24,13 +24,13 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
     console.log(data.email);
   };
   const compareAuthNumber = () => {
-    // 인증 번호 입력
-    if (checkAuthNumber('123456')) {
-      if (setAuthenticate) {
+    if (authInput.current?.value.length === 6) {
+      // 인증 번호 입력
+      if (checkAuthNumber('123456')) {
         setAuthenticate({ ...userData, isAuthentication: true });
+      } else {
+        setAuthenticate({ ...userData, isAuthentication: false });
       }
-    } else {
-      alert('not match');
     }
   };
   return (
@@ -40,7 +40,7 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} />
-            {isOpen && <input className={styles.input} type="number" placeholder="인증번호" ref={authInput} />}
+            {isOpen && <input className={styles.input} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={authInput} />}
           </div>
           {errors.email && (
             <div className={styles['email-check__warn']}>
@@ -70,14 +70,20 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
         <>
           <div className={styles['email-check']}>
             <span className={styles['email-check__phrase']}>
-              <span className={styles['email-check__phrase--user-email']}>abcd123@koreatech.ac.kr</span>
+              <span className={styles['email-check__phrase--user-email']}>{userData.email}</span>
             &nbsp;으로
               <br />
               발송된 인증번호 6자리를 입력해 주세요
             </span>
             <div className={styles['email-check__input']}>
-              <input className={styles.input} type="password" placeholder="인증번호 입력" />
+              <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" onChange={compareAuthNumber} ref={authInput} />
             </div>
+            {userData?.isAuthentication === undefined && (
+            <div className={styles['email-check__warn']}>
+              <Warn />
+              <span className={styles['email-check__warn--phrase']}>인증번호가 일치하지 않습니다.</span>
+            </div>
+            )}
             <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
           <div className={styles.buttons}>
