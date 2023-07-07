@@ -56,10 +56,7 @@ export type UserResponse = z.infer<typeof UserResponse>;
 export const RegisterParam = z.object({
   email: z.string(),
   password: z.string(),
-  isAuthentication: z.boolean().refine((value) => value === true, {
-    message: 'isAuth는 true여야 합니다.',
-    path: ['isAuth'],
-  }),
+  isAuthentication: z.boolean().refine((value) => value === true),
 });
 
 export type RegisterParam = z.infer<typeof RegisterParam>;

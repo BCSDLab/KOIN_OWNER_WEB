@@ -78,7 +78,7 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" onChange={compareAuthNumber} ref={authInput} />
             </div>
-            {!userData?.isAuthentication && (
+            {userData.isAuthentication !== undefined && !userData.isAuthentication && (
             <div className={styles['email-check__warn']}>
               <Warn />
               <span className={styles['email-check__warn--phrase']}>인증번호가 일치하지 않습니다.</span>
