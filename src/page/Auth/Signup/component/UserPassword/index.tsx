@@ -21,7 +21,6 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
     passwordRegister, passwordConfirmRegister, errors, handleSubmit,
   } = usePasswordConfirm();
   const onSubmit:SubmitHandler<RegisterData> = (data) => {
-    console.log(data, userData, setPassword);
     setPassword({ ...userData, password: data.password });
   };
   return (

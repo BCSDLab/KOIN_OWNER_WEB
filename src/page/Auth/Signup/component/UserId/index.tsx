@@ -18,15 +18,12 @@ export default function UserId({ setId, userData }:EmailInputProps) {
   const [isUsable, setUsable] = useState<boolean | null>(null);
   const { emailHandleSubmit, errors, emailDuplicateRegister } = useEmailDuplicateCheck();
   const onSubmit:SubmitHandler<RegisterData> = (data) => {
-    console.log('이메일 중복 체크', data.email);
     setId({ ...userData, email: data.email });
     setUsable(!isUsable);
   };
   const mobileSubmit:SubmitHandler<RegisterData> = (data) => {
     if (isMobile) {
-      console.log('이메일 중복 체크', data.email);
-      setId({ ...userData, email: data.email });
-      setUsable(!isUsable);
+      onSubmit(data);
     }
   };
   return (
