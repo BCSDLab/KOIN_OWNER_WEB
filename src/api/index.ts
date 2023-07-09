@@ -2,7 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import API_PATH from 'config/constants';
-import { RefreshParams, RefreshResponse } from './auth/model';
+import { RefreshParams, RefreshResponse } from 'model/auth';
 
 const client = axios.create({
   baseURL: `${API_PATH}`,
