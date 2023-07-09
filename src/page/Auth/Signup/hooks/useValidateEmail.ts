@@ -9,7 +9,8 @@ export default function useValidateEmail() {
     register: emailRegister,
     handleSubmit: emailHandleSubmit,
     formState: { errors },
-  } = useForm<RegisterData>();
+    watch,
+  } = useForm<RegisterData>({ mode: 'all' });
   const emailDuplicateRegister = emailRegister('email', {
     required: { value: true, message: '이메일을 입력해주세요.' },
     pattern: {
@@ -18,6 +19,6 @@ export default function useValidateEmail() {
     },
   });
   return {
-    emailHandleSubmit, errors, emailDuplicateRegister,
+    emailHandleSubmit, errors, emailDuplicateRegister, watch,
   };
 }

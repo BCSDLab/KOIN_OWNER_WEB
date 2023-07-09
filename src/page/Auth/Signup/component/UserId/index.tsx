@@ -13,12 +13,17 @@ interface EmailInputProps {
 
 export default function UserId({ setId, userData }:EmailInputProps) {
   const { isMobile } = useMediaQuery();
-  const { emailHandleSubmit, errors, emailDuplicateRegister } = useValidateEmail();
-  const { status, onSubmit, onMobileSubmit } = useCheckEmailDuplicate(userData, setId, isMobile);
+  const {
+    emailHandleSubmit, errors, emailDuplicateRegister, watch,
+  } = useValidateEmail();
+  const {
+    status, onSubmit, onMobileSubmit, email,
+  } = useCheckEmailDuplicate(userData, setId, isMobile);
+
   return (
     <form
       className={styles.form}
-      onChange={emailHandleSubmit(onMobileSubmit)}
+      onChange={isMobile ? emailHandleSubmit(onMobileSubmit) : () => {}}
       onSubmit={emailHandleSubmit(onSubmit)}
     >
       {!isMobile && <span className={styles.form__label}>아이디</span>}
@@ -32,19 +37,20 @@ export default function UserId({ setId, userData }:EmailInputProps) {
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>
-      {errors.email ? (
+      {errors.email && (
         <div className={styles.form__warn}>
           <Warn />
           <span className={styles['form__warn--phrase']}>{errors.email.message}</span>
         </div>
-      ) : (status === 'error' && !errors.email)
-            && (
-              <div className={styles.form__warn}>
-                <Warn />
-                <span className={styles['form__warn--phrase']}>이미 가입된 이메일입니다.</span>
-              </div>
-            )}
-      {(status === 'success' && !errors.email)
+      )}
+      {watch().email === email && !errors.email && status === 'error'
+      && (
+      <div className={styles.form__warn}>
+        <Warn />
+        <span className={styles['form__warn--phrase']}>이미 가입된 이메일입니다.</span>
+      </div>
+      )}
+      {watch().email === email && !errors.email && status === 'success'
       && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
 
     </form>

@@ -29,5 +29,7 @@ export default function useCheckEmailDuplicate(
       setId({ ...userData, email });
     }
   }, [status, setId, email, userData]);
-  return { status, onSubmit, onMobileSubmit };
+  return {
+    status, onSubmit, onMobileSubmit, email,
+  };
 }
