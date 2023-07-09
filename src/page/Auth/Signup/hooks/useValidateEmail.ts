@@ -4,7 +4,7 @@ import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 
 const REG_EX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
-export default function useEmailDuplicateCheck() {
+export default function useValidateEmail() {
   const {
     register: emailRegister,
     handleSubmit: emailHandleSubmit,

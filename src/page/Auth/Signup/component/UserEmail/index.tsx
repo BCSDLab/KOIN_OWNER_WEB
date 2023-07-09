@@ -5,7 +5,7 @@ import { useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SubmitHandler } from 'react-hook-form';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
-import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useEmailDataCheck';
+import useEmailDuplicateCheck from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import styles from './UserEmail.module.scss';
 

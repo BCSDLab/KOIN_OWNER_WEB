@@ -8,7 +8,7 @@ import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useStepStore from 'store/useStepStore';
 // eslint-disable-next-line import/no-named-as-default
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
-import { RegisterParam } from 'api/auth/model';
+import { RegisterParam } from 'api/register/model';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
@@ -43,6 +43,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
       checkEmailStep(userData);
     }
     checkNextStep(userData);
+    console.log(userData);
   }, [userData, checkNextStep, isMobile, checkEmailStep]);
 
   const goEmailAuth = () => {
