@@ -1,8 +1,7 @@
 import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
-import { ReactComponent as LogoMobileIcon } from 'assets/svg/common/koin-logo-mobile.svg';
+import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-logo.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
-import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CATEGORY from 'static/category';
 import cn from 'utils/ts/className';
@@ -10,6 +9,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
 import { postLogout } from 'api/auth';
 import useUserStore from 'store/user';
+import useStepStore from 'store/useStepStore';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -35,10 +35,9 @@ function Header() {
     expandSidebar,
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
-
   const isMain = true;
-  const [userInfo] = useState<{ name: string; } | null>(null);
-  const removeUser = useUserStore((state) => state.removeUser);
+  const { user, removeUser } = useUserStore();
+  const setStep = useStepStore((state) => state.setStep);
 
   const logout = () => {
     postLogout()
@@ -46,6 +45,7 @@ function Header() {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         removeUser();
+        setStep(0);
       });
   };
 
@@ -75,7 +75,7 @@ function Header() {
               )}
               <span className={styles.mobileheader__title}>
                 {isMain ? (
-                  <LogoMobileIcon title="코인 로고" />
+                  <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)
                   .find((subMenuValue) => subMenuValue.link === pathname)
@@ -111,8 +111,7 @@ function Header() {
                       <BackArrowIcon title="뒤로 가기 버튼" />
                     </button>
                     <div className={styles.mobileheader__greet}>
-                      {/* Auth 완료시 수정 필요 */}
-                      {userInfo?.name}
+                      {user?.name}
                       <span>님, 안녕하세요!</span>
                     </div>
                     <ul className={styles['mobileheader__auth-menu']}>
