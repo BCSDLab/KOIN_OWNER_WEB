@@ -62,6 +62,7 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
                 buttonSize="large"
                 content="인증완료"
                 onClick={verificationCode}
+                disable={userData.isAuthentication}
               />
             </>
           ) : (
