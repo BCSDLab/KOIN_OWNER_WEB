@@ -76,9 +76,9 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
             ) : <UserEmail setAuthenticate={setData} userData={userData} />}
           </section>
           <div className={styles.buttons}>
-            {registerStep === 0
-              ? <CustomButton buttonSize="large" content="이메일 인증하기" onClick={goEmailAuth} disable={!isFilled} />
-              : <CustomButton buttonSize="large" content="다음" onClick={clickEvent} disable={!isDone} />}
+            {registerStep === 0 && <CustomButton buttonSize="large" content="이메일 인증하기" onClick={goEmailAuth} disable={!isFilled} />}
+            {registerStep > 1 && <CustomButton buttonSize="large" content="다음" onClick={clickEvent} disable={!isDone} />}
+
           </div>
         </>
       )

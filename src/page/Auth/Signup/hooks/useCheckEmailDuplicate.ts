@@ -1,4 +1,4 @@
-import useCheckDuplicate from 'query/register';
+import { useCheckDuplicate } from 'query/register';
 import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
