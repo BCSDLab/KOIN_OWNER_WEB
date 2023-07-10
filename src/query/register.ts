@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getEmailAuthCode, getEmailDuplicate, verificationAuthCode } from 'api/register';
+import useUploadToken from 'store/uploadToken';
 
 export const useCheckDuplicate = (email:string) => {
   const { status, refetch } = useQuery(['emailDuplicateCheck', email], () => getEmailDuplicate(email), { enabled: false });
@@ -22,6 +23,7 @@ export const useGenerateAuthCode = (email:string) => {
 };
 
 export const useVerificationAuthCode = (code:string, email:string) => {
+  const { setUploadToken } = useUploadToken();
   const {
     status, refetch, isError, error,
   } = useQuery(
@@ -30,7 +32,9 @@ export const useVerificationAuthCode = (code:string, email:string) => {
     {
       enabled: false,
       onSuccess: (response) => {
-        if (response.token) { sessionStorage.setItem('upload_token', response.token); }
+        if (response.token) {
+          setUploadToken(response.token);
+        }
       },
     },
   );
