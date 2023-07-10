@@ -9,7 +9,8 @@ export default function useCheckEmailDuplicate(
   isMobile: boolean,
 ) {
   const [email, setEmail] = useState<string>('');
-  const { status, refetch } = useCheckDuplicate(email);
+  const [errorMessage, setMessage] = useState('');
+  const { status, refetch, error } = useCheckDuplicate(email);
 
   const onSubmit:SubmitHandler<RegisterData> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
@@ -27,9 +28,11 @@ export default function useCheckEmailDuplicate(
   useEffect(() => {
     if (status === 'success' && userData.email !== email) {
       setId({ ...userData, email });
+    } else {
+      setMessage(Object(error).response?.data.message);
     }
-  }, [status, setId, email, userData]);
+  }, [status, setId, email, userData, error]);
   return {
-    status, onSubmit, onMobileSubmit, email,
+    status, onSubmit, onMobileSubmit, email, errorMessage,
   };
 }

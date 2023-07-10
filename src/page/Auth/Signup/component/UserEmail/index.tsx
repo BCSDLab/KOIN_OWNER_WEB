@@ -1,10 +1,10 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
@@ -35,29 +35,13 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
             {isOpen && <input className={styles.input} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
-          {(errors.email) && (
-            <div className={styles['email-check__warn']}>
-              <Warn />
-              <span className={styles['email-check__warn--phrase']}>{errors.email.message}</span>
-            </div>
-          )}
-          {verificateError && (
-          <div className={styles['email-check__warn']}>
-            <Warn />
-            <span className={styles['email-check__warn--phrase']}>{verificateError}</span>
-          </div>
-          )}
+          { errors.email && <ErrorMessage message={errors.email.message} />}
           {(!errors.email && errorMessage && email === watch().email)
-          && (
-          <div className={styles['email-check__warn']}>
-            <Warn />
-            <span className={styles['email-check__warn--phrase']}>{errorMessage}</span>
-          </div>
-          )}
+           && <ErrorMessage message={errorMessage} />}
+          { verificateError && <ErrorMessage message={verificateError} />}
           {isOpen ? (
             <>
               <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-
               <CustomButton
                 buttonSize="large"
                 content="인증완료"
@@ -86,12 +70,7 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" />
             </div>
-            {userData.isAuthentication !== undefined && !userData.isAuthentication && (
-            <div className={styles['email-check__warn']}>
-              <Warn />
-              <span className={styles['email-check__warn--phrase']}>인증번호가 일치하지 않습니다.</span>
-            </div>
-            )}
+            {verificateError && <ErrorMessage message={verificateError} />}
             <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
           <div className={styles.buttons}>

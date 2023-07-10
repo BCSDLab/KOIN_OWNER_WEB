@@ -3,8 +3,8 @@ import { getEmailAuthCode, getEmailDuplicate, verificationAuthCode } from 'api/r
 import useUploadToken from 'store/uploadToken';
 
 export const useCheckDuplicate = (email:string) => {
-  const { status, refetch } = useQuery(['emailDuplicateCheck', email], () => getEmailDuplicate(email), { enabled: false });
-  return { status, refetch };
+  const { status, refetch, error } = useQuery(['emailDuplicateCheck', email], () => getEmailDuplicate(email), { enabled: false });
+  return { status, refetch, error };
 };
 
 export const useGenerateAuthCode = (email:string) => {

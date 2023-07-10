@@ -1,12 +1,12 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
-import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SubmitHandler } from 'react-hook-form';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import styles from './UserPassword.module.scss';
 
 interface PasswordInputProps {
@@ -39,11 +39,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
           {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
-        {errors.password ? (
-          <div className={styles.form__warn}>
-            <Warn />
-            <span className={styles['form__warn--phrase']}>{errors.password.message}</span>
-          </div>
+        {errors.password ? (<ErrorMessage message={errors.password.message} />
         ) : <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>}
       </div>
       <div className={styles.form__input}>
@@ -53,12 +49,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
           {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
-        {errors.passwordConfirm && (
-          <div className={styles.form__warn}>
-            <Warn />
-            <span className={styles['form__warn--phrase']}>{errors.passwordConfirm.message}</span>
-          </div>
-        )}
+        {errors.passwordConfirm && <ErrorMessage message={errors.passwordConfirm.message} />}
       </div>
     </div>
   );
