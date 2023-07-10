@@ -10,7 +10,7 @@ export type EmailAuthResponse = z.infer<typeof EmailAuthResponse>;
 
 export const AuthCodeParam = z.object({
   address: z.string().email(),
-  certificatoin_code: z.string(),
+  certification_code: z.string(),
 });
 export type AuthCodeParam = z.infer<typeof AuthCodeParam>;
 

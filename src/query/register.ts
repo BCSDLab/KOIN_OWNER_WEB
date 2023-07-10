@@ -22,12 +22,19 @@ export const useGenerateAuthCode = (email:string) => {
 };
 
 export const useVerificationAuthCode = (code:string, email:string) => {
-  const { data, refetch } = useQuery(
+  const {
+    status, refetch, isError, error,
+  } = useQuery(
     ['verificationCode', code],
-    () => verificationAuthCode({ certificatoin_code: code, address: email }),
+    () => verificationAuthCode({ certification_code: code, address: email }),
     {
       enabled: false,
+      onSuccess: (response) => {
+        if (response.token) { sessionStorage.setItem('upload_token', response.token); }
+      },
     },
   );
-  return { data, refetch };
+  return {
+    status, refetch, isError, error,
+  };
 };
