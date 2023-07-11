@@ -1,51 +1,25 @@
-import { useEffect, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'component/common/ProgressBar';
-import useStepStore from 'store/useStepStore';
 import OwnerData from './view/OwnerDataPage';
 import TermsOfService from './view/TermsOfServicePage';
 import UserData from './view/UserDataPage';
 import styles from './SignUp.module.scss';
 import Complete from './view/CompletePage';
+import useRegisterStep from './hooks/useRegisterStep';
 
 export default function Signup() {
-  const {
-    step, setStep, increaseStep, decreaseStep,
-  } = useStepStore();
   const { isMobile } = useMediaQuery();
-  const [registerStep, setRegisterStep] = useState(0);
-  useEffect(() => {
-    setStep(0);
-    setRegisterStep(0);
-  }, [isMobile, setStep]);
-
-  const goNext = () => {
-    increaseStep();
-    setRegisterStep(registerStep + 1);
-  };
-
-  const goPrev = () => {
-    if (registerStep === 2) {
-      setRegisterStep(1);
-      setStep(1);
-    } else if (step === 2) {
-      setStep(1);
-      setRegisterStep(1);
-    } else {
-      setRegisterStep(registerStep - 1);
-      decreaseStep();
-    }
-  };
-
+  const {
+    goNext, registerStep, goPrev, step,
+  } = useRegisterStep();
   const STEPS = [
     <TermsOfService clickEvent={goNext} />,
-    <UserData clickEvent={goNext} />,
+    <UserData goNext={goNext} />,
     <OwnerData clickEvent={goNext} />,
   ];
-
   return (
     <div className={styles.page}>
       {!isMobile

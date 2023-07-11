@@ -8,8 +8,6 @@ export default function useCheckNextStep() {
   const checkNextStep = (userData:RegisterData) => {
     if (RegisterParam.safeParse(userData).success) {
       setDone(true);
-    } else {
-      setDone(false);
     }
   };
 

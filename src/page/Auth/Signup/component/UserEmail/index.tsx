@@ -8,12 +8,12 @@ import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
-  clickEvent?: () => void | null,
+  goNext?: () => void;
   userData: RegisterData,
   setAuthenticate: (data:RegisterData) => void
 };
 
-export default function UserEmail({ clickEvent, userData, setAuthenticate }:ButtonClickEvent) {
+export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const {
     emailHandleSubmit, errors: formErrors, emailDuplicateRegister, watch,
@@ -68,14 +68,14 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
               발송된 인증번호 6자리를 입력해 주세요
             </span>
             <div className={styles['email-check__input']}>
-              <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" />
+              <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
             {verificateError && <ErrorMessage message={verificateError} />}
             <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
           <div className={styles.buttons}>
             <CustomButton buttonSize="mobile" content="재발송" onClick={refetch} />
-            <CustomButton buttonSize="mobile" content="다음" onClick={clickEvent} />
+            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} />
           </div>
         </>
       )

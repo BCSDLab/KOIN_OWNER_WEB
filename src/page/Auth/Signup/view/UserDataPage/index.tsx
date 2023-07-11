@@ -6,13 +6,12 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useStepStore from 'store/useStepStore';
-// eslint-disable-next-line import/no-named-as-default
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
 import { RegisterParam } from 'api/register/model';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
-  clickEvent: () => void;
+  goNext: () => void;
 };
 
 const useCheckEmailStep = () => {
@@ -24,7 +23,7 @@ const useCheckEmailStep = () => {
   };
   return { isFilled, checkEmailStep };
 };
-export default function UserData({ clickEvent }:ButtonClickEventProps) {
+export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const [userData, setData] = useState<RegisterData>({});
   const { isDone, checkNextStep } = useCheckNextStep();
@@ -60,7 +59,7 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
             <UserEmail setAuthenticate={setData} userData={userData} />
           </section>
           <div className={styles.buttons}>
-            <CustomButton buttonSize="large" content="다음" onClick={clickEvent} disable={!isDone} />
+            <CustomButton buttonSize="large" content="다음" onClick={goNext} disable={!isDone} />
           </div>
         </>
       )
@@ -72,12 +71,11 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
                 <UserId setId={setData} userData={userData} />
                 <UserPassword setPassword={setData} userData={userData} />
               </>
-            ) : <UserEmail setAuthenticate={setData} userData={userData} />}
+            ) : <UserEmail setAuthenticate={setData} userData={userData} goNext={goNext} />}
           </section>
           <div className={styles.buttons}>
             {registerStep === 0 && <CustomButton buttonSize="large" content="이메일 인증하기" onClick={goEmailAuth} disable={!isFilled} />}
-            {registerStep > 1 && <CustomButton buttonSize="large" content="다음" onClick={clickEvent} disable={!isDone} />}
-
+            {registerStep > 1 && <CustomButton buttonSize="large" content="다음" onClick={goNext} disable={!isDone} />}
           </div>
         </>
       )
