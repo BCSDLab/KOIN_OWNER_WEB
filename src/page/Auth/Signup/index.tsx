@@ -21,9 +21,6 @@ export default function Signup() {
     setStep(0);
     setRegisterStep(0);
   }, [isMobile, setStep]);
-  useEffect(() => {
-    console.log(registerStep, step);
-  }, [step, registerStep]);
 
   const goNext = () => {
     increaseStep();

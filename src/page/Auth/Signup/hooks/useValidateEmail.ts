@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useForm } from 'react-hook-form';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 

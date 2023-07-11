@@ -43,7 +43,6 @@ export default function UserData({ clickEvent }:ButtonClickEventProps) {
       checkEmailStep(userData);
     }
     checkNextStep(userData);
-    console.log(userData);
   }, [userData, checkNextStep, isMobile, checkEmailStep]);
 
   const goEmailAuth = () => {
