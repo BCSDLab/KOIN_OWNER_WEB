@@ -22,10 +22,10 @@ export default function useRegisterStep() {
   }, [increaseStep, setRegisterStep]);
 
   useEffect(() => {
-    if (uploadToken) {
+    if (uploadToken && isMobile) {
       goNext();
     }
-  }, [uploadToken, goNext]);
+  }, [uploadToken, goNext, isMobile]);
 
   const goPrev = () => {
     if (registerStep === 2) {
