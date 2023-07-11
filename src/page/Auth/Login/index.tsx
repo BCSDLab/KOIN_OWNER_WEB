@@ -9,7 +9,7 @@ import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import useLogin from 'query/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginParams } from 'api/auth/model';
+import { LoginParams } from 'model/auth';
 import { useState } from 'react';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
