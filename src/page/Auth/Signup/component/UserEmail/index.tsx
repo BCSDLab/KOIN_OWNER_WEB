@@ -16,10 +16,10 @@ type ButtonClickEvent = {
 export default function UserEmail({ clickEvent, userData, setAuthenticate }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const {
-    emailHandleSubmit, errors, emailDuplicateRegister, watch,
+    emailHandleSubmit, errors: formErrors, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    isOpen, onSubmit, errorMessage, email, refetch,
+    isOpen, onSubmit, errorMessage: requestError, email, refetch,
   } = useAuthCheck(userData.email ? userData.email : '', isMobile);
   const {
     verificationCode,
@@ -35,9 +35,9 @@ export default function UserEmail({ clickEvent, userData, setAuthenticate }:Butt
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
             {isOpen && <input className={styles.input} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
-          { errors.email && <ErrorMessage message={errors.email.message} />}
-          {(!errors.email && errorMessage && email === watch().email)
-           && <ErrorMessage message={errorMessage} />}
+          { formErrors.email && <ErrorMessage message={formErrors.email.message} />}
+          {(!formErrors.email && requestError && email === watch().email)
+           && <ErrorMessage message={requestError} />}
           { verificateError && <ErrorMessage message={verificateError} />}
           {isOpen ? (
             <>

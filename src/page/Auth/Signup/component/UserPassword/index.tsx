@@ -18,7 +18,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
   const { isMobile } = useMediaQuery();
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const {
-    passwordRegister, passwordConfirmRegister, errors, handleSubmit,
+    passwordRegister, passwordConfirmRegister, errors: formErrors, handleSubmit,
   } = usePasswordConfirm();
   const onSubmit:SubmitHandler<RegisterData> = (data) => {
     setPassword({ ...userData, password: data.password });
@@ -39,7 +39,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
           {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
-        {errors.password ? (<ErrorMessage message={errors.password.message} />
+        {formErrors.password ? (<ErrorMessage message={formErrors.password.message} />
         ) : <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>}
       </div>
       <div className={styles.form__input}>
@@ -49,7 +49,8 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
           {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
-        {errors.passwordConfirm && <ErrorMessage message={errors.passwordConfirm.message} />}
+        {formErrors.passwordConfirm
+        && <ErrorMessage message={formErrors.passwordConfirm.message} />}
       </div>
     </div>
   );

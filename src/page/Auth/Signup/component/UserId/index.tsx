@@ -14,10 +14,10 @@ interface EmailInputProps {
 export default function UserId({ setId, userData }:EmailInputProps) {
   const { isMobile } = useMediaQuery();
   const {
-    emailHandleSubmit, errors, emailDuplicateRegister, watch,
+    emailHandleSubmit, errors: formErros, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    status, onSubmit, onMobileSubmit, email, errorMessage,
+    status, onSubmit, onMobileSubmit, email, errorMessage: requestError,
   } = useCheckEmailDuplicate(userData, setId, isMobile);
 
   return (
@@ -37,10 +37,10 @@ export default function UserId({ setId, userData }:EmailInputProps) {
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>
-      {errors.email && <ErrorMessage message={errors.email.message} />}
-      {!errors.email && watch().email === email && errorMessage
-      && <ErrorMessage message={errorMessage} />}
-      {!errors.email && watch().email === email && status === 'success'
+      {formErros.email && <ErrorMessage message={formErros.email.message} />}
+      {!formErros.email && watch().email === email && requestError
+      && <ErrorMessage message={requestError} />}
+      {!formErros.email && watch().email === email && status === 'success'
       && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
     </form>
   );
