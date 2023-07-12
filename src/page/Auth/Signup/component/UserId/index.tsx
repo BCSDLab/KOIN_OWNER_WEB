@@ -34,7 +34,6 @@ export default function UserId({ setId, userData }:EmailInputProps) {
           type="text"
           placeholder={isMobile ? '이메일' : '이메일 형식 아이디 입력(필수)'}
           {...emailDuplicateRegister}
-          disabled={status === 'success'}
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>

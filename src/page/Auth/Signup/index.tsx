@@ -3,6 +3,7 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'component/common/ProgressBar';
+import PreviousStep from 'component/common/Auth/PreviousStep';
 import OwnerData from './view/OwnerDataPage';
 import TermsOfService from './view/TermsOfServicePage';
 import UserData from './view/UserDataPage';
@@ -44,11 +45,7 @@ export default function Signup() {
                 <Link to="/login" className={styles['back-button']}>
                   <Back />
                 </Link>
-              ) : (
-                <div className={styles['back-button']}>
-                  <Back onClick={goPrev} />
-                </div>
-              )}
+              ) : <PreviousStep step={step} clickEvent={goPrev} />}
               <section className={styles.section}>
                 <span className={styles.section__name}>
                   사장님용
