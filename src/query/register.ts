@@ -11,7 +11,7 @@ export const useGenerateAuthCode = (email:string) => {
   const {
     status, refetch, isError, error,
   } = useQuery(
-    ['genrateEmailAuthCode', email],
+    ['generateEmailAuthCode', email],
     () => getEmailAuthCode({ address: email }),
     {
       enabled: false,
