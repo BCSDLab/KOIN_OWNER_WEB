@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
-import { RegisterParam } from 'api/register/model';
+import { RegisterParam } from 'model/register';
 
 export default function useCheckNextStep() {
   const [isDone, setDone] = useState(false);

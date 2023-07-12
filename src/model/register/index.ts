@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-export const EmailAuthParam = z.object({
+export const EmailRegisterParam = z.object({
   address: z.string().email(),
 });
-export type EmailAuthParam = z.infer<typeof EmailAuthParam>;
+export type EmailRegisterParam = z.infer<typeof EmailRegisterParam>;
 
-export const EmailAuthResponse = z.string();
-export type EmailAuthResponse = z.infer<typeof EmailAuthResponse>;
+export const EmailRegisterResponse = z.string();
+export type EmailRegisterResponse = z.infer<typeof EmailRegisterResponse>;
 
 export const AuthCodeParam = z.object({
   address: z.string().email(),

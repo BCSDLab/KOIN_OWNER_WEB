@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useStepStore from 'store/useStepStore';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
-import { RegisterParam } from 'api/register/model';
+import { RegisterParam } from 'model/register';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
