@@ -1,12 +1,16 @@
 /// <reference types="react-scripts" />
 
-export interface Env {
-  NODE_ENV: 'development' | 'production';
-  REACT_APP_API_PATH: string;
-}
+import { z } from 'zod';
+
+const envVar = z.object({
+  NODE_ENV: z.enum(['development', 'production']),
+  REACT_APP_API_PATH: z.string(),
+});
+
+export type EnvVar = z.infer<typeof envVar>;
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends Env {}
+    interface ProcessEnv extends EnvVar {}
   }
 }
