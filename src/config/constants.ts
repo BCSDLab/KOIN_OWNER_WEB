@@ -1,3 +1,5 @@
+import { EnvVar } from 'react-app-env';
+
 const number = (value: string) => {
   const result = Number(value);
   if (!Number.isNaN(result)) {
@@ -10,9 +12,9 @@ const string = (value: string) => value;
 
 const typeConverter = { number, string };
 
-function checkEnv(key: string, type: 'string'): string;
-function checkEnv(key: string, type: 'number'): number;
-function checkEnv(key:string, type: 'number' | 'string') {
+function checkEnv(key: keyof EnvVar, type: 'string'): string;
+function checkEnv(key: keyof EnvVar, type: 'number'): number;
+function checkEnv(key: keyof EnvVar, type: 'number' | 'string') {
   const value = process.env[key];
   if (value !== undefined) {
     const result = typeConverter[type](value);
