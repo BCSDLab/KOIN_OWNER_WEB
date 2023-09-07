@@ -1,0 +1,73 @@
+.template{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-top:220px;
+    padding-bottom:120px;
+    flex-direction: column;
+}
+.logo{
+    margin:auto;
+}
+
+.form {
+  width: 368px;
+  margin-top: 57px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__input{
+    width: 368px;
+    height: 48px;
+    padding: 13px 16px 14px;
+    border: 1px solid #d2dae2;
+    color: #222;
+    font-family: Noto Sans CJK KR;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    box-sizing: border-box;
+  }
+  &__input--auth{
+    width: 255px;
+  }
+
+  &__label {
+    color: #252525;
+    font-family: Noto Sans CJK KR;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.send_auth{
+  width: 97px;
+  height: 48px;
+  background-color: #175C8E;
+  color: white;
+  cursor: pointer;
+}
+
+.submit{
+  width: 368px;
+  height: 48px;
+  color: white;
+  background: #C4C4C4;
+  cursor: pointer;
+  margin-top: 250px;
+  box-sizing: border-box;
+}
+
+.send_container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
