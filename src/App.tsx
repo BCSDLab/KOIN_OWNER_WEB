@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
-import FindPassword from 'page/Auth/FindPassword';
+import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
 import AuthLayout from 'layout/AuthLayout';
 
 import MyStorePage from 'page/MyShopPage';
