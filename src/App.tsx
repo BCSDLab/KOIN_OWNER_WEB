@@ -3,6 +3,8 @@ import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
+import NewPassword from 'page/Auth/FindPassword/NewPassword';
+import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePassword';
 import AuthLayout from 'layout/AuthLayout';
 
 import MyStorePage from 'page/MyShopPage';
@@ -19,6 +21,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/find-password" element={<FindPassword />} />
+        <Route path="/new-password" element={<NewPassword />} />
+        <Route path="/complete-change-password" element={<CompleteChangePassword />} />
       </Route>
     </Routes>
   );
