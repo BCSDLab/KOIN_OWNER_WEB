@@ -12,15 +12,15 @@
 
 .form {
   width: 368px;
-  margin-top: 57px;
+  margin-top: 48px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 
   &__input{
     width: 368px;
     height: 48px;
-    padding: 13px 16px 14px;
+    padding: 14px 16px;
     border: 1px solid #d2dae2;
     color: #222;
     font-family: Noto Sans CJK KR;
@@ -44,6 +44,7 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    gap: 8px;
   }
 }
 
