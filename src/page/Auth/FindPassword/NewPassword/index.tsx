@@ -19,7 +19,7 @@ export default function NewPassword() {
             <Blind />
           </div>
         </label>
-        <span className={styles.password_tip}>* 특수문자 포함 영어와 숫자 조합 6~18자리</span>
+        <span className={styles.form__tip}>* 특수문자 포함 영어와 숫자 조합 6~18자리</span>
         <label className={styles.form__label} htmlFor="check-password">
           비밀번호 확인
           <div className={styles.input_container}>
