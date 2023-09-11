@@ -32,7 +32,7 @@ export default function NewPassword() {
             <Blind />
           </div>
         </label>
-        <button type="button" className={styles.submit}>다음</button>
+        <button type="button" className={styles.form__submit}>다음</button>
       </form>
     </div>
   );
