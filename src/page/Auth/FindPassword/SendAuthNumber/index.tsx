@@ -18,13 +18,13 @@ export default function FindPassword() {
           </label>
           <label className={styles.form__label} htmlFor="auth-num">
             인증번호 보내기
-            <div className={styles.send_container}>
+            <div className={styles.auth_container}>
               <input
                 className={`${styles.form__input} ${styles['form__input--auth']}`}
                 type="text"
                 id="auth-num"
               />
-              <button type="button" className={styles.send_auth}>인증번호 발송</button>
+              <button type="button" className={styles.auth_button}>인증번호 발송</button>
             </div>
           </label>
           <button type="button" className={styles.submit}>다음</button>
