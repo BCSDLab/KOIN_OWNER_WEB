@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
+import cn from 'utils/ts/className';
 import styles from './SendAuthNumber.module.scss';
 
 export default function FindPassword() {
@@ -20,7 +21,7 @@ export default function FindPassword() {
             인증번호 보내기
             <div className={styles.auth_container}>
               <input
-                className={`${styles.form__input} ${styles['form__input--auth']}`}
+                className={cn({ [styles.form__input]: true, [styles['form__input--auth']]: true })}
                 type="text"
                 id="auth-num"
               />
