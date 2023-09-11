@@ -1,4 +1,3 @@
-// import { Outlet } from 'react-router-dom';
 import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Blind } from 'assets/svg/auth/blind.svg';
 import styles from './NewPassword.module.scss';
