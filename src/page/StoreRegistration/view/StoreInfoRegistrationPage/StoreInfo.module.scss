@@ -1,0 +1,156 @@
+.content {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .write {
+    display: block;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #175c8e;
+    margin-bottom: 24px;
+    height: 53px;
+  }
+
+  .complete-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 80px;
+    color: #858585;
+  }
+
+  .nextStep-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 368px;
+    height: 48px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #175c8e;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.content-image {
+  margin-bottom: 64px;
+}
+
+.template {
+  position: relative;
+  height: 1380px;
+}
+
+.section {
+  width: 368px;
+  position: relative;
+  margin: 0 auto;
+  margin-top: 80px;
+
+  &__logo {
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 56px;
+    background-color: #ffffff;
+    z-index: 2;
+  }
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  &__label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+}
+
+.file-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 191px;
+  height: 93px;
+  border: 1px solid #d2dae2;
+  padding: 53px 88px 54px 89px;
+
+  &__plus-box-image {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &__command {
+    text-align: center;
+    font-size: 14px;
+    display: block;
+    color: #858585;
+    margin-top: 8px;
+  }
+}
+
+.input-block {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+
+  &__input-text {
+    width: calc(272px - 32px);
+    border: 1px solid #d2dae2;
+    height: clac(48px - 26px);
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+
+  &__input {
+    width: calc(368px - 32px);
+    border: 1px solid #d2dae2;
+    height: calc(48px - 26px);
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+
+  &__time {
+    display: flex;
+    align-items: center;
+    width: 272px;
+    height: 48px;
+    font-size: 16px;
+    color: #858585;
+  }
+}
+
+.next-button {
+  width: 368px;
+  margin-top: 56px;
+}
