@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom';
 import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 import OperateTime from './component/OperateTime';
+import StoreInfo from './view/StoreInfoRegistrationPage';
 
 const TOTAL_STEP = 4;
 export default function StoreRegistration() {
@@ -193,7 +194,7 @@ export default function StoreRegistration() {
             )}
           </div>
         </>
-      ) : (<div>Desktop</div>)}
+      ) : (<div><StoreInfo /></div>)}
     </div>
   );
 }
