@@ -16,7 +16,7 @@ export default function NewPassword() {
               id="new-password"
               placeholder="비밀번호 입력 (필수)"
             />
-            <Blind />
+            <Blind className={styles.cursor_pointer} />
           </div>
         </label>
         <span className={styles.form__tip}>* 특수문자 포함 영어와 숫자 조합 6~18자리</span>
@@ -29,7 +29,7 @@ export default function NewPassword() {
               id="check-password"
               placeholder="비밀번호 확인 (필수)"
             />
-            <Blind />
+            <Blind className={styles.cursor_pointer} />
           </div>
         </label>
         <button type="button" className={styles.form__submit}>다음</button>
