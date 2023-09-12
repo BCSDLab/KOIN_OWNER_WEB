@@ -28,9 +28,9 @@
   &__buttons-close {
     font-size: 14px;
     width: 160px;
-    background-color: #175c8e;
-    color: #ffffff;
-    border: none;
+    background-color: #ffffff;
+    color: #858585;
+    border: 1px solid #175c8e;
     height: 48px;
     border-radius: 15px;
     margin-right: 24px;
@@ -43,9 +43,9 @@
   &__buttons-next {
     font-size: 14px;
     width: 160px;
-    background-color: #ffffff;
-    color: #858585;
-    border: 1px solid #175c8e;
+    background-color: #175c8e;
+    color: #ffffff;
+    border: none;
     height: 48px;
     border-radius: 15px;
 
