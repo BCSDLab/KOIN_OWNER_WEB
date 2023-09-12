@@ -16,20 +16,20 @@ export default function NewPassword() {
               id="new-password"
               placeholder="비밀번호 입력 (필수)"
             />
-            <Blind className={styles.cursor_pointer} />
+            <Blind className={styles['cursor-pointer']} />
           </div>
         </label>
         <span className={styles.form__tip}>* 특수문자 포함 영어와 숫자 조합 6~18자리</span>
         <label className={styles.form__label} htmlFor="check-password">
           비밀번호 확인
-          <div className={styles.input_container}>
+          <div className={styles['form__input-container']}>
             <input
               className={styles.form__input}
               type="password"
               id="check-password"
               placeholder="비밀번호 확인 (필수)"
             />
-            <Blind className={styles.cursor_pointer} />
+            <Blind className={styles['cursor-pointer']} />
           </div>
         </label>
         <button type="button" className={styles.form__submit}>다음</button>
