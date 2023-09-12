@@ -1,0 +1,120 @@
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #000000;
+  opacity: 0.4;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 430px;
+  height: 838px;
+  background-color: #ffffff;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(430px - 32px);
+    height: calc(78px - 48px);
+    background-color: #175c8e;
+    padding: 24px 16px;
+  }
+
+  &__title-text {
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  &__title-button {
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.info {
+  width: calc(100% - 34px);
+  height: calc(100% - 32px);
+  padding: 32px 18px 0 16px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: calc(396px - 27px);
+  height: calc(38px - 18px);
+  padding: 9px 11px 9px 16px;
+  background-color: #f6f8f9;
+  border: 1px solid #d2dae2;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  width: calc(396px - 27px);
+  height: 100%;
+  border: none;
+  background-color: #f6f8f9;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.storeList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.store {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 32px);
+  height: calc(59px - 36px);
+  padding: 18px 16px;
+  border: 1px solid #d2dae2;
+  margin-bottom: 16px;
+
+  &__info {
+    display: flex;
+    justify-content: flex-end;
+    width: 160px;
+    gap: 12px;
+  }
+
+  &__info-delivery {
+    font-size: 12px;
+    color: #f7941e;
+  }
+
+  &__info-card {
+    font-size: 12px;
+    color: #f7941e;
+  }
+
+  &__info-account {
+    font-size: 12px;
+    color: #f7941e;
+  }
+}
+
+.store-title {
+  font-size: 15px;
+}
