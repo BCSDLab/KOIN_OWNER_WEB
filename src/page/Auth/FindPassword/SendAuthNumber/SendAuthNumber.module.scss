@@ -29,10 +29,10 @@
     font-weight: 400;
     line-height: normal;
     box-sizing: border-box;
-  }
 
-  &__input--auth {
-    width: 255px;
+    &--auth {
+      width: 255px;
+    }
   }
 
   &__label {
@@ -48,7 +48,7 @@
   }
 }
 
-.auth_button {
+.auth-button {
   width: 97px;
   height: 48px;
   background-color: #175c8e;
@@ -66,7 +66,7 @@
   box-sizing: border-box;
 }
 
-.auth_container {
+.auth-container {
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -9,7 +9,7 @@ export default function NewPassword() {
       <form className={styles.form}>
         <label className={styles.form__label} htmlFor="new-password">
           새 비밀번호
-          <div className={styles.input_container}>
+          <div className={styles['input-container']}>
             <input
               className={styles.form__input}
               type="password"

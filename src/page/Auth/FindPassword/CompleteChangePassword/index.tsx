@@ -4,7 +4,7 @@ import styles from './CompleteChangePassword.module.scss';
 export default function CompleteChangePassword() {
   return (
     <div className={styles.template}>
-      <div className={styles.circle}>
+      <div className={styles['circle-icon']}>
         <Check />
       </div>
       <div className={styles.content}>

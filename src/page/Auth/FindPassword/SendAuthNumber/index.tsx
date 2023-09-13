@@ -19,13 +19,13 @@ export default function FindPassword() {
           </label>
           <label className={styles.form__label} htmlFor="auth-num">
             인증번호 보내기
-            <div className={styles.auth_container}>
+            <div className={styles['auth-container']}>
               <input
                 className={cn({ [styles.form__input]: true, [styles['form__input--auth']]: true })}
                 type="text"
                 id="auth-num"
               />
-              <button type="button" className={styles.auth_button}>인증번호 발송</button>
+              <button type="button" className={styles['auth-button']}>인증번호 발송</button>
             </div>
           </label>
           <button type="button" className={styles.submit}>다음</button>
