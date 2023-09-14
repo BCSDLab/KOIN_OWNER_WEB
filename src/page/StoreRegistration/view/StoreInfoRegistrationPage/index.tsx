@@ -1,7 +1,6 @@
 import { ReactComponent as Memo } from 'assets/svg/mystore/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/mystore/cutlery.svg';
-
 import { useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
