@@ -13,8 +13,8 @@ export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
   return createPortal(
     <div className={styles.modal}>
       <div className={styles.content}>
-        <div className={styles.content__title}>
-          <span className={styles.content__text}>
+        <div className={styles.content__header}>
+          <span className={styles.content__title}>
             카테고리 검색
           </span>
           <button

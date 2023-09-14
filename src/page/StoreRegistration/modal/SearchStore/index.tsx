@@ -13,8 +13,8 @@ export default function SearchStoreModal({ isOpen, onClose } : SearchStoreProps)
   return createPortal(
     <div className={styles.modal}>
       <div className={styles.content}>
-        <div className={styles.content__title}>
-          <span className={styles.content__text}>
+        <div className={styles.content__header}>
+          <span className={styles.content__title}>
             가게 검색
           </span>
           <button
