@@ -21,11 +21,21 @@
   padding: 56px;
   box-shadow: 0 4 4 0 #0000001a;
 
+  &__top-text {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  &__bottom-text {
+    font-size: 12.8px;
+    color: #a1a1a1;
+  }
+
   &__buttons {
     margin-top: 38px;
   }
 
-  &__buttons-close {
+  &__cancel-button {
     font-size: 14px;
     width: 160px;
     background-color: #ffffff;
@@ -40,7 +50,7 @@
     }
   }
 
-  &__buttons-next {
+  &__next-button {
     font-size: 14px;
     width: 160px;
     background-color: #175c8e;
@@ -53,14 +63,4 @@
       cursor: pointer;
     }
   }
-}
-
-.content-topText {
-  font-size: 22px;
-  margin-bottom: 24px;
-}
-
-.content-bottomText {
-  font-size: 12.8px;
-  color: #a1a1a1;
 }

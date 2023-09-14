@@ -14,14 +14,14 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
     <div className={styles.modal}>
       <div className={styles.content}>
         <div className={styles.content__header}>
-          <span className={styles['content__header-title']}>
+          <span className={styles.content__title}>
             운영시간
           </span>
           <button
             type="button"
             id="timeSettingModal"
             onClick={onClose}
-            className={styles['content__header-button']}
+            className={styles['content__close-button']}
           >
             X
           </button>
@@ -45,7 +45,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>화</td>
@@ -57,7 +57,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>수</td>
@@ -69,7 +69,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>목</td>
@@ -81,7 +81,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>금</td>
@@ -93,7 +93,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>토</td>
@@ -105,7 +105,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
               <tr className={styles.table__data}>
                 <td>일</td>
@@ -117,7 +117,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
                   {' '}
                   <input type="time" />
                 </td>
-                <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
+                <td><input type="checkbox" className={styles.table__checkbox} /></td>
               </tr>
             </tbody>
           </table>

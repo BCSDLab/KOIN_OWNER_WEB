@@ -28,12 +28,12 @@
     padding: 24px 16px;
   }
 
-  &__header-title {
+  &__title {
     font-size: 20px;
     color: #ffffff;
   }
 
-  &__header-button {
+  &__close-button {
     width: 24px;
     height: 24px;
     border: 0;
@@ -61,4 +61,9 @@
   height: 100%;
   margin-bottom: 36px;
   text-align: center;
+
+  &__checkbox {
+    width: 19px;
+    height: 19px;
+  }
 }

@@ -28,12 +28,12 @@
     padding: 24px 16px;
   }
 
-  &__title-text {
+  &__text {
     font-size: 20px;
     color: #ffffff;
   }
 
-  &__title-button {
+  &__button {
     width: 24px;
     height: 24px;
     border: 0;
@@ -51,31 +51,31 @@
   width: calc(100% - 34px);
   height: calc(100% - 32px);
   padding: 32px 18px 0 16px;
-}
 
-.search {
-  display: flex;
-  align-items: center;
-  width: calc(396px - 27px);
-  height: calc(38px - 18px);
-  padding: 9px 11px 9px 16px;
-  background-color: #f6f8f9;
-  border: 1px solid #d2dae2;
-  margin-bottom: 24px;
-}
+  &__search {
+    display: flex;
+    align-items: center;
+    width: calc(396px - 27px);
+    height: calc(38px - 18px);
+    padding: 9px 11px 9px 16px;
+    background-color: #f6f8f9;
+    border: 1px solid #d2dae2;
+    margin-bottom: 24px;
+  }
 
-.search-input {
-  width: calc(396px - 27px);
-  height: 100%;
-  border: none;
-  background-color: #f6f8f9;
+  &__input {
+    width: calc(396px - 27px);
+    height: 100%;
+    border: none;
+    background-color: #f6f8f9;
 
-  &:focus {
-    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 }
 
-.storeList {
+.store-list {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -91,6 +91,10 @@
   border: 1px solid #d2dae2;
   margin-bottom: 16px;
 
+  &__title {
+    font-size: 15px;
+  }
+
   &__info {
     display: flex;
     justify-content: flex-end;
@@ -98,22 +102,8 @@
     gap: 12px;
   }
 
-  &__info-delivery {
+  &__text {
     font-size: 12px;
     color: #f7941e;
   }
-
-  &__info-card {
-    font-size: 12px;
-    color: #f7941e;
-  }
-
-  &__info-account {
-    font-size: 12px;
-    color: #f7941e;
-  }
-}
-
-.store-title {
-  font-size: 15px;
 }

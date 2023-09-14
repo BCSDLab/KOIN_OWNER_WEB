@@ -42,10 +42,10 @@ export default function StoreInfo() {
   return (
     <>
       {step === 0 && (
-        <div className={styles.content}>
-          <Memo className={styles['content-image']} />
-          <span className={styles.write}>가게 정보 기입</span>
-          <div className={styles['complete-text']}>
+        <div className={styles.block}>
+          <Memo className={styles['block__writing-icon']} />
+          <span className={styles.block__title}>가게 정보 기입</span>
+          <div className={styles.block__text}>
             <span>
               가게의 다양한 정보를 입력 및 수정하여
             </span>
@@ -56,7 +56,7 @@ export default function StoreInfo() {
           <button
             type="button"
             onClick={() => setStep(step + 1)}
-            className={styles['nextStep-button']}
+            className={styles['block__next-button']}
           >
             가게 정보 기입
           </button>
@@ -64,22 +64,20 @@ export default function StoreInfo() {
         </div>
       )}
       {step === 1 && (
-        <div className={styles.template}>
-          <div className={styles.section}>
-            <Logo className={styles.section__logo} />
-          </div>
-          <div className={styles.form}>
+        <div className={styles.container}>
+          <Logo className={styles['container__koin-logo']} />
+          <form className={styles.form}>
             <div>
               <span className={styles.form__label}>대표 이미지</span>
-              <div className={styles['file-box']}>
-                <Cutlery className={styles['file-box__plus-box-image']} />
-                <span className={styles['file-box__command']}>클릭하여 이미지를 등록해주세요.</span>
+              <div className={styles['form__image-upload']}>
+                <Cutlery className={styles['form__cutlery-cross']} />
+                <span className={styles.form__title}>클릭하여 이미지를 등록해주세요.</span>
               </div>
             </div>
             <div>
               <span className={styles.form__label}>카테고리</span>
-              <div className={styles['input-block']}>
-                <input className={styles['input-block__input-text']} />
+              <div className={styles.form__section}>
+                <input type="text" className={styles.form__input} />
                 <CustomButton content="카테고리 검색" buttonType="small" modalId="categoryModal" onClick={toggleModal} />
               </div>
             </div>
@@ -87,8 +85,8 @@ export default function StoreInfo() {
             <InputBox content="대표자명" />
             <div>
               <span className={styles.form__label}>가게명</span>
-              <div className={styles['input-block']}>
-                <input className={styles['input-block__input-text']} />
+              <div className={styles.form__section}>
+                <input type="text" className={styles.form__input} />
                 <CustomButton content="가게검색" buttonType="small" modalId="searchStoreModal" onClick={toggleModal} />
               </div>
             </div>
@@ -98,8 +96,8 @@ export default function StoreInfo() {
             <InputBox content="배달금액" />
             <div>
               <span className={styles.form__label}>운영시간</span>
-              <div className={styles['input-block']}>
-                <div className={styles['input-block__time']}>
+              <div className={styles.form__section}>
+                <div className={styles['form__operate-time']}>
                   <span>00:00 ~ 24:00</span>
                 </div>
                 <CustomButton content="시간수정" buttonType="small" modalId="timeSettingModal" onClick={toggleModal} />
@@ -107,7 +105,7 @@ export default function StoreInfo() {
             </div>
             <OperateTimeModal isOpen={isOpen.timeSettingModal} onClose={toggleModal} />
             <InputBox content="기타정보" />
-            <div className={styles['next-button']}>
+            <div className={styles['form__next-button']}>
               <CustomButton
                 content="다음"
                 buttonType="large"
@@ -116,7 +114,7 @@ export default function StoreInfo() {
               />
             </div>
             <ConfirmPopup isOpen={isOpen.confirmPopup} onClose={toggleModal} />
-          </div>
+          </form>
           <Copyright />
         </div>
       )}

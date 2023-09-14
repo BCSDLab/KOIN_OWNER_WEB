@@ -1,18 +1,18 @@
-.content {
+.form {
   &__label {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
   }
 
-  &__input {
+  &__section {
     display: flex;
     justify-content: space-between;
     gap: 16px;
     margin-top: 8px;
   }
 
-  &__input-text {
+  &__input {
     width: calc(368px - 32px);
     border: 1px solid #d2dae2;
     height: calc(48px - 26px);

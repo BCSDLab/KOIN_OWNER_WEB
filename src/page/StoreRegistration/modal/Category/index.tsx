@@ -14,14 +14,14 @@ export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
     <div className={styles.modal}>
       <div className={styles.content}>
         <div className={styles.content__title}>
-          <span className={styles['content__title-text']}>
+          <span className={styles.content__text}>
             카테고리 검색
           </span>
           <button
             type="button"
             id="categoryModal"
             onClick={onClose}
-            className={styles['content__title-button']}
+            className={styles['content__close-button']}
           >
             X
           </button>
@@ -29,7 +29,7 @@ export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
         <div className={styles.content__category}>
           카테고리
         </div>
-        <div className={styles.content__nextbtn}>
+        <div className={styles['content__next-button']}>
           <CustomButton content="다음" buttonType="large" />
         </div>
       </div>

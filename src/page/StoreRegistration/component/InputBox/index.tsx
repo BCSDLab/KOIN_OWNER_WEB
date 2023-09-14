@@ -6,11 +6,11 @@ interface InputProps {
 
 export default function InputBox({ content }: InputProps) {
   return (
-    <div className={styles.content}>
-      <span className={styles.content__label}>{content}</span>
-      <div className={styles.content__input}>
-        <input className={styles['content__input-text']} />
+    <form className={styles.form}>
+      <span className={styles.form__label}>{content}</span>
+      <div className={styles.form__section}>
+        <input type="text" className={styles.form__input} />
       </div>
-    </div>
+    </form>
   );
 }
