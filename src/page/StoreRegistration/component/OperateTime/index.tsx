@@ -7,6 +7,9 @@ import styles from './OperateTime.module.scss';
 interface OperateTimeProps {
   clickEvent: React.Dispatch<React.SetStateAction<boolean>>
 }
+
+const week: string[] = ['월', '화', '수', '목', '금', '토', '일'];
+
 export default function OperateTime({ clickEvent }: OperateTimeProps) {
   const { isMobile } = useMediaQuery();
   const step = useStepStore((state) => state.step);
@@ -32,89 +35,19 @@ export default function OperateTime({ clickEvent }: OperateTimeProps) {
                 </tr>
               </thead>
               <tbody>
-                <tr className={styles.table__data}>
-                  <td>월</td>
-                  <td>
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>화</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>수</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>목</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>금</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>토</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
-                <tr className={styles.table__data}>
-                  <td>일</td>
-                  <td>
-                    {' '}
-                    <input type="time" />
-                    {' '}
-                    ~
-                    {' '}
-                    <input type="time" />
-                  </td>
-                  <td><input type="checkbox" className={styles['table__data-checkbox']} /></td>
-                </tr>
+                {week.map((day) => (
+                  <tr className={styles.table__data}>
+                    <td>{day}</td>
+                    <td>
+                      <input type="time" />
+                      {' '}
+                      ~
+                      {' '}
+                      <input type="time" />
+                    </td>
+                    <td><input type="checkbox" className={styles.table__checkbox} /></td>
+                  </tr>
+                ))}
               </tbody>
             </table>
             <div className={styles.table__button}>

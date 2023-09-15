@@ -7,6 +7,8 @@ interface OperateTimeProps {
   modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
+const week: string[] = ['월', '화', '수', '목', '금', '토', '일'];
+
 export default function OperateTimeModal({ isOpen, modalHandler }: OperateTimeProps) {
   if (!isOpen) return null;
 
@@ -36,89 +38,19 @@ export default function OperateTimeModal({ isOpen, modalHandler }: OperateTimePr
               </tr>
             </thead>
             <tbody>
-              <tr className={styles.table__data}>
-                <td>월</td>
-                <td>
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>화</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>수</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>목</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>금</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>토</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
-              <tr className={styles.table__data}>
-                <td>일</td>
-                <td>
-                  {' '}
-                  <input type="time" />
-                  {' '}
-                  ~
-                  {' '}
-                  <input type="time" />
-                </td>
-                <td><input type="checkbox" className={styles.table__checkbox} /></td>
-              </tr>
+              {week.map((day) => (
+                <tr className={styles.table__data} key={day}>
+                  <td>{day}</td>
+                  <td>
+                    <input type="time" />
+                    {' '}
+                    ~
+                    {' '}
+                    <input type="time" />
+                  </td>
+                  <td><input type="checkbox" className={styles.table__checkbox} /></td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <CustomButton content="다음" buttonType="large" modalId="timeSettingModal" onClick={modalHandler} />
