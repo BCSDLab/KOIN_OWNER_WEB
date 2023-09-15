@@ -83,7 +83,7 @@ export default function StoreInfo() {
                   <CustomButton content="카테고리 검색" buttonType="small" modalId="categoryModal" onClick={toggleModal} />
                 </div>
               </div>
-              <CategoryModal isOpen={isOpen.categoryModal} onClose={toggleModal} />
+              <CategoryModal isOpen={isOpen.categoryModal} modalHandler={toggleModal} />
               <InputBox content="대표자명" />
               <div>
                 <span className={styles.form__label}>가게명</span>
@@ -92,7 +92,7 @@ export default function StoreInfo() {
                   <CustomButton content="가게검색" buttonType="small" modalId="searchStoreModal" onClick={toggleModal} />
                 </div>
               </div>
-              <SearchStoreModal isOpen={isOpen.searchStoreModal} onClose={toggleModal} />
+              <SearchStoreModal isOpen={isOpen.searchStoreModal} modalHandler={toggleModal} />
               <InputBox content="주소정보" />
               <InputBox content="전화번호" />
               <InputBox content="배달금액" />
@@ -105,7 +105,7 @@ export default function StoreInfo() {
                   <CustomButton content="시간수정" buttonType="small" modalId="timeSettingModal" onClick={toggleModal} />
                 </div>
               </div>
-              <OperateTimeModal isOpen={isOpen.timeSettingModal} onClose={toggleModal} />
+              <OperateTimeModal isOpen={isOpen.timeSettingModal} modalHandler={toggleModal} />
               <InputBox content="기타정보" />
               <div className={styles['form__next-button']}>
                 <CustomButton
@@ -115,7 +115,7 @@ export default function StoreInfo() {
                   onClick={toggleModal}
                 />
               </div>
-              <ConfirmPopup isOpen={isOpen.confirmPopup} onClose={toggleModal} />
+              <ConfirmPopup isOpen={isOpen.confirmPopup} modalHandler={toggleModal} />
             </form>
           </div>
           <Copyright />

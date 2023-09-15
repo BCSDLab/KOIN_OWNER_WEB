@@ -4,10 +4,10 @@ import styles from './Category.module.scss';
 
 interface CategoryProps {
   isOpen: boolean;
-  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
+export default function CategoryModal({ isOpen, modalHandler } : CategoryProps) {
   if (!isOpen) return null;
 
   return createPortal(
@@ -20,7 +20,7 @@ export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
           <button
             type="button"
             id="categoryModal"
-            onClick={onClose}
+            onClick={modalHandler}
             className={styles['content__close-button']}
           >
             X
@@ -30,7 +30,7 @@ export default function CategoryModal({ isOpen, onClose } : CategoryProps) {
           카테고리
         </div>
         <div className={styles['content__next-button']}>
-          <CustomButton content="다음" buttonType="large" />
+          <CustomButton content="다음" buttonType="large" modalId="categoryModal" onClick={modalHandler} />
         </div>
       </div>
     </div>,

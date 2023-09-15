@@ -4,10 +4,10 @@ import styles from './OperateTime.module.scss';
 
 interface OperateTimeProps {
   isOpen: boolean;
-  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) {
+export default function OperateTimeModal({ isOpen, modalHandler }: OperateTimeProps) {
   if (!isOpen) return null;
 
   return createPortal(
@@ -20,7 +20,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
           <button
             type="button"
             id="timeSettingModal"
-            onClick={onClose}
+            onClick={modalHandler}
             className={styles['content__close-button']}
           >
             X
@@ -121,7 +121,7 @@ export default function OperateTimeModal({ isOpen, onClose }: OperateTimeProps) 
               </tr>
             </tbody>
           </table>
-          <CustomButton content="다음" buttonType="large" />
+          <CustomButton content="다음" buttonType="large" modalId="timeSettingModal" onClick={modalHandler} />
         </div>
       </div>
     </div>,

@@ -4,10 +4,10 @@ import styles from './SearchStore.module.scss';
 
 interface SearchStoreProps {
   isOpen: boolean;
-  onClose: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function SearchStoreModal({ isOpen, onClose } : SearchStoreProps) {
+export default function SearchStoreModal({ isOpen, modalHandler } : SearchStoreProps) {
   if (!isOpen) return null;
 
   return createPortal(
@@ -20,7 +20,7 @@ export default function SearchStoreModal({ isOpen, onClose } : SearchStoreProps)
           <button
             type="button"
             id="searchStoreModal"
-            onClick={onClose}
+            onClick={modalHandler}
             className={styles.content__button}
           >
             X
