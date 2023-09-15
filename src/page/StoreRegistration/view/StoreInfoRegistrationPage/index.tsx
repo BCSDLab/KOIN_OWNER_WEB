@@ -7,10 +7,10 @@ import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/StoreRegistration/component/CustomButton';
 import Complete from 'component/common/Auth/Complete';
 import InputBox from 'page/StoreRegistration/component/InputBox';
-import CategoryModal from 'page/StoreRegistration/modal/Category';
-import SearchStoreModal from 'page/StoreRegistration/modal/SearchStore';
-import OperateTimeModal from 'page/StoreRegistration/modal/OperateTime';
-import ConfirmPopup from 'page/StoreRegistration/modal/ConfirmPopup';
+import CategoryModal from 'component/common/Modal/Category';
+import SearchStoreModal from 'component/common/Modal/SearchStore';
+import OperateTimeModal from 'component/common/Modal/OperateTime';
+import ConfirmPopup from 'component/common/Modal/ConfirmPopup';
 import styles from './StoreInfo.module.scss';
 
 interface ModalProps {
