@@ -1,7 +1,7 @@
-import { ReactComponent as Memo } from 'assets/svg/mystore/memo.svg';
+import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as Cutlery } from 'assets/svg/mystore/cutlery.svg';
-import { useState } from 'react';
+import { ReactComponent as Cutlery } from 'assets/svg/storereg/cutlery.svg';
+import { useEffect, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/StoreRegistration/component/CustomButton';
@@ -11,6 +11,7 @@ import CategoryModal from 'component/common/Modal/Category';
 import SearchStoreModal from 'component/common/Modal/SearchStore';
 import OperateTimeModal from 'component/common/Modal/OperateTime';
 import ConfirmPopup from 'component/common/Modal/ConfirmPopup';
+import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './StoreInfo.module.scss';
 
 interface ModalProps {
@@ -22,6 +23,7 @@ interface ModalProps {
 }
 
 export default function StoreInfo() {
+  const { isMobile } = useMediaQuery();
   const { step, setStep } = useStepStore();
   const [isOpen, setIsOpen] = useState<ModalProps>({
     categoryModal: false,
@@ -38,6 +40,16 @@ export default function StoreInfo() {
     }));
   };
 
+  // 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
+  useEffect(() => {
+    if (!isMobile && step === 1) {
+      setIsOpen({
+        ...isOpen,
+        categoryModal: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       {step === 0 && (
@@ -64,7 +76,7 @@ export default function StoreInfo() {
           <Copyright />
         </div>
       )}
-      {step === 1 && (
+      {step >= 1 && step <= 4 && (
         <div className={styles.wrapper}>
           <div className={styles.container}>
             <Logo className={styles['container__koin-logo']} />
@@ -121,7 +133,7 @@ export default function StoreInfo() {
           <Copyright />
         </div>
       )}
-      {step === 2 && (
+      {step === 5 && (
         <div className={styles.wrapper}>
           <Complete title="가게 정보 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/login" linkText="메인화면으로 바로가기" />
           <Copyright />

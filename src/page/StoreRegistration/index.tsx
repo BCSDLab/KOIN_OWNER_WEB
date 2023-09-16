@@ -10,6 +10,7 @@ import cn from 'utils/ts/className';
 import { useState } from 'react';
 import useStoreCategory from 'query/storeCategory';
 import { createPortal } from 'react-dom';
+import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
 import styles from './StoreRegistration.module.scss';
 import PROGRESS_TITLE from './constant/progress';
 import OperateTime from './component/OperateTime';
@@ -30,9 +31,24 @@ export default function StoreRegistration() {
           <PreviousStep step={step} clickEvent={decreaseStep} />
           <div className={styles.content}>
             {step === 0 && (
+              <div className={styles['mobile-block']}>
+                <Memo className={styles['mobile-block__icon']} />
+                <span className={styles['mobile-block__title']}>가게 정보 기입</span>
+                <div className={styles['mobile-block__text']}>
+                  <span>
+                    가게의 다양한 정보를 입력 및 수정하여
+                  </span>
+                  <span>
+                    학생들에게 최신 가게 정보를 알려주세요.
+                  </span>
+                  <button type="button" className={styles['mobile-block__button']} onClick={() => setStep(step + 1)}>가게 정보 기입</button>
+                </div>
+              </div>
+            )}
+            {step === 1 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
-                <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
+                <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles['mobile-category']}>
                   <div className={styles['mobile-category__title']}>카테고리를 골라주세요.</div>
                   <div className={styles['mobile-category__wrapper']}>
@@ -57,10 +73,10 @@ export default function StoreRegistration() {
                 </div>
               </>
             )}
-            {step === 1 && (
+            {step === 2 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
-                <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
+                <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <div className={styles.form__img}>
                     <EmptyImgIcon />
@@ -80,10 +96,10 @@ export default function StoreRegistration() {
                 </div>
               </>
             )}
-            {step === 2 && (
+            {step === 3 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="세부 정보를 입력해 주세요." />
-                <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
+                <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <label htmlFor="phone" className={styles.form__label}>
                     전화번호
@@ -131,11 +147,11 @@ export default function StoreRegistration() {
 
               </>
             )}
-            {step === 3 && (
+            {step === 4 && (
               <>
                 <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
                 <div className={styles.margin} />
-                <ProgressBar step={step} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
+                <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
                 <div className={styles.form}>
                   <div className={styles.form__info}>
                     <span className={styles.form__title}>카테고리</span>
@@ -189,7 +205,7 @@ export default function StoreRegistration() {
                 </div>
               </>
             )}
-            {step > 3 && (
+            {step === 5 && (
               <Complete title="가게 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/" linkText="메인 화면 바로가기" />
             )}
           </div>

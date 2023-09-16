@@ -8,7 +8,7 @@ interface ConfirmPopupProps {
 }
 
 export default function ConfirmPopup({ isOpen, modalHandler }: ConfirmPopupProps) {
-  const { step, setStep } = useStepStore();
+  const { setStep } = useStepStore();
 
   if (!isOpen) return null;
 
@@ -28,7 +28,7 @@ export default function ConfirmPopup({ isOpen, modalHandler }: ConfirmPopupProps
           </button>
           <button
             type="button"
-            onClick={() => setStep(step + 1)}
+            onClick={() => setStep(5)}
             className={styles['content__next-button']}
           >
             확인
