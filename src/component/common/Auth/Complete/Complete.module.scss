@@ -7,6 +7,10 @@
   align-items: center;
   justify-content: center;
 
+  @include media.media-breakpoint-down(mobile) {
+    height: calc(100vh - 200px);
+  }
+
   &__complete {
     width: 160px;
     height: 160px;
