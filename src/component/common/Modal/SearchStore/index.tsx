@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { ReactComponent as Magnifier } from 'assets/svg/mystore/magnifier.svg';
+import { ReactComponent as Magnifier } from 'assets/svg/storereg/magnifier.svg';
 import styles from './SearchStore.module.scss';
 
 interface SearchStoreProps {
