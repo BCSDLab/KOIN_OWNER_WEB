@@ -1,10 +1,12 @@
 import { createPortal } from 'react-dom';
 import CustomButton from 'page/StoreRegistration/component/CustomButton';
+import { ReactComponent as XClose } from 'assets/svg/storereg/close-x.svg';
+import TimePicker from 'page/StoreRegistration/component/TimePicker';
 import styles from './OperateTime.module.scss';
 
 interface OperateTimeProps {
   isOpen: boolean;
-  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent) => void;
 }
 
 const week: string[] = ['월', '화', '수', '목', '금', '토', '일'];
@@ -19,14 +21,11 @@ export default function OperateTimeModal({ isOpen, modalHandler }: OperateTimePr
           <span className={styles.content__title}>
             운영시간
           </span>
-          <button
-            type="button"
+          <XClose
             id="timeSettingModal"
             onClick={modalHandler}
             className={styles['content__close-button']}
-          >
-            X
-          </button>
+          />
         </div>
         <div className={styles.container}>
           <table className={styles.table}>
@@ -41,12 +40,10 @@ export default function OperateTimeModal({ isOpen, modalHandler }: OperateTimePr
               {week.map((day) => (
                 <tr className={styles.table__data} key={day}>
                   <td>{day}</td>
-                  <td>
-                    <input type="time" />
-                    {' '}
+                  <td className={styles['table__time-picker']}>
+                    <TimePicker />
                     ~
-                    {' '}
-                    <input type="time" />
+                    <TimePicker />
                   </td>
                   <td><input type="checkbox" className={styles.table__checkbox} /></td>
                 </tr>

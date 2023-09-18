@@ -2,6 +2,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import PreviousStep from 'component/common/Auth/PreviousStep';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
+import TimePicker from 'page/StoreRegistration/component/TimePicker';
 import styles from './OperateTime.module.scss';
 
 interface OperateTimeProps {
@@ -38,12 +39,12 @@ export default function OperateTime({ clickEvent }: OperateTimeProps) {
                 {week.map((day) => (
                   <tr className={styles.table__data}>
                     <td>{day}</td>
-                    <td>
-                      <input type="time" />
+                    <td className={styles['table__time-picker']}>
+                      <TimePicker />
                       {' '}
                       ~
                       {' '}
-                      <input type="time" />
+                      <TimePicker />
                     </td>
                     <td><input type="checkbox" className={styles.table__checkbox} /></td>
                   </tr>

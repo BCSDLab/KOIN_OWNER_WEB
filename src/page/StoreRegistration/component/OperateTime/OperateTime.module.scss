@@ -40,6 +40,11 @@
     text-align: center;
   }
 
+  &__time-picker {
+    display: flex;
+    justify-content: center;
+  }
+
   &__checkbox {
     appearance: none;
     border: 1px solid #175c8e;

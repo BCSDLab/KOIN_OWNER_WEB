@@ -1,10 +1,11 @@
 import { createPortal } from 'react-dom';
 import { ReactComponent as Magnifier } from 'assets/svg/storereg/magnifier.svg';
+import { ReactComponent as XClose } from 'assets/svg/storereg/close-x.svg';
 import styles from './SearchStore.module.scss';
 
 interface SearchStoreProps {
   isOpen: boolean;
-  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent) => void;
 }
 
 export default function SearchStoreModal({ isOpen, modalHandler } : SearchStoreProps) {
@@ -17,14 +18,11 @@ export default function SearchStoreModal({ isOpen, modalHandler } : SearchStoreP
           <span className={styles.content__title}>
             가게 검색
           </span>
-          <button
-            type="button"
+          <XClose
             id="searchStoreModal"
             onClick={modalHandler}
             className={styles.content__button}
-          >
-            X
-          </button>
+          />
         </div>
         <div className={styles.info}>
           <div className={styles.info__search}>

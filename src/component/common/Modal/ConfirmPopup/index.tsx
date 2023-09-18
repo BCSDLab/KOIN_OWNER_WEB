@@ -4,7 +4,7 @@ import styles from './ConfirmPopup.module.scss';
 
 interface ConfirmPopupProps {
   isOpen: boolean;
-  modalHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  modalHandler: (event: React.MouseEvent) => void;
 }
 
 export default function ConfirmPopup({ isOpen, modalHandler }: ConfirmPopupProps) {

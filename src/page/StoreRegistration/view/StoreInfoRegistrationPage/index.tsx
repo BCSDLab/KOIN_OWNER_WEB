@@ -32,7 +32,7 @@ export default function StoreInfo() {
     confirmPopup: false,
   });
 
-  const toggleModal = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const toggleModal = (event: React.MouseEvent) => {
     const targetButton = event.target as HTMLButtonElement;
     setIsOpen((prevIsOpen) => ({
       ...prevIsOpen,

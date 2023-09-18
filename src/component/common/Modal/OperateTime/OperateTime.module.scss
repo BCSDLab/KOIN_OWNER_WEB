@@ -71,6 +71,13 @@
     text-align: center;
   }
 
+  &__time-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
   &__checkbox {
     appearance: none;
     border: 1px solid #175c8e;
