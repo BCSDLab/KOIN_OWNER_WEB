@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/storereg/cutlery.svg';
@@ -48,8 +49,8 @@ export default function StoreInfo() {
         categoryModal: true,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       {step === 0 && (
