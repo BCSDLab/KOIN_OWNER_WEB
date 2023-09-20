@@ -120,6 +120,20 @@ export default function StoreInfo() {
               </div>
               <OperateTimeModal isOpen={isOpen.timeSettingModal} modalHandler={toggleModal} />
               <InputBox content="기타정보" inputId="etc" />
+              <div className={styles.form__checkbox}>
+                <label htmlFor="delivery" className={styles['form__checkbox-label']}>
+                  <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} />
+                  <span>배달 가능</span>
+                </label>
+                <label htmlFor="card" className={styles['form__checkbox-label']}>
+                  <input type="checkbox" id="card" className={styles['form__checkbox-input']} />
+                  <span>카드 가능</span>
+                </label>
+                <label htmlFor="bank" className={styles['form__checkbox-label']}>
+                  <input type="checkbox" id="bank" className={styles['form__checkbox-input']} />
+                  <span>계좌이체 가능</span>
+                </label>
+              </div>
               <div className={styles['form__next-button']}>
                 <CustomButton
                   content="다음"
