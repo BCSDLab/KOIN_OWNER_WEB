@@ -1,16 +1,15 @@
 import styles from './InputBox.module.scss';
 
 interface InputProps {
-  content: string
+  content: string;
+  inputId: string;
 }
 
-export default function InputBox({ content }: InputProps) {
+export default function InputBox({ content, inputId }: InputProps) {
   return (
-    <form className={styles.form}>
+    <label htmlFor={inputId} className={styles.form}>
       <span className={styles.form__label}>{content}</span>
-      <div className={styles.form__section}>
-        <input type="text" className={styles.form__input} />
-      </div>
-    </form>
+      <input type="text" id={inputId} className={styles.form__input} />
+    </label>
   );
 }

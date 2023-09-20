@@ -81,7 +81,7 @@ export default function StoreInfo() {
         <div className={styles.wrapper}>
           <div className={styles.container}>
             <Logo className={styles['container__koin-logo']} />
-            <form className={styles.form}>
+            <div className={styles.form}>
               <div>
                 <span className={styles.form__label}>대표 이미지</span>
                 <div className={styles['form__image-upload']}>
@@ -97,7 +97,7 @@ export default function StoreInfo() {
                 </div>
               </div>
               <CategoryModal isOpen={isOpen.categoryModal} modalHandler={toggleModal} />
-              <InputBox content="대표자명" />
+              <InputBox content="대표자명" inputId="name" />
               <div>
                 <span className={styles.form__label}>가게명</span>
                 <div className={styles.form__section}>
@@ -106,9 +106,9 @@ export default function StoreInfo() {
                 </div>
               </div>
               <SearchStoreModal isOpen={isOpen.searchStoreModal} modalHandler={toggleModal} />
-              <InputBox content="주소정보" />
-              <InputBox content="전화번호" />
-              <InputBox content="배달금액" />
+              <InputBox content="주소정보" inputId="address" />
+              <InputBox content="전화번호" inputId="phoneNumber" />
+              <InputBox content="배달금액" inputId="deliveryFee" />
               <div>
                 <span className={styles.form__label}>운영시간</span>
                 <div className={styles.form__section}>
@@ -119,7 +119,7 @@ export default function StoreInfo() {
                 </div>
               </div>
               <OperateTimeModal isOpen={isOpen.timeSettingModal} modalHandler={toggleModal} />
-              <InputBox content="기타정보" />
+              <InputBox content="기타정보" inputId="etc" />
               <div className={styles['form__next-button']}>
                 <CustomButton
                   content="다음"
@@ -129,7 +129,7 @@ export default function StoreInfo() {
                 />
               </div>
               <ConfirmPopup isOpen={isOpen.confirmPopup} modalHandler={toggleModal} />
-            </form>
+            </div>
           </div>
           <Copyright />
         </div>
