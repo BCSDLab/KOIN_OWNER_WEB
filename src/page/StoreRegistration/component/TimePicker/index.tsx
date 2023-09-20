@@ -1,16 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './TimePicker.module.scss';
 
-const hours: number[] = [];
-const minutes: number[] = [];
-
-for (let i = 0; i < 24; i += 1) {
-  hours.push(i);
-}
-
-for (let i = 0; i < 60; i += 1) {
-  minutes.push(i);
-}
+const hours: number[] = Array.from({ length: 24 }, (_, i) => i);
+const minutes: number[] = Array.from({ length: 12 }, (_, i) => i * 5);
 
 export default function OperatingHour() {
   const dropMenuRef = useRef<HTMLDivElement | null>(null);
@@ -48,7 +40,6 @@ export default function OperatingHour() {
     <div className={styles.container} ref={dropMenuRef}>
       <button
         type="button"
-        contentEditable
         className={styles.container__hour}
         onClick={toggleModal}
       >
@@ -57,7 +48,6 @@ export default function OperatingHour() {
       :
       <button
         type="button"
-        contentEditable
         className={styles.container__minute}
         onClick={toggleModal}
       >
