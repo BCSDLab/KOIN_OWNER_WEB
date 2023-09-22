@@ -30,7 +30,6 @@ export default function SearchStoreModal({ isOpen, modalHandler } : SearchStoreP
             <Magnifier />
           </div>
           <div className={styles['store-list']}>
-            스토어 리스트
             <div className={styles.store}>
               <span className={styles.store__title}>가장 맛있는 족발</span>
               <div className={styles.store__info}>

@@ -2,52 +2,52 @@
 import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/storereg/cutlery.svg';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
-import CustomButton from 'page/StoreRegistration/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import Complete from 'component/common/Auth/Complete';
 import InputBox from 'page/StoreRegistration/component/InputBox';
-import CategoryModal from 'component/common/Modal/Category';
-import SearchStoreModal from 'component/common/Modal/SearchStore';
-import OperateTimeModal from 'component/common/Modal/OperateTime';
-import ConfirmPopup from 'component/common/Modal/ConfirmPopup';
+import CategoryModal from 'page/StoreRegistration/component/Modal/Category';
+import SearchStoreModal from 'page/StoreRegistration/component/Modal/SearchStore';
+import OperateTime from 'page/StoreRegistration/component/Modal/OperateTimePC';
+import ConfirmPopup from 'page/StoreRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import styles from './StoreInfo.module.scss';
+import useBooleanState from 'utils/hooks/useBooleanState';
+import styles from './StoreRegistrationPC.module.scss';
 
-interface ModalProps {
-  [key: string]: boolean;
-  categoryModal: boolean;
-  searchStoreModal: boolean;
-  timeSettingModal: boolean;
-  confirmPopup: boolean;
-}
-
-export default function StoreInfo() {
+export default function StoreRegistrationPC() {
   const { isMobile } = useMediaQuery();
   const { step, setStep } = useStepStore();
-  const [isOpen, setIsOpen] = useState<ModalProps>({
-    categoryModal: false,
-    searchStoreModal: false,
-    timeSettingModal: false,
-    confirmPopup: false,
-  });
+  const { value: showCategory, setValue: setShowCategory } = useBooleanState(false);
+  const { value: showOperateTime, setValue: setshowOperateTime } = useBooleanState(false);
+  const { value: showsearchStore, setValue: setShowSearchStore } = useBooleanState(false);
+  const { value: showConfirmPopup, setValue: setShowConfirmPopup } = useBooleanState(false);
 
-  const toggleModal = (event: React.MouseEvent) => {
-    const targetButton = event.target as HTMLButtonElement;
-    setIsOpen((prevIsOpen) => ({
-      ...prevIsOpen,
-      [targetButton.id]: !prevIsOpen[targetButton.id],
-    }));
+  const toggleModal = (modalName: string) => {
+    switch (modalName) {
+      case 'categoryModal':
+        setShowCategory((prev) => !prev);
+        break;
+      case 'operateTimeModal':
+        setshowOperateTime((prev) => !prev);
+        break;
+      case 'searchStoreModal':
+        setShowSearchStore((prev) => !prev);
+        break;
+      default:
+        break;
+    }
   };
 
-  // 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
+  const togglePopup = () => {
+    setShowConfirmPopup(!showConfirmPopup);
+  };
+
+  // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
     if (!isMobile && step === 1) {
-      setIsOpen({
-        ...isOpen,
-        categoryModal: true,
-      });
+      setShowCategory(!showCategory);
     }
   }, []);
 
@@ -93,19 +93,19 @@ export default function StoreInfo() {
                 <span className={styles.form__label}>카테고리</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="카테고리 검색" buttonType="small" modalId="categoryModal" onClick={toggleModal} />
+                  <CustomButton content="카테고리 검색" buttonType="small" onClick={() => toggleModal('categoryModal')} />
                 </div>
               </div>
-              <CategoryModal isOpen={isOpen.categoryModal} modalHandler={toggleModal} />
+              <CategoryModal isOpen={showCategory} modalHandler={() => toggleModal('categoryModal')} />
               <InputBox content="대표자명" inputId="name" />
               <div>
                 <span className={styles.form__label}>가게명</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="가게검색" buttonType="small" modalId="searchStoreModal" onClick={toggleModal} />
+                  <CustomButton content="가게검색" buttonType="small" onClick={() => toggleModal('searchStoreModal')} />
                 </div>
               </div>
-              <SearchStoreModal isOpen={isOpen.searchStoreModal} modalHandler={toggleModal} />
+              <SearchStoreModal isOpen={showsearchStore} modalHandler={() => toggleModal('searchStoreModal')} />
               <InputBox content="주소정보" inputId="address" />
               <InputBox content="전화번호" inputId="phoneNumber" />
               <InputBox content="배달금액" inputId="deliveryFee" />
@@ -115,10 +115,10 @@ export default function StoreInfo() {
                   <div className={styles['form__operate-time']}>
                     <span>00:00 ~ 24:00</span>
                   </div>
-                  <CustomButton content="시간수정" buttonType="small" modalId="timeSettingModal" onClick={toggleModal} />
+                  <CustomButton content="시간수정" buttonType="small" onClick={() => toggleModal('operateTimeModal')} />
                 </div>
               </div>
-              <OperateTimeModal isOpen={isOpen.timeSettingModal} modalHandler={toggleModal} />
+              <OperateTime isOpen={showOperateTime} modalHandler={() => toggleModal('operateTimeModal')} />
               <InputBox content="기타정보" inputId="etc" />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
@@ -138,11 +138,10 @@ export default function StoreInfo() {
                 <CustomButton
                   content="다음"
                   buttonType="large"
-                  modalId="confirmPopup"
-                  onClick={toggleModal}
+                  onClick={togglePopup}
                 />
               </div>
-              <ConfirmPopup isOpen={isOpen.confirmPopup} modalHandler={toggleModal} />
+              <ConfirmPopup isOpen={showConfirmPopup} modalHandler={togglePopup} />
             </div>
           </div>
           <Copyright />
