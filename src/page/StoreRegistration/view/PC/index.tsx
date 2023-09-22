@@ -141,7 +141,7 @@ export default function StoreRegistrationPC() {
                   onClick={togglePopup}
                 />
               </div>
-              <ConfirmPopup isOpen={showConfirmPopup} modalHandler={togglePopup} />
+              <ConfirmPopup isOpen={showConfirmPopup} popupHandler={togglePopup} />
             </div>
           </div>
           <Copyright />
