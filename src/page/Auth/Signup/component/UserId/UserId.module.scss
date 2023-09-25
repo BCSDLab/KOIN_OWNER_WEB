@@ -1,6 +1,12 @@
 @use "src/utils/styles/mediaQuery" as media;
 
 .form {
+  height: 100px;
+
+  @include media.media-breakpoint-down(mobile) {
+    height: 50px;
+  }
+
   &__label {
     display: block;
     font-size: 18px;
