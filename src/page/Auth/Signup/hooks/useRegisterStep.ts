@@ -19,6 +19,7 @@ export default function useRegisterStep() {
   const goNext = useCallback(() => {
     increaseStep();
     setRegisterStep((regiStep) => regiStep + 1);
+    window.scrollTo({ top: 0 });
   }, [increaseStep, setRegisterStep]);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function useRegisterStep() {
       setRegisterStep(registerStep - 1);
       decreaseStep();
     }
+    window.scrollTo({ top: 0 });
   };
   return {
     goNext, registerStep, goPrev, step,
