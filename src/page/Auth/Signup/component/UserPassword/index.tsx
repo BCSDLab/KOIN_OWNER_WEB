@@ -24,7 +24,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
     setPassword({ ...userData, password: data.password });
   };
   return (
-    <div className={styles.form} onChange={handleSubmit(onSubmit)}>
+    <div className={styles.form} onFocus={handleSubmit(onSubmit)}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
       <div className={styles.form__input}>
         <input
