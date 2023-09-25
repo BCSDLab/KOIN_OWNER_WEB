@@ -4,6 +4,7 @@ import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'component/common/ProgressBar';
 import PreviousStep from 'component/common/Auth/PreviousStep';
+import { useRef } from 'react';
 import OwnerData from './view/OwnerDataPage';
 import TermsOfService from './view/TermsOfServicePage';
 import UserData from './view/UserDataPage';
@@ -16,8 +17,9 @@ export default function Signup() {
   const {
     goNext, registerStep, goPrev, step,
   } = useRegisterStep();
+  const termsRef = useRef<HTMLDivElement>(null);
   const STEPS = [
-    <TermsOfService clickEvent={goNext} />,
+    <TermsOfService clickEvent={goNext} termsRef={termsRef} />,
     <UserData goNext={goNext} />,
     <OwnerData clickEvent={goNext} />,
   ];
@@ -46,7 +48,7 @@ export default function Signup() {
                   <Back />
                 </Link>
               ) : <PreviousStep step={step} clickEvent={goPrev} />}
-              <section className={styles.section}>
+              <section className={styles.section} ref={termsRef}>
                 <span className={styles.section__name}>
                   사장님용
                   <br />

@@ -2,18 +2,19 @@ import { Link } from 'react-router-dom';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import TERMS from 'page/Auth/Signup/constant/terms';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './TermsOfService.module.scss';
 
 type ButtonClickEventProps = {
   clickEvent: () => void;
+  termsRef: React.RefObject<HTMLDivElement>
 };
-const useTermCheck = () => {
+const useTermCheck = (ref:React.RefObject<HTMLDivElement>) => {
   const [isUserTermAgree, setUserTermAgree] = useState(false);
   const [isKoinTermAgree, setKoinTermAgree] = useState(false);
   const [isAllAgree, setAllAgree] = useState(false);
-
+  const sectionRef = useRef<HTMLDivElement>(null);
   const checkAll = () => {
     if (isAllAgree) {
       setUserTermAgree(false);
@@ -26,21 +27,40 @@ const useTermCheck = () => {
   useEffect(() => {
     setAllAgree(isKoinTermAgree && isUserTermAgree);
   }, [isKoinTermAgree, isUserTermAgree]);
+  useEffect(() => {
+    if (isAllAgree && ref.current) {
+      console.log(
+        ref.current.scrollHeight,
+        ref.current.scrollTop,
+      );
+      ref.current.scrollTo({ top: ref.current.scrollHeight });
+      console.log(
+        ref.current.scrollHeight,
+        ref.current.scrollTop,
+      );
+    }
+  }, [isAllAgree, ref]);
   return {
-    isUserTermAgree, setUserTermAgree, isKoinTermAgree, setKoinTermAgree, isAllAgree, checkAll,
+    isUserTermAgree,
+    setUserTermAgree,
+    isKoinTermAgree,
+    setKoinTermAgree,
+    isAllAgree,
+    checkAll,
+    sectionRef,
   };
 };
 
-export default function TermsOfService({ clickEvent }:ButtonClickEventProps) {
+export default function TermsOfService({ clickEvent, termsRef }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const USER_TERM = TERMS[0];
   const KOIN_TERM = TERMS[1];
   const {
     isUserTermAgree, setUserTermAgree, isKoinTermAgree, setKoinTermAgree, isAllAgree, checkAll,
-  } = useTermCheck();
+  } = useTermCheck(termsRef);
   return (
     <>
-      <section className={styles.section}>
+      <section className={styles.section} ref={termsRef}>
         <div className={styles['agree-all']}>
           <label htmlFor="terms" className={styles['agree-all__content']}>
             <input id="terms" type="checkbox" className={styles.section__checkbox} checked={isAllAgree} onChange={checkAll} />

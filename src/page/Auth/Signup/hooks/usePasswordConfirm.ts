@@ -13,7 +13,7 @@ export default function usePasswordConfirm() {
     formState: { errors },
     getValues,
     handleSubmit,
-  } = useForm<PasswordForm>({ mode: 'onBlur' });
+  } = useForm<PasswordForm>({ mode: 'onChange' });
 
   const passwordRegister = register('password', {
     required: { value: true, message: '비밀번호를 입력해주세요.' },
