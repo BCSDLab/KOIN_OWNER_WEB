@@ -1,11 +1,11 @@
 import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import styles from './ErrorMessage.module.scss';
 
-interface ErrorMEssageProps {
+interface ErrorMessageProps {
   message: string | undefined
 }
 
-export default function ErrorMessage({ message }:ErrorMEssageProps) {
+export default function ErrorMessage({ message }:ErrorMessageProps) {
   return (
     <div className={styles.warn}>
       <Warn />
