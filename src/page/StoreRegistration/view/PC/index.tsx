@@ -106,7 +106,7 @@ export default function StoreRegistrationPC() {
                 open={showSearchStore}
                 onCancel={() => setShowSearchStore(false)}
               >
-                <SearchStore />
+                <SearchStore open={showSearchStore} onCancel={() => setShowSearchStore(false)} />
               </CustomModal>
               <InputBox content="주소정보" inputId="address" />
               <InputBox content="전화번호" inputId="phoneNumber" />

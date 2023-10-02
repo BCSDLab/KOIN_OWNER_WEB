@@ -1,15 +1,28 @@
 import { ReactComponent as Magnifier } from 'assets/svg/storereg/magnifier.svg';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
+import useBooleanState from 'utils/hooks/useBooleanState';
+import ConfirmStore from 'page/StoreRegistration/component/Modal/ConfirmStore';
 import styles from './SearchStore.module.scss';
 
-export default function SearchStore() {
+interface SearchStoreProps {
+  open: boolean;
+  onCancel: () => void;
+}
+
+export default function SearchStore({ open, onCancel }: SearchStoreProps) {
   const [selectedStore, setSelectedStore] = useState('');
+  const { value: showConfirmStore, setValue: setShowConfirmStore } = useBooleanState(false);
 
   function toggleStore() {
     setSelectedStore(selectedStore === '가장 맛있는 족발' ? ' ' : '가장 맛있는 족발');
   }
 
+  function toggleModal() {
+    setShowConfirmStore((prev) => !prev);
+  }
+
+  if (!open) return null;
   return (
     <div className={styles.info}>
       <div className={styles.info__search}>
@@ -25,6 +38,7 @@ export default function SearchStore() {
           type="button"
           onClick={() => {
             toggleStore();
+            toggleModal();
           }}
         >
           <span className={styles.store__title}>가장 맛있는 족발</span>
@@ -35,6 +49,7 @@ export default function SearchStore() {
           </div>
         </button>
       </div>
+      <ConfirmStore open={showConfirmStore} onCancel={onCancel} />
     </div>
   );
 }
