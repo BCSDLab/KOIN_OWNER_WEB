@@ -11,23 +11,11 @@
 }
 
 .container {
-  &--large {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 430px;
-    height: 75vh;
-    background-color: #ffffff;
-  }
-
-  &--small {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #ffffff;
-    width: 430px;
-    height: 434px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 430px;
+  background-color: #ffffff;
 
   &__header {
     display: flex;
@@ -54,7 +42,7 @@
     cursor: pointer;
   }
 
-  &__next-button {
+  &__footer {
     width: 366px;
     margin-bottom: 40px;
   }

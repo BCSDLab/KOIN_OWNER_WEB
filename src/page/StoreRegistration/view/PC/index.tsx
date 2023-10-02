@@ -8,12 +8,13 @@ import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import Complete from 'component/common/Auth/Complete';
 import InputBox from 'page/StoreRegistration/component/InputBox';
-import CategoryModal from 'page/StoreRegistration/component/Modal/Category';
-import SearchStoreModal from 'page/StoreRegistration/component/Modal/SearchStore';
-import OperateTime from 'page/StoreRegistration/component/Modal/OperateTimePC';
+import Category from 'page/StoreRegistration/component/Modal/Category';
+import SearchStore from 'page/StoreRegistration/component/Modal/SearchStore';
+import OperateTimePC from 'page/StoreRegistration/component/Modal/OperateTimePC';
 import ConfirmPopup from 'page/StoreRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
+import CustomModal from 'component/common/CustomModal';
 import styles from './StoreRegistrationPC.module.scss';
 
 export default function StoreRegistrationPC() {
@@ -21,24 +22,8 @@ export default function StoreRegistrationPC() {
   const { step, setStep } = useStepStore();
   const { value: showCategory, setValue: setShowCategory } = useBooleanState(false);
   const { value: showOperateTime, setValue: setshowOperateTime } = useBooleanState(false);
-  const { value: showsearchStore, setValue: setShowSearchStore } = useBooleanState(false);
+  const { value: showSearchStore, setValue: setShowSearchStore } = useBooleanState(false);
   const { value: showConfirmPopup, setValue: setShowConfirmPopup } = useBooleanState(false);
-
-  const toggleModal = (modalName: string) => {
-    switch (modalName) {
-      case 'categoryModal':
-        setShowCategory((prev) => !prev);
-        break;
-      case 'operateTimeModal':
-        setshowOperateTime((prev) => !prev);
-        break;
-      case 'searchStoreModal':
-        setShowSearchStore((prev) => !prev);
-        break;
-      default:
-        break;
-    }
-  };
 
   const togglePopup = () => {
     setShowConfirmPopup(!showConfirmPopup);
@@ -93,19 +78,36 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__label}>카테고리</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="카테고리 검색" buttonType="small" onClick={() => toggleModal('categoryModal')} />
+                  <CustomButton content="카테고리 검색" buttonType="small" onClick={() => setShowCategory(true)} />
                 </div>
               </div>
-              <CategoryModal isOpen={showCategory} modalHandler={() => toggleModal('categoryModal')} />
+              <CustomModal
+                buttonText="다음"
+                title="카테고리 검색"
+                height="434px"
+                footer={!null}
+                open={showCategory}
+                onCancel={() => setShowCategory(false)}
+              >
+                <Category />
+              </CustomModal>
               <InputBox content="대표자명" inputId="name" />
               <div>
                 <span className={styles.form__label}>가게명</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="가게검색" buttonType="small" onClick={() => toggleModal('searchStoreModal')} />
+                  <CustomButton content="가게검색" buttonType="small" onClick={() => setShowSearchStore(true)} />
                 </div>
               </div>
-              <SearchStoreModal isOpen={showsearchStore} modalHandler={() => toggleModal('searchStoreModal')} />
+              <CustomModal
+                title="가게검색"
+                height="75vh"
+                footer={null}
+                open={showSearchStore}
+                onCancel={() => setShowSearchStore(false)}
+              >
+                <SearchStore />
+              </CustomModal>
               <InputBox content="주소정보" inputId="address" />
               <InputBox content="전화번호" inputId="phoneNumber" />
               <InputBox content="배달금액" inputId="deliveryFee" />
@@ -115,10 +117,19 @@ export default function StoreRegistrationPC() {
                   <div className={styles['form__operate-time']}>
                     <span>00:00 ~ 24:00</span>
                   </div>
-                  <CustomButton content="시간수정" buttonType="small" onClick={() => toggleModal('operateTimeModal')} />
+                  <CustomButton content="시간수정" buttonType="small" onClick={() => setshowOperateTime(true)} />
                 </div>
               </div>
-              <OperateTime isOpen={showOperateTime} modalHandler={() => toggleModal('operateTimeModal')} />
+              <CustomModal
+                buttonText="다음"
+                title="운영시간"
+                height="536px"
+                footer={!null}
+                open={showOperateTime}
+                onCancel={() => setshowOperateTime(false)}
+              >
+                <OperateTimePC />
+              </CustomModal>
               <InputBox content="기타정보" inputId="etc" />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
