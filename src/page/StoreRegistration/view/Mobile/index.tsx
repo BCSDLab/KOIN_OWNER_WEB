@@ -11,7 +11,7 @@ import useStoreCategory from 'query/storeCategory';
 import { createPortal } from 'react-dom';
 import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
 import OperateTime from 'page/StoreRegistration/component/Modal/OperateTimeMobile';
-import PROGRESS_TITLE from 'utils/constants/progress';
+import PROGRESS_TITLE from 'utils/constant/progress';
 import styles from './StoreRegistrationMobile.module.scss';
 
 const TOTAL_STEP = 4;

@@ -1,5 +1,5 @@
 import TimePicker from 'page/StoreRegistration/component/TimePicker';
-import WEEK from 'utils/constants/week';
+import WEEK from 'utils/constant/week';
 import styles from './OperateTimePC.module.scss';
 
 export default function OperateTimePC() {

@@ -2,7 +2,7 @@ import PreviousStep from 'component/common/Auth/PreviousStep';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import TimePicker from 'page/StoreRegistration/component/TimePicker';
-import WEEK from 'utils/constants/week';
+import WEEK from 'utils/constant/week';
 import styles from './OperateTimeMobile.module.scss';
 
 interface OperateTimeProps {
