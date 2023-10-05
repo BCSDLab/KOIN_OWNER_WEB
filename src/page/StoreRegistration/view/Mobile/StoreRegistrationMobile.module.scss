@@ -4,7 +4,7 @@
   width: 297px;
   flex-direction: column;
   font-weight: 500;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 100px);
 }
 
 .form {
@@ -76,6 +76,7 @@
       font-weight: 500;
       font-size: 15px;
       color: #ffffff;
+      cursor: pointer;
     }
   }
 
@@ -93,6 +94,7 @@
     font-size: 14px;
     color: #858585;
     box-sizing: content-box;
+    cursor: pointer;
 
     input[type="checkbox"]:checked + span {
       color: #f7941e;
@@ -193,7 +195,6 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    min-height: 310px;
     margin-top: 28px;
   }
 
@@ -228,6 +229,7 @@
   &__button {
     display: flex;
     justify-content: flex-end;
+    margin-top: 155px;
 
     button {
       padding: 8px 40px;
@@ -235,6 +237,7 @@
       font-weight: 500;
       font-size: 15px;
       color: #ffffff;
+      cursor: pointer;
     }
   }
 }
