@@ -85,7 +85,7 @@ export default function StoreRegistrationPC() {
                 buttonText="다음"
                 title="카테고리 검색"
                 height="434px"
-                footer={!null}
+                hasFooter
                 open={showCategory}
                 onCancel={() => setShowCategory(false)}
               >
@@ -102,7 +102,7 @@ export default function StoreRegistrationPC() {
               <CustomModal
                 title="가게검색"
                 height="75vh"
-                footer={null}
+                hasFooter={false}
                 open={showSearchStore}
                 onCancel={() => setShowSearchStore(false)}
               >
@@ -124,7 +124,7 @@ export default function StoreRegistrationPC() {
                 buttonText="다음"
                 title="운영시간"
                 height="536px"
-                footer={!null}
+                hasFooter
                 open={showOperateTime}
                 onCancel={() => setshowOperateTime(false)}
               >

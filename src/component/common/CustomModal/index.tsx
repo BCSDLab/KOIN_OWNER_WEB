@@ -7,16 +7,15 @@ interface CustomModalProps {
   buttonText?: string;
   title: string;
   height: string;
-  footer: React.ReactNode;
+  hasFooter: boolean;
   open: boolean;
   onCancel: () => void;
   children: React.ReactNode
 }
 
 export default function CustomModal({
-  buttonText, title, height, footer, open, onCancel, children,
+  buttonText = '', title, height, hasFooter, open, onCancel, children,
 }: CustomModalProps) {
-  const buttonTexts = buttonText || ' ';
   if (!open) return null;
   return createPortal(
     <div className={styles.modal}>
@@ -31,9 +30,9 @@ export default function CustomModal({
         <div className={styles.content}>
           {children}
         </div>
-        {footer !== null && (
+        {hasFooter && (
           <div className={styles.container__footer}>
-            <CustomButton content={buttonTexts} buttonType="large" onClick={onCancel} />
+            <CustomButton content={buttonText} buttonType="large" onClick={onCancel} />
           </div>
         )}
       </div>
