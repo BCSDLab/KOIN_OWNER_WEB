@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactComponent as Memo } from 'assets/svg/storereg/memo.svg';
+import { ReactComponent as Memo } from 'assets/svg/StoreRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as Cutlery } from 'assets/svg/storereg/cutlery.svg';
+import { ReactComponent as Cutlery } from 'assets/svg/StoreRegistration/cutlery.svg';
 import { useEffect } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';

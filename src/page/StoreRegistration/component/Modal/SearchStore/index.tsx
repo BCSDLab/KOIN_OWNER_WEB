@@ -1,4 +1,4 @@
-import { ReactComponent as Magnifier } from 'assets/svg/storereg/magnifier.svg';
+import { ReactComponent as Magnifier } from 'assets/svg/StoreRegistration/magnifier.svg';
 import cn from 'utils/ts/className';
 import { useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
