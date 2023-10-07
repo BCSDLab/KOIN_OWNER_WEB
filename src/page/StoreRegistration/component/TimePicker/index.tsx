@@ -26,13 +26,13 @@ export default function OperatingHour() {
   }
 
   function handleTimeChange(e: any) {
-    const selectedValue = parseInt(e.target.value, 10);
+    const selectedTime = parseInt(e.target.value, 10);
     const selectedId = e.target.id;
 
     // 선택한 시간 또는 분을 텍스트로 업데이트
     setTime({
       ...time,
-      [selectedId]: selectedValue < 10 ? `0${selectedValue}` : selectedValue.toString(),
+      [selectedId]: selectedTime.toString().padStart(2, '0'),
     });
   }
 
