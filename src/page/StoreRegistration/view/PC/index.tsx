@@ -20,19 +20,32 @@ import styles from './StoreRegistrationPC.module.scss';
 export default function StoreRegistrationPC() {
   const { isMobile } = useMediaQuery();
   const { step, setStep } = useStepStore();
-  const { value: showCategory, setValue: setShowCategory } = useBooleanState(false);
-  const { value: showOperateTime, setValue: setshowOperateTime } = useBooleanState(false);
-  const { value: showSearchStore, setValue: setShowSearchStore } = useBooleanState(false);
-  const { value: showConfirmPopup, setValue: setShowConfirmPopup } = useBooleanState(false);
-
-  const togglePopup = () => {
-    setShowConfirmPopup(!showConfirmPopup);
-  };
+  const {
+    value: showCategory,
+    setTrue: openCategory,
+    setFalse: closeCategory,
+    changeValue: toggleCategory,
+  } = useBooleanState(false);
+  const {
+    value: showOperateTime,
+    setTrue: openOperateTime,
+    setFalse: closeOperateTime,
+  } = useBooleanState(false);
+  const {
+    value: showSearchStore,
+    setTrue: openSearchStore,
+    setFalse: closeSearchStore,
+  } = useBooleanState(false);
+  const {
+    value: showConfirmPopup,
+    setTrue: openConfirmPopup,
+    setFalse: closeConfirmPopup,
+  } = useBooleanState(false);
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
     if (!isMobile && step === 1) {
-      setShowCategory(!showCategory);
+      toggleCategory();
     }
   }, []);
 
@@ -46,8 +59,7 @@ export default function StoreRegistrationPC() {
             <div className={styles.block__text}>
               <span>
                 가게의 다양한 정보를 입력 및 수정하여
-              </span>
-              <span>
+                <br />
                 학생들에게 최신 가게 정보를 알려주세요
               </span>
             </div>
@@ -78,7 +90,7 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__label}>카테고리</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="카테고리 검색" buttonType="small" onClick={() => setShowCategory(true)} />
+                  <CustomButton content="카테고리 검색" buttonType="small" onClick={openCategory} />
                 </div>
               </div>
               <CustomModal
@@ -86,8 +98,8 @@ export default function StoreRegistrationPC() {
                 title="카테고리 검색"
                 height="434px"
                 hasFooter
-                open={showCategory}
-                onCancel={() => setShowCategory(false)}
+                isOpen={showCategory}
+                onCancel={closeCategory}
               >
                 <Category />
               </CustomModal>
@@ -96,17 +108,17 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__label}>가게명</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="가게검색" buttonType="small" onClick={() => setShowSearchStore(true)} />
+                  <CustomButton content="가게검색" buttonType="small" onClick={openSearchStore} />
                 </div>
               </div>
               <CustomModal
                 title="가게검색"
                 height="75vh"
                 hasFooter={false}
-                open={showSearchStore}
-                onCancel={() => setShowSearchStore(false)}
+                isOpen={showSearchStore}
+                onCancel={closeSearchStore}
               >
-                <SearchStore open={showSearchStore} onCancel={() => setShowSearchStore(false)} />
+                <SearchStore open={showSearchStore} onCancel={openSearchStore} />
               </CustomModal>
               <InputBox content="주소정보" inputId="address" />
               <InputBox content="전화번호" inputId="phoneNumber" />
@@ -117,7 +129,7 @@ export default function StoreRegistrationPC() {
                   <div className={styles['form__operate-time']}>
                     <span>00:00 ~ 24:00</span>
                   </div>
-                  <CustomButton content="시간수정" buttonType="small" onClick={() => setshowOperateTime(true)} />
+                  <CustomButton content="시간수정" buttonType="small" onClick={openOperateTime} />
                 </div>
               </div>
               <CustomModal
@@ -125,8 +137,8 @@ export default function StoreRegistrationPC() {
                 title="운영시간"
                 height="536px"
                 hasFooter
-                open={showOperateTime}
-                onCancel={() => setshowOperateTime(false)}
+                isOpen={showOperateTime}
+                onCancel={closeOperateTime}
               >
                 <OperateTimePC />
               </CustomModal>
@@ -149,10 +161,10 @@ export default function StoreRegistrationPC() {
                 <CustomButton
                   content="다음"
                   buttonType="large"
-                  onClick={togglePopup}
+                  onClick={openConfirmPopup}
                 />
               </div>
-              <ConfirmPopup isOpen={showConfirmPopup} popupHandler={togglePopup} />
+              <ConfirmPopup isOpen={showConfirmPopup} onCancel={closeConfirmPopup} />
             </div>
           </div>
           <Copyright />

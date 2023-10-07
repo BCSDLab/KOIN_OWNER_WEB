@@ -6,11 +6,11 @@ import styles from './Sub.module.scss';
 
 export default function Sub() {
   const { increaseStep } = useStepStore();
-  const { value: showOperateTime, setValue: setShowOperateTime } = useBooleanState(false);
-
-  function toggleOperateTime() {
-    setShowOperateTime((prev) => !prev);
-  }
+  const {
+    value: showOperateTime,
+    setTrue: openOperateTime,
+    setFalse: closeOperateTime,
+  } = useBooleanState(false);
 
   return (
     <div className={styles.form}>
@@ -28,11 +28,11 @@ export default function Sub() {
         <button
           type="button"
           className={styles['form__label-button']}
-          onClick={toggleOperateTime}
+          onClick={openOperateTime}
         >
           수정
         </button>
-        <OperateTimeMobile isOpen={showOperateTime} closeModal={() => setShowOperateTime(false)} />
+        <OperateTimeMobile isOpen={showOperateTime} closeModal={closeOperateTime} />
       </label>
       <label htmlFor="extra-info" className={styles.form__label}>
         기타정보

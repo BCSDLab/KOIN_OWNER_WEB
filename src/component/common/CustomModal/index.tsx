@@ -8,15 +8,15 @@ interface CustomModalProps {
   title: string;
   height: string;
   hasFooter: boolean;
-  open: boolean;
+  isOpen: boolean;
   onCancel: () => void;
   children: React.ReactNode
 }
 
 export default function CustomModal({
-  buttonText = '', title, height, hasFooter, open, onCancel, children,
+  buttonText = '', title, height, hasFooter, isOpen, onCancel, children,
 }: CustomModalProps) {
-  if (!open) return null;
+  if (!isOpen) return null;
   return createPortal(
     <div className={styles.modal}>
       <div className={styles.container} style={{ height }}>

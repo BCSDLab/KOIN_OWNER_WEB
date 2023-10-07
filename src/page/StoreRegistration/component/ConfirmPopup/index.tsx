@@ -4,10 +4,10 @@ import styles from './ConfirmPopup.module.scss';
 
 interface ConfirmPopupProps {
   isOpen: boolean;
-  popupHandler: (event: React.MouseEvent) => void;
+  onCancel: (event: React.MouseEvent) => void;
 }
 
-export default function ConfirmPopup({ isOpen, popupHandler }: ConfirmPopupProps) {
+export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
   const { setStep } = useStepStore();
 
   if (!isOpen) return null;
@@ -20,7 +20,7 @@ export default function ConfirmPopup({ isOpen, popupHandler }: ConfirmPopupProps
         <div className={styles.content__buttons}>
           <button
             type="button"
-            onClick={popupHandler}
+            onClick={onCancel}
             id="confirmPopup"
             className={styles['content__cancel-button']}
           >
