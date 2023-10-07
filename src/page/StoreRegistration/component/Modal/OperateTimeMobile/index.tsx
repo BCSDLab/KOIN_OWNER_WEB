@@ -3,6 +3,7 @@ import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import TimePicker from 'page/StoreRegistration/component/TimePicker';
 import WEEK from 'utils/constant/week';
+import { createPortal } from 'react-dom';
 import styles from './OperateTimeMobile.module.scss';
 
 interface OperateTimeMobileProps {
@@ -14,7 +15,7 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
   const step = useStepStore((state) => state.step);
 
   if (!isOpen) return null;
-  return (
+  return createPortal(
     <div>
       <div className={styles.container}>
         <div className={styles['chevron-left']}>
@@ -56,6 +57,7 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
