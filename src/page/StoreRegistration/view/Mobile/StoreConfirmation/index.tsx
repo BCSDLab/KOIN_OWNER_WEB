@@ -2,7 +2,7 @@ import useStepStore from 'store/useStepStore';
 import styles from './StoreConfirmation.module.scss';
 
 export default function StoreConfirmation() {
-  const { step, setStep } = useStepStore();
+  const { increaseStep } = useStepStore();
 
   return (
     <>
@@ -55,7 +55,7 @@ export default function StoreConfirmation() {
         </div>
       </div>
       <div className={styles.form__button}>
-        <button type="button" onClick={() => setStep(step + 1)}>등록</button>
+        <button type="button" onClick={increaseStep}>등록</button>
       </div>
     </>
   );

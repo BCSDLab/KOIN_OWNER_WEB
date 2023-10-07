@@ -12,9 +12,8 @@ import Sub from 'page/StoreRegistration/view/Mobile/Sub';
 import StoreConfirmation from 'page/StoreRegistration/view/Mobile/StoreConfirmation';
 import styles from './StoreRegistrationMobile.module.scss';
 
-const TOTAL_STEP = 4;
 export default function StoreRegistrationMobile() {
-  const { step, decreaseStep } = useStepStore();
+  const { TOTAL_STEP, step, decreaseStep } = useStepStore();
 
   return (
     <div>

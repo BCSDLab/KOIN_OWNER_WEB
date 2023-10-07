@@ -8,7 +8,7 @@ type Category = string;
 
 export default function StoreCategory() {
   const { categoryList } = useStoreCategory();
-  const { step, setStep } = useStepStore();
+  const { increaseStep } = useStepStore();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   return (
@@ -31,7 +31,7 @@ export default function StoreCategory() {
         ))}
       </div>
       <div className={styles.category__button}>
-        <button type="button" onClick={() => setStep(step + 1)}>다음</button>
+        <button type="button" onClick={increaseStep}>다음</button>
       </div>
     </div>
   );

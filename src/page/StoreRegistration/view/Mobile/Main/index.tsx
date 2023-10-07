@@ -3,7 +3,7 @@ import useStepStore from 'store/useStepStore';
 import styles from './Main.module.scss';
 
 export default function Main() {
-  const { step, setStep } = useStepStore();
+  const { increaseStep } = useStepStore();
 
   return (
     <div className={styles.form}>
@@ -20,7 +20,7 @@ export default function Main() {
         <input type="text" id="address" className={styles.form__input} />
       </label>
       <div className={styles.form__button}>
-        <button type="button" onClick={() => setStep(step + 1)}>다음</button>
+        <button type="button" onClick={increaseStep}>다음</button>
       </div>
     </div>
   );

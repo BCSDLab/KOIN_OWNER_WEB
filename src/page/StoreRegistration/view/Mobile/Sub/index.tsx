@@ -5,7 +5,7 @@ import useStepStore from 'store/useStepStore';
 import styles from './Sub.module.scss';
 
 export default function Sub() {
-  const { step, setStep } = useStepStore();
+  const { increaseStep } = useStepStore();
   const { value: showOperateTime, setValue: setShowOperateTime } = useBooleanState(false);
 
   function toggleOperateTime() {
@@ -53,7 +53,7 @@ export default function Sub() {
         </label>
       </div>
       <div className={styles.form__button}>
-        <button type="button" onClick={() => setStep(step + 1)}>다음</button>
+        <button type="button" onClick={increaseStep}>다음</button>
       </div>
     </div>
   );
