@@ -5,18 +5,20 @@ import TimePicker from 'page/StoreRegistration/component/TimePicker';
 import WEEK from 'utils/constant/week';
 import styles from './OperateTimeMobile.module.scss';
 
-interface OperateTimeProps {
-  clickEvent: React.Dispatch<React.SetStateAction<boolean>>
+interface OperateTimeMobileProps {
+  isOpen: boolean;
+  closeModal: () => void;
 }
 
-export default function OperateTimeMobile({ clickEvent }: OperateTimeProps) {
+export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMobileProps) {
   const step = useStepStore((state) => state.step);
 
+  if (!isOpen) return null;
   return (
     <div>
       <div className={styles.container}>
         <div className={styles['chevron-left']}>
-          <button type="button" className={styles.container__button} onClick={() => clickEvent(false)}>
+          <button type="button" className={styles.container__button} onClick={closeModal}>
             <PreviousStep step={step} />
           </button>
         </div>
@@ -48,7 +50,7 @@ export default function OperateTimeMobile({ clickEvent }: OperateTimeProps) {
             </tbody>
           </table>
           <div className={styles.table__button}>
-            <button type="button" onClick={() => clickEvent(false)}>
+            <button type="button" onClick={closeModal}>
               다음
             </button>
           </div>
