@@ -27,7 +27,7 @@ export default function TimePicker() {
     setIsOpen(!isOpen);
   }
 
-  function handleTimeClick(e: MouseEvent<HTMLButtonElement>) {
+  function handleClickTimeChangeButton(e: MouseEvent<HTMLButtonElement>) {
     const selectedTime = parseInt(e.currentTarget.value, 10);
     const selectedId = e.currentTarget.id;
 
@@ -64,7 +64,7 @@ export default function TimePicker() {
                 type="button"
                 id="hour"
                 className={styles['content__hour-item']}
-                onClick={handleTimeClick}
+                onClick={handleClickTimeChangeButton}
                 value={hour}
               >
                 {hour}
@@ -78,7 +78,7 @@ export default function TimePicker() {
                 type="button"
                 id="minute"
                 className={styles['content__minute-item']}
-                onClick={handleTimeClick}
+                onClick={handleClickTimeChangeButton}
                 value={minute}
               >
                 {minute}
