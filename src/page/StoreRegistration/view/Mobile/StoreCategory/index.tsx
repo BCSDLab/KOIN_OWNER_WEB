@@ -15,7 +15,7 @@ export default function StoreCategory() {
     <div className={styles.category}>
       <div className={styles.category__title}>카테고리를 골라주세요.</div>
       <div className={styles.category__wrapper}>
-        {categoryList?.shop_categories.filter((element, index) => index > 0).map((category) => (
+        {categoryList?.shop_categories.filter((_, index) => index > 0).map((category) => (
           <button
             className={cn({
               [styles.category__menu]: true,

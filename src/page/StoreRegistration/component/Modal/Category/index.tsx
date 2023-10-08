@@ -8,7 +8,7 @@ export default function Category() {
   const { categoryList } = useStoreCategory();
   return (
     <div className={styles.category}>
-      {categoryList?.shop_categories.slice(1).map((value) => (
+      {categoryList?.shop_categories.filter((_, index) => index > 0).map((value) => (
         <button
           className={cn({
             [styles.category__menu]: true,
