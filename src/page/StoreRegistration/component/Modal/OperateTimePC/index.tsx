@@ -18,7 +18,7 @@ export default function OperateTimePC() {
             <td>{day}</td>
             <td className={styles['table__time-picker']}>
               <TimePicker />
-              ~
+              {' ~ '}
               <TimePicker />
             </td>
             <td><input type="checkbox" className={styles.table__checkbox} /></td>
