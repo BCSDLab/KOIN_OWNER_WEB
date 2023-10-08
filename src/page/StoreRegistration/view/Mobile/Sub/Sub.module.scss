@@ -89,7 +89,10 @@
     cursor: pointer;
 
     &:checked {
-      border: none;
+      border: 2px solid #f7941e;
+      padding: 1px;
+      background-clip: content-box;
+      background-color: #f7941e;
     }
   }
 }
