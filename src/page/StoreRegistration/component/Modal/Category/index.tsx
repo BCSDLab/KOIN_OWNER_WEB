@@ -8,18 +8,18 @@ export default function Category() {
   const { categoryList } = useStoreCategory();
   return (
     <div className={styles.category}>
-      {categoryList?.shop_categories.filter((_, index) => index > 0).map((value) => (
+      {categoryList?.shop_categories.filter((_, index) => index > 0).map((category) => (
         <button
           className={cn({
             [styles.category__menu]: true,
-            [styles['category__menu--selected']]: value.name === selectedCategory,
+            [styles['category__menu--selected']]: category.name === selectedCategory,
           })}
           type="button"
-          onClick={() => setSelectedCategory(value.name)}
-          key={value.id}
+          onClick={() => setSelectedCategory(category.name)}
+          key={category.id}
         >
-          <img className={styles.category__image} src={value.image_url} alt="category_img" />
-          <span className={styles.category__type}>{value.name}</span>
+          <img className={styles.category__image} src={category.image_url} alt="category_img" />
+          <span className={styles.category__type}>{category.name}</span>
         </button>
       ))}
     </div>
