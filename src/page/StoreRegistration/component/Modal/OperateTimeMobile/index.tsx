@@ -19,9 +19,7 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
     <div>
       <div className={styles.container}>
         <div className={styles['chevron-left']}>
-          <button type="button" className={styles.container__button} onClick={closeModal}>
-            <PreviousStep step={step} />
-          </button>
+          <PreviousStep step={step} clickEvent={closeModal} />
         </div>
         <div className={styles.content}>
           <SubTitle topTitle="가게 등록" bottomTitle="" topText="시간 설정" bottomText="" />

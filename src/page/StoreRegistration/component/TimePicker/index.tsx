@@ -1,10 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
+import {
+  useState, useRef, useEffect, MouseEvent,
+} from 'react';
 import styles from './TimePicker.module.scss';
 
 const hours: number[] = Array.from({ length: 24 }, (_, i) => i);
 const minutes: number[] = Array.from({ length: 12 }, (_, i) => i * 5);
 
-export default function OperatingHour() {
+export default function TimePicker() {
   const dropMenuRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [time, setTime] = useState({
@@ -13,21 +15,21 @@ export default function OperatingHour() {
   });
 
   useEffect(() => {
-    const handleOutsideClose = (e: { target: any }) => {
-      if (isOpen && (!dropMenuRef.current?.contains(e.target))) setIsOpen(false);
+    const handleClickOutside = (e: Event) => {
+      if (isOpen && (!dropMenuRef.current?.contains(e.target as Node))) setIsOpen(false);
     };
-    document.addEventListener('click', handleOutsideClose);
+    document.addEventListener('mousedown', handleClickOutside);
 
-    return () => document.removeEventListener('click', handleOutsideClose);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isOpen]);
 
   function toggleModal() {
     setIsOpen(!isOpen);
   }
 
-  function handleTimeChange(e: any) {
-    const selectedTime = parseInt(e.target.value, 10);
-    const selectedId = e.target.id;
+  function handleTimeClick(e: MouseEvent<HTMLButtonElement>) {
+    const selectedTime = parseInt(e.currentTarget.value, 10);
+    const selectedId = e.currentTarget.id;
 
     // 선택한 시간 또는 분을 텍스트로 업데이트
     setTime({
@@ -62,7 +64,7 @@ export default function OperatingHour() {
                 type="button"
                 id="hour"
                 className={styles['content__hour-item']}
-                onClick={handleTimeChange}
+                onClick={handleTimeClick}
                 value={hour}
               >
                 {hour}
@@ -76,7 +78,7 @@ export default function OperatingHour() {
                 type="button"
                 id="minute"
                 className={styles['content__minute-item']}
-                onClick={handleTimeChange}
+                onClick={handleTimeClick}
                 value={minute}
               >
                 {minute}
