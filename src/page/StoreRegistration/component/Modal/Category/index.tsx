@@ -18,7 +18,7 @@ export default function Category() {
           onClick={() => setSelectedCategory(category.name)}
           key={category.id}
         >
-          <img className={styles.category__image} src={category.image_url} alt="category_img" />
+          <img className={styles.category__image} src={category.image_url} alt="" />
           <span className={styles.category__type}>{category.name}</span>
         </button>
       ))}
