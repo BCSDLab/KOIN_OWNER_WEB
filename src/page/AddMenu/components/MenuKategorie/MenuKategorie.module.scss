@@ -1,0 +1,54 @@
+.container {
+  margin-top: 32px;
+}
+.kategorie-header {
+  display: flex;
+  justify-content: space-between;
+  height: 36px;
+  &__caption {
+    color: #175C8E;
+    font-family: Noto Sans CJK KR;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  &__condition {
+    color: #A1A1A1;
+    text-align: center;
+    font-family: Noto Sans CJK KR;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+.caption-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.kategorie-btns {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  button {
+    width: 176px;
+    height: 62px;
+    border: 0.5px solid var(--stroke, #858585); 
+    background-color: white;
+    color: #252525;
+    text-align: center;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}

@@ -1,0 +1,101 @@
+.container{
+    margin-top: 32px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
+  &__title {
+    color: #175C8E;
+    font-family: Noto Sans CJK KR;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  &__condition{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 17.5px;
+  }
+  &__condition-text{
+    color: #A1A1A1;
+    text-align: right;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  &__condition-icon{
+    width: 21px;
+    height: 21px;
+  }
+}
+.price-info-inputs {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  input {
+    width: 303px;
+    height: 30px;
+    border: 0.5px solid var(--stroke, #858585);
+    padding: 16px;
+    color: var(--, #252525);
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+.size-input {
+  &::placeholder {
+    color: #A1A1A1;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.price-input {
+  &::placeholder {
+    color: #A1A1A1;
+    text-align: right;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.cancle-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.add-price-button {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  gap: 8px;
+  height: 28px;
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+  &__text {
+    color: #F7941E;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+}

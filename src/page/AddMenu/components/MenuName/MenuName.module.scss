@@ -1,0 +1,36 @@
+.container{
+    width: 708px;
+}
+.caption{
+  display: flex;
+  align-items: center;
+  height: 36px;
+  color: #175C8E;
+  font-family: Noto Sans CJK KR;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;   
+  line-height: normal;
+}
+.nameInput{
+  margin-top: 24px;
+  height: 62px;
+  width: 100%;
+  border: 0.5px solid var(--stroke, #858585);
+  outline: none;
+  color: var(--, #252525);
+  font-family: Noto Sans CJK KR;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-left: 16px;
+  &::placeholder {
+    color: #A1A1A1;
+    font-family: Noto Sans CJK KR;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
