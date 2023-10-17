@@ -1,4 +1,4 @@
-.mobile {
+.container {
   position: absolute;
   top: 0;
   left: 0;
@@ -6,10 +6,6 @@
   width: 100vw;
   height: 100vh;
   background-color: #fff;
-
-  &__button {
-    background-color: transparent;
-  }
 }
 
 .content {
@@ -40,7 +36,12 @@
     text-align: center;
   }
 
-  &__data-checkbox {
+  &__time-picker {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__checkbox {
     appearance: none;
     border: 1px solid #175c8e;
     width: 18px;
@@ -64,6 +65,7 @@
       font-weight: 500;
       font-size: 15px;
       color: #ffffff;
+      cursor: pointer;
     }
   }
 }
