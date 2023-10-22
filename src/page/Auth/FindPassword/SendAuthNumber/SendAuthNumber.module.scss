@@ -1,0 +1,74 @@
+.template {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 220px;
+  padding-bottom: 120px;
+  flex-direction: column;
+}
+
+.logo {
+  margin: auto;
+}
+
+.form {
+  width: 368px;
+  margin-top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__input {
+    width: 368px;
+    height: 48px;
+    padding: 14px 16px;
+    border: 1px solid #d2dae2;
+    color: #222;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    box-sizing: border-box;
+
+    &--auth {
+      width: 255px;
+    }
+  }
+
+  &__label {
+    color: #252525;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.auth-button {
+  width: 97px;
+  height: 48px;
+  background-color: #175c8e;
+  color: white;
+  cursor: pointer;
+}
+
+.submit {
+  width: 368px;
+  height: 48px;
+  color: white;
+  background: #c4c4c4;
+  cursor: pointer;
+  margin-top: 250px;
+  box-sizing: border-box;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
