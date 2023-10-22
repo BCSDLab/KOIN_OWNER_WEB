@@ -3,7 +3,7 @@ import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import { Link, useLocation } from 'react-router-dom';
-import CATEGORY from 'static/category';
+import CATEGORY from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';

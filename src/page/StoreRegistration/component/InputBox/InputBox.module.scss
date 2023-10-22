@@ -1,0 +1,25 @@
+.form {
+  &__label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  &__section {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  &__input {
+    width: 336px;
+    border: 1px solid #d2dae2;
+    height: 22px;
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+}
