@@ -6,7 +6,6 @@ interface StepStore {
   setStep: (step: number) => void;
   decreaseStep: () => void;
   increaseStep: () => void;
-  increaseStep: () => void
 }
 const useStepStore = create<StepStore>((set) => ({
   TOTAL_STEP: 4,
