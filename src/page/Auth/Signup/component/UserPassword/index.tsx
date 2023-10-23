@@ -24,7 +24,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
     setPassword({ ...userData, password: data.password });
   };
   return (
-    <div className={styles.form} onFocus={handleSubmit(onSubmit)}>
+    <div className={styles.form}>
       {!isMobile && <span className={styles.form__label}>비밀번호</span>}
       <div className={styles.form__input}>
         <input
@@ -42,7 +42,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
         {formErrors.password ? (<ErrorMessage message={formErrors.password.message} />
         ) : <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>}
       </div>
-      <div className={styles.form__input}>
+      <div className={styles.form__input} onChange={handleSubmit(onSubmit)}>
         <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} {...passwordConfirmRegister} autoComplete="off" />
         {!isMobile && (
         <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
