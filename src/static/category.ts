@@ -52,7 +52,6 @@ const CATEGORY: Category[] = [
         planFlag: true,
         tag: null,
       },
-
     ],
   },
 ];

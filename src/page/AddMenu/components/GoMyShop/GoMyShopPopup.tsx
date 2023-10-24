@@ -8,8 +8,6 @@ interface CheckPopupProps {
 
 export default function GoMyShopPopup({ isOpen }: CheckPopupProps) {
   if (!isOpen) return null;
-  const goMyShop = () => {
-  };
   return createPortal(
     <div className={styles.popup}>
       <div className={styles.content}>
@@ -19,7 +17,6 @@ export default function GoMyShopPopup({ isOpen }: CheckPopupProps) {
           <Link to="/">
             <button
               type="button"
-              onClick={goMyShop}
               className={styles['content__goMyShop-button']}
             >
               내 상점으로

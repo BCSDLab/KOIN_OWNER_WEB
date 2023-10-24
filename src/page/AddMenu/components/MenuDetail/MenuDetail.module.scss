@@ -35,3 +35,33 @@
     line-height: normal;
   }
 }
+.mobile {
+  &__container{
+    width: 345px;
+    padding: 0 4.5% 0 4.5%;
+    margin-top: 16px;
+  }
+  &__caption {
+    color: #175C8E;
+    font-family: Noto Sans CJK KR;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  } 
+  &__menu-detail-input {
+    margin-top: 8px;
+    padding: 8px;
+    width: 320px;
+    height: 89px;
+    border: 0.5px solid #898A8D;
+    resize: none; 
+    &::placeholder {
+      color: #A1A1A1;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+  }
+}

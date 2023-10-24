@@ -1,3 +1,25 @@
+.mobile {
+  &__container {
+    padding: 0 4.5% 0 4.5%;
+  }
+
+  &__caption {
+    margin: 16px 0 8px 0;
+    color: #175C8E;
+    font-family: Noto Sans CJK KR;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  &__nameInput {
+    width: 327px;
+    height: 19px;
+    flex-shrink: 0;
+    border: 0.5px solid #898A8D;
+    padding: 8px;
+  }
+}
 .container{
     width: 708px;
 }

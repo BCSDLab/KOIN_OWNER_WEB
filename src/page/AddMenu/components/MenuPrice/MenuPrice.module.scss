@@ -1,3 +1,102 @@
+.mobile {
+  &__container {
+    width: 345px;
+    padding: 0 4.5% 0 4.5%;
+    margin-top: 16px;
+  }
+  &__header {
+    width: 345px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__header-title {
+    color: #175C8E;
+    font-family: Noto Sans CJK KR;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  &__header-condition {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    &__text {
+      color: #A1A1A1;
+      text-align: right;
+      font-family: Noto Sans CJK KR;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    &__icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  &__price-info-input-box {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  &__price-info-inputs {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    input {
+      width: 138px;
+      height: 19px;
+      border: 0.5px solid #898A8D;
+      padding: 8px;
+      &::placeholder {
+        color: #A1A1A1;
+        font-family: Noto Sans CJK KR;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+  &__add-price-button {
+    display: flex;
+    align-items: center;
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+
+  }
+  &__price-input {
+    &::placeholder {
+      text-align: right;
+    }
+  }
+  &__cancle-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+  }
+  &__add-price-button {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+    gap: 8px;
+    &__text {
+      color: #F7941E;
+      font-family: Noto Sans CJK KR;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+}
+
 .container{
     margin-top: 32px;
 }
@@ -50,28 +149,19 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-  }
-}
-.size-input {
-  &::placeholder {
-    color: #A1A1A1;
-    font-family: Noto Sans CJK KR;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    &::placeholder {
+      color: #A1A1A1;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
   }
 }
 
 .price-input {
   &::placeholder {
-    color: #A1A1A1;
     text-align: right;
-    font-family: Noto Sans CJK KR;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
   }
 }
 
@@ -86,6 +176,7 @@
   margin-top: 16px;
   gap: 8px;
   height: 28px;
+  width: 107px;
   &__icon {
     width: 24px;
     height: 24px;
@@ -97,5 +188,8 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+  }
+  &:hover {
+    cursor: pointer;
   }
 }

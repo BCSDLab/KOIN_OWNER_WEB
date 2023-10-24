@@ -1,3 +1,54 @@
+.mobile {
+  &__caption {
+    display: flex;
+    align-items: center;
+    padding: 7px 0px 6px 16px;
+    margin-top: 16px;
+    height: 19px;
+    color: #A1A1A1;
+    font-family: Noto Sans CJK KR;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background-color: #F6F8F9;
+  }
+  &__btn-container {
+    width: 345px;
+    padding: 0 4.5% 0 4.5%;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &__btn-cancel {
+    width: 94px;
+    height: 43px;
+    flex-shrink: 0;
+    border: 1px solid #F7941E;
+    background-color: white;
+    color: #F7941E;
+    text-align: center;
+    font-family: Noto Sans CJK KR;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  &__btn-check {
+    width: 226px;
+    height: 43px;
+    flex-shrink: 0;
+    background: #175C8E;
+    color: #FFF;
+    text-align: center;
+    font-family: Noto Sans CJK KR;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
 .container {
     width: 1136px;
     margin: 0 auto;

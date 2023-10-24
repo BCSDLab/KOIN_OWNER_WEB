@@ -74,7 +74,7 @@ function Header() {
                 </button>
               )}
               <span className={styles.mobileheader__title}>
-                {isMain ? (
+                {pathname === '/' ? (
                   <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)
