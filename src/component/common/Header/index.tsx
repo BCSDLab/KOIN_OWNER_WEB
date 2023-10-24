@@ -49,6 +49,21 @@ function Header() {
       });
   };
 
+  if (pathname === '/add-menu') {
+    return (
+      <header className={styles.addMenuHeader}>
+        <button
+          className={styles.addMenuHeader__goBackButton}
+          type="button"
+          onClick={() => window.history.back()}
+        >
+          <BackArrowIcon title="뒤로 가기 버튼" />
+        </button>
+        <div className={styles.addMenuHeader__caption}>메뉴추가</div>
+      </header>
+    );
+  }
+
   return (
     <header
       className={cn({

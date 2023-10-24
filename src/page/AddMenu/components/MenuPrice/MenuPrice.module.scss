@@ -23,6 +23,9 @@
     justify-content: center;
     align-items: center;
     gap: 9px;
+    &:hover {
+      cursor: pointer;
+    }
     &__text {
       color: #A1A1A1;
       text-align: right;
@@ -62,15 +65,6 @@
       }
     }
   }
-  &__add-price-button {
-    display: flex;
-    align-items: center;
-    &__icon {
-      width: 12px;
-      height: 12px;
-    }
-
-  }
   &__price-input {
     &::placeholder {
       text-align: right;
@@ -80,12 +74,22 @@
     width: 16px;
     height: 16px;
     margin-left: 4px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__add-price-button {
     display: flex;
     align-items: center;
     margin-top: 16px;
     gap: 8px;
+    &__icon {
+      width: 12px;
+      height: 12px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
     &__text {
       color: #F7941E;
       font-family: Noto Sans CJK KR;
@@ -127,10 +131,16 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__condition-icon{
     width: 21px;
     height: 21px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 .price-info-inputs {
@@ -168,6 +178,9 @@
 .cancle-icon {
   width: 24px;
   height: 24px;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .add-price-button {

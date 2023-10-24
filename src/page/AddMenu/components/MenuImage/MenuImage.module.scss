@@ -44,6 +44,9 @@
     width: 264px;
     height: 176px;
     border: 1px dashed #858585;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__add-caption{
     color: #A1A1A1;
@@ -100,6 +103,9 @@
       height: 137px;
       flex-shrink: 0;
       border: 0.5px solid #A1A1A1;
+      &:hover {
+        cursor: pointer;
+      }
     }
     &__plusIcon {
       width: 26px;

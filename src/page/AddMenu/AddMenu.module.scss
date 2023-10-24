@@ -34,6 +34,9 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    &:hover {
+      cursor: pointer;
+    }
   }
   &__btn-check {
     width: 226px;
@@ -47,6 +50,9 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 .container {
