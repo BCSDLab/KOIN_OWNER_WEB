@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Category, SubMenu } from 'static/category';
+import { Category, SubMenu } from 'utils/constant/category';
 
 const useMegaMenu = (category: Category[]) => {
   const [panelMenuList, setPanelMenuList] = useState<SubMenu[] | null>();
