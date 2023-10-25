@@ -1,32 +1,35 @@
 .container {
   margin-top: 32px;
 }
+
 .category-header {
   display: flex;
   justify-content: space-between;
   height: 36px;
-  &__caption {
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-  }
-  &__condition {
-    color: #A1A1A1;
-    text-align: center;
-    font-family: Noto Sans CJK KR;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  &__icon {
-    width: 24px;
-    height: 24px;
-  }
 }
+
+.category-header__caption {
+  color: #175c8e;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.category-header__condition {
+  color: #a1a1a1;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.category-header__icon {
+  width: 24px;
+  height: 24px;
+}
+
 .caption-container {
   display: flex;
   align-items: center;
@@ -38,74 +41,80 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
   button {
     width: 176px;
     height: 62px;
-    border: 0.5px solid var(--stroke, #858585); 
+    border: 0.5px solid var(--stroke, #858585);
     background-color: white;
     color: #252525;
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
     &:hover {
       cursor: pointer;
     }
   }
 }
 
-.mobile{
+.mobile {
   &__container {
-    width: 345px;
-    padding: 0 4.5% 0 4.5%;
+    width: 100%;
+    padding: 0 4.5%;
     margin-top: 16px;
   }
+
   &__category-header {
     display: flex;
     justify-content: space-between;
+
     &__caption {
-      color: #175C8E;
-      font-family: Noto Sans CJK KR;
+      color: #175c8e;
       font-size: 15px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     }
+
     &__condition {
-      color: #A1A1A1;
-      font-family: Noto Sans CJK KR;
+      color: #a1a1a1;
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     }
   }
+
   &__caption-container {
     display: flex;
     justify-content: center;
     gap: 3px;
   }
+
   &__category-btns {
     margin-top: 8px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-  }
-  &__category-button {
-    width: 160px;
-    height: 39px;
-    border: 0.5px solid #898A8D;
-    background-color: white;
-    color: #252525;
-    text-align: center;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    &:hover {
-      cursor: pointer;
+
+    &__category-button {
+      width: 160px;
+      height: 39px;
+      border: 0.5px solid #898a8d;
+      background-color: white;
+      color: #252525;
+      text-align: center;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

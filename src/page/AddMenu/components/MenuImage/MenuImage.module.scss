@@ -1,20 +1,20 @@
-.header{
+.header {
   display: flex;
   gap: 8px;
   align-items: center;
   height: 36px;
-  &__caption{
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
+
+  &__caption {
+    color: #175c8e;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
   }
-  &__condition{
-    color: #A1A1A1;
+
+  &__condition {
+    color: #a1a1a1;
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -22,20 +22,20 @@
   }
 }
 
-.newImg{
-  &__container{
+.newImg {
+  &__container {
     display: flex;
     flex-direction: column;
-    //justify-content: center;
     align-items: center;
     margin-top: 24px;
     padding: 40px;
     width: 266px;
     height: 613px;
     border: 0.5px solid var(--stroke, #858585);
-    background: #FFF;
+    background: #fff;
   }
-  &__add-btn{
+
+  &__add-btn {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -44,55 +44,60 @@
     width: 264px;
     height: 176px;
     border: 1px dashed #858585;
+
     &:hover {
       cursor: pointer;
     }
   }
-  &__add-caption{
-    color: #A1A1A1;
+
+  &__add-caption {
+    color: #a1a1a1;
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
 }
-.plusIcon{
+
+.plusIcon {
   width: 40px;
   height: 40px;
 }
 
 .mobile {
   &__container {
-    width: 345px;
-    padding: 0 4.5% 0 4.5%;
+    width: 100%;
+    padding: 0 4.5%;
     margin-top: 16px;
   }
+
   &__header {
     display: flex;
     align-items: center;
     gap: 12px;
+
     &__caption {
-      color: #175C8E;
-      font-family: Noto Sans CJK KR;
+      color: #175c8e;
       font-size: 15px;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
     }
+
     &__condition {
-      color: #A1A1A1;
+      color: #a1a1a1;
       text-align: center;
-      font-family: Noto Sans CJK KR;
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     }
   }
+
   &__newImg {
     display: flex;
+
     &__add-btn {
       margin-top: 16px;
       display: flex;
@@ -102,20 +107,22 @@
       width: 137px;
       height: 137px;
       flex-shrink: 0;
-      border: 0.5px solid #A1A1A1;
+      border: 0.5px solid #a1a1a1;
       background-color: white;
+
       &:hover {
         cursor: pointer;
       }
     }
+
     &__plusIcon {
       width: 26px;
       height: 27px;
     }
+
     &__add-caption {
-      color: #A1A1A1;
+      color: #a1a1a1;
       text-align: center;
-      font-family: Noto Sans CJK KR;
       font-size: 13px;
       font-style: normal;
       font-weight: 400;

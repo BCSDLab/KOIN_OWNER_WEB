@@ -1,55 +1,60 @@
 .mobile {
   &__container {
-    padding: 0 4.5% 0 4.5%;
+    padding: 0 4.5%;
   }
 
   &__caption {
-    margin: 16px 0 8px 0;
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
+    margin: 16px 0 8px;
+    color: #175c8e;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
   }
+
   &__nameInput {
     width: 327px;
     height: 19px;
     flex-shrink: 0;
-    border: 0.5px solid #898A8D;
+    border: 0.5px solid #898a8d;
     padding: 8px;
   }
 }
-.container{
-    width: 708px;
+
+.container {
+  width: 708px;
 }
-.caption{
+
+.caption {
   display: flex;
   align-items: center;
   height: 36px;
-  color: #175C8E;
-  font-family: Noto Sans CJK KR;
+  color: #175c8e;
+  font-family: "Noto Sans CJK KR", sans-serif;
   font-size: 24px;
   font-style: normal;
-  font-weight: 500;   
+  font-weight: 500;
   line-height: normal;
 }
-.nameInput{
+
+.nameInput {
   margin-top: 24px;
   height: 62px;
   width: 100%;
-  border: 0.5px solid var(--stroke, #858585);
+  border: 0.5px solid var(--stroke-color, #858585);
   outline: none;
-  color: var(--, #252525);
-  font-family: Noto Sans CJK KR;
+  color: var(--text-color, #252525);
+  font-family: "Noto Sans CJK KR", sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   padding-left: 16px;
+
   &::placeholder {
-    color: #A1A1A1;
-    font-family: Noto Sans CJK KR;
+    color: #a1a1a1;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;

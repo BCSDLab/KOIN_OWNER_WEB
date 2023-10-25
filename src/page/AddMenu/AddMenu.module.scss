@@ -1,71 +1,82 @@
 .mobile {
+  &__container {
+    width: 343px;
+    margin: 0 auto;
+  }
+
   &__caption {
     display: flex;
     align-items: center;
-    padding: 7px 0px 6px 16px;
+    padding: 7px 0 6px 16px;
     margin-top: 16px;
     height: 19px;
-    color: #A1A1A1;
-    font-family: Noto Sans CJK KR;
+    width: 100%;
+    color: #a1a1a1;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    background-color: #F6F8F9;
+    background-color: #f6f8f9;
   }
+
   &__btn-container {
     width: 345px;
-    padding: 0 4.5% 0 4.5%;
+    padding: 0 4.5%;
     margin-top: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
+
   &__btn-cancel {
     width: 94px;
     height: 43px;
     flex-shrink: 0;
-    border: 1px solid #F7941E;
+    border: 1px solid #f7941e;
     background-color: white;
-    color: #F7941E;
+    color: #f7941e;
     text-align: center;
-    font-family: Noto Sans CJK KR;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   &__btn-check {
     width: 226px;
     height: 43px;
     flex-shrink: 0;
-    background: #175C8E;
-    color: #FFF;
+    background: #175c8e;
+    color: #fff;
     text-align: center;
-    font-family: Noto Sans CJK KR;
+    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
     &:hover {
       cursor: pointer;
     }
   }
 }
+
 .container {
-    width: 1136px;
-    margin: 0 auto;
-  }
-  
+  width: 1136px;
+  margin: 0 auto;
+
   .header {
     display: flex;
     align-items: center;
     height: 117px;
     border-bottom: 2px solid #175c8e;
-    
+
     &__title {
       margin-right: auto;
       height: 47px;
@@ -74,13 +85,13 @@
       color: #175c8e;
       font-family: "Noto Sans CJK KR", sans-serif;
     }
-  
+
     &__btn-container {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-  
+
     &__btn-cancel {
       width: 112px;
       height: 48px;
@@ -93,17 +104,16 @@
       align-items: center;
       background-color: #ffffff;
       font-family: "Noto Sans CJK KR", sans-serif;
-  
+
       &:hover {
         cursor: pointer;
       }
     }
-  
+
     &__btn-check {
       width: 112px;
       height: 48px;
       border: 1px solid #175c8e;
-      margin-left: 16px;
       font-size: 18px;
       font-weight: 400;
       color: #ffffff;
@@ -112,20 +122,21 @@
       align-items: center;
       background: #175c8e;
       font-family: "Noto Sans CJK KR", sans-serif;
-  
+
       &:hover {
         cursor: pointer;
       }
     }
   }
 
-  .content{
+  .content {
     display: flex;
-    
     padding-top: 32px;
     gap: 64px;
-    &__right{
+
+    &__right {
       flex-direction: column;
       width: 725px;
     }
   }
+}

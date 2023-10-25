@@ -1,63 +1,70 @@
 .mobile {
   &__container {
-    width: 345px;
-    padding: 0 4.5% 0 4.5%;
+    width: 100%;
+    padding: 0 4.5%;
     margin-top: 16px;
   }
+
   &__header {
-    width: 345px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &__header-title {
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
+    color: #175c8e;
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
   }
+
   &__header-condition {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 9px;
+
     &:hover {
       cursor: pointer;
     }
+
     &__text {
-      color: #A1A1A1;
+      color: #a1a1a1;
       text-align: right;
-      font-family: Noto Sans CJK KR;
       font-size: 14px;
       font-style: normal;
       font-weight: 400;
       line-height: normal;
     }
+
     &__icon {
       width: 14px;
       height: 14px;
     }
   }
+
   &__price-info-input-box {
     display: flex;
     align-items: center;
     gap: 4px;
   }
+
   &__price-info-inputs {
     margin-top: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
+
     input {
       width: 138px;
       height: 19px;
-      border: 0.5px solid #898A8D;
+      border: 0.5px solid #898a8d;
       padding: 8px;
+
       &::placeholder {
-        color: #A1A1A1;
-        font-family: Noto Sans CJK KR;
+        color: #a1a1a1;
         font-size: 13px;
         font-style: normal;
         font-weight: 400;
@@ -65,102 +72,115 @@
       }
     }
   }
+
   &__price-input {
     &::placeholder {
       text-align: right;
     }
   }
+
   &__cancle-icon {
     width: 16px;
     height: 16px;
     margin-left: 4px;
+
     &:hover {
       cursor: pointer;
     }
   }
+
   &__add-price-button {
     display: flex;
     align-items: center;
     margin-top: 16px;
     gap: 8px;
+
     &__icon {
       width: 12px;
       height: 12px;
     }
-    &:hover {
-      cursor: pointer;
-    }
+
     &__text {
-      color: #F7941E;
-      font-family: Noto Sans CJK KR;
+      color: #f7941e;
       font-size: 13px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
     }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
-.container{
-    margin-top: 32px;
+.container {
+  margin-top: 32px;
 }
+
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+
   &__title {
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
+    color: #175c8e;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
   }
-  &__condition{
+
+  &__condition {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 17.5px;
   }
-  &__condition-text{
-    color: #A1A1A1;
+
+  &__condition-text {
+    color: #a1a1a1;
     text-align: right;
-    font-family: Noto Sans CJK KR;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
     &:hover {
       cursor: pointer;
     }
   }
-  &__condition-icon{
+
+  &__condition-icon {
     width: 21px;
     height: 21px;
+
     &:hover {
       cursor: pointer;
     }
   }
 }
+
 .price-info-inputs {
   margin-top: 24px;
   display: flex;
   gap: 16px;
   align-items: center;
+
   input {
     width: 303px;
     height: 30px;
     border: 0.5px solid var(--stroke, #858585);
     padding: 16px;
-    color: var(--, #252525);
-    font-family: Noto Sans CJK KR;
+    color: #252525;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
     &::placeholder {
-      color: #A1A1A1;
+      color: #a1a1a1;
       font-size: 20px;
       font-style: normal;
       font-weight: 400;
@@ -178,6 +198,7 @@
 .cancle-icon {
   width: 24px;
   height: 24px;
+
   &:hover {
     cursor: pointer;
   }
@@ -190,18 +211,22 @@
   gap: 8px;
   height: 28px;
   width: 107px;
+
   &__icon {
     width: 24px;
     height: 24px;
   }
+
   &__text {
-    color: #F7941E;
-    font-family: Noto Sans CJK KR;
+    display: flex;
+    align-items: center;
+    color: #f7941e;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
   }
+
   &:hover {
     cursor: pointer;
   }

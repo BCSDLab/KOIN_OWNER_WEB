@@ -9,6 +9,7 @@
   top: 0;
   background-color: #00000066;
 }
+
 .content {
   display: flex;
   justify-content: center;
@@ -19,44 +20,45 @@
   padding: 56px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: #FFF;
+  background: #fff;
+
   &__main-text {
     width: 289px;
     height: 33px;
-    color: var(--, #252525);
+    color: var(--text-color, #252525);
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     margin-bottom: 24px;
   }
+
   &__sub-text {
     width: 294px;
     height: 21px;
     margin-bottom: 38px;
     color: #858585;
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
+
   &__goMyShop-button {
     width: 344px;
     height: 48px;
     flex-shrink: 0;
     border-radius: 15px;
-    background: var(--main, #175C8E);
-    color: #FFF;
+    background: var(--main-color, #175c8e);
+    color: #fff;
     text-align: center;
-    font-family: Noto Sans CJK KR;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+
     &:hover {
       cursor: pointer;
     }

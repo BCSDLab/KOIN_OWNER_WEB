@@ -1,63 +1,66 @@
 .container {
   margin-top: 32px;
 }
+
 .caption {
   display: flex;
   align-items: center;
   height: 36px;
-  color: #175C8E;
-  font-family: Noto Sans CJK KR;
+  color: #175c8e;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
+
 .menu-detail-input {
-  margin-top: 24px  ;
+  margin-top: 24px;
   width: 695px;
   height: 153px;
   flex-shrink: 0;
   padding: 16px;
   border: 0.5px solid var(--stroke, #858585);
-  color: var(--, #252525);
-  font-family: Noto Sans CJK KR;
+  color: var(--text-color, #252525);
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   resize: none;
+
   &::placeholder {
     color: var(--stroke, #858585);
-    font-family: Noto Sans CJK KR;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
 }
+
 .mobile {
-  &__container{
-    width: 345px;
-    padding: 0 4.5% 0 4.5%;
+  &__container {
+    width: 100%;
+    padding: 0 4.5%;
     margin-top: 16px;
   }
+
   &__caption {
-    color: #175C8E;
-    font-family: Noto Sans CJK KR;
+    color: #175c8e;
     font-size: 15px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-  } 
+  }
+
   &__menu-detail-input {
     margin-top: 8px;
     padding: 8px;
     width: 320px;
     height: 89px;
-    border: 0.5px solid #898A8D;
-    resize: none; 
+    border: 0.5px solid #898a8d;
+    resize: none;
+
     &::placeholder {
-      color: #A1A1A1;
+      color: #a1a1a1;
       font-size: 13px;
       font-style: normal;
       font-weight: 400;
