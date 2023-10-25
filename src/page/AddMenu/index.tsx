@@ -5,7 +5,7 @@ import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
-import MenuKategorie from './components/MenuCategory';
+import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopPopup from './components/GoMyShop/GoMyShopPopup';
 
@@ -28,7 +28,7 @@ export default function AddMenu() {
             </div>
             <MenuName />
             <MenuPrice />
-            <MenuKategorie />
+            <MenuCategory />
           </div>
           <div className={styles['mobile__menu-detail']}>
             <div className={styles.mobile__caption}>
@@ -80,7 +80,7 @@ export default function AddMenu() {
             <div className={styles.content__right}>
               <MenuName />
               <MenuPrice />
-              <MenuKategorie />
+              <MenuCategory />
               <MenuDetail />
             </div>
           </div>

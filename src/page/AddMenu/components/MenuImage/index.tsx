@@ -1,10 +1,16 @@
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { useState } from 'react';
 
+import AddMenuImgPopup from 'page/AddMenu/components/AddMenuImgPopup/AddMenuImgPopup';
 import styles from './MenuImage.module.scss';
 
 export default function MenuImage() {
+  const [isAddMenuImgPopupOpen, setAddMenuImgPopupOpen] = useState(false);
   const { isMobile } = useMediaQuery();
+  const addmenuImg = () => {
+    setAddMenuImgPopupOpen(true);
+  };
   return (
     <div>
       {isMobile ? (
@@ -18,11 +24,19 @@ export default function MenuImage() {
             </div>
           </div>
           <div className={styles.mobile__newImg__container}>
-            <div className={styles['mobile__newImg__add-btn']}>
+            <button
+              type="button"
+              className={styles['mobile__newImg__add-btn']}
+              onClick={addmenuImg}
+            >
               <ImgPlusIcon className={styles.mobile__newImg__plusIcon} />
               <div className={styles['mobile__newImg__add-caption']}>이미지 추가</div>
-            </div>
+            </button>
           </div>
+          <AddMenuImgPopup
+            isOpen={isAddMenuImgPopupOpen}
+            closePopup={() => setAddMenuImgPopupOpen(false)}
+          />
         </div>
       ) : (
         <div className={styles.container}>

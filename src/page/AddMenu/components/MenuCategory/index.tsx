@@ -9,7 +9,7 @@ interface MenuCategory {
   name: string;
 }
 
-export default function Menucategory() {
+export default function MenuCategory() {
   const { isMobile } = useMediaQuery();
   const [menuCategories/* , setMenuCategories */] = useState<MenuCategory[]>([
     { id: 1, name: '이벤트 메뉴' },
