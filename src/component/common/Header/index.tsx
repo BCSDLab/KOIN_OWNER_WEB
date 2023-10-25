@@ -49,7 +49,7 @@ function Header() {
       });
   };
 
-  if (pathname === '/add-menu') {
+  if (pathname === '/add-menu' && isMobile) {
     return (
       <header className={styles.addMenuHeader}>
         <button
