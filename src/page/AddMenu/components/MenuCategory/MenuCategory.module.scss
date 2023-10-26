@@ -99,22 +99,22 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+  }
 
-    &__category-button {
-      width: 160px;
-      height: 39px;
-      border: 0.5px solid #898a8d;
-      background-color: white;
-      color: #252525;
-      text-align: center;
-      font-size: 15px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
+  &__category-button {
+    width: 160px;
+    height: 39px;
+    border: 0.5px solid #898a8d;
+    background-color: white;
+    color: #252525;
+    text-align: center;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
 
-      &:hover {
-        cursor: pointer;
-      }
+    &:hover {
+      cursor: pointer;
     }
   }
 }
