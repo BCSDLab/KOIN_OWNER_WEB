@@ -77,7 +77,7 @@
   align-items: center;
   gap: 16px;
 
-  &__label {
+  &__title {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
@@ -92,6 +92,16 @@
     height: 93px;
     border: 1px solid #d2dae2;
     padding: 53px 80px 54px;
+    cursor: pointer;
+  }
+
+  &__upload-file {
+    display: none;
+  }
+
+  &__main-menu {
+    width: 370px;
+    height: 202px;
   }
 
   &__cutlery-cross {
@@ -104,7 +114,7 @@
     position: relative;
   }
 
-  &__title {
+  &__text {
     text-align: center;
     font-size: 14px;
     display: block;

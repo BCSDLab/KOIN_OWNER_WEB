@@ -2,7 +2,7 @@
 import { ReactComponent as Memo } from 'assets/svg/StoreRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/StoreRegistration/cutlery.svg';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -41,6 +41,23 @@ export default function StoreRegistrationPC() {
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
+  const [imgFile, setImgFile] = useState('');
+  const imgRef = useRef<HTMLInputElement>(null);
+
+  const saveImgFile = () => {
+    const file = imgRef.current?.files?.[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const { result } = reader;
+      if (typeof result === 'string') {
+        setImgFile(result);
+      }
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
@@ -78,18 +95,37 @@ export default function StoreRegistrationPC() {
         <div className={styles.wrapper}>
           <div className={styles.container}>
             <Logo className={styles['container__koin-logo']} />
-            <div className={styles.form}>
+            <form className={styles.form}>
               <div>
-                <span className={styles.form__label}>대표 이미지</span>
-                <div className={styles['form__image-upload']}>
-                  <Cutlery className={styles['form__cutlery-cross']} />
-                  <span className={styles.form__title}>클릭하여 이미지를 등록해주세요.</span>
-                </div>
+                <span className={styles.form__title}>대표 이미지</span>
+                <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="mainMenuImage"
+                    className={styles['form__upload-file']}
+                    onChange={saveImgFile}
+                    ref={imgRef}
+                  />
+                  {imgFile
+                    ? <img src={imgFile} className={styles['form__main-menu']} alt="" />
+                    : (
+                      <>
+                        <Cutlery className={styles['form__cutlery-cross']} />
+                        <span className={styles.form__text}>클릭하여 이미지를 등록해주세요.</span>
+                      </>
+                    )}
+
+                </label>
               </div>
               <div>
-                <span className={styles.form__label}>카테고리</span>
+                <span className={styles.form__title}>카테고리</span>
                 <div className={styles.form__section}>
-                  <input type="text" className={styles.form__input} />
+                  <input
+                    type="text"
+                    className={styles.form__input}
+                    readOnly
+                  />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
                 </div>
               </div>
@@ -105,9 +141,13 @@ export default function StoreRegistrationPC() {
               </CustomModal>
               <InputBox content="대표자명" id="name" />
               <div>
-                <span className={styles.form__label}>가게명</span>
+                <span className={styles.form__title}>가게명</span>
                 <div className={styles.form__section}>
-                  <input type="text" className={styles.form__input} />
+                  <input
+                    type="text"
+                    className={styles.form__input}
+                    readOnly
+                  />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchStore} />
                 </div>
               </div>
@@ -118,13 +158,13 @@ export default function StoreRegistrationPC() {
                 isOpen={showSearchStore}
                 onCancel={closeSearchStore}
               >
-                <SearchStore open={showSearchStore} onCancel={openSearchStore} />
+                <SearchStore open={showSearchStore} onCancel={closeSearchStore} />
               </CustomModal>
               <InputBox content="주소정보" id="address" />
               <InputBox content="전화번호" id="phoneNumber" />
               <InputBox content="배달금액" id="deliveryFee" />
               <div>
-                <span className={styles.form__label}>운영시간</span>
+                <span className={styles.form__title}>운영시간</span>
                 <div className={styles.form__section}>
                   <div className={styles['form__operate-time']}>
                     <span>00:00 ~ 24:00</span>
@@ -165,7 +205,7 @@ export default function StoreRegistrationPC() {
                 />
               </div>
               <ConfirmPopup isOpen={showConfirmPopup} onCancel={closeConfirmPopup} />
-            </div>
+            </form>
           </div>
           <Copyright />
         </div>
