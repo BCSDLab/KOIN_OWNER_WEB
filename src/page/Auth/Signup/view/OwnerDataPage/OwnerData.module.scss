@@ -23,6 +23,8 @@
     width: calc(100% - 34px);
     border: 1px solid #d2dae2;
     padding: 13px 16px;
+    height: 22px;
+    font-size: 14px;
 
     @include media.media-breakpoint-down(mobile) {
       width: 100%;
@@ -54,6 +56,7 @@
         text-align: center;
         width: calc(88px - 34px);
         padding: 10px 16px;
+        height: 22px;
       }
 
       &--middle {
@@ -62,6 +65,7 @@
         text-align: center;
         width: calc(72px - 52px);
         padding: 10px 26px;
+        height: 22px;
       }
 
       &--last {
@@ -70,6 +74,7 @@
         text-align: center;
         width: calc(144px - 94px);
         padding: 10px 47px;
+        height: 22px;
       }
 
       &::after {
@@ -92,6 +97,7 @@
         text-align: center;
         width: calc(88px - 34px);
         padding: 10px 16px;
+        height: 22px;
       }
 
       &--middle {
@@ -100,6 +106,7 @@
         text-align: center;
         width: 108px;
         padding: 10px 0;
+        height: 22px;
       }
 
       &--last {
@@ -108,6 +115,7 @@
         text-align: center;
         width: 108px;
         padding: 10px 0;
+        height: 22px;
       }
 
       &::after {
@@ -125,6 +133,40 @@
 .input {
   display: flex;
   align-items: center;
+
+  &__store-name {
+    &--wrapper {
+      display: flex;
+      align-items: end;
+    }
+
+    width: calc(272px - 34px);
+    font-size: 14px;
+    border: 1px solid #d2dae2;
+    padding: 13px 16px;
+    margin-right: 16px;
+    height: 22px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 77%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #d2dae2;
+      color: #d2dae2;
+      padding: 0;
+      font-size: 15px;
+      padding-bottom: 8px;
+
+      &::placeholder {
+        color: #d2dae2;
+      }
+
+      &:focus {
+        border-bottom: 1px solid #252525;
+        color: #252525;
+      }
+    }
+  }
 }
 
 .file-box {

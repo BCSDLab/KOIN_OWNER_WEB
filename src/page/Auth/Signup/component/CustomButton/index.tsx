@@ -2,7 +2,7 @@ import styles from './CustomButton.module.scss';
 
 interface ButtonProps {
   content:string,
-  buttonSize: 'small' | 'mobile' | 'large',
+  buttonSize: 'small' | 'mobile' | 'large' | 'mobile-small',
   disable?: boolean,
   submit?:boolean
   onClick?: () => void
