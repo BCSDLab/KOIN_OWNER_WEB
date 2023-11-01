@@ -90,7 +90,7 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__label}>카테고리</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="카테고리 검색" buttonType="small" onClick={openCategory} />
+                  <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
                 </div>
               </div>
               <CustomModal
@@ -108,7 +108,7 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__label}>가게명</span>
                 <div className={styles.form__section}>
                   <input type="text" className={styles.form__input} />
-                  <CustomButton content="가게검색" buttonType="small" onClick={openSearchStore} />
+                  <CustomButton content="가게검색" buttonSize="small" onClick={openSearchStore} />
                 </div>
               </div>
               <CustomModal
@@ -129,7 +129,7 @@ export default function StoreRegistrationPC() {
                   <div className={styles['form__operate-time']}>
                     <span>00:00 ~ 24:00</span>
                   </div>
-                  <CustomButton content="시간수정" buttonType="small" onClick={openOperateTime} />
+                  <CustomButton content="시간수정" buttonSize="small" onClick={openOperateTime} />
                 </div>
               </div>
               <CustomModal
@@ -160,7 +160,7 @@ export default function StoreRegistrationPC() {
               <div className={styles['form__next-button']}>
                 <CustomButton
                   content="다음"
-                  buttonType="large"
+                  buttonSize="large"
                   onClick={openConfirmPopup}
                 />
               </div>

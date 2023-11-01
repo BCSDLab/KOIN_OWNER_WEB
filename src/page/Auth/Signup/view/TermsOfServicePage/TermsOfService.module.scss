@@ -101,6 +101,10 @@
     padding: 16px;
     margin-bottom: 18px;
     white-space: pre-line;
+    scrollbar-width: none; /* 파이어폭스 */
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     @include media.media-breakpoint-down(mobile) {
       border: 1px dashed #d2dae2;
