@@ -18,7 +18,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           <span className={styles.form__label}>가게명</span>
           <div className={styles['input__store-name--wrapper']}>
             <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} />
-            <CustomButton content="가게검색" buttonSize="mobile-small" />
+            <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} />
           </div>
         </div>
         <div>
