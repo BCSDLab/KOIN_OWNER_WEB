@@ -32,6 +32,23 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
             : <input className={styles.form__input} type="text" placeholder="사업자등록번호" />}
         </div>
         <div>
+          <span className={styles.form__label}>개인 연락처</span>
+          {!isMobile ? (
+            <div className={styles.input}>
+              <div className={styles['form__input__phone-number']}>
+                <input className={styles['form__input__phone-number--first']} type="text" maxLength={3} pattern="\d*" />
+              </div>
+              <div className={styles['form__input__phone-number']}>
+                <input className={styles['form__input__phone-number--middle']} type="text" maxLength={4} pattern="^[0-9]+$" />
+              </div>
+              <div>
+                <input className={styles['form__input__phone-number--last']} type="text" maxLength={4} pattern="^[0-9]+$" />
+              </div>
+            </div>
+          )
+            : <input className={styles.form__input} type="text" placeholder="개인 연락처" />}
+        </div>
+        <div>
           <span className={styles.form__label}>파일첨부</span>
           <div className={styles['file-box']}>
             <div className={styles['file-box__plus-box-image']} />

@@ -81,6 +81,44 @@
         margin: 6px;
       }
     }
+
+    &__phone-number {
+      display: flex;
+      align-items: center;
+
+      &--first {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: calc(88px - 34px);
+        padding: 10px 16px;
+      }
+
+      &--middle {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: 108px;
+        padding: 10px 0;
+      }
+
+      &--last {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: 108px;
+        padding: 10px 0;
+      }
+
+      &::after {
+        display: block;
+        content: "";
+        width: 16px;
+        height: 0;
+        border: 1px solid black;
+        margin: 6px;
+      }
+    }
   }
 }
 
