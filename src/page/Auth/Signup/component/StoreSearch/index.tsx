@@ -3,6 +3,7 @@ import { ReactComponent as SearchButton } from 'assets/svg/auth/search-glasses.s
 import { ReactComponent as MobileCloseButton } from 'assets/svg/common/back-arrow.svg';
 import { useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import Toast from 'page/Auth/Signup/component/Toast';
 import styles from './StoreSearch.module.scss';
 
 const DUMMY = [
@@ -121,7 +122,7 @@ const DUMMY = [
   },
 ];
 export default function StoreSearch() {
-  const [selectedStore, setStore] = useState(0);
+  const [selectedStore, setStore] = useState<null | number>(null);
   const { isMobile } = useMediaQuery();
   return (
     <div className={styles.background}>
@@ -157,7 +158,10 @@ export default function StoreSearch() {
               </button>
             ))}
           </ul>
+          {selectedStore !== null
+           && <Toast name={DUMMY[selectedStore].name} number={DUMMY[selectedStore].tel} />}
         </div>
+
       </div>
     </div>
   );
