@@ -5,21 +5,140 @@ import useBooleanState from 'utils/hooks/useBooleanState';
 import ConfirmStore from 'page/StoreRegistration/component/Modal/ConfirmStore';
 import styles from './SearchStore.module.scss';
 
+const DUMMY = [
+  {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  },
+  {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: true,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  },
+  {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  },
+  {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: true,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  },
+  {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: true,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  }, {
+    name: '가장 맛있는 족발가장 맛있는 족발가장 맛있는 족발',
+    tel: '042-523-5839',
+    card: false,
+    deliver: true,
+    account: false,
+  },
+];
 interface SearchStoreProps {
   open: boolean;
   onCancel: () => void;
 }
 
 export default function SearchStore({ open, onCancel }: SearchStoreProps) {
-  const [selectedStore, setSelectedStore] = useState('');
+  const [selectedStore, setSelectedStore] = useState<null | number>(null);
   const { value: showConfirmStore, setValue: setShowConfirmStore } = useBooleanState(false);
 
-  function toggleStore() {
-    setSelectedStore(selectedStore === '가장 맛있는 족발' ? ' ' : '가장 맛있는 족발');
+  function toggleStore(index:number) {
+    if (index !== selectedStore) {
+      setSelectedStore(index);
+    } else {
+      setSelectedStore(null);
+    }
   }
 
-  function toggleModal() {
-    setShowConfirmStore((prev) => !prev);
+  function toggleModal(isOpen:boolean) {
+    setShowConfirmStore(isOpen);
   }
 
   if (!open) return null;
@@ -30,26 +149,35 @@ export default function SearchStore({ open, onCancel }: SearchStoreProps) {
         <Magnifier type="button" className={styles['info__search-button']} />
       </div>
       <div className={styles['store-list']}>
-        <button
-          className={cn({
-            [styles.store]: true,
-            [styles['store--selected']]: selectedStore === '가장 맛있는 족발',
-          })}
-          type="button"
-          onClick={() => {
-            toggleStore();
-            toggleModal();
-          }}
-        >
-          <span className={styles.store__title}>가장 맛있는 족발</span>
-          <div className={styles.store__info}>
-            <span className={styles.store__text}>배달</span>
-            <span className={styles.store__text}>카드결제</span>
-            <span className={styles.store__text}>계좌이체</span>
-          </div>
-        </button>
+        {DUMMY.map((shop, index) => (
+          <button
+            className={cn({
+              [styles.store]: true,
+              [styles['store--selected']]: selectedStore === index,
+            })}
+            type="button"
+            onClick={() => {
+              toggleStore(index);
+              toggleModal(index !== selectedStore);
+            }}
+          >
+            <span className={styles.store__title}>{shop.name}</span>
+            <div className={styles.store__info}>
+              <span className={shop.deliver ? styles.store__text : styles['store__text--impossible']}>배달</span>
+              <span className={shop.card ? styles.store__text : styles['store__text--impossible']}>카드결제</span>
+              <span className={shop.account ? styles.store__text : styles['store__text--impossible']}>계좌이체</span>
+            </div>
+          </button>
+        ))}
+        {selectedStore !== null && (
+        <ConfirmStore
+          open={showConfirmStore}
+          onCancel={onCancel}
+          store={DUMMY[selectedStore]}
+        />
+        )}
       </div>
-      <ConfirmStore open={showConfirmStore} onCancel={onCancel} />
+
     </div>
   );
 }

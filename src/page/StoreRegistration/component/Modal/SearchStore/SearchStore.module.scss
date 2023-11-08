@@ -36,6 +36,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: calc(100% - 150px);
+  overflow-y: scroll;
 }
 
 .store {
@@ -55,6 +57,9 @@
   }
 
   &__title {
+    display: block;
+    max-width: 220px;
+    text-align: start;
     font-size: 15px;
   }
 
@@ -68,5 +73,10 @@
   &__text {
     font-size: 12px;
     color: #f7941e;
+
+    &--impossible {
+      font-size: 12px;
+      color: #d2dae2;
+    }
   }
 }
