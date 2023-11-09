@@ -1,5 +1,6 @@
 $caption-text-color: #175c8e;
 $button-text-color: #252525;
+
 .container {
   margin-top: 32px;
 }
@@ -8,15 +9,15 @@ $button-text-color: #252525;
   display: flex;
   justify-content: space-between;
   height: 36px;
-}
 
-.category-header__caption {
-  color: $caption-text-color;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-    &condition {
+  &__caption {
+    color: $caption-text-color;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    &__condition {
       color: #a1a1a1;
       text-align: center;
       font-size: 16px;
@@ -24,10 +25,12 @@ $button-text-color: #252525;
       font-weight: 400;
       line-height: normal;
     }
+
     &__icon {
       width: 24px;
       height: 24px;
     }
+  }
 }
 
 .caption-container {
