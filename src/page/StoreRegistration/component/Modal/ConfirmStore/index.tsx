@@ -1,3 +1,4 @@
+import useModalStore from 'store/modalStore';
 import styles from './ConfirmStore.module.scss';
 
 interface ConfirmStoreProps {
@@ -6,6 +7,7 @@ interface ConfirmStoreProps {
 }
 
 export default function ConfirmStore({ open, onCancel }: ConfirmStoreProps) {
+  const { setSearchStoreState } = useModalStore();
   if (!open) return null;
   return (
     <div className={styles.container}>
@@ -19,7 +21,10 @@ export default function ConfirmStore({ open, onCancel }: ConfirmStoreProps) {
       <button
         type="button"
         className={styles['container__select-button']}
-        onClick={onCancel}
+        onClick={() => {
+          setSearchStoreState('가장 맛있는 족발'); // api 생성 후 수정
+          onCancel();
+        }}
       >
         선택
       </button>
