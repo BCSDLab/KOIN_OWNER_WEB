@@ -15,6 +15,8 @@ import ConfirmPopup from 'page/StoreRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
+import useModalStore from 'store/modalStore';
+import WEEK from 'utils/constant/week';
 import styles from './StoreRegistrationPC.module.scss';
 
 export default function StoreRegistrationPC() {
@@ -58,6 +60,34 @@ export default function StoreRegistrationPC() {
       reader.readAsDataURL(file);
     }
   };
+
+  const {
+    categoryState, searchStoreState, openTimeState, closeTimeState, storeClosedState,
+  } = useModalStore();
+
+  type OperateTimeProps = { [key: string]: string };
+  const [operateTimeState, setOperateTimeState] = useState<OperateTimeProps>({});
+  // case1
+  const closeDay = WEEK.filter((day) => storeClosedState[day] === true);
+  const openDay = WEEK.filter((day) => storeClosedState[day] === false)[0];
+  let operatingTimeCase;
+  useEffect(() => {
+    setOperateTimeState((prevOperateTimeState) => ({
+      ...prevOperateTimeState,
+      휴일: `매주 ${WEEK.filter((day) => storeClosedState[day] === true).join('요일 ')}요일 정기 휴무`,
+      시간: `${openTimeState[openDay]} ~ ${closeTimeState[openDay]}`,
+    }));
+  }, [openTimeState, closeTimeState]);
+
+  WEEK.forEach((day) => {
+    operateTimeState[day] = storeClosedState[day] ? `매주 ${day} 정기 휴무` : `${openTimeState[day]} ~ ${closeTimeState[day]}`;
+  });
+
+  if (new Set(Object.values(openTimeState)).size > 2) {
+    operatingTimeCase = 2;
+  } else {
+    operatingTimeCase = 1;
+  }
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
@@ -124,6 +154,7 @@ export default function StoreRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
+                    value={categoryState}
                     readOnly
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
@@ -146,6 +177,7 @@ export default function StoreRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
+                    value={searchStoreState}
                     readOnly
                   />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchStore} />
@@ -167,7 +199,23 @@ export default function StoreRegistrationPC() {
                 <span className={styles.form__title}>운영시간</span>
                 <div className={styles.form__section}>
                   <div className={styles['form__operate-time']}>
-                    <span>00:00 ~ 24:00</span>
+                    <div>
+                      {operatingTimeCase === 1 ? (
+                        <>
+                          <div>
+                            {closeDay.length === 0 ? '' : operateTimeState['휴일']}
+                          </div>
+                          <div>
+                            {operateTimeState['시간']}
+                          </div>
+                        </>
+                      ) : WEEK.map((day) => (
+                        <div key={day}>
+                          {storeClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                        </div>
+                      ))}
+
+                    </div>
                   </div>
                   <CustomButton content="시간수정" buttonSize="small" onClick={openOperateTime} />
                 </div>
