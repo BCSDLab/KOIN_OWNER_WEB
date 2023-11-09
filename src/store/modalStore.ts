@@ -24,12 +24,22 @@ const initialOperatingTime = {
   일: '00:00',
 };
 
+const initialStoreClosed = {
+  월: false,
+  화: false,
+  수: false,
+  목: false,
+  금: false,
+  토: false,
+  일: false,
+};
+
 const useModalStore = create<ModalStore>((set) => ({
   categoryState: undefined,
   searchStoreState: undefined,
   openTimeState: initialOperatingTime,
   closeTimeState: initialOperatingTime,
-  storeClosedState: { '': false },
+  storeClosedState: initialStoreClosed,
   setCategoryState: (state) => set({ categoryState: state }),
   setSearchStoreState: (state) => set({ searchStoreState: state }),
   setOpenTimeState: (state) => set(() => ({ openTimeState: state })),
