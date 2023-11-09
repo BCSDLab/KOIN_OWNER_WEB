@@ -37,9 +37,9 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
                 <tr className={styles.table__data} key={day}>
                   <td>{day}</td>
                   <td className={styles['table__time-picker']}>
-                    <TimePicker />
+                    <TimePicker operatingDay={day} isOpenTimePicker />
                     {' ~ '}
-                    <TimePicker />
+                    <TimePicker operatingDay={day} isOpenTimePicker={false} />
                   </td>
                   <td><input type="checkbox" className={styles.table__checkbox} /></td>
                 </tr>

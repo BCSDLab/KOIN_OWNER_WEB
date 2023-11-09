@@ -14,6 +14,10 @@
     &:focus {
       outline: none;
     }
+
+    &--selected {
+      color: #c5c5c5;
+    }
   }
 
   &__minute {
@@ -24,6 +28,10 @@
 
     &:focus {
       outline: none;
+    }
+
+    &--selected {
+      color: #c5c5c5;
     }
   }
 }

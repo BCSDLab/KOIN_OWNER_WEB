@@ -18,6 +18,10 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    &--selected {
+      color: #c5c5c5;
+    }
   }
 
   &__checkbox {
