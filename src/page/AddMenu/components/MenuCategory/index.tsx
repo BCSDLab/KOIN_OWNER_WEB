@@ -56,7 +56,7 @@ export default function MenuCategory() {
           </div>
           <div className={styles['category-buttons']}>
             {menuCategories.map((category) => (
-              <button key={category.id} className={styles.categoryButton} type="button">
+              <button key={category.id} className={styles['category-button']} type="button">
                 {category.name}
               </button>
             ))}
