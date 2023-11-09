@@ -1,3 +1,5 @@
+$text-color: #252525;
+
 .popup {
   position: fixed;
   display: flex;
@@ -35,7 +37,7 @@
 
   &__main-text {
     height: 27px;
-    color: var(--text-color, #252525);
+    color: $text-color;
     text-align: center;
     font-size: 18px;
     font-style: normal;
@@ -45,7 +47,7 @@
 
   &__sub-text {
     height: 19px;
-    color: var(--text-color, #252525);
+    color: $text-color;
     text-align: center;
     font-size: 13px;
     font-style: normal;
@@ -67,7 +69,7 @@
       height: 48px;
       flex-shrink: 0;
       border-radius: 10px;
-      border: 1px solid var(--main-color, #175c8e);
+      border: 1px solid #175c8e;
       color: #175c8e;
       text-align: center;
       font-size: 14px;

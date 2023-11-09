@@ -33,7 +33,7 @@ export default function MenuCategory() {
             </div>
             <GearIcon className={styles['mobile__category-header__icon']} />
           </div>
-          <div className={styles['mobile__category-btns']}>
+          <div className={styles['mobile__category-buttons']}>
             {menuCategories.map((category) => (
               <button key={category.id} className={styles['mobile__category-button']} type="button">
                 {category.name}
@@ -54,7 +54,7 @@ export default function MenuCategory() {
             </div>
             <GearIcon className={styles['category-header__icon']} />
           </div>
-          <div className={styles['category-btns']}>
+          <div className={styles['category-buttons']}>
             {menuCategories.map((category) => (
               <button key={category.id} className={styles.categoryButton} type="button">
                 {category.name}
