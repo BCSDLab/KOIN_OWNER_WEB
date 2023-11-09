@@ -1,11 +1,14 @@
 import useStoreCategory from 'query/storeCategory';
 import { useState } from 'react';
 import cn from 'utils/ts/className';
+import useModalStore from 'store/modalStore';
 import styles from './Category.module.scss';
 
 export default function Category() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const { categoryList } = useStoreCategory();
+  const { setCategoryState } = useModalStore();
+
   return (
     <div className={styles.category}>
       {categoryList?.shop_categories.filter((_, index) => index > 0).map((category) => (
@@ -15,7 +18,10 @@ export default function Category() {
             [styles['category__menu--selected']]: category.name === selectedCategory,
           })}
           type="button"
-          onClick={() => setSelectedCategory(category.name)}
+          onClick={() => {
+            setSelectedCategory(category.name);
+            setCategoryState(category.name);
+          }}
           key={category.id}
         >
           <img className={styles.category__image} src={category.image_url} alt="" />
