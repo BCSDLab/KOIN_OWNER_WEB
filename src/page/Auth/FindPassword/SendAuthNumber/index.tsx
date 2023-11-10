@@ -19,7 +19,7 @@ export default function FindPassword() {
   });
 
   const submit = useMutation({
-    mutationFn: async () => findPassword({ address: emailInput, certificationCode: verifyInput }),
+    mutationFn: () => findPassword({ address: emailInput, certificationCode: verifyInput }),
     onSuccess: () => {
       navigate('/new-password');
     },
