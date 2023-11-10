@@ -1,4 +1,4 @@
-const Terms = [
+const TEMRS = [
   {
     id: 'term_1',
     title: '개인정보 이용약관',
@@ -19,4 +19,4 @@ const Terms = [
   },
 ];
 
-export default Terms;
+export default TEMRS;

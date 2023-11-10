@@ -32,7 +32,7 @@ export default function CustomModal({
         </div>
         {hasFooter && (
           <div className={styles.container__footer}>
-            <CustomButton content={buttonText} buttonType="large" onClick={onCancel} />
+            <CustomButton content={buttonText} buttonSize="large" onClick={onCancel} />
           </div>
         )}
       </div>

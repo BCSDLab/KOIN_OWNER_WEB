@@ -2,18 +2,19 @@ import styles from './CustomButton.module.scss';
 
 interface ButtonProps {
   content:string,
-  buttonType:string,
+  buttonSize: 'small' | 'mobile' | 'large',
   disable?: boolean,
+  submit?:boolean
   onClick?: () => void
 }
 
 export default function CustomButton({
-  content, buttonType, disable, onClick,
+  content, buttonSize, disable, onClick, submit,
 }:ButtonProps) {
   return (
     <button
-      type="button"
-      className={`${styles[`button--${buttonType}`]}`}
+      type={submit ? 'submit' : 'button'}
+      className={`${styles[`button--${buttonSize}`]}`}
       onClick={onClick}
       disabled={!!disable}
     >
