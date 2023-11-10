@@ -48,7 +48,7 @@ export default function MenuImage() {
               (최대 이미지 3장)
             </div>
           </div>
-          <div className={styles.newImg__container}>
+          <div className={styles['new-image__container']}>
             <div className={styles['new-image__add-btn']}>
               <ImgPlusIcon className={styles.plusIcon} />
               <div className={styles['new-image__add-caption']}>이미지 추가</div>
