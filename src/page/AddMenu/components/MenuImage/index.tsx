@@ -29,7 +29,7 @@ export default function MenuImage() {
               className={styles['mobile__newImg__add-btn']}
               onClick={addmenuImg}
             >
-              <ImgPlusIcon className={styles.mobile__newImg__plusIcon} />
+              <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
               <div className={styles['mobile__newImg__add-caption']}>이미지 추가</div>
             </button>
           </div>
