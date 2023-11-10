@@ -4,7 +4,7 @@ import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import styles from './NewPassword.module.scss';
 
 export default function NewPassword() {
-  useRouteCheck('new-password', '/find-password');
+  useRouteCheck('authCheck', '/find-password');
   return (
     <div className={styles.template}>
       <KoinLogo className={styles.logo} />
