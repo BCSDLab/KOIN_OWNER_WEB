@@ -23,14 +23,14 @@ export default function MenuImage() {
               (최대 이미지 3장)
             </div>
           </div>
-          <div className={styles.mobile__newImg__container}>
+          <div className={styles['mobile__new-image__container']}>
             <button
               type="button"
-              className={styles['mobile__newImg__add-btn']}
+              className={styles['mobile__new-image__add-btn']}
               onClick={addmenuImg}
             >
               <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
-              <div className={styles['mobile__newImg__add-caption']}>이미지 추가</div>
+              <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
             </button>
           </div>
           <AddMenuImgPopup
@@ -49,9 +49,9 @@ export default function MenuImage() {
             </div>
           </div>
           <div className={styles.newImg__container}>
-            <div className={styles['newImg__add-btn']}>
+            <div className={styles['new-image__add-btn']}>
               <ImgPlusIcon className={styles.plusIcon} />
-              <div className={styles['newImg__add-caption']}>이미지 추가</div>
+              <div className={styles['new-image__add-caption']}>이미지 추가</div>
             </div>
           </div>
         </div>
