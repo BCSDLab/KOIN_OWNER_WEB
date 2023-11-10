@@ -26,16 +26,20 @@ export default function AddMenu() {
             <div className={styles.mobile__caption}>
               메뉴 정보
             </div>
-            <MenuName />
-            <MenuPrice />
-            <MenuCategory />
+            <div className={styles['mobile__menu-content']}>
+              <MenuName />
+              <MenuPrice />
+              <MenuCategory />
+            </div>
           </div>
           <div className={styles['mobile__menu-detail']}>
             <div className={styles.mobile__caption}>
               메뉴 세부
             </div>
-            <MenuDetail />
-            <MenuImage />
+            <div className={styles['mobile__menu-content']}>
+              <MenuDetail />
+              <MenuImage />
+            </div>
           </div>
           <div className={styles['mobile__btn-container']}>
             <button

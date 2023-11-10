@@ -1,7 +1,12 @@
 .mobile {
   &__container {
-    width: 343px;
+    width: 100%;
+    max-width: 400px;
     margin: 0 auto;
+  }
+
+  &__menu-content {
+    padding: 0 16px;
   }
 
   &__caption {
@@ -9,7 +14,7 @@
     align-items: center;
     padding: 7px 0 6px 16px;
     margin-top: 16px;
-    height: 19px;
+    height: 32px;
     width: 100%;
     color: #a1a1a1;
     font-family: "Noto Sans CJK KR", sans-serif;
@@ -18,15 +23,17 @@
     font-weight: 400;
     line-height: normal;
     background-color: #f6f8f9;
+    box-sizing: border-box;
   }
 
   &__btn-container {
     width: 100%;
-    padding: 0 4.5%;
+    padding: 0 16px;
     margin-top: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
   }
 
   &__btn-cancel {

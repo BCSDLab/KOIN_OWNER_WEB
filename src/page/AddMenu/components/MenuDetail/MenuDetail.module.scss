@@ -39,7 +39,6 @@
 .mobile {
   &__container {
     width: 100%;
-    padding: 0 4.5%;
     margin-top: 16px;
   }
 
@@ -54,10 +53,11 @@
   &__menu-detail-input {
     margin-top: 8px;
     padding: 8px;
-    width: 320px;
-    height: 89px;
+    width: 100%;
+    height: 105px;
     border: 0.5px solid #898a8d;
     resize: none;
+    box-sizing: border-box;
 
     &::placeholder {
       color: #a1a1a1;

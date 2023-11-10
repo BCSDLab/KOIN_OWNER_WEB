@@ -48,7 +48,7 @@ $button-text-color: #252525;
   button {
     width: 176px;
     height: 62px;
-    border: 0.5px solid  #858585;
+    border: 0.5px solid #858585;
     background-color: white;
     color: $button-text-color;
     text-align: center;
@@ -66,7 +66,6 @@ $button-text-color: #252525;
 .mobile {
   &__container {
     width: 100%;
-    padding: 0 4.5%;
     margin-top: 16px;
   }
 
@@ -103,10 +102,10 @@ $button-text-color: #252525;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
+    width: 100%;
   }
 
   &__category-button {
-    width: 160px;
     height: 39px;
     border: 0.5px solid #898a8d;
     background-color: white;
