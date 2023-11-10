@@ -1,8 +1,10 @@
 import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Blind } from 'assets/svg/auth/blind.svg';
+import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import styles from './NewPassword.module.scss';
 
 export default function NewPassword() {
+  useRouteCheck('new-password', '/find-password');
   return (
     <div className={styles.template}>
       <KoinLogo className={styles.logo} />

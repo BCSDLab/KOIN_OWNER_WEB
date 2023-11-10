@@ -21,7 +21,7 @@ export default function FindPassword() {
   const submit = useMutation({
     mutationFn: () => findPassword({ address: emailInput, certificationCode: verifyInput }),
     onSuccess: () => {
-      navigate('/new-password');
+      navigate('/new-password', { state: { authCheck: true }, replace: true });
     },
     onError: () => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
