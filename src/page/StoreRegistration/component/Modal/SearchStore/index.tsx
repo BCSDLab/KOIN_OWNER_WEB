@@ -148,8 +148,8 @@ export default function SearchStore({ open, onCancel }: SearchStoreProps) {
         <input type="text" placeholder="상점 검색" className={styles.info__input} />
         <Magnifier type="button" className={styles['info__search-button']} />
       </div>
-      <div className={styles['store-list']}>
-        {DUMMY.map((shop, index) => (
+      <div className={showConfirmStore ? styles['store-list--opend'] : styles['store-list']}>
+        {stores.map((shop, index) => (
           <button
             className={cn({
               [styles.store]: true,

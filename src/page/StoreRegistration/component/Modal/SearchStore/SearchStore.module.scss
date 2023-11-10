@@ -38,6 +38,14 @@
   width: 100%;
   height: calc(100% - 150px);
   overflow-y: scroll;
+
+  &--opend {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 150px - 170px);
+    overflow-y: scroll;
+  }
 }
 
 .store {
