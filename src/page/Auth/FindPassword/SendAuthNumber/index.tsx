@@ -10,8 +10,12 @@ export default function FindPassword() {
   const navigate = useNavigate();
   const [emailInput, setEmailInput] = useState('');
   const [verifyInput, setVerifyInput] = useState('');
+  const [isSendAuth, setIsSendAuth] = useState(false);
   const verifyEmail = useMutation({
     mutationFn: () => findPasswordVerify({ address: emailInput }),
+    onSuccess: () => {
+      setIsSendAuth(true);
+    },
   });
 
   const submit = useMutation({
@@ -42,7 +46,7 @@ export default function FindPassword() {
                 id="email"
               />
               <button type="button" className={styles['auth-button']} onClick={() => verifyEmail.mutate()} disabled={verifyEmail.isLoading}>
-                인증번호 발송
+                {isSendAuth ? '재발송' : '인증번호 발송'}
               </button>
             </div>
           </label>
