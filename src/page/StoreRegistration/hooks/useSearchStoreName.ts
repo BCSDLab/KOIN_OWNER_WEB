@@ -17,5 +17,13 @@ export default function useSearchStoreName(stores :Array<{
     }
   };
 
-  return { searchInput, onClickSearchButton, fillteredStores };
+  const onKeyPress = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onClickSearchButton(e);
+    }
+  };
+
+  return {
+    searchInput, onClickSearchButton, fillteredStores, onKeyPress,
+  };
 }

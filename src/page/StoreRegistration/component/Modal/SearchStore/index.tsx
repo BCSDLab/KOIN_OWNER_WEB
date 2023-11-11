@@ -145,8 +145,8 @@ export default function SearchStore({ open, onCancel }: SearchStoreProps) {
   return (
     <div className={styles.info}>
       <div className={styles.info__search}>
-        <input type="text" placeholder="상점 검색" className={styles.info__input} />
-        <Magnifier type="button" className={styles['info__search-button']} />
+        <input type="text" placeholder="상점 검색" className={styles.info__input} ref={searchInput} onKeyDown={onKeyPress} />
+        <Magnifier type="button" className={styles['info__search-button']} onClick={onClickSearchButton} />
       </div>
       <div className={showConfirmStore ? styles['store-list--opend'] : styles['store-list']}>
         {stores.map((shop, index) => (
