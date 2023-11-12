@@ -2,15 +2,15 @@ import { create } from 'zustand';
 import WEEK from 'utils/constant/week';
 
 interface ModalStore {
-  categoryState: string | undefined,
-  searchStoreState: string | undefined,
-  openTimeState: { [key in typeof WEEK[number]]: string },
-  closeTimeState: { [key in typeof WEEK[number]]: string },
+  categoryState: [string, number];
+  searchStoreState: string,
+  openTimeState: { [key in typeof WEEK[number]]: string | null },
+  closeTimeState: { [key in typeof WEEK[number]]: string | null },
   storeClosedState: { [key: string]: boolean },
-  setCategoryState: (state: string) => void,
+  setCategoryState: (state: [string, number]) => void,
   setSearchStoreState: (state: string) => void,
-  setOpenTimeState: (state: { [key in typeof WEEK[number]]: string }) => void,
-  setCloseTimeState: (state: { [key in typeof WEEK[number]]: string }) => void,
+  setOpenTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
+  setCloseTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
   setStoreClosedState: (state: { [key : string]: boolean }) => void,
 }
 
@@ -35,8 +35,8 @@ const initialStoreClosed = {
 };
 
 const useModalStore = create<ModalStore>((set) => ({
-  categoryState: undefined,
-  searchStoreState: undefined,
+  categoryState: ['', 0],
+  searchStoreState: '',
   openTimeState: initialOperatingTime,
   closeTimeState: initialOperatingTime,
   storeClosedState: initialStoreClosed,
