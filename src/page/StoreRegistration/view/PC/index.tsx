@@ -2,7 +2,9 @@
 import { ReactComponent as Memo } from 'assets/svg/StoreRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/StoreRegistration/cutlery.svg';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -17,6 +19,11 @@ import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
 import useModalStore from 'store/modalStore';
 import WEEK from 'utils/constant/week';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { OwnerShop } from 'model/shopInfo/ownerShop';
+import { useMutation } from '@tanstack/react-query';
+import { postRegisterShop } from 'api/shop';
 import styles from './StoreRegistrationPC.module.scss';
 
 export default function StoreRegistrationPC() {
@@ -62,32 +69,90 @@ export default function StoreRegistrationPC() {
   };
 
   const {
-    categoryState, searchStoreState, openTimeState, closeTimeState, storeClosedState,
+    categoryState,
+    searchStoreState,
+    setSearchStoreState,
+    openTimeState,
+    closeTimeState,
+    storeClosedState,
   } = useModalStore();
 
   type OperateTimeProps = { [key: string]: string };
   const [operateTimeState, setOperateTimeState] = useState<OperateTimeProps>({});
-  // case1
-  const closeDay = WEEK.filter((day) => storeClosedState[day] === true);
   const openDay = WEEK.filter((day) => storeClosedState[day] === false)[0];
-  let operatingTimeCase;
   useEffect(() => {
     setOperateTimeState((prevOperateTimeState) => ({
       ...prevOperateTimeState,
-      휴일: `매주 ${WEEK.filter((day) => storeClosedState[day] === true).join('요일 ')}요일 정기 휴무`,
+      휴일: `매주 ${WEEK.filter((day) => storeClosedState[day]).join('요일 ')}요일 정기 휴무`,
       시간: `${openTimeState[openDay]} ~ ${closeTimeState[openDay]}`,
     }));
-  }, [openTimeState, closeTimeState]);
+  }, [openTimeState, closeTimeState, storeClosedState]);
 
   WEEK.forEach((day) => {
     operateTimeState[day] = storeClosedState[day] ? `매주 ${day} 정기 휴무` : `${openTimeState[day]} ~ ${closeTimeState[day]}`;
   });
 
-  if (new Set(Object.values(openTimeState)).size > 2) {
-    operatingTimeCase = 2;
-  } else {
-    operatingTimeCase = 1;
-  }
+  const DAY_OF_WEEK = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const storeClosedArray = Object.values(storeClosedState);
+  const 전부_같은_시간인가 = openTimeArray.every((time) => openTimeArray[0] === time)
+    && closeTimeArray.every((time) => closeTimeArray[0] === time);
+
+  const 휴일이_있는_날이_있는가 = storeClosedArray.some((closed) => closed);
+
+  const 휴일이_아닌_오픈_시간이_전부_같은가 = useMemo(() => {
+    const 휴일이_아닌_오픈시간 = openTimeArray.find((time, index) => {
+      if (!storeClosedArray[index]) return time;
+      return false;
+    })!;
+    return openTimeArray.every((time, index) => {
+      if (storeClosedArray[index]) return true;
+      return time === 휴일이_아닌_오픈시간;
+    });
+  }, [openTimeArray, storeClosedArray]);
+
+  const 휴일이_아닌_폐점_시간이_전부_같은가 = useMemo(() => {
+    const 휴일이_아닌_폐점시간 = closeTimeArray.find((time, index) => {
+      if (!storeClosedArray[index]) return time;
+      return false;
+    })!;
+    return closeTimeArray.every((time, index) => {
+      if (storeClosedArray[index]) return true;
+      return time === 휴일이_아닌_폐점시간;
+    });
+  }, [closeTimeArray, storeClosedArray]);
+
+  const 특정_날만_휴일이고_전부_같은_시간인가 = 휴일이_있는_날이_있는가 && 휴일이_아닌_오픈_시간이_전부_같은가 && 휴일이_아닌_폐점_시간이_전부_같은가;
+
+  const {
+    register, handleSubmit, setValue,
+  } = useForm<OwnerShop>({
+    resolver: zodResolver(OwnerShop),
+  });
+
+  const mutation = useMutation({
+    mutationFn: (form: OwnerShop) => postRegisterShop(form),
+    onSuccess: () => setStep(5),
+  });
+
+  useEffect(() => {
+    const openValue = DAY_OF_WEEK.map((day, index) => ({
+      close_time: closeTimeArray[index],
+      closed: storeClosedArray[index],
+      day_of_week: day,
+      open_time: openTimeArray[index],
+    }));
+    setValue('open', openValue);
+    setValue('image_urls', [imgFile]);
+    setValue('name', searchStoreState);
+    setValue('category_ids', [categoryState[1]]);
+  }, [openTimeState, closeTimeState, imgFile]);
+
+  const onSubmit: SubmitHandler<OwnerShop> = (data) => {
+    mutation.mutate(data);
+  };
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
@@ -125,7 +190,7 @@ export default function StoreRegistrationPC() {
         <div className={styles.wrapper}>
           <div className={styles.container}>
             <Logo className={styles['container__koin-logo']} />
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <span className={styles.form__title}>대표 이미지</span>
                 <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
@@ -145,7 +210,6 @@ export default function StoreRegistrationPC() {
                         <span className={styles.form__text}>클릭하여 이미지를 등록해주세요.</span>
                       </>
                     )}
-
                 </label>
               </div>
               <div>
@@ -154,7 +218,7 @@ export default function StoreRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={categoryState}
+                    value={categoryState[0]}
                     readOnly
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
@@ -170,7 +234,15 @@ export default function StoreRegistrationPC() {
               >
                 <Category />
               </CustomModal>
-              <InputBox content="대표자명" id="name" />
+              <div>
+                <span className={styles.form__title}>대표자명</span>
+                <div className={styles.form__section}>
+                  <input
+                    type="text"
+                    className={styles['form__input-large']}
+                  />
+                </div>
+              </div>
               <div>
                 <span className={styles.form__title}>가게명</span>
                 <div className={styles.form__section}>
@@ -178,7 +250,9 @@ export default function StoreRegistrationPC() {
                     type="text"
                     className={styles.form__input}
                     value={searchStoreState}
-                    readOnly
+                    onChange={(e) => {
+                      setSearchStoreState(e.target.value);
+                    }}
                   />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchStore} />
                 </div>
@@ -192,29 +266,41 @@ export default function StoreRegistrationPC() {
               >
                 <SearchStore open={showSearchStore} onCancel={closeSearchStore} />
               </CustomModal>
-              <InputBox content="주소정보" id="address" />
-              <InputBox content="전화번호" id="phoneNumber" />
-              <InputBox content="배달금액" id="deliveryFee" />
+              <InputBox content="주소정보" id="address" register={register} />
+              <InputBox content="전화번호" id="phone" register={register} />
+              <InputBox content="배달금액" id="delivery_price" register={register} isNumber />
               <div>
                 <span className={styles.form__title}>운영시간</span>
                 <div className={styles.form__section}>
                   <div className={styles['form__operate-time']}>
                     <div>
-                      {operatingTimeCase === 1 ? (
-                        <>
-                          <div>
-                            {closeDay.length === 0 ? '' : operateTimeState['휴일']}
-                          </div>
+                      {
+                        전부_같은_시간인가 && !휴일이_있는_날이_있는가 ? (
                           <div>
                             {operateTimeState['시간']}
                           </div>
-                        </>
-                      ) : WEEK.map((day) => (
-                        <div key={day}>
-                          {storeClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                        </div>
-                      ))}
-
+                        )
+                          : null
+                      }
+                      {
+                        특정_날만_휴일이고_전부_같은_시간인가 ? (
+                          <div>
+                            <div>{operateTimeState['시간']}</div>
+                            <div>{operateTimeState['휴일']}</div>
+                          </div>
+                        ) : null
+                      }
+                      {
+                        !전부_같은_시간인가 && !특정_날만_휴일이고_전부_같은_시간인가 ? (
+                          <>
+                            {WEEK.map((day) => (
+                              <div key={day}>
+                                {storeClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                              </div>
+                            ))}
+                          </>
+                        ) : null
+                      }
                     </div>
                   </div>
                   <CustomButton content="시간수정" buttonSize="small" onClick={openOperateTime} />
@@ -226,22 +312,23 @@ export default function StoreRegistrationPC() {
                 height="536px"
                 hasFooter
                 isOpen={showOperateTime}
+                hasOverflow
                 onCancel={closeOperateTime}
               >
                 <OperateTimePC />
               </CustomModal>
-              <InputBox content="기타정보" id="etc" />
+              <InputBox content="기타정보" id="description" register={register} />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} />
+                  <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} {...register('delivery')} />
                   <span>배달 가능</span>
                 </label>
                 <label htmlFor="card" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="card" className={styles['form__checkbox-input']} />
+                  <input type="checkbox" id="card" className={styles['form__checkbox-input']} {...register('pay_card')} />
                   <span>카드 가능</span>
                 </label>
                 <label htmlFor="bank" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="bank" className={styles['form__checkbox-input']} />
+                  <input type="checkbox" id="bank" className={styles['form__checkbox-input']} {...register('pay_bank')} />
                   <span>계좌이체 가능</span>
                 </label>
               </div>
@@ -252,7 +339,10 @@ export default function StoreRegistrationPC() {
                   onClick={openConfirmPopup}
                 />
               </div>
-              <ConfirmPopup isOpen={showConfirmPopup} onCancel={closeConfirmPopup} />
+              <ConfirmPopup
+                isOpen={showConfirmPopup}
+                onCancel={closeConfirmPopup}
+              />
             </form>
           </div>
           <Copyright />

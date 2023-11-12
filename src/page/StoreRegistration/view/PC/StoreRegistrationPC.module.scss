@@ -140,6 +140,17 @@
     }
   }
 
+  &__input-large {
+    width: 336px;
+    border: 1px solid #d2dae2;
+    height: 22px;
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+
   &__operate-time {
     display: flex;
     align-items: center;
