@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  useState, useRef, useEffect, MouseEvent,
+  useState, useRef, useEffect, MouseEvent, useCallback,
 } from 'react';
 import useModalStore from 'store/modalStore';
 import WEEK from 'utils/constant/week';
 import cn from 'utils/ts/className';
+import TimeSelection from 'page/StoreRegistration/component/Modal/TimeSelection';
 import styles from './TimePicker.module.scss';
 
 type Weekday = typeof WEEK[number];
@@ -13,9 +14,6 @@ interface TimerPickerProps {
   operatingDay: Weekday;
   isOpenTimePicker: boolean;
 }
-
-const hours: number[] = Array.from({ length: 24 }, (_, i) => i);
-const minutes: number[] = Array.from({ length: 12 }, (_, i) => i * 5);
 
 export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPickerProps) {
   const dropMenuRef = useRef<HTMLDivElement | null>(null);
@@ -55,26 +53,39 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
     }
   }
 
-  function handleClickTimeChangeButton(e: MouseEvent<HTMLButtonElement>) {
-    const selectedTime = Number(e.currentTarget.value);
-    const selectedId = e.currentTarget.id;
+  const handleClickTimeChangeButton = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      const selectedTime = Number(e.currentTarget.value);
+      const selectedId = e.currentTarget.id;
 
-    if (selectedId === 'hour') {
-      setTime({
-        ...time,
-        hour: selectedTime.toString().padStart(2, '0'),
-      });
-    } else if (selectedId === 'minute') {
-      setTime({
-        ...time,
-        minute: selectedTime.toString().padStart(2, '0'),
-      });
-    }
-  }
+      if (selectedId === 'hour') {
+        setTime((prevTime) => ({
+          ...prevTime,
+          hour: selectedTime.toString().padStart(2, '0'),
+        }));
+      } else if (selectedId === 'minute') {
+        setTime((prevTime) => ({
+          ...prevTime,
+          minute: selectedTime.toString().padStart(2, '0'),
+        }));
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     handleChangeOperateTime();
   }, [time, storeClosedState]);
+
+  useEffect(() => {
+    if (isOpenTimePicker) {
+      time.hour = openTimeState[operatingDay]?.slice(0, 2) || '00:00';
+      time.minute = openTimeState[operatingDay]?.slice(3, 5) || '00:00';
+    } else {
+      time.hour = closeTimeState[operatingDay]?.slice(0, 2) || '00:00';
+      time.minute = closeTimeState[operatingDay]?.slice(3, 5) || '00:00';
+    }
+  }, []);
   return (
     <div className={styles.container} ref={dropMenuRef}>
       <button
@@ -98,36 +109,7 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
         {time.minute}
       </button>
       {isOpen && !storeClosedState[operatingDay] && (
-        <div className={styles.content}>
-          <div className={styles['content__hour-list']}>
-            {hours.map((hour) => (
-              <button
-                key={hour}
-                type="button"
-                id="hour"
-                className={styles['content__hour-item']}
-                onClick={handleClickTimeChangeButton}
-                value={hour}
-              >
-                {hour}
-              </button>
-            ))}
-          </div>
-          <div className={styles['content__minute-list']}>
-            {minutes.map((minute) => (
-              <button
-                key={minute}
-                type="button"
-                id="minute"
-                className={styles['content__minute-item']}
-                onClick={handleClickTimeChangeButton}
-                value={minute}
-              >
-                {minute}
-              </button>
-            ))}
-          </div>
-        </div>
+        <TimeSelection handleClickTimeChangeButton={handleClickTimeChangeButton} />
       )}
     </div>
   );
