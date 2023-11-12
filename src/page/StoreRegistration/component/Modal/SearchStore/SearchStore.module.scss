@@ -1,8 +1,7 @@
 .info {
   position: relative;
-  width: calc(100% - 34px);
+  width: 100%;
   height: calc(100% - 32px);
-  padding: 32px 18px 0 16px;
 
   &__search {
     display: flex;
@@ -12,7 +11,7 @@
     padding: 9px 11px 9px 16px;
     background-color: #f6f8f9;
     border: 1px solid #d2dae2;
-    margin-bottom: 24px;
+    margin: 32px 18px 24px 16px;
   }
 
   &__input {
@@ -35,7 +34,8 @@
 .store-list {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% - 34px);
+  margin: 0 18px 0 16px;
 }
 
 .store {

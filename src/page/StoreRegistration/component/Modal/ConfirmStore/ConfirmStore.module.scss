@@ -2,13 +2,17 @@
   position: sticky;
   bottom: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  height: 25%;
+  height: 23%;
   width: 100%;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -5px 10px #00000026;
   background-color: #ffffff;
+
+  &__info {
+    margin-left: 32px;
+  }
 
   &__title {
     font-size: 20px;
@@ -34,6 +38,7 @@
     width: 144px;
     height: 48px;
     background-color: #175c8e;
+    margin-right: 31px;
     font-size: 20px;
     font-weight: 600;
     color: #ffffff;
