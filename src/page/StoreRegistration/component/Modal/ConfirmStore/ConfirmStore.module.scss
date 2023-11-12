@@ -1,7 +1,6 @@
 .container {
-  position: absolute;
+  position: sticky;
   bottom: 0;
-  left: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -9,6 +8,7 @@
   width: 100%;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -5px 10px #00000026;
+  background-color: #ffffff;
 
   &__title {
     font-size: 20px;

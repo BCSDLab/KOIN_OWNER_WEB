@@ -1,5 +1,3 @@
-import { createPortal } from 'react-dom';
-import useStepStore from 'store/useStepStore';
 import styles from './ConfirmPopup.module.scss';
 
 interface ConfirmPopupProps {
@@ -8,11 +6,9 @@ interface ConfirmPopupProps {
 }
 
 export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
-  const { setStep } = useStepStore();
-
   if (!isOpen) return null;
 
-  return createPortal(
+  return (
     <div className={styles.popup}>
       <div className={styles.content}>
         <span className={styles['content__top-text']}>가게 정보를 저장하시겠습니까?</span>
@@ -27,15 +23,13 @@ export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
             취소
           </button>
           <button
-            type="button"
-            onClick={() => setStep(5)}
+            type="submit"
             className={styles['content__next-button']}
           >
             확인
           </button>
         </div>
       </div>
-    </div>,
-    document.body,
+    </div>
   );
 }
