@@ -16,8 +16,15 @@
   align-items: center;
   width: 430px;
   background-color: #ffffff;
+  overflow: auto;
+
+  &--selected {
+    overflow: visible;
+  }
 
   &__header {
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -25,6 +32,7 @@
     height: 30px;
     background-color: #175c8e;
     padding: 24px 16px;
+    z-index: 3;
   }
 
   &__title {
@@ -45,6 +53,10 @@
   &__footer {
     width: 366px;
     margin-bottom: 40px;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
