@@ -65,8 +65,27 @@
     gap: 12px;
   }
 
-  &__text {
+  &__delivery {
     font-size: 12px;
-    color: #f7941e;
+
+    &--selected {
+      color: #f7941e;
+    }
+  }
+
+  &__pay-card {
+    font-size: 12px;
+
+    &--selected {
+      color: #f7941e;
+    }
+  }
+
+  &__pay-bank {
+    font-size: 12px;
+
+    &--selected {
+      color: #f7941e;
+    }
   }
 }
