@@ -20,7 +20,7 @@ export default function Category() {
           type="button"
           onClick={() => {
             setSelectedCategory(category.name);
-            setCategoryState(category.name);
+            setCategoryState([category.name, category.id]);
           }}
           key={category.id}
         >
