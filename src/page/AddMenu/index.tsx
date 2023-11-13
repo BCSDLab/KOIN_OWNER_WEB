@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import useBooleanState from 'utils/hooks/useBooleanState';
 
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
@@ -10,14 +10,14 @@ import MenuDetail from './components/MenuDetail';
 import GoMyShopPopup from './components/GoMyShop/GoMyShopPopup';
 
 export default function AddMenu() {
-  const [isCheckPopupOpen, setIsCheckPopupOpen] = useState(false);
   const { isMobile } = useMediaQuery();
   const adddmenuCancel = () => {
     console.log('cancle');
   };
-  const adddmenuCheck = () => {
-    setIsCheckPopupOpen(true);
-  };
+  const {
+    value: isGoMyShopPopup,
+    setTrue: openGoMyShopPopup,
+  } = useBooleanState(false);
   return (
     <div>
       {isMobile ? (
@@ -71,7 +71,7 @@ export default function AddMenu() {
               <button
                 className={styles['header__btn-check']}
                 type="button"
-                onClick={adddmenuCheck}
+                onClick={openGoMyShopPopup}
               >
                 확인
               </button>
@@ -88,7 +88,7 @@ export default function AddMenu() {
               <MenuDetail />
             </div>
           </div>
-          <GoMyShopPopup isOpen={isCheckPopupOpen} />
+          <GoMyShopPopup isOpen={isGoMyShopPopup} />
         </div>
       )}
     </div>

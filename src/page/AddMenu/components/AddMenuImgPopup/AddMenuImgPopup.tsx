@@ -4,20 +4,11 @@ import styles from './AddMenuImgPopup.module.scss';
 
 interface AddMenuImgPopupProps {
   isOpen: boolean;
-  closePopup: () => void;
+  onCancel: (event: React.MouseEvent) => void;
 }
 
-export default function AddMenuImgPopup({ isOpen, closePopup }: AddMenuImgPopupProps) {
+export default function AddMenuImgPopup({ isOpen, onCancel }: AddMenuImgPopupProps) {
   if (!isOpen) return null;
-  const onClickCancelButton = () => {
-    closePopup();
-  };
-  const onClickFromAlbum = () => {
-    closePopup();
-  };
-  const conClickFromCamera = () => {
-    closePopup();
-  };
 
   return createPortal(
     <div className={styles.popup}>
@@ -25,7 +16,7 @@ export default function AddMenuImgPopup({ isOpen, closePopup }: AddMenuImgPopupP
         <button
           type="button"
           className={styles['cancel-button']}
-          onClick={onClickCancelButton}
+          onClick={onCancel}
         >
           <CancelIcon className={styles.cancelIcon} />
         </button>
@@ -35,14 +26,14 @@ export default function AddMenuImgPopup({ isOpen, closePopup }: AddMenuImgPopupP
           <button
             type="button"
             className={styles['content__from-album-button']}
-            onClick={onClickFromAlbum}
+            onClick={onCancel}
           >
             사진 앨범
           </button>
           <button
             type="button"
             className={styles['content__from-camera-button']}
-            onClick={conClickFromCamera}
+            onClick={onCancel}
           >
             카메라 촬영
           </button>
