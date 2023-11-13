@@ -24,7 +24,7 @@
     box-sizing: border-box;
   }
 
-  &__btn-container {
+  &__button-container {
     width: 100%;
     padding: 0 16px;
     margin-top: 16px;
@@ -34,7 +34,7 @@
     box-sizing: border-box;
   }
 
-  &__btn-cancel {
+  &__button-cancel {
     width: 94px;
     height: 43px;
     flex-shrink: 0;
@@ -51,7 +51,7 @@
     }
   }
 
-  &__btn-check {
+  &__button-check {
     width: 226px;
     height: 43px;
     flex-shrink: 0;
@@ -87,13 +87,13 @@
       font-family: "Noto Sans CJK KR", sans-serif;
     }
 
-    &__btn-container {
+    &__button-container {
       display: flex;
       align-items: center;
       gap: 16px;
     }
 
-    &__btn-cancel {
+    &__button-cancel {
       width: 112px;
       height: 48px;
       border: 1px solid #175c8e;
@@ -111,7 +111,7 @@
       }
     }
 
-    &__btn-check {
+    &__button-check {
       width: 112px;
       height: 48px;
       border: 1px solid #175c8e;

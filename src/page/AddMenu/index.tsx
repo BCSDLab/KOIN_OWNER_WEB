@@ -41,15 +41,15 @@ export default function AddMenu() {
               <MenuImage />
             </div>
           </div>
-          <div className={styles['mobile__btn-container']}>
+          <div className={styles['mobile__button-container']}>
             <button
-              className={styles['mobile__btn-cancel']}
+              className={styles['mobile__button-cancel']}
               type="button"
             >
               취소
             </button>
             <button
-              className={styles['mobile__btn-check']}
+              className={styles['mobile__button-check']}
               type="button"
             >
               확인
@@ -60,16 +60,16 @@ export default function AddMenu() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>메뉴 추가</h1>
-            <div className={styles['header__btn-container']}>
+            <div className={styles['header__button-container']}>
               <button
-                className={styles['header__btn-cancel']}
+                className={styles['header__button-cancel']}
                 type="button"
                 onClick={adddmenuCancel}
               >
                 취소
               </button>
               <button
-                className={styles['header__btn-check']}
+                className={styles['header__button-check']}
                 type="button"
                 onClick={openGoMyShopPopup}
               >
