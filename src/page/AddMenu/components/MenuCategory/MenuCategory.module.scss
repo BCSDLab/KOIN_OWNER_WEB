@@ -35,7 +35,7 @@ $button-text-color: #252525;
   gap: 16px;
 }
 
-.category-buttons {
+.category-button-container {
   margin-top: 24px;
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@ $button-text-color: #252525;
     gap: 3px;
   }
 
-  &__category-buttons {
+  &__category-button-container {
     margin-top: 8px;
     display: grid;
     grid-template-columns: 1fr 1fr;

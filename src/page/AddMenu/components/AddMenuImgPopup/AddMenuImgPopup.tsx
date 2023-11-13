@@ -25,14 +25,14 @@ export default function AddMenuImgPopup({ isOpen, onCancel }: AddMenuImgPopupPro
         <div className={styles['content__button-container']}>
           <button
             type="button"
-            className={styles['content__from-album-button']}
+            className={styles['content__album-button']}
             onClick={onCancel}
           >
             사진 앨범
           </button>
           <button
             type="button"
-            className={styles['content__from-camera-button']}
+            className={styles['content__camera-button']}
             onClick={onCancel}
           >
             카메라 촬영
