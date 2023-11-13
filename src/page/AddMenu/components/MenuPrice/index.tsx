@@ -45,7 +45,10 @@ export default function MenuPrice() {
           </div>
           <div className={styles['price-info-inputs']}>
             <input className={styles['size-input']} placeholder="예) 소 (1~2 인분)" />
-            <input className={styles['price-input']} placeholder="원" />
+            <div className={styles['prcie-input-box']}>
+              <input className={styles['price-input']} />
+              <p className={styles['price-input-won']}>원</p>
+            </div>
             <CancleIcon className={styles['cancle-icon']} />
           </div>
           <div className={styles['add-price-button']}>

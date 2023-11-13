@@ -168,16 +168,18 @@
   gap: 16px;
   align-items: center;
 
-  input {
-    width: 303px;
-    height: 30px;
-    border: 0.5px solid var(--stroke, #858585);
+  .size-input {
+    box-sizing: border-box;
+    width: 335px;
+    height: 62px;
+    border: 0.5px solid #858585;
     padding: 16px;
     color: #252525;
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    outline: none;
 
     &::placeholder {
       color: #a1a1a1;
@@ -189,9 +191,37 @@
   }
 }
 
-.price-input {
-  &::placeholder {
+.prcie-input-box {
+  position: relative;
+  box-sizing: border-box;
+  width: 335px;
+  height: 62px;
+  border: 0.5px solid #858585;
+
+  .price-input {
     text-align: right;
+    box-sizing: border-box;
+    width: 303px;
+    height: 60px;
+    padding: 16px;
+    color: #252525;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: 0;
+    outline: none;
+  }
+
+  .price-input-won {
+    position: absolute;
+    top: 32%;
+    right: 10px;
+    color: #a1a1a1;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 }
 
