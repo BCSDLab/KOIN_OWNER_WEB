@@ -51,15 +51,15 @@ function Header() {
 
   if (pathname === '/add-menu' && isMobile) {
     return (
-      <header className={styles.addMenuHeader}>
+      <header className={styles['add-menu-header']}>
         <button
-          className={styles.addMenuHeader__goBackButton}
+          className={styles['add-menu-header__goBackButton']}
           type="button"
           onClick={() => window.history.back()}
         >
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
-        <div className={styles.addMenuHeader__caption}>메뉴추가</div>
+        <div className={styles['add-menu-header__caption']}>메뉴추가</div>
       </header>
     );
   }
