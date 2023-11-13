@@ -8,9 +8,7 @@
   height: 36px;
   color: #175c8e;
   font-size: 24px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
 }
 
 .menu-detail-input {
@@ -22,17 +20,13 @@
   border: 0.5px solid var(--stroke, #858585);
   color: var(--text-color, #252525);
   font-size: 20px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
   resize: none;
 
   &::placeholder {
     color: var(--stroke, #858585);
     font-size: 20px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
   }
 }
 
@@ -45,9 +39,7 @@
   &__caption {
     color: #175c8e;
     font-size: 15px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
   }
 
   &__menu-detail-input {
@@ -62,9 +54,7 @@
     &::placeholder {
       color: #a1a1a1;
       font-size: 13px;
-      font-style: normal;
       font-weight: 400;
-      line-height: normal;
     }
   }
 }

@@ -14,9 +14,7 @@
   &__header-title {
     color: #175c8e;
     font-size: 15px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
   }
 
   &__header-condition {
@@ -33,9 +31,7 @@
       color: #a1a1a1;
       text-align: right;
       font-size: 14px;
-      font-style: normal;
       font-weight: 400;
-      line-height: normal;
     }
 
     &__icon {
@@ -66,9 +62,7 @@
       &::placeholder {
         color: #a1a1a1;
         font-size: 13px;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
       }
     }
   }
@@ -103,9 +97,7 @@
     &__text {
       color: #f7941e;
       font-size: 13px;
-      font-style: normal;
       font-weight: 700;
-      line-height: normal;
     }
 
     &:hover {
@@ -127,9 +119,7 @@
   &__title {
     color: #175c8e;
     font-size: 24px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
   }
 
   &__condition {
@@ -143,9 +133,7 @@
     color: #a1a1a1;
     text-align: right;
     font-size: 20px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
 
     &:hover {
       cursor: pointer;
@@ -176,17 +164,13 @@
     padding: 16px;
     color: #252525;
     font-size: 20px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
     outline: none;
 
     &::placeholder {
       color: #a1a1a1;
       font-size: 20px;
-      font-style: normal;
       font-weight: 400;
-      line-height: normal;
     }
   }
 }
@@ -206,9 +190,7 @@
     padding: 16px;
     color: #252525;
     font-size: 20px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
     border: 0;
     outline: none;
   }
@@ -219,9 +201,7 @@
     right: 10px;
     color: #a1a1a1;
     font-size: 20px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
   }
 }
 
@@ -252,9 +232,7 @@
     align-items: center;
     color: #f7941e;
     font-size: 20px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
   }
 
   &:hover {

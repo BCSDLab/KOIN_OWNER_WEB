@@ -40,9 +40,7 @@ $text-color: #252525;
     color: $text-color;
     text-align: center;
     font-size: 18px;
-    font-style: normal;
     font-weight: 500;
-    line-height: normal;
   }
 
   &__sub-text {
@@ -50,9 +48,7 @@ $text-color: #252525;
     color: $text-color;
     text-align: center;
     font-size: 13px;
-    font-style: normal;
     font-weight: 400;
-    line-height: normal;
     margin-top: 8px;
   }
 
@@ -73,9 +69,7 @@ $text-color: #252525;
       color: #175c8e;
       text-align: center;
       font-size: 14px;
-      font-style: normal;
       font-weight: 400;
-      line-height: normal;
       background-color: white;
 
       &:hover {
