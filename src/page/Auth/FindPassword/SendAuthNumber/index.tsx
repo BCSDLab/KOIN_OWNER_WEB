@@ -12,7 +12,7 @@ export default function FindPassword() {
   const [verifyInput, setVerifyInput] = useState('');
   const [isSendAuth, setIsSendAuth] = useState(false);
   const verifyEmail = useMutation({
-    mutationFn: () => findPasswordVerify({ address: emailInput }),
+    mutationFn: () => findPasswordVerify({ email: emailInput }),
     onSuccess: () => {
       setIsSendAuth(true);
     },

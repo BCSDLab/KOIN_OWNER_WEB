@@ -16,7 +16,7 @@ export const getMe = async () => {
   return UserResponse.parse(data);
 };
 
-export const findPasswordVerify = ({ address }: { address: string }) => client.post('/owners/password/reset/verification', { address });
+export const findPasswordVerify = ({ email }: { email: string }) => client.post('/owners/password/reset/verification', { address: email });
 
 export const findPassword = ({
   address,
