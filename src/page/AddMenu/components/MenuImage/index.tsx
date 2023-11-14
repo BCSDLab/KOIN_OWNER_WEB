@@ -2,7 +2,7 @@ import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 
-import AddMenuImgPopup from 'page/AddMenu/components/AddMenuImgModal/AddMenuImgModal';
+import AddMenuImgPopup from 'page/AddMenu/components/AddMenuImgModal';
 import styles from './MenuImage.module.scss';
 
 export default function MenuImage() {

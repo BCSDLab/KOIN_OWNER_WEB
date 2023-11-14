@@ -7,7 +7,7 @@ import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
 import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
-import GoMyShopPopup from './components/GoMyShop/GoMyShopModal';
+import GoMyShopPopup from './components/GoMyShop';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
