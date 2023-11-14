@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancel-icon.svg';
-import styles from './AddMenuImgPopup.module.scss';
+import styles from './AddMenuImgModal.module.scss';
 
 interface AddMenuImgPopupProps {
   isOpen: boolean;

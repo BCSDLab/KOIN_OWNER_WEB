@@ -1,6 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import MobileDivide from 'page/AddMenu/components/MobileDivide';
-
 import styles from './MenuName.module.scss';
 
 export default function MenuName() {

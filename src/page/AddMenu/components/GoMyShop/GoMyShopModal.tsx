@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
-import styles from './GoMyShopPopup.module.scss';
+import styles from './GoMyShopModal.module.scss';
 
 interface CheckPopupProps {
   isOpen: boolean;
