@@ -7,7 +7,7 @@ import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
 import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
-import GoMyShopPopup from './components/GoMyShop';
+import GoMyShopModal from './components/GoMyShop';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
@@ -15,8 +15,9 @@ export default function AddMenu() {
     console.log('cancle');
   };
   const {
-    value: isGoMyShopPopup,
-    setTrue: openGoMyShopPopup,
+    value: isGoMyShopModal,
+    setTrue: openGoMyShopModal,
+    setFalse: closeGOMyShopModal,
   } = useBooleanState(false);
   return (
     <div>
@@ -71,7 +72,7 @@ export default function AddMenu() {
               <button
                 className={styles['header__button-check']}
                 type="button"
-                onClick={openGoMyShopPopup}
+                onClick={openGoMyShopModal}
               >
                 확인
               </button>
@@ -88,7 +89,7 @@ export default function AddMenu() {
               <MenuDetail />
             </div>
           </div>
-          <GoMyShopPopup isOpen={isGoMyShopPopup} />
+          <GoMyShopModal isOpen={isGoMyShopModal} onCancel={closeGOMyShopModal} />
         </div>
       )}
     </div>

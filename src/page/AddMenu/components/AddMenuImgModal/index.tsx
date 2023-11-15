@@ -2,17 +2,28 @@ import { createPortal } from 'react-dom';
 import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancel-icon.svg';
 import styles from './AddMenuImgModal.module.scss';
 
-interface AddMenuImgPopupProps {
+interface AddMenuImgModalProps {
   isOpen: boolean;
-  onCancel: (event: React.MouseEvent) => void;
+  onCancel: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
 }
 
-export default function AddMenuImgPopup({ isOpen, onCancel }: AddMenuImgPopupProps) {
+export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalProps) {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className={styles.popup}>
-      <div className={styles.content}>
+    <div
+      className={styles.modal}
+      onClick={onCancel}
+      onKeyDown={onCancel}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className={styles.content}
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+        role="presentation"
+      >
         <button
           type="button"
           className={styles['cancel-button']}

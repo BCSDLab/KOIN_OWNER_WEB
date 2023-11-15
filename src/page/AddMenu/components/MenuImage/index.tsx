@@ -2,15 +2,15 @@ import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 
-import AddMenuImgPopup from 'page/AddMenu/components/AddMenuImgModal';
+import AddMenuImgModal from 'page/AddMenu/components/AddMenuImgModal';
 import styles from './MenuImage.module.scss';
 
 export default function MenuImage() {
   const { isMobile } = useMediaQuery();
   const {
-    value: isAddMenuImgPopup,
-    setTrue: openAddMenuImgPopup,
-    setFalse: closeAddMenuImgPopup,
+    value: isAddMenuImgModal,
+    setTrue: openAddMenuImgModal,
+    setFalse: closeAddMenuImgModal,
   } = useBooleanState(false);
   return (
     <div>
@@ -28,15 +28,15 @@ export default function MenuImage() {
             <button
               type="button"
               className={styles['mobile__new-image__add-btn']}
-              onClick={openAddMenuImgPopup}
+              onClick={openAddMenuImgModal}
             >
               <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
               <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
             </button>
           </div>
-          <AddMenuImgPopup
-            isOpen={isAddMenuImgPopup}
-            onCancel={closeAddMenuImgPopup}
+          <AddMenuImgModal
+            isOpen={isAddMenuImgModal}
+            onCancel={closeAddMenuImgModal}
           />
         </div>
       ) : (
