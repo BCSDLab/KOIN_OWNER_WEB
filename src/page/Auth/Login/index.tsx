@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
-import useLogin from 'query/auth';
+import { useLogin } from 'query/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';

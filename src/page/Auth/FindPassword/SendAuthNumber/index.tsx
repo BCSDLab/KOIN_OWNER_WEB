@@ -1,32 +1,16 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
 import { useState } from 'react';
 import cn from 'utils/ts/className';
-import { useMutation } from '@tanstack/react-query';
-import { findPassword, findPasswordVerify } from 'api/auth';
+import { useVerifyEmail, useSubmit } from 'query/auth';
 import styles from './SendAuthNumber.module.scss';
 
 export default function FindPassword() {
-  const navigate = useNavigate();
   const [emailInput, setEmailInput] = useState('');
   const [verifyInput, setVerifyInput] = useState('');
   const [isSendAuth, setIsSendAuth] = useState(false);
-  const verifyEmail = useMutation({
-    mutationFn: () => findPasswordVerify({ email: emailInput }),
-    onSuccess: () => {
-      setIsSendAuth(true);
-    },
-  });
-
-  const submit = useMutation({
-    mutationFn: () => findPassword({ address: emailInput, certificationCode: verifyInput }),
-    onSuccess: () => {
-      navigate('/new-password', { state: { authCheck: true }, replace: true });
-    },
-    onError: () => {
-      // TODO: 이메일 인증 실패 시 UI 처리 필요
-    },
-  });
+  const verifyEmail = useVerifyEmail(emailInput, setIsSendAuth);
+  const submit = useSubmit(emailInput, verifyInput);
 
   return (
     <>
@@ -45,7 +29,12 @@ export default function FindPassword() {
                 type="text"
                 id="email"
               />
-              <button type="button" className={styles['auth-button']} onClick={() => verifyEmail.mutate()} disabled={verifyEmail.isLoading}>
+              <button
+                type="button"
+                className={styles['auth-button']}
+                onClick={() => verifyEmail.mutate()}
+                disabled={verifyEmail.isLoading}
+              >
                 {isSendAuth ? '재발송' : '인증번호 발송'}
               </button>
             </div>
