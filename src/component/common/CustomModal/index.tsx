@@ -10,13 +10,13 @@ interface CustomModalProps {
   height: string;
   hasFooter: boolean;
   isOpen: boolean;
-  hasOverflow?: boolean;
+  isOverflowVisible: boolean;
   onCancel: () => void;
   children: React.ReactNode
 }
 
 export default function CustomModal({
-  buttonText = '', title, height, hasFooter, isOpen, hasOverflow, onCancel, children,
+  buttonText = '', title, height, hasFooter, isOpen, isOverflowVisible, onCancel, children,
 }: CustomModalProps) {
   if (!isOpen) return null;
   return createPortal(
@@ -24,7 +24,7 @@ export default function CustomModal({
       <div
         className={cn({
           [styles.container]: true,
-          [styles['container--selected']]: !!hasOverflow,
+          [styles['container--selected']]: isOverflowVisible,
         })}
         style={{ height }}
       >

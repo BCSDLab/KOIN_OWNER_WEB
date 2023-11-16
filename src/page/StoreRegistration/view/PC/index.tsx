@@ -229,6 +229,7 @@ export default function StoreRegistrationPC() {
                 title="카테고리 검색"
                 height="434px"
                 hasFooter
+                isOverflowVisible={false}
                 isOpen={showCategory}
                 onCancel={closeCategory}
               >
@@ -261,6 +262,7 @@ export default function StoreRegistrationPC() {
                 title="가게검색"
                 height="75vh"
                 hasFooter={false}
+                isOverflowVisible={false}
                 isOpen={showSearchStore}
                 onCancel={closeSearchStore}
               >
@@ -312,7 +314,7 @@ export default function StoreRegistrationPC() {
                 height="536px"
                 hasFooter
                 isOpen={showOperateTime}
-                hasOverflow
+                isOverflowVisible
                 onCancel={closeOperateTime}
               >
                 <OperateTimePC />
