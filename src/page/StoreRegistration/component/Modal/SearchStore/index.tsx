@@ -22,8 +22,7 @@ export default function SearchStore({ open, onCancel }: SearchStoreProps) {
   const { shopList } = useAllShops();
 
   function handleClickStore(e: React.MouseEvent<HTMLButtonElement>) {
-    const { value } = e.currentTarget;
-    const { name, phone } = JSON.parse(value);
+    const { name, phone } = JSON.parse(e.currentTarget.value);
     if (!showConfirmStore) {
       setSelectedStore({
         name,
