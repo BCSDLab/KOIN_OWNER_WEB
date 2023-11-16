@@ -266,9 +266,9 @@ export default function StoreRegistrationPC() {
               >
                 <SearchStore open={showSearchStore} onCancel={closeSearchStore} />
               </CustomModal>
-              <InputBox content="주소정보" id="address" register={register} />
-              <InputBox content="전화번호" id="phone" register={register} />
-              <InputBox content="배달금액" id="delivery_price" register={register} isNumber />
+              <InputBox content="주소정보" id="address" register={register} inputType="text" />
+              <InputBox content="전화번호" id="phone" register={register} inputType="tel" />
+              <InputBox content="배달금액" id="delivery_price" register={register} inputType="number" />
               <div>
                 <span className={styles.form__title}>운영시간</span>
                 <div className={styles.form__section}>
@@ -317,7 +317,7 @@ export default function StoreRegistrationPC() {
               >
                 <OperateTimePC />
               </CustomModal>
-              <InputBox content="기타정보" id="description" register={register} />
+              <InputBox content="기타정보" id="description" register={register} inputType="text" />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
                   <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} {...register('delivery')} />
