@@ -5,11 +5,11 @@ import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import PROGRESS_TITLE from 'utils/constant/progress';
-import ShopEntry from 'page/StoreRegistration/view/Mobile/ShopEntry';
-import ShopCategory from 'page/StoreRegistration/view/Mobile/ShopCategory';
-import Main from 'page/StoreRegistration/view/Mobile/Main';
-import Sub from 'page/StoreRegistration/view/Mobile/Sub';
-import ShopConfirmation from 'page/StoreRegistration/view/Mobile/ShopConfirmation';
+import ShopEntry from 'page/ShopRegistration/view/Mobile/ShopEntry';
+import ShopCategory from 'page/ShopRegistration/view/Mobile/ShopCategory';
+import Main from 'page/ShopRegistration/view/Mobile/Main';
+import Sub from 'page/ShopRegistration/view/Mobile/Sub';
+import ShopConfirmation from 'page/ShopRegistration/view/Mobile/ShopConfirmation';
 import styles from './ShopRegistrationMobile.module.scss';
 
 export default function ShopRegistrationMobile() {

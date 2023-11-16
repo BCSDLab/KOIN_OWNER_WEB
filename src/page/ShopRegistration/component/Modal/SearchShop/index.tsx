@@ -2,7 +2,7 @@ import { ReactComponent as Magnifier } from 'assets/svg/shopRegistration/magnifi
 import cn from 'utils/ts/className';
 import { ChangeEvent, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import ConfirmShop from 'page/StoreRegistration/component/Modal/ConfirmShop';
+import ConfirmShop from 'page/ShopRegistration/component/Modal/ConfirmShop';
 import useAllShops from 'query/shops';
 import styles from './SearchShop.module.scss';
 

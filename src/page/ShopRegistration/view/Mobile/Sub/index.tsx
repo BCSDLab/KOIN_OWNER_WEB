@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import OperateTimeMobile from 'page/StoreRegistration/component/Modal/OperateTimeMobile';
+import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useStepStore from 'store/useStepStore';
 import styles from './Sub.module.scss';

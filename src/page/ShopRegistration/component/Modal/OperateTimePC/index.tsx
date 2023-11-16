@@ -1,4 +1,4 @@
-import TimePicker from 'page/StoreRegistration/component/TimePicker';
+import TimePicker from 'page/ShopRegistration/component/TimePicker';
 import WEEK from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import cn from 'utils/ts/className';

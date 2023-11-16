@@ -8,14 +8,14 @@ import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePasswor
 import AuthLayout from 'layout/AuthLayout';
 
 import MyStorePage from 'page/MyShopPage';
-import ShopRegistration from 'page/StoreRegistration';
+import ShopRegistration from 'page/ShopRegistration';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<MyStorePage />} />
-        <Route path="/store-registration" element={<ShopRegistration />} />
+        <Route path="/shop-registration" element={<ShopRegistration />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
