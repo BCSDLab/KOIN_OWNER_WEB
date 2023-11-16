@@ -15,7 +15,7 @@ function App() {
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<MyStorePage />} />
-        <Route path="/shop-registration" element={<ShopRegistration />} />
+        <Route path="/store-registration" element={<ShopRegistration />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
