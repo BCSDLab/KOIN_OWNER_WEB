@@ -1,7 +1,7 @@
 import useStepStore from 'store/useStepStore';
-import styles from './StoreConfirmation.module.scss';
+import styles from './ShopConfirmation.module.scss';
 
-export default function StoreConfirmation() {
+export default function ShopConfirmation() {
   const { increaseStep } = useStepStore();
 
   return (

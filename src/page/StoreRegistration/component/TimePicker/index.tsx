@@ -23,7 +23,7 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
     minute: '00',
   });
   const {
-    openTimeState, closeTimeState, storeClosedState, setOpenTimeState, setCloseTimeState,
+    openTimeState, closeTimeState, shopClosedState, setOpenTimeState, setCloseTimeState,
   } = useModalStore();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
 
   useEffect(() => {
     handleChangeOperateTime();
-  }, [time, storeClosedState]);
+  }, [time, shopClosedState]);
 
   useEffect(() => {
     if (isOpenTimePicker) {
@@ -92,7 +92,7 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
         type="button"
         className={cn({
           [styles.container__hour]: true,
-          [styles['container__hour--selected']]: storeClosedState[operatingDay],
+          [styles['container__hour--selected']]: shopClosedState[operatingDay],
         })}
         onClick={toggleModal}
       >
@@ -102,13 +102,13 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
         type="button"
         className={cn({
           [styles.container__minute]: true,
-          [styles['container__minute--selected']]: storeClosedState[operatingDay],
+          [styles['container__minute--selected']]: shopClosedState[operatingDay],
         })}
         onClick={toggleModal}
       >
         {time.minute}
       </button>
-      {isOpen && !storeClosedState[operatingDay] && (
+      {isOpen && !shopClosedState[operatingDay] && (
         <TimeSelection handleClickTimeChangeButton={handleClickTimeChangeButton} />
       )}
     </div>

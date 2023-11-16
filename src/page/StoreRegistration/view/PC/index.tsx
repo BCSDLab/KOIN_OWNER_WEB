@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactComponent as Memo } from 'assets/svg/StoreRegistration/memo.svg';
+import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as Cutlery } from 'assets/svg/StoreRegistration/cutlery.svg';
+import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
 import {
   useEffect, useMemo, useRef, useState,
 } from 'react';
@@ -11,7 +11,7 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import Complete from 'component/common/Auth/Complete';
 import InputBox from 'page/StoreRegistration/component/InputBox';
 import Category from 'page/StoreRegistration/component/Modal/Category';
-import SearchStore from 'page/StoreRegistration/component/Modal/SearchStore';
+import SearchShop from 'page/StoreRegistration/component/Modal/SearchShop';
 import OperateTimePC from 'page/StoreRegistration/component/Modal/OperateTimePC';
 import ConfirmPopup from 'page/StoreRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
@@ -24,9 +24,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { useMutation } from '@tanstack/react-query';
 import { postRegisterShop } from 'api/shop';
-import styles from './StoreRegistrationPC.module.scss';
+import styles from './ShopRegistrationPC.module.scss';
 
-export default function StoreRegistrationPC() {
+export default function ShopRegistrationPC() {
   const { isMobile } = useMediaQuery();
   const { step, setStep } = useStepStore();
   const {
@@ -70,11 +70,11 @@ export default function StoreRegistrationPC() {
 
   const {
     categoryState,
-    searchStoreState,
-    setSearchStoreState,
+    searchShopState: searchStoreState,
+    setSearchShopState: setSearchStoreState,
     openTimeState,
     closeTimeState,
-    storeClosedState,
+    shopClosedState: storeClosedState,
   } = useModalStore();
 
   type OperateTimeProps = { [key: string]: string };
@@ -266,7 +266,7 @@ export default function StoreRegistrationPC() {
                 isOpen={showSearchStore}
                 onCancel={closeSearchStore}
               >
-                <SearchStore open={showSearchStore} onCancel={closeSearchStore} />
+                <SearchShop open={showSearchStore} onCancel={closeSearchStore} />
               </CustomModal>
               <InputBox content="주소정보" id="address" register={register} inputType="text" />
               <InputBox content="전화번호" id="phone" register={register} inputType="tel" />

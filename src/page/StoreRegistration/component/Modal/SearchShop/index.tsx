@@ -1,17 +1,17 @@
-import { ReactComponent as Magnifier } from 'assets/svg/StoreRegistration/magnifier.svg';
+import { ReactComponent as Magnifier } from 'assets/svg/shopRegistration/magnifier.svg';
 import cn from 'utils/ts/className';
 import { ChangeEvent, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import ConfirmStore from 'page/StoreRegistration/component/Modal/ConfirmStore';
+import ConfirmShop from 'page/StoreRegistration/component/Modal/ConfirmShop';
 import useAllShops from 'query/shops';
-import styles from './SearchStore.module.scss';
+import styles from './SearchShop.module.scss';
 
-interface SearchStoreProps {
+interface SearchShopProps {
   open: boolean;
   onCancel: () => void;
 }
 
-export default function SearchStore({ open, onCancel }: SearchStoreProps) {
+export default function SearchShop({ open, onCancel }: SearchShopProps) {
   const [selectedStore, setSelectedStore] = useState({
     name: '',
     phone: '',
@@ -109,7 +109,7 @@ export default function SearchStore({ open, onCancel }: SearchStoreProps) {
           </button>
         ))}
       </div>
-      <ConfirmStore open={showConfirmStore} onCancel={onCancel} selectedShop={selectedStore} />
+      <ConfirmShop open={showConfirmStore} onCancel={onCancel} selectedShop={selectedStore} />
     </div>
   );
 }

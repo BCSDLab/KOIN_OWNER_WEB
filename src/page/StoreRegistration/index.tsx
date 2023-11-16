@@ -1,13 +1,13 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import StoreRegistrationMobile from './view/Mobile';
-import StoreRegistrationPC from './view/PC';
+import ShopRegistrationMobile from './view/Mobile';
+import ShopRegistrationPC from './view/PC';
 
-export default function StoreRegistration() {
+export default function ShopRegistration() {
   const { isMobile } = useMediaQuery();
 
   return (
     <div>
-      {isMobile ? <StoreRegistrationMobile /> : <StoreRegistrationPC />}
+      {isMobile ? <ShopRegistrationMobile /> : <ShopRegistrationPC />}
     </div>
   );
 }

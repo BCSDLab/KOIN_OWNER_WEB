@@ -1,4 +1,4 @@
-import { ReactComponent as EmptyImgIcon } from 'assets/svg/StoreRegistration/mobile-empty-img.svg';
+import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
 import useStepStore from 'store/useStepStore';
 import styles from './Main.module.scss';
 

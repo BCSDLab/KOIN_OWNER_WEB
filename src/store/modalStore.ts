@@ -3,15 +3,15 @@ import WEEK from 'utils/constant/week';
 
 interface ModalStore {
   categoryState: [string, number];
-  searchStoreState: string,
+  searchShopState: string,
   openTimeState: { [key in typeof WEEK[number]]: string | null },
   closeTimeState: { [key in typeof WEEK[number]]: string | null },
-  storeClosedState: { [key: string]: boolean },
+  shopClosedState: { [key: string]: boolean },
   setCategoryState: (state: [string, number]) => void,
-  setSearchStoreState: (state: string) => void,
+  setSearchShopState: (state: string) => void,
   setOpenTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
   setCloseTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
-  setStoreClosedState: (state: { [key : string]: boolean }) => void,
+  setShopClosedState: (state: { [key : string]: boolean }) => void,
 }
 
 const initialOperatingTime = {
@@ -24,7 +24,7 @@ const initialOperatingTime = {
   일: '00:00',
 };
 
-const initialStoreClosed = {
+const initialShopClosed = {
   월: false,
   화: false,
   수: false,
@@ -36,15 +36,15 @@ const initialStoreClosed = {
 
 const useModalStore = create<ModalStore>((set) => ({
   categoryState: ['', 0],
-  searchStoreState: '',
+  searchShopState: '',
   openTimeState: initialOperatingTime,
   closeTimeState: initialOperatingTime,
-  storeClosedState: initialStoreClosed,
+  shopClosedState: initialShopClosed,
   setCategoryState: (state) => set({ categoryState: state }),
-  setSearchStoreState: (state) => set({ searchStoreState: state }),
+  setSearchShopState: (state) => set({ searchShopState: state }),
   setOpenTimeState: (state) => set(() => ({ openTimeState: state })),
   setCloseTimeState: (state) => set(() => ({ closeTimeState: state })),
-  setStoreClosedState: (state) => set({ storeClosedState: state }),
+  setShopClosedState: (state) => set({ shopClosedState: state }),
 }));
 
 export default useModalStore;

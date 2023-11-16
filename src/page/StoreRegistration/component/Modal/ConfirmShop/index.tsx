@@ -1,19 +1,19 @@
 import useModalStore from 'store/modalStore';
-import styles from './ConfirmStore.module.scss';
+import styles from './ConfirmShop.module.scss';
 
 interface ShopInfo {
   name: string;
   phone: string;
 }
 
-interface ConfirmStoreProps {
+interface ConfirmShopProps {
   open: boolean;
   selectedShop: ShopInfo;
   onCancel: () => void;
 }
 
-export default function ConfirmStore({ open, onCancel, selectedShop }: ConfirmStoreProps) {
-  const { setSearchStoreState } = useModalStore();
+export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmShopProps) {
+  const { setSearchShopState: setSearchStoreState } = useModalStore();
   if (!open) return null;
   return (
     <div className={styles.container}>

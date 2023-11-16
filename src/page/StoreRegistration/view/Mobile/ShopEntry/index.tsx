@@ -1,8 +1,8 @@
-import { ReactComponent as Memo } from 'assets/svg/StoreRegistration/memo.svg';
+import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import useStepStore from 'store/useStepStore';
-import styles from './StoreEntry.module.scss';
+import styles from './ShopEntry.module.scss';
 
-export default function StoreEntry() {
+export default function ShopEntry() {
   const { increaseStep } = useStepStore();
   return (
     <div className={styles.block}>

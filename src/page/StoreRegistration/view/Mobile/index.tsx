@@ -5,26 +5,26 @@ import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
 import useStepStore from 'store/useStepStore';
 import PROGRESS_TITLE from 'utils/constant/progress';
-import StoreEntry from 'page/StoreRegistration/view/Mobile/StoreEntry';
-import StoreCategory from 'page/StoreRegistration/view/Mobile/StoreCategory';
+import ShopEntry from 'page/StoreRegistration/view/Mobile/ShopEntry';
+import ShopCategory from 'page/StoreRegistration/view/Mobile/ShopCategory';
 import Main from 'page/StoreRegistration/view/Mobile/Main';
 import Sub from 'page/StoreRegistration/view/Mobile/Sub';
-import StoreConfirmation from 'page/StoreRegistration/view/Mobile/StoreConfirmation';
-import styles from './StoreRegistrationMobile.module.scss';
+import ShopConfirmation from 'page/StoreRegistration/view/Mobile/ShopConfirmation';
+import styles from './ShopRegistrationMobile.module.scss';
 
-export default function StoreRegistrationMobile() {
+export default function ShopRegistrationMobile() {
   const { TOTAL_STEP, step, decreaseStep } = useStepStore();
 
   return (
     <div>
       <PreviousStep step={step} clickEvent={decreaseStep} />
       <div className={styles.content}>
-        {step === 0 && <StoreEntry />}
+        {step === 0 && <ShopEntry />}
         {step === 1 && (
         <>
           <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
           <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <StoreCategory />
+          <ShopCategory />
         </>
         )}
         {step === 2 && (
@@ -46,7 +46,7 @@ export default function StoreRegistrationMobile() {
           <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
           <div className={styles.margin} />
           <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <StoreConfirmation />
+          <ShopConfirmation />
         </>
         )}
         {step === 5 && (

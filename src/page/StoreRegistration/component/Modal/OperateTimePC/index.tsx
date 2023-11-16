@@ -5,12 +5,12 @@ import cn from 'utils/ts/className';
 import styles from './OperateTimePC.module.scss';
 
 export default function OperateTimePC() {
-  const { storeClosedState, setStoreClosedState } = useModalStore();
+  const { shopClosedState, setShopClosedState } = useModalStore();
 
-  const handleChangeStoreClosed = (day: string) => {
-    setStoreClosedState({
-      ...storeClosedState,
-      [day]: !storeClosedState[day],
+  const handleChangeShopClosed = (day: string) => {
+    setShopClosedState({
+      ...shopClosedState,
+      [day]: !shopClosedState[day],
     });
   };
   return (
@@ -28,7 +28,7 @@ export default function OperateTimePC() {
             <td>{day}</td>
             <td className={cn({
               [styles['table__time-picker']]: true,
-              [styles['table__time-picker--selected']]: storeClosedState[day],
+              [styles['table__time-picker--selected']]: shopClosedState[day],
             })}
             >
               <TimePicker operatingDay={day} isOpenTimePicker />
@@ -39,8 +39,8 @@ export default function OperateTimePC() {
               <input
                 type="checkbox"
                 className={styles.table__checkbox}
-                onChange={() => handleChangeStoreClosed(day)}
-                checked={storeClosedState[day]}
+                onChange={() => handleChangeShopClosed(day)}
+                checked={shopClosedState[day]}
               />
             </td>
           </tr>

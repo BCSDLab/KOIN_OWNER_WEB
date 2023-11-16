@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import useStepStore from 'store/useStepStore';
-import useStoreCategory from 'query/storeCategory';
+import useShopCategory from 'query/shopCategory';
 import cn from 'utils/ts/className';
-import styles from './StoreCategory.module.scss';
+import styles from './ShopCategory.module.scss';
 
 type Category = string;
 
-export default function StoreCategory() {
-  const { categoryList } = useStoreCategory();
+export default function ShopCategory() {
+  const { categoryList } = useShopCategory();
   const { increaseStep } = useStepStore();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
