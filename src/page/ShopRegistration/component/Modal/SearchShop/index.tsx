@@ -44,12 +44,8 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
     setConfirmStore((prev) => !prev);
   }
 
-  let filteredShopList;
-  if (searchText === '') {
-    filteredShopList = shopList?.shops;
-  } else {
-    filteredShopList = shopList?.shops.filter(({ name }) => name.includes(searchText));
-  }
+  const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
+  setFilteredShopList(shopList?.shops.filter((shop) => shop.name.includes(searchText)));
 
   if (!open) return null;
   return (
