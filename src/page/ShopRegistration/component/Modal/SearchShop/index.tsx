@@ -19,7 +19,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
   const { value: showConfirmStore, setValue: setConfirmStore } = useBooleanState(false);
   const [searchText, setSearchText] = useState('');
 
-  const { shopList } = useAllShops();
+  const { shopList, isError } = useAllShops();
 
   function handleClickStore(e: React.MouseEvent<HTMLButtonElement>) {
     const { name, phone } = JSON.parse(e.currentTarget.value);
@@ -83,6 +83,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
         />
       </div>
       <div className={styles['store-list']}>
+        {isError && <div>에러가 발생했습니다.</div>}
         {filteredShopList?.map((shop) => (
           <button
             key={shop.id}
