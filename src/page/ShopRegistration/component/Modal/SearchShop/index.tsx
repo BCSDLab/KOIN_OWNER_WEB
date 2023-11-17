@@ -1,6 +1,6 @@
 import { ReactComponent as Magnifier } from 'assets/svg/shopRegistration/magnifier.svg';
 import cn from 'utils/ts/className';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import ConfirmShop from 'page/ShopRegistration/component/Modal/ConfirmShop';
 import useAllShops from 'query/shops';
@@ -36,16 +36,33 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
     }
   }
 
+  const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
+
+  function handleSearch() {
+    if (searchText !== '') {
+      setFilteredShopList(shopList?.shops.filter(({ name }) => name.includes(searchText)));
+    }
+  }
+
   function handleChangeSearchText(e: ChangeEvent<HTMLInputElement>) {
     setSearchText(e.target.value);
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
   }
 
   function toggleConfirmStore() {
     setConfirmStore((prev) => !prev);
   }
 
-  const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
-  setFilteredShopList(shopList?.shops.filter((shop) => shop.name.includes(searchText)));
+  useEffect(() => {
+    if (searchText === '') {
+      setFilteredShopList(shopList?.shops);
+    }
+  }, [searchText, shopList?.shops]);
 
   if (!open) return null;
   return (
@@ -56,9 +73,14 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
           placeholder="상점 검색"
           value={searchText}
           onChange={handleChangeSearchText}
+          onKeyDown={handleKeyDown}
           className={styles.info__input}
         />
-        <Magnifier type="button" className={styles['info__search-button']} />
+        <Magnifier
+          type="button"
+          className={styles['info__search-button']}
+          onClick={() => handleSearch()}
+        />
       </div>
       <div className={styles['store-list']}>
         {filteredShopList?.map((shop) => (
