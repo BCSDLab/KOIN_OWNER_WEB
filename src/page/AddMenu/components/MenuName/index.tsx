@@ -1,10 +1,17 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import MobileDivide from 'page/AddMenu/components/MobileDivide';
+import { useState } from 'react';
 import styles from './MenuName.module.scss';
 
-export default function MenuName() {
-  const { isMobile } = useMediaQuery();
+interface MenuPriceProps {
+  isComplete: boolean;
+}
 
+export default function MenuName({ isComplete }: MenuPriceProps) {
+  const { isMobile } = useMediaQuery();
+  const [name, setName] = useState('');
+  const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
   return (
     <div>
       {isMobile ? (
@@ -12,21 +19,29 @@ export default function MenuName() {
           <div className={styles.mobile__caption}>
             메뉴명
           </div>
-          <input
-            className={styles.mobile__nameInput}
-            placeholder="예) 불족발 + 막국수 저녁 SET"
-          />
-          <MobileDivide />
+          {isComplete ? (
+            <p className={styles['mobile__name-text']}>{name}</p>
+          ) : (
+            <input
+              className={styles.mobile__nameInput}
+              placeholder="예) 불족발 + 막국수 저녁 SET"
+              onChange={handleNameChange}
+            />
+          )}
         </div>
       ) : (
         <div className={styles.container}>
           <div className={styles.caption}>
             메뉴명
           </div>
-          <input
-            className={styles.nameInput}
-            placeholder="예) 불족발 + 막국수 저녁 SET"
-          />
+          {isComplete ? (
+            <p>{name}</p>
+          ) : (
+            <input
+              className={styles.nameInput}
+              placeholder="예) 불족발 + 막국수 저녁 SET"
+            />
+          )}
         </div>
       )}
     </div>

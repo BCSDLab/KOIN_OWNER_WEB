@@ -1,11 +1,8 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
-import MobileDivide from 'page/AddMenu/components/MobileDivide';
-
 import styles from './MenuPrice.module.scss';
 
 export default function MenuPrice() {
@@ -24,7 +21,10 @@ export default function MenuPrice() {
           <div className={styles['mobile__price-info-input-box']}>
             <div className={styles['mobile__price-info-inputs']}>
               <input className={styles['mobile__size-input']} placeholder="예) 소 (1~2 인분)" />
-              <input className={styles['mobile__price-input']} placeholder="원" />
+              <div className={styles['mobile__price-input-box']}>
+                <input className={styles['mobile__price-input']} />
+                <p className={styles['mobile__price-input-won']}>원</p>
+              </div>
             </div>
             <CancleIcon className={styles['mobile__cancle-icon']} />
           </div>
@@ -32,7 +32,6 @@ export default function MenuPrice() {
             <MobilePlusIcon className={styles['mobile__add-price-button__icon']} />
             <div className={styles['mobile__add-price-button__text']}>가격 추가</div>
           </div>
-          <MobileDivide />
         </div>
       ) : (
         <div className={styles.container}>

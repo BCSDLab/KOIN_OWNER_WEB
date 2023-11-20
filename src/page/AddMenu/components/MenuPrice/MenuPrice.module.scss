@@ -2,6 +2,7 @@
   &__container {
     width: 100%;
     margin-top: 16px;
+    margin-bottom: 24px;
   }
 
   &__header {
@@ -67,10 +68,18 @@
     }
   }
 
-  &__price-input {
-    &::placeholder {
-      text-align: right;
-    }
+  &__price-input-box {
+    position: relative;
+  }
+
+  &__price-input-won {
+    box-sizing: border-box;
+    position: absolute;
+    right: 8px;
+    top: 32%;
+    color: #a1a1a1;
+    font-size: 13px;
+    font-weight: 400;
   }
 
   &__cancle-icon {

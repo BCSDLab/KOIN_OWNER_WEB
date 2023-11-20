@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-
+import cn from 'utils/ts/className';
 import styles from './MenuCategory.module.scss';
 
 interface MenuCategory {
@@ -17,7 +17,16 @@ export default function MenuCategory() {
     { id: 3, name: '사이드 메뉴' },
     { id: 4, name: '세트 메뉴' },
   ]);
-
+  const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
+  const appendSelectCategory = (category: MenuCategory) => {
+    if (selectedCategories.some((alreadySelected) => alreadySelected.id === category.id)) {
+      setSelectedCategories(
+        selectedCategories.filter((alreadySelected) => alreadySelected.id !== category.id),
+      );
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
   return (
     <div>
       {isMobile ? (
@@ -35,7 +44,15 @@ export default function MenuCategory() {
           </div>
           <div className={styles['mobile__category-button-container']}>
             {menuCategories.map((category) => (
-              <button key={category.id} className={styles['mobile__category-button']} type="button">
+              <button
+                key={category.id}
+                className={cn({
+                  [styles['mobile__category-button']]: true,
+                  [styles['mobile__category-button--selected']]: selectedCategories.some((c) => c.id === category.id),
+                })}
+                type="button"
+                onClick={() => appendSelectCategory(category)}
+              >
                 {category.name}
               </button>
             ))}
@@ -56,7 +73,15 @@ export default function MenuCategory() {
           </div>
           <div className={styles['category-button-container']}>
             {menuCategories.map((category) => (
-              <button key={category.id} className={styles['category-button']} type="button">
+              <button
+                key={category.id}
+                className={cn({
+                  [styles['category-button']]: true,
+                  [styles['category-button--selected']]: selectedCategories.some((c) => c.id === category.id),
+                })}
+                type="button"
+                onClick={() => appendSelectCategory(category)}
+              >
                 {category.name}
               </button>
             ))}

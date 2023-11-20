@@ -18,6 +18,16 @@
     border: 0.5px solid #898a8d;
     padding: 8px;
     box-sizing: border-box;
+    margin-bottom: 24px;
+  }
+
+  &__name-text {
+    margin-top: 12px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 16px;
   }
 }
 

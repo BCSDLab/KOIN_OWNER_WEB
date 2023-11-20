@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-
+import { useState } from 'react';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -8,11 +8,13 @@ import MenuPrice from './components/MenuPrice';
 import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
+import MobileDivide from './components/MobileDivide';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
-  const adddmenuCancel = () => {
-    console.log('cancle');
+  const [isComplete, setIsComplete] = useState<boolean>(false);
+  const toggleConfirmClick = () => {
+    setIsComplete((prevState) => !prevState);
   };
   const {
     value: isGoMyShopModal,
@@ -28,8 +30,10 @@ export default function AddMenu() {
               메뉴 정보
             </div>
             <div className={styles['mobile__menu-content']}>
-              <MenuName />
+              <MenuName isComplete={isComplete} />
+              <MobileDivide />
               <MenuPrice />
+              <MobileDivide />
               <MenuCategory />
             </div>
           </div>
@@ -39,22 +43,46 @@ export default function AddMenu() {
             </div>
             <div className={styles['mobile__menu-content']}>
               <MenuDetail />
+              <MobileDivide />
               <MenuImage />
             </div>
           </div>
           <div className={styles['mobile__button-container']}>
-            <button
-              className={styles['mobile__button-cancel']}
-              type="button"
-            >
-              취소
-            </button>
-            <button
-              className={styles['mobile__button-check']}
-              type="button"
-            >
-              확인
-            </button>
+            {isComplete ? (
+              <>
+                <button
+                  className={styles['mobile__button-cancel']}
+                  type="button"
+                  onClick={toggleConfirmClick}
+                >
+                  취소
+                </button>
+                <button
+                  className={styles['mobile__button-check']}
+                  type="button"
+                  onClick={openGoMyShopModal}
+                >
+                  확인
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className={styles['mobile__button-cancel']}
+                  type="button"
+                  onClick={openGoMyShopModal}
+                >
+                  취소
+                </button>
+                <button
+                  className={styles['mobile__button-check']}
+                  type="button"
+                  onClick={toggleConfirmClick}
+                >
+                  확인
+                </button>
+              </>
+            )}
           </div>
         </div>
       ) : (
@@ -65,17 +93,26 @@ export default function AddMenu() {
               <button
                 className={styles['header__button-cancel']}
                 type="button"
-                onClick={adddmenuCancel}
               >
                 취소
               </button>
-              <button
-                className={styles['header__button-check']}
-                type="button"
-                onClick={openGoMyShopModal}
-              >
-                확인
-              </button>
+              {isComplete ? (
+                <button
+                  className={styles['header__button-check']}
+                  type="button"
+                  onClick={openGoMyShopModal}
+                >
+                  확인
+                </button>
+              ) : (
+                <button
+                  className={styles['header__button-check']}
+                  type="button"
+                  onClick={toggleConfirmClick}
+                >
+                  확인
+                </button>
+              )}
             </div>
           </div>
           <div className={styles.content}>
@@ -83,7 +120,7 @@ export default function AddMenu() {
               <MenuImage />
             </div>
             <div className={styles.content__right}>
-              <MenuName />
+              <MenuName isComplete={isComplete} />
               <MenuPrice />
               <MenuCategory />
               <MenuDetail />
