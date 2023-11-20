@@ -29,12 +29,9 @@ export const useLogin = () => {
   return { login: mutate, error, isError };
 };
 
-export const useVerifyEmail = (emailInput: string, setIsSendAuth: (value:boolean)=>void) => {
+export const useVerifyEmail = (emailInput: string) => {
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: () => findPasswordVerify({ email: emailInput }),
-    onSuccess: () => {
-      setIsSendAuth(true);
-    },
   });
   return {
     verifyEmail: mutate, mutate, isLoading, isSuccess,
