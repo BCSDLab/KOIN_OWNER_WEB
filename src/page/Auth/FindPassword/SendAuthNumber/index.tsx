@@ -8,8 +8,8 @@ import styles from './SendAuthNumber.module.scss';
 export default function FindPassword() {
   const [emailInput, setEmailInput] = useState('');
   const [verifyInput, setVerifyInput] = useState('');
-  const verifyEmail = useVerifyEmail(emailInput);
-  const submit = useSubmit(emailInput, verifyInput);
+  const { verifyEmail } = useVerifyEmail();
+  const submit = useSubmit();
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function FindPassword() {
               <button
                 type="button"
                 className={styles['auth-button']}
-                onClick={() => verifyEmail.mutate()}
+                onClick={() => verifyEmail.mutate(emailInput)}
                 disabled={verifyEmail.isLoading}
               >
                 {verifyEmail.isSuccess ? '재발송' : '인증번호 발송'}
@@ -51,7 +51,7 @@ export default function FindPassword() {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              submit.mutate();
+              submit({ emailInput, verifyInput });
             }}
             className={styles.submit}
             disabled={!verifyEmail.isSuccess}

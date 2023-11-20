@@ -4,6 +4,11 @@ import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
 
+interface VerifyInput {
+  emailInput: string;
+  verifyInput: string;
+}
+
 export const useLogin = () => {
   const navigate = useNavigate();
   const { prevPath } = usePrevPathStore((state) => state);
@@ -29,19 +34,21 @@ export const useLogin = () => {
   return { login: mutate, error, isError };
 };
 
-export const useVerifyEmail = (emailInput: string) => {
+export const useVerifyEmail = () => {
   const { mutate, isLoading, isSuccess } = useMutation({
-    mutationFn: () => findPasswordVerify({ email: emailInput }),
+    mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
   });
-  return {
-    verifyEmail: mutate, mutate, isLoading, isSuccess,
-  };
+  return { verifyEmail: { mutate, isLoading, isSuccess } };
 };
 
-export const useSubmit = (emailInput: string, verifyInput:string) => {
+export const useSubmit = () => {
   const navigate = useNavigate();
-  const { mutate } = useMutation({
-    mutationFn: () => findPassword({ address: emailInput, certificationCode: verifyInput }),
+  const { mutate: submit } = useMutation({
+    mutationFn: ({
+      emailInput,
+      verifyInput,
+    }
+    :VerifyInput) => findPassword({ address: emailInput, certificationCode: verifyInput }),
     onSuccess: () => {
       navigate('/new-password', { state: { authCheck: true }, replace: true });
     },
@@ -49,5 +56,5 @@ export const useSubmit = (emailInput: string, verifyInput:string) => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
     },
   });
-  return { submit: mutate, mutate };
+  return submit;
 };
