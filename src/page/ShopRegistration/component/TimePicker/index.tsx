@@ -3,7 +3,7 @@ import {
   useState, useRef, useEffect, MouseEvent, useCallback,
 } from 'react';
 import useModalStore from 'store/modalStore';
-import WEEK from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 import cn from 'utils/ts/className';
 import TimeSelection from 'page/ShopRegistration/component/Modal/TimeSelection';
 import styles from './TimePicker.module.scss';

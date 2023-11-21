@@ -1,5 +1,5 @@
 import TimePicker from 'page/ShopRegistration/component/TimePicker';
-import WEEK from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import cn from 'utils/ts/className';
 import styles from './OperateTimePC.module.scss';

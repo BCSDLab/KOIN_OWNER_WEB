@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import WEEK from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 
 interface ModalStore {
   categoryState: [string, number];
