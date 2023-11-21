@@ -3,7 +3,7 @@ import cn from 'utils/ts/className';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import ConfirmShop from 'page/ShopRegistration/component/Modal/ConfirmShop';
-import useAllShops from 'query/shops';
+import useShopList from 'query/shops';
 import styles from './SearchShop.module.scss';
 
 interface SearchShopProps {
@@ -19,7 +19,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
   const { value: showConfirmStore, setValue: setConfirmStore } = useBooleanState(false);
   const [searchText, setSearchText] = useState('');
 
-  const { shopList, isError } = useAllShops();
+  const { shopList, isError } = useShopList();
 
   function handleClickStore(e: React.MouseEvent<HTMLButtonElement>) {
     const { name, phone } = JSON.parse(e.currentTarget.value);
