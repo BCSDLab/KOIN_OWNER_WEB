@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { getAllShopList } from 'api/shop';
+import { getShopList } from 'api/shop';
 
-const useAllShops = () => {
-  const { data: shopList, isError } = useQuery(['allshops'], getAllShopList);
+const useShopList = () => {
+  const { data: shopList, isError } = useQuery(['allshops'], getShopList);
   return { shopList, isError };
 };
 
-export default useAllShops;
+export default useShopList;

@@ -20,9 +20,9 @@ export const Shop = z.object({
 
 export type Shop = z.infer<typeof Shop>;
 
-export const AllShopList = z.object({
+export const ShopListRes = z.object({
   count: z.number(),
   shops: z.array(Shop),
 });
 
-export type AllShopList = z.infer<typeof AllShopList>;
+export type ShopListRes = z.infer<typeof ShopListRes>;
