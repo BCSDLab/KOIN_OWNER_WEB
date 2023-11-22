@@ -2,9 +2,7 @@
 import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
-import {
-  useEffect, useMemo, useRef, useState,
-} from 'react';
+import { useEffect } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -18,12 +16,15 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
 import useModalStore from 'store/modalStore';
-import WEEK from 'utils/constant/week';
+import { WEEK, DAY_OF_WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { useMutation } from '@tanstack/react-query';
-import { postRegisterShop } from 'api/shop';
+import { postShop } from 'api/shop';
+import useImageUpload from 'page/ShopRegistration/hooks/useImageUpload';
+import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
+import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -41,90 +42,33 @@ export default function ShopRegistrationPC() {
     setFalse: closeOperateTime,
   } = useBooleanState(false);
   const {
-    value: showSearchStore,
-    setTrue: openSearchStore,
-    setFalse: closeSearchStore,
+    value: showSearchShop,
+    setTrue: openSearchShop,
+    setFalse: closeSearchShop,
   } = useBooleanState(false);
   const {
     value: showConfirmPopup,
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
-  const [imgFile, setImgFile] = useState('');
-  const imgRef = useRef<HTMLInputElement>(null);
-
-  const saveImgFile = () => {
-    const file = imgRef.current?.files?.[0];
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const { result } = reader;
-      if (typeof result === 'string') {
-        setImgFile(result);
-      }
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
+  const { imgFile, imgRef, saveImgFile } = useImageUpload();
 
   const {
     categoryState,
-    searchShopState: searchStoreState,
-    setSearchShopState: setSearchStoreState,
+    searchShopState,
+    setSearchShopState,
     openTimeState,
     closeTimeState,
-    shopClosedState: storeClosedState,
+    shopClosedState,
   } = useModalStore();
 
-  type OperateTimeProps = { [key: string]: string };
-  const [operateTimeState, setOperateTimeState] = useState<OperateTimeProps>({});
-  const openDay = WEEK.filter((day) => storeClosedState[day] === false)[0];
-  useEffect(() => {
-    setOperateTimeState((prevOperateTimeState) => ({
-      ...prevOperateTimeState,
-      휴일: `매주 ${WEEK.filter((day) => storeClosedState[day]).join('요일 ')}요일 정기 휴무`,
-      시간: `${openTimeState[openDay]} ~ ${closeTimeState[openDay]}`,
-    }));
-  }, [openTimeState, closeTimeState, storeClosedState]);
+  const operateTimeState = useOperateTimeState();
 
-  WEEK.forEach((day) => {
-    operateTimeState[day] = storeClosedState[day] ? `매주 ${day} 정기 휴무` : `${openTimeState[day]} ~ ${closeTimeState[day]}`;
-  });
-
-  const DAY_OF_WEEK = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
-
-  const openTimeArray = Object.values(openTimeState);
-  const closeTimeArray = Object.values(closeTimeState);
-  const storeClosedArray = Object.values(storeClosedState);
-  const 전부_같은_시간인가 = openTimeArray.every((time) => openTimeArray[0] === time)
-    && closeTimeArray.every((time) => closeTimeArray[0] === time);
-
-  const 휴일이_있는_날이_있는가 = storeClosedArray.some((closed) => closed);
-
-  const 휴일이_아닌_오픈_시간이_전부_같은가 = useMemo(() => {
-    const 휴일이_아닌_오픈시간 = openTimeArray.find((time, index) => {
-      if (!storeClosedArray[index]) return time;
-      return false;
-    })!;
-    return openTimeArray.every((time, index) => {
-      if (storeClosedArray[index]) return true;
-      return time === 휴일이_아닌_오픈시간;
-    });
-  }, [openTimeArray, storeClosedArray]);
-
-  const 휴일이_아닌_폐점_시간이_전부_같은가 = useMemo(() => {
-    const 휴일이_아닌_폐점시간 = closeTimeArray.find((time, index) => {
-      if (!storeClosedArray[index]) return time;
-      return false;
-    })!;
-    return closeTimeArray.every((time, index) => {
-      if (storeClosedArray[index]) return true;
-      return time === 휴일이_아닌_폐점시간;
-    });
-  }, [closeTimeArray, storeClosedArray]);
-
-  const 특정_날만_휴일이고_전부_같은_시간인가 = 휴일이_있는_날이_있는가 && 휴일이_아닌_오픈_시간이_전부_같은가 && 휴일이_아닌_폐점_시간이_전부_같은가;
+  const {
+    isAllSameTime,
+    hasClosedDay,
+    isSpecificDayClosedAndAllSameTime,
+  } = CheckSameTime();
 
   const {
     register, handleSubmit, setValue,
@@ -133,20 +77,24 @@ export default function ShopRegistrationPC() {
   });
 
   const mutation = useMutation({
-    mutationFn: (form: OwnerShop) => postRegisterShop(form),
+    mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => setStep(5),
   });
+
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
-      closed: storeClosedArray[index],
+      closed: shopClosedArray[index],
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
     setValue('open', openValue);
     setValue('image_urls', [imgFile]);
-    setValue('name', searchStoreState);
+    setValue('name', searchShopState);
     setValue('category_ids', [categoryState[1]]);
   }, [openTimeState, closeTimeState, imgFile]);
 
@@ -250,12 +198,12 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={searchStoreState}
+                    value={searchShopState}
                     onChange={(e) => {
-                      setSearchStoreState(e.target.value);
+                      setSearchShopState(e.target.value);
                     }}
                   />
-                  <CustomButton content="가게검색" buttonSize="small" onClick={openSearchStore} />
+                  <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
                 </div>
               </div>
               <CustomModal
@@ -263,10 +211,10 @@ export default function ShopRegistrationPC() {
                 height="75vh"
                 hasFooter={false}
                 isOverflowVisible={false}
-                isOpen={showSearchStore}
-                onCancel={closeSearchStore}
+                isOpen={showSearchShop}
+                onCancel={closeSearchShop}
               >
-                <SearchShop open={showSearchStore} onCancel={closeSearchStore} />
+                <SearchShop open={showSearchShop} onCancel={closeSearchShop} />
               </CustomModal>
               <InputBox content="주소정보" id="address" register={register} inputType="text" />
               <InputBox content="전화번호" id="phone" register={register} inputType="tel" />
@@ -277,27 +225,27 @@ export default function ShopRegistrationPC() {
                   <div className={styles['form__operate-time']}>
                     <div>
                       {
-                        전부_같은_시간인가 && !휴일이_있는_날이_있는가 ? (
+                        isAllSameTime && !hasClosedDay ? (
                           <div>
-                            {operateTimeState['시간']}
+                            {operateTimeState.time}
                           </div>
                         )
                           : null
                       }
                       {
-                        특정_날만_휴일이고_전부_같은_시간인가 ? (
+                        isSpecificDayClosedAndAllSameTime ? (
                           <div>
-                            <div>{operateTimeState['시간']}</div>
-                            <div>{operateTimeState['휴일']}</div>
+                            <div>{operateTimeState.time}</div>
+                            <div>{operateTimeState.holiday}</div>
                           </div>
                         ) : null
                       }
                       {
-                        !전부_같은_시간인가 && !특정_날만_휴일이고_전부_같은_시간인가 ? (
+                        !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
                           <>
                             {WEEK.map((day) => (
                               <div key={day}>
-                                {storeClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                                {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
                               </div>
                             ))}
                           </>
