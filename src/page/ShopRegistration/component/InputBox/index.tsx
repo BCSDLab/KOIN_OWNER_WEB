@@ -3,7 +3,7 @@ import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { HTMLInputTypeAttribute } from 'react';
 import styles from './InputBox.module.scss';
 
-interface InputProps {
+interface InputBoxProps {
   content: string;
   id: keyof OwnerShop
   register: UseFormRegister<OwnerShop>;
@@ -12,7 +12,7 @@ interface InputProps {
 
 export default function InputBox({
   content, id, register, inputType,
-}: InputProps) {
+}: InputBoxProps) {
   return (
     <label htmlFor={id} className={styles.form}>
       <span className={styles.form__label}>{content}</span>
