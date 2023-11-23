@@ -22,7 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { useMutation } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
-import useImageUpload from 'page/ShopRegistration/hooks/useImageUpload';
+import useImageUpload from 'utils/hooks/useImageUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import styles from './ShopRegistrationPC.module.scss';
