@@ -1,20 +1,22 @@
 import { create } from 'zustand';
 import { WEEK } from 'utils/constant/week';
 
+type OperatingTime = { [key in typeof WEEK[number]]: string | null };
+
 interface ModalStore {
   categoryState: [string, number];
-  searchShopState: string,
-  openTimeState: { [key in typeof WEEK[number]]: string | null },
-  closeTimeState: { [key in typeof WEEK[number]]: string | null },
-  shopClosedState: { [key: string]: boolean },
-  setCategoryState: (state: [string, number]) => void,
-  setSearchShopState: (state: string) => void,
-  setOpenTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
-  setCloseTimeState: (state: { [key in typeof WEEK[number]]: string | null }) => void,
-  setShopClosedState: (state: { [key : string]: boolean }) => void,
+  searchShopState: string;
+  openTimeState: OperatingTime;
+  closeTimeState: OperatingTime;
+  shopClosedState: { [key: string]: boolean };
+  setCategoryState: (state: [string, number]) => void;
+  setSearchShopState: (state: string) => void;
+  setOpenTimeState: (state: OperatingTime) => void;
+  setCloseTimeState: (state: OperatingTime) => void;
+  setShopClosedState: (state: { [key: string]: boolean }) => void;
 }
 
-const initialOperatingTime = {
+const initialOperatingTime: OperatingTime = {
   월: '00:00',
   화: '00:00',
   수: '00:00',
