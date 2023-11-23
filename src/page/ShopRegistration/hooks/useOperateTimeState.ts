@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useModalStore from 'store/modalStore';
 import { WEEK } from 'utils/constant/week';
 
-type OperateTimeProps = { [key: string]: string };
+type OperateTimeProps = Record<string, string>;
 
 export default function useOperateTimeState() {
   const {
