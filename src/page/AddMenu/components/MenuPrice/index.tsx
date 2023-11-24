@@ -23,7 +23,7 @@ export default function MenuPrice() {
               <input className={styles['mobile__size-input']} placeholder="예) 소 (1~2 인분)" />
               <div className={styles['mobile__price-input-box']}>
                 <input className={styles['mobile__price-input']} />
-                <p className={styles['mobile__price-input-won']}>원</p>
+                <span className={styles['mobile__price-input-won']}>원</span>
               </div>
             </div>
             <CancleIcon className={styles['mobile__cancle-icon']} />
@@ -46,7 +46,7 @@ export default function MenuPrice() {
             <input className={styles['size-input']} placeholder="예) 소 (1~2 인분)" />
             <div className={styles['prcie-input-box']}>
               <input className={styles['price-input']} />
-              <p className={styles['price-input-won']}>원</p>
+              <span className={styles['price-input-won']}>원</span>
             </div>
             <CancleIcon className={styles['cancle-icon']} />
           </div>
