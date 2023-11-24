@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancel-icon.svg';
+import { ReactComponent as CancleIcon } from 'assets/svg/addmenu/mobile-cancle-icon.svg';
 import styles from './AddMenuImgModal.module.scss';
 
 interface AddMenuImgModalProps {
@@ -29,7 +29,7 @@ export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalPro
           className={styles['cancel-button']}
           onClick={onCancel}
         >
-          <CancelIcon className={styles.cancelIcon} />
+          <CancleIcon className={styles.cancelIcon} />
         </button>
         <span className={styles['content__main-text']}>이미지 추가</span>
         <span className={styles['content__sub-text']}>메뉴 사진을 추가 할 수 있습니다.</span>

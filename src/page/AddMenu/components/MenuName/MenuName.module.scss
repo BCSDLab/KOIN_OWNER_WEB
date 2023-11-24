@@ -6,7 +6,6 @@
   &__caption {
     margin: 16px 0 8px;
     color: #175c8e;
-    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 15px;
     font-weight: 500;
   }
@@ -19,6 +18,12 @@
     padding: 8px;
     box-sizing: border-box;
     margin-bottom: 24px;
+
+    &::placeholder {
+      color: #a1a1a1;
+      font-size: 13px;
+      font-weight: 400;
+    }
   }
 
   &__name-text {
@@ -49,17 +54,15 @@
   margin-top: 24px;
   height: 62px;
   width: 100%;
-  border: 0.5px solid var(--stroke-color, #858585);
+  border: 0.5px solid #858585;
   outline: none;
-  color: var(--text-color, #252525);
-  font-family: "Noto Sans CJK KR", sans-serif;
+  color: #a1a1a1;
   font-size: 20px;
   font-weight: 500;
   padding-left: 16px;
 
   &::placeholder {
     color: #a1a1a1;
-    font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 20px;
     font-weight: 400;
   }
