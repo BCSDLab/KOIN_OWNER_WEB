@@ -1,6 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useState } from 'react';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -12,10 +11,6 @@ import MobileDivide from './components/MobileDivide';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
-  const [isComplete, setIsComplete] = useState<boolean>(false);
-  const toggleConfirmClick = () => {
-    setIsComplete((prevState) => !prevState);
-  };
   const {
     value: isGoMyShopModal,
     setTrue: openGoMyShopModal,
@@ -30,7 +25,7 @@ export default function AddMenu() {
               메뉴 정보
             </div>
             <div className={styles['mobile__menu-content']}>
-              <MenuName isComplete={isComplete} />
+              <MenuName />
               <MobileDivide />
               <MenuPrice />
               <MobileDivide />
@@ -48,41 +43,20 @@ export default function AddMenu() {
             </div>
           </div>
           <div className={styles['mobile__button-container']}>
-            {isComplete ? (
-              <>
-                <button
-                  className={styles['mobile__button-cancel']}
-                  type="button"
-                  onClick={toggleConfirmClick}
-                >
-                  취소
-                </button>
-                <button
-                  className={styles['mobile__button-check']}
-                  type="button"
-                  onClick={openGoMyShopModal}
-                >
-                  확인
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  className={styles['mobile__button-cancel']}
-                  type="button"
-                  onClick={openGoMyShopModal}
-                >
-                  취소
-                </button>
-                <button
-                  className={styles['mobile__button-check']}
-                  type="button"
-                  onClick={toggleConfirmClick}
-                >
-                  확인
-                </button>
-              </>
-            )}
+            <button
+              className={styles['mobile__button-cancel']}
+              type="button"
+              onClick={openGoMyShopModal}
+            >
+              취소
+            </button>
+            <button
+              className={styles['mobile__button-check']}
+              type="button"
+              onClick={openGoMyShopModal}
+            >
+              확인
+            </button>
           </div>
         </div>
       ) : (
@@ -96,23 +70,13 @@ export default function AddMenu() {
               >
                 취소
               </button>
-              {isComplete ? (
-                <button
-                  className={styles['header__button-check']}
-                  type="button"
-                  onClick={openGoMyShopModal}
-                >
-                  확인
-                </button>
-              ) : (
-                <button
-                  className={styles['header__button-check']}
-                  type="button"
-                  onClick={toggleConfirmClick}
-                >
-                  확인
-                </button>
-              )}
+              <button
+                className={styles['header__button-check']}
+                type="button"
+                onClick={openGoMyShopModal}
+              >
+                확인
+              </button>
             </div>
           </div>
           <div className={styles.content}>
@@ -120,7 +84,7 @@ export default function AddMenu() {
               <MenuImage />
             </div>
             <div className={styles.content__right}>
-              <MenuName isComplete={isComplete} />
+              <MenuName />
               <MenuPrice />
               <MenuCategory />
               <MenuDetail />
