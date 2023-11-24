@@ -15,3 +15,16 @@ export const getMe = async () => {
   const { data } = await accessClient.get<UserResponse>('/owner');
   return UserResponse.parse(data);
 };
+
+export const findPasswordVerify = ({ email }: { email: string }) => client.post('/owners/password/reset/verification', { address: email });
+
+export const findPassword = ({
+  address,
+  certificationCode,
+}: {
+  address: string;
+  certificationCode: string;
+}) => client.post('/owners/password/reset/send', {
+  address,
+  certification_code: certificationCode,
+});
