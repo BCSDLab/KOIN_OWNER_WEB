@@ -8,7 +8,7 @@ import styles from './CustomModal.module.scss';
 interface CustomModalProps {
   buttonText?: string;
   title: string;
-  height: string;
+  modalSize: string;
   hasFooter: boolean;
   isOpen: boolean;
   isOverflowVisible: boolean;
@@ -17,7 +17,7 @@ interface CustomModalProps {
 }
 
 export default function CustomModal({
-  buttonText = '', title, height, hasFooter, isOpen, isOverflowVisible, onCancel, children,
+  buttonText = '', title, modalSize, hasFooter, isOpen, isOverflowVisible, onCancel, children,
 }: CustomModalProps) {
   useEffect(() => {
     if (isOpen) {
@@ -40,10 +40,9 @@ export default function CustomModal({
     <div className={styles.modal}>
       <div
         className={cn({
-          [styles.container]: true,
-          [styles['container--selected']]: isOverflowVisible,
+          [styles[`container__${modalSize}`]]: true,
+          [styles[`container__${modalSize}--visible`]]: isOverflowVisible,
         })}
-        style={{ height }}
       >
         <div className={styles.container__header}>
           <span className={styles.container__title}>{title}</span>

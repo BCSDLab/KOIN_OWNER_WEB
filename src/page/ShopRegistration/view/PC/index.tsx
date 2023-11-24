@@ -175,7 +175,7 @@ export default function ShopRegistrationPC() {
               <CustomModal
                 buttonText="다음"
                 title="카테고리 검색"
-                height="434px"
+                modalSize="small"
                 hasFooter
                 isOverflowVisible={false}
                 isOpen={showCategory}
@@ -208,7 +208,7 @@ export default function ShopRegistrationPC() {
               </div>
               <CustomModal
                 title="가게검색"
-                height="75vh"
+                modalSize="large"
                 hasFooter={false}
                 isOverflowVisible={false}
                 isOpen={showSearchShop}
@@ -259,7 +259,7 @@ export default function ShopRegistrationPC() {
               <CustomModal
                 buttonText="다음"
                 title="운영시간"
-                height="536px"
+                modalSize="medium"
                 hasFooter
                 isOpen={showOperateTime}
                 isOverflowVisible
