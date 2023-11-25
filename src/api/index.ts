@@ -14,7 +14,7 @@ const accessClient = axios.create({
   timeout: 2000,
 });
 
-const refresh = (config: InternalAxiosRequestConfig) => {
+const refresh = async (config: InternalAxiosRequestConfig) => {
   const refreshToken = localStorage.getItem('refresh_token');
 
   if (refreshToken) {

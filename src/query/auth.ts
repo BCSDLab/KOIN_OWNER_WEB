@@ -1,10 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
-import { postLogin } from 'api/auth';
+import { postLogin, findPasswordVerify, findPassword } from 'api/auth';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
 
-const useLogin = () => {
+interface VerifyInput {
+  emailInput: string;
+  verifyInput: string;
+}
+
+export const useLogin = () => {
   const navigate = useNavigate();
   const { prevPath } = usePrevPathStore((state) => state);
 
@@ -29,4 +34,27 @@ const useLogin = () => {
   return { login: mutate, error, isError };
 };
 
-export default useLogin;
+export const useVerifyEmail = () => {
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
+  });
+  return { verifyEmail: { mutate, isLoading, isSuccess } };
+};
+
+export const useSubmit = () => {
+  const navigate = useNavigate();
+  const { mutate: submit } = useMutation({
+    mutationFn: ({
+      emailInput,
+      verifyInput,
+    }
+    :VerifyInput) => findPassword({ address: emailInput, certificationCode: verifyInput }),
+    onSuccess: () => {
+      navigate('/new-password', { state: { authCheck: true }, replace: true });
+    },
+    onError: () => {
+      // TODO: 이메일 인증 실패 시 UI 처리 필요
+    },
+  });
+  return submit;
+};
