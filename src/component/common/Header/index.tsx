@@ -49,6 +49,21 @@ function Header() {
       });
   };
 
+  if (pathname === '/add-menu' && isMobile) {
+    return (
+      <header className={styles['add-menu-header']}>
+        <button
+          className={styles['add-menu-header__goBackButton']}
+          type="button"
+          onClick={() => window.history.back()}
+        >
+          <BackArrowIcon title="뒤로 가기 버튼" />
+        </button>
+        <div className={styles['add-menu-header__caption']}>메뉴추가</div>
+      </header>
+    );
+  }
+
   return (
     <header
       className={cn({
@@ -74,7 +89,7 @@ function Header() {
                 </button>
               )}
               <span className={styles.mobileheader__title}>
-                {isMain ? (
+                {pathname === '/' ? (
                   <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)

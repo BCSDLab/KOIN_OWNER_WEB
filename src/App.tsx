@@ -9,6 +9,7 @@ import AuthLayout from 'layout/AuthLayout';
 
 import MyStorePage from 'page/MyShopPage';
 import StoreRegistration from 'page/StoreRegistration';
+import AddMenu from 'page/AddMenu';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<MyStorePage />} />
         <Route path="/store-registration" element={<StoreRegistration />} />
+        <Route path="/add-menu" element={<AddMenu />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
