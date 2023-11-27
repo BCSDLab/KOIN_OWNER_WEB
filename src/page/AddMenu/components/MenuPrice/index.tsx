@@ -1,12 +1,23 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { useState } from 'react';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
-import { ReactComponent as CancleIcon } from 'assets/svg/mystore/x-in-circle-cancle.svg';
+import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
+import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
 import styles from './MenuPrice.module.scss';
 
 export default function MenuPrice() {
   const { isMobile } = useMediaQuery();
+  const [priceInputs, setPriceInputs] = useState([{ id: 1 }]);
+
+  const addPriceInput = () => {
+    setPriceInputs([...priceInputs, { id: priceInputs.length + 1 }]);
+  };
+  const deletePriceInput = (id : number) => {
+    setPriceInputs(priceInputs.filter((input) => input.id !== id));
+  };
+
   return (
     <div>
       {isMobile ? (
@@ -18,20 +29,32 @@ export default function MenuPrice() {
               <CheckCircleIcon className={styles['mobile__header-condition__icon']} />
             </div>
           </div>
-          <div className={styles['mobile__price-info-input-box']}>
-            <div className={styles['mobile__price-info-inputs']}>
-              <input className={styles['mobile__size-input']} placeholder="예) 소 (1~2 인분)" />
-              <div className={styles['mobile__price-input-box']}>
-                <input className={styles['mobile__price-input']} />
-                <span className={styles['mobile__price-input-won']}>원</span>
+          {priceInputs.map((input) => (
+            <div key={input.id} className={styles['mobile__price-info-input-box']}>
+              <div className={styles['mobile__price-info-inputs']}>
+                <input className={styles['mobile__price-info-inputs__size-input']} placeholder="예) 소 (1~2 인분)" />
+                <div className={styles['mobile__price-info-inputs__price-input-box']}>
+                  <input className={styles['mobile__price-info-inputs__price-input']} />
+                  <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>
+                </div>
               </div>
+              <button
+                type="button"
+                className={styles['mobile__cancle-button']}
+                onClick={() => deletePriceInput(input.id)}
+              >
+                <MobileDeleteIcon className={styles['mobile__cancle-icon']} />
+              </button>
             </div>
-            <CancleIcon className={styles['mobile__cancle-icon']} />
-          </div>
-          <div className={styles['mobile__add-price-button']}>
+          ))}
+          <button
+            type="button"
+            className={styles['mobile__add-price-button']}
+            onClick={addPriceInput}
+          >
             <MobilePlusIcon className={styles['mobile__add-price-button__icon']} />
-            <div className={styles['mobile__add-price-button__text']}>가격 추가</div>
-          </div>
+            <span className={styles['mobile__add-price-button__text']}>가격 추가</span>
+          </button>
         </div>
       ) : (
         <div className={styles.container}>
@@ -42,18 +65,32 @@ export default function MenuPrice() {
               <CheckCircleIcon className={styles['header__condition-icon']} />
             </div>
           </div>
-          <div className={styles['price-info-inputs']}>
-            <input className={styles['size-input']} placeholder="예) 소 (1~2 인분)" />
-            <div className={styles['prcie-input-box']}>
-              <input className={styles['price-input']} />
-              <span className={styles['price-input-won']}>원</span>
+          {priceInputs.map((input) => (
+            <div key={input.id} className={styles['price-info-input-box']}>
+              <div className={styles['price-info-inputs']}>
+                <input className={styles['price-info-inputs__size-input']} placeholder="예) 소 (1~2 인분)" />
+                <div className={styles['price-info-inputs__price-input-box']}>
+                  <input className={styles['price-info-inputs__price-input']} />
+                  <p className={styles['price-info-inputs__price-input-won']}>원</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className={styles['cancle-button']}
+                onClick={() => deletePriceInput(input.id)}
+              >
+                <DeleteIcon className={styles['cancle-button__icon']} />
+              </button>
             </div>
-            <CancleIcon className={styles['cancle-icon']} />
-          </div>
-          <div className={styles['add-price-button']}>
+          ))}
+          <button
+            type="button"
+            className={styles['add-price-button']}
+            onClick={addPriceInput}
+          >
             <PlusIcon className={styles['add-price-button__icon']} />
             <div className={styles['add-price-button__text']}>가격 추가</div>
-          </div>
+          </button>
         </div>
       )}
     </div>
