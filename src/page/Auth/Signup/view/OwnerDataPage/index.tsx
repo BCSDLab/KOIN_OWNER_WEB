@@ -70,8 +70,10 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           )
             : <input className={styles.form__input} type="text" placeholder="사업자등록번호" />}
         </div>
-        {errors.registrationNumberFront
-        && <ErrorMessage message={errors.registrationNumberFront.message} />}
+        {(errors.registrationNumberFront
+        || errors.registrationNumberMiddle
+        || errors.registrationNumberEnd)
+        && <ErrorMessage message="사업자 등록번호를 입력해주세요" />}
         <div>
           <span className={styles.form__label}>개인 연락처</span>
           {!isMobile ? (
@@ -89,16 +91,16 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           )
             : <input className={styles.form__input} type="text" placeholder="개인 연락처" />}
         </div>
-        {errors.phoneFront && <ErrorMessage message={errors.phoneFront.message} />}
+        {(errors.phoneFront || errors.phoneMiddle || errors.phoneEnd) && <ErrorMessage message="전화번호를 입력해주세요" />}
         <div>
           <span className={styles.form__label}>파일첨부</span>
-          <div className={styles['file-box']}>
+          <label htmlFor="upload_button" className={styles['file-box']}>
             <div className={styles['file-box__plus-box-image']} />
             <span className={styles['file-box__command']}>{!isMobile ? '파일을 마우스로 끌어 오세요.' : '파일을 첨부해주세요'}</span>
             <span className={styles['file-box__information']}>
               {!isMobile ? '사업자등록증, 영업신고증, 통장사본 이미지 필수10mb 이하의 PDF 혹은 이미지 형식의 파일(e.g. jpg, png, gif 등)로 5개까지 업로드 가능합니다.' : '사업자등록증, 영업신고증, 통장사본 이미지 첨부'}
             </span>
-          </div>
+          </label>
           {!isMobile && (
           <div className={styles.button}>
             <label htmlFor="upload_button" className={styles['button--upload']}>
