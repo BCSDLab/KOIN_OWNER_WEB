@@ -1,10 +1,8 @@
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link } from 'react-router-dom';
-
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
-import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import styles from './MyShopPage.module.scss';
 
 export default function MyShopPage() {
