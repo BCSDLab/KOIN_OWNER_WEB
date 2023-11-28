@@ -1,7 +1,7 @@
 import { MyShopListRes, MyShopInfoRes, MyShopParam } from 'model/shopInfo/myShopInfo';
 import { MenuInfoRes } from 'model/shopInfo/menuCategory';
 import { ShopListRes } from 'model/shopInfo/allShopInfo';
-import { accessClient } from 'api';
+import { accessClient, client } from 'api';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 
 export const getMyShopList = async () => {
@@ -20,7 +20,7 @@ export const getMenuInfoList = async (param: MyShopParam) => {
 };
 
 export const getShopList = async () => {
-  const { data } = await accessClient.get<ShopListRes>('/shops');
+  const { data } = await client.get<ShopListRes>('/shops');
   return ShopListRes.parse(data);
 };
 
