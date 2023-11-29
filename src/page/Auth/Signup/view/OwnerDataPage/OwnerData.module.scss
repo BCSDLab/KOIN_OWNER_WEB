@@ -170,8 +170,8 @@
 }
 
 .file-box {
-  width: calc(368px - 64px);
-  height: calc(218px - 85px);
+  width: calc(368px - 50px);
+  height: calc(218px - 48px);
   border: 1px dashed #d2dae2;
   padding: 24px;
   overflow-y: scroll;
@@ -189,6 +189,7 @@
   }
 
   &__file {
+    all: unset;
     display: flex;
     gap: 8px;
     align-items: center;
@@ -235,6 +236,7 @@
     border: 1px solid #f7941e;
     border-radius: 13%;
     margin: 0 auto;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
