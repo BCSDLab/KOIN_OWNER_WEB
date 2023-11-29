@@ -1,10 +1,12 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import SearchStore from 'page/StoreRegistration/component/Modal/SearchStore';
+import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
+import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { useEffect, useState } from 'react';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -12,9 +14,10 @@ type ButtonClickEvent = {
 };
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
+  const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
   const {
-    value: isOpen, setTrue: openSearchStore,
-    setFalse: closeSearchStore,
+    value: isOpen, setTrue: openSearchShop,
+    setFalse: closeSearchShop,
   } = useBooleanState(false);
   const {
     ownerNameRegister,
@@ -30,6 +33,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     errors,
     watch,
   } = useCheckOwnerData();
+  const files = watch('registerFiles');
   const onSumbmit = () => {
     console.log(watch('ownerName'), watch('shopName'));
     console.log(watch('registrationNumberFront'), watch('registrationNumberMiddle'), watch('registrationNumberEnd'));
@@ -37,6 +41,12 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     console.log(watch('registerFiles'));
     console.log(clickEvent);
   };
+  useEffect(() => {
+    if (files) {
+      setPreviewFiles((p) => [...p, ...Array.from(files)].slice(0, 5));
+    }
+  }, [files]);
+
   return (
     <>
       <section className={styles.form}>
@@ -49,7 +59,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           <span className={styles.form__label}>가게명</span>
           <div className={styles['input__store-name--wrapper']}>
             <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} {...shopNameNameRegister} />
-            <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchStore} />
+            <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchShop} />
           </div>
         </div>
         {errors.shopName && <ErrorMessage message={errors.shopName.message} />}
@@ -94,18 +104,32 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         {(errors.phoneFront || errors.phoneMiddle || errors.phoneEnd) && <ErrorMessage message="전화번호를 입력해주세요" />}
         <div>
           <span className={styles.form__label}>파일첨부</span>
-          <label htmlFor="upload_button" className={styles['file-box']}>
-            <div className={styles['file-box__plus-box-image']} />
-            <span className={styles['file-box__command']}>{!isMobile ? '파일을 마우스로 끌어 오세요.' : '파일을 첨부해주세요'}</span>
-            <span className={styles['file-box__information']}>
-              {!isMobile ? '사업자등록증, 영업신고증, 통장사본 이미지 필수10mb 이하의 PDF 혹은 이미지 형식의 파일(e.g. jpg, png, gif 등)로 5개까지 업로드 가능합니다.' : '사업자등록증, 영업신고증, 통장사본 이미지 첨부'}
-            </span>
-          </label>
+          <div className={styles['file-box']}>
+            {previewFiles.length > 0 ? (
+              <div className={styles['file-box__files']}>
+                {previewFiles.map((file) => (
+                  <div className={styles['file-box__file']}>
+                    <FileImage />
+                    <span className={styles['file-box__file--name']}>{file.name}</span>
+                  </div>
+                ))}
+              </div>
+            )
+              : (
+                <>
+                  <div className={styles['file-box__plus-box-image']} />
+                  <span className={styles['file-box__command']}>{!isMobile ? '파일을 마우스로 끌어 오세요.' : '파일을 첨부해주세요'}</span>
+                  <span className={styles['file-box__information']}>
+                    {!isMobile ? '사업자등록증, 영업신고증, 통장사본 이미지 필수10mb 이하의 PDF 혹은 이미지 형식의 파일(e.g. jpg, png, gif 등)로 5개까지 업로드 가능합니다.' : '사업자등록증, 영업신고증, 통장사본 이미지 첨부'}
+                  </span>
+                </>
+              )}
+          </div>
           {!isMobile && (
           <div className={styles.button}>
             <label htmlFor="upload_button" className={styles['button--upload']}>
               <span>내 pc</span>
-              <input id="upload_button" type="file" {...fileRegister} />
+              <input id="upload_button" type="file" {...fileRegister} multiple />
             </label>
           </div>
           )}
@@ -118,12 +142,13 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
       {isOpen && (
       <CustomModal
         title="가게검색"
-        height="75vh"
         hasFooter={false}
         isOpen={isOpen}
-        onCancel={closeSearchStore}
+        onCancel={closeSearchShop}
+        isOverflowVisible
+        modalSize="75vh"
       >
-        <SearchStore open={isOpen} onCancel={openSearchStore} />
+        <SearchShop open={isOpen} onCancel={openSearchShop} />
       </CustomModal>
       )}
     </>

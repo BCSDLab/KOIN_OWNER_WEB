@@ -173,12 +173,35 @@
   width: calc(368px - 64px);
   height: calc(218px - 85px);
   border: 1px dashed #d2dae2;
-  padding: 45px 31px 40px;
+  padding: 24px;
+  overflow-y: scroll;
 
   @include media.media-breakpoint-down(mobile) {
     width: calc(100% - 78px);
     height: calc(125px - 68px);
     padding: 36px 38px 32px;
+  }
+
+  &__files {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__file {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: start;
+
+    &--name {
+      width: 90%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 15px;
+      color: #858585;
+    }
   }
 
   &__command {

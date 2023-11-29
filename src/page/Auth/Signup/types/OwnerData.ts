@@ -7,5 +7,5 @@ export type OwnerData = {
   phoneFront:'string',
   phoneMiddle:'string',
   phoneEnd:'string',
-  registerFiles:'file'
+  registerFiles:FileList
 };
