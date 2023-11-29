@@ -46,7 +46,9 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
       setPreviewFiles((p) => [...p, ...Array.from(files)].slice(0, 5));
     }
   }, [files]);
-
+  const onClick = (index:number) => {
+    setPreviewFiles(previewFiles.filter((file, idx) => index !== idx));
+  };
   return (
     <>
       <section className={styles.form}>
@@ -107,11 +109,11 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           <div className={styles['file-box']}>
             {previewFiles.length > 0 ? (
               <div className={styles['file-box__files']}>
-                {previewFiles.map((file) => (
-                  <div className={styles['file-box__file']}>
+                {previewFiles.map((file, index) => (
+                  <button type="button" className={styles['file-box__file']} onClick={() => onClick(index)}>
                     <FileImage />
                     <span className={styles['file-box__file--name']}>{file.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             )
