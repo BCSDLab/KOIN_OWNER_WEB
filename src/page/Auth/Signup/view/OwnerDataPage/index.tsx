@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useBooleanState from 'utils/hooks/useBooleanState';
@@ -19,6 +20,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     value: isOpen, setTrue: openSearchShop,
     setFalse: closeSearchShop,
   } = useBooleanState(false);
+  const { value: isActive, setTrue: setActive, setFalse: setUnActive } = useBooleanState(false);
   const {
     ownerNameRegister,
     shopNameNameRegister,
@@ -43,11 +45,23 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   };
   useEffect(() => {
     if (files) {
-      setPreviewFiles((p) => [...p, ...Array.from(files)].slice(0, 5));
+      setPreviewFiles((p) => [...Array.from(files), ...p].slice(0, 5));
     }
   }, [files]);
-  const onClick = (index:number) => {
+  const onClick = (index:number, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
     setPreviewFiles(previewFiles.filter((file, idx) => index !== idx));
+  };
+  const handleDragOver = (event:React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    setActive();
+  };
+  const handleDrop = (event:React.DragEvent<HTMLLabelElement>) => {
+    event.preventDefault();
+    setUnActive();
+    const file = event.dataTransfer.files[0];
+    console.log(file);
+    setPreviewFiles((p) => [file, ...p].slice(0, 5));
   };
   return (
     <>
@@ -106,11 +120,19 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         {(errors.phoneFront || errors.phoneMiddle || errors.phoneEnd) && <ErrorMessage message="전화번호를 입력해주세요" />}
         <div>
           <span className={styles.form__label}>파일첨부</span>
-          <div className={styles['file-box']}>
+          <label
+            htmlFor="upload-button"
+            className={`${styles['file-box']} ${styles[isActive ? 'active' : '']}`}
+            onDragEnter={setActive}
+            onDragOver={(e) => handleDragOver(e)}
+            onDragLeave={setUnActive}
+            onDrop={(e) => handleDrop(e)}
+          >
+            <input id="upload-button" className={styles['file-box__input']} type="file" {...fileRegister} multiple />
             {previewFiles.length > 0 ? (
               <div className={styles['file-box__files']}>
                 {previewFiles.map((file, index) => (
-                  <button type="button" className={styles['file-box__file']} onClick={() => onClick(index)}>
+                  <button type="button" className={styles['file-box__file']} onClick={(e) => onClick(index, e)}>
                     <FileImage />
                     <span className={styles['file-box__file--name']}>{file.name}</span>
                   </button>
@@ -126,12 +148,11 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
                   </span>
                 </>
               )}
-          </div>
+          </label>
           {!isMobile && (
           <div className={styles.button}>
-            <label htmlFor="upload_button" className={styles['button--upload']}>
+            <label htmlFor="upload-button" className={styles['button--upload']}>
               <span>내 pc</span>
-              <input id="upload_button" type="file" {...fileRegister} multiple />
             </label>
           </div>
           )}

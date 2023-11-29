@@ -170,11 +170,26 @@
 }
 
 .file-box {
+  display: block;
   width: calc(368px - 50px);
   height: calc(218px - 48px);
   border: 1px dashed #d2dae2;
   padding: 24px;
   overflow-y: scroll;
+  z-index: 999;
+
+  &:hover {
+    border: 1px dashed #252525;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &.active {
+    background-color: #efeef3;
+    border: 1px dashed #252525;
+  }
 
   @include media.media-breakpoint-down(mobile) {
     width: calc(100% - 78px);
@@ -210,6 +225,7 @@
     font-size: 14px;
     display: block;
     margin-top: 21px;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       font-size: 12px;
@@ -223,6 +239,7 @@
     font-size: 14px;
     display: block;
     color: #858585;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       margin: 0;
@@ -241,6 +258,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       width: 18px;
