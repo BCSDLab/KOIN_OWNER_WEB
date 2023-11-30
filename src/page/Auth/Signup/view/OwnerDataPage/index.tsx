@@ -168,8 +168,8 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         hasFooter={false}
         isOpen={isOpen}
         onCancel={closeSearchShop}
-        isOverflowVisible
-        modalSize="75vh"
+        isOverflowVisible={false}
+        modalSize="medium"
       >
         <SearchShop open={isOpen} onCancel={openSearchShop} />
       </CustomModal>
