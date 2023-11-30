@@ -7,7 +7,7 @@ import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
-import { useEffect, useState } from 'react';
+import useFileController from 'page/Auth/Signup/hooks/useFileController';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -15,7 +15,6 @@ type ButtonClickEvent = {
 };
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
-  const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
   const {
     value: isOpen, setTrue: openSearchShop,
     setFalse: closeSearchShop,
@@ -36,6 +35,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     watch,
   } = useCheckOwnerData();
   const files = watch('registerFiles');
+  const { uploadedFiles, addFile, deleteFile } = useFileController(files);
   const onSumbmit = () => {
     console.log(watch('ownerName'), watch('shopName'));
     console.log(watch('registrationNumberFront'), watch('registrationNumberMiddle'), watch('registrationNumberEnd'));
@@ -43,14 +43,10 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     console.log(watch('registerFiles'));
     console.log(clickEvent);
   };
-  useEffect(() => {
-    if (files) {
-      setPreviewFiles((p) => [...Array.from(files), ...p].slice(0, 5));
-    }
-  }, [files]);
+
   const onClick = (index:number, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    setPreviewFiles(previewFiles.filter((file, idx) => index !== idx));
+    deleteFile(index);
   };
   const handleDragOver = (event:React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
@@ -60,9 +56,9 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     event.preventDefault();
     setUnActive();
     const file = event.dataTransfer.files[0];
-    console.log(file);
-    setPreviewFiles((p) => [file, ...p].slice(0, 5));
+    addFile(file);
   };
+
   return (
     <>
       <section className={styles.form}>
@@ -129,9 +125,9 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
             onDrop={(e) => handleDrop(e)}
           >
             <input id="upload-button" className={styles['file-box__input']} type="file" {...fileRegister} multiple />
-            {previewFiles.length > 0 ? (
+            {uploadedFiles.length > 0 ? (
               <div className={styles['file-box__files']}>
-                {previewFiles.map((file, index) => (
+                {uploadedFiles.map((file:File, index:number) => (
                   <button type="button" className={styles['file-box__file']} onClick={(e) => onClick(index, e)}>
                     <FileImage />
                     <span className={styles['file-box__file--name']}>{file.name}</span>
