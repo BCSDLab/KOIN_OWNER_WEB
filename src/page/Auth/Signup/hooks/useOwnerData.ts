@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { OwnerData } from 'page/Auth/Signup/types/OwnerData';
 import useModalStore from 'store/modalStore';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 const VALIDATIONMESSAGE = {
   owerName: '대표자명을 입력해주세요',
@@ -11,7 +11,7 @@ const VALIDATIONMESSAGE = {
   file: '파일을 첨부해주세요',
 };
 
-export default function useCheckOwnerData() {
+export default function useCheckOwnerData(isMobile:boolean) {
   const {
     register,
     handleSubmit,
@@ -31,82 +31,94 @@ export default function useCheckOwnerData() {
 
   const registrationNumberRegister = {
     front: register('registrationNumberFront', {
-      required: { value: true, message: VALIDATIONMESSAGE.registraionNumber },
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{3,3}$/,
         message: '3자리 숫자를 입력해주세요.',
       },
-      maxLength: 3,
     }),
     middle: register('registrationNumberMiddle', {
-      required: { value: true, message: VALIDATIONMESSAGE.registraionNumber },
-      maxLength: 2,
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{2,2}$/,
         message: '2자리 숫자를 입력해주세요.',
       },
     }),
     end: register('registrationNumberEnd', {
-      required: { value: true, message: VALIDATIONMESSAGE.registraionNumber },
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{5,5}$/,
         message: '5자리 숫자를 입력해주세요.',
       },
-      maxLength: 5,
+    }),
+    mobile: register('registrationNumberMobile', {
+      required: { value: isMobile, message: VALIDATIONMESSAGE.registraionNumber },
+      pattern: {
+        value: /[0-9]{10,10}$/,
+        message: '-를 제외하고 모두 입력해주세요.',
+      },
     }),
     message: errors.registrationNumberFront?.message
      || errors.registrationNumberMiddle?.message
-     || errors.registrationNumberEnd?.message,
+     || errors.registrationNumberEnd?.message
+     || errors.registrationNumberMobile?.message,
   };
 
   const phoneNumberRegister = {
     front: register('phoneFront', {
-      required: { value: true, message: VALIDATIONMESSAGE.phoneNumber },
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{3,3}$/,
         message: '3자리 숫자를 입력해주세요.',
       },
-      maxLength: 3,
     }),
     middle: register('phoneMiddle', {
-      required: { value: true, message: VALIDATIONMESSAGE.phoneNumber },
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{4,4}$/,
         message: '4자리 숫자를 입력해주세요.',
       },
-      maxLength: 4,
     }),
     end: register('phoneEnd', {
-      required: { value: true, message: VALIDATIONMESSAGE.phoneNumber },
+      required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{4,4}$/,
         message: '4자리 숫자를 입력해주세요.',
       },
-      maxLength: 4,
     }),
-    message: errors.phoneFront?.message || errors.phoneMiddle?.message || errors.phoneEnd?.message,
+    mobile: register('phoneMobile', {
+      required: { value: isMobile, message: VALIDATIONMESSAGE.phoneNumber },
+      pattern: {
+        value: /[0-9]$/,
+        message: '-를 제외하고 모두 입력해주세요.',
+      },
+    }),
+    message: errors.phoneFront?.message
+    || errors.phoneMiddle?.message
+    || errors.phoneEnd?.message
+    || errors.phoneMobile?.message,
   };
+
   const fileRegister = register('registerFiles', {
     required: { value: true, message: VALIDATIONMESSAGE.file },
   });
 
-  const getPhoneNumber = () => `${watch('phoneFront')}-${watch('phoneMiddle')}-${watch('phoneEnd')}`;
-
-  const getRegisterNumber = () => `${watch('registrationNumberFront')}-${watch('registrationNumberMiddle')}-${watch('registrationNumberEnd')}`;
+  const getPhoneNumber = useCallback(() => `${watch('phoneFront')}${watch('phoneMiddle')}${watch('phoneEnd')}`, [watch]);
+  const getRegisterationNumber = useCallback(() => `${watch('registrationNumberFront')}${watch('registrationNumberMiddle')}${watch('registrationNumberEnd')}`, [watch]);
 
   const { searchShopState } = useModalStore();
-
   useEffect(() => {
     setValue('shopName', searchShopState);
   }, [searchShopState, setValue]);
 
-  const registerNumberFront = watch('registrationNumberFront');
-  const registerNumberMiddle = watch('registrationNumberMiddle');
+  const registerNumberFront = watch('registrationNumberFront') ? watch('registrationNumberFront') : '';
+  const registerNumberMiddle = watch('registrationNumberMiddle') ? watch('registrationNumberMiddle') : '';
+
   useEffect(() => {
     if (registerNumberFront?.length === 3) {
       setFocus('registrationNumberMiddle');
     }
-  }, [setFocus, registerNumberFront]);
+  }, [setFocus, registerNumberFront, setValue]);
   useEffect(() => {
     if (registerNumberMiddle?.length === 2) {
       setFocus('registrationNumberEnd');
@@ -115,6 +127,7 @@ export default function useCheckOwnerData() {
 
   const phoneFront = watch('phoneFront');
   const phoneMiddle = watch('phoneMiddle');
+
   useEffect(() => {
     if (phoneFront?.length === 3) {
       setFocus('phoneMiddle');
@@ -137,6 +150,6 @@ export default function useCheckOwnerData() {
     handleSubmit,
     setValue,
     getPhoneNumber,
-    getRegisterNumber,
+    getRegisterationNumber,
   };
 }

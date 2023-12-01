@@ -31,15 +31,15 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     errors,
     watch,
     getPhoneNumber,
-    getRegisterNumber,
-  } = useCheckOwnerData();
+    getRegisterationNumber,
+  } = useCheckOwnerData(isMobile);
   const files = watch('registerFiles');
 
   const { uploadedFiles, addFile, deleteFile } = useFileController(files);
   const onSumbmit = () => {
     console.log(watch('ownerName'), watch('shopName'));
     console.log(getPhoneNumber());
-    console.log(getRegisterNumber());
+    console.log(getRegisterationNumber());
     console.log(watch('registerFiles'));
     console.log(clickEvent);
   };
@@ -72,7 +72,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         <div>
           <span className={styles.form__label}>가게명</span>
           <div className={styles['input__store-name--wrapper']}>
-            <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} {...shopNameRegister} />
+            <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '가게명' : ''} {...shopNameRegister} />
             <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchShop} />
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
               </div>
             </div>
           )
-            : <input className={styles.form__input} type="text" placeholder="사업자등록번호" />}
+            : <input className={styles.form__input} type="text" placeholder="사업자등록번호" maxLength={10} {...registrationNumberRegister.mobile} />}
         </div>
         {(registrationNumberRegister.message)
         && <ErrorMessage message={registrationNumberRegister.message} />}
@@ -111,7 +111,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
               </div>
             </div>
           )
-            : <input className={styles.form__input} type="text" placeholder="개인 연락처" />}
+            : <input className={styles.form__input} type="text" placeholder="개인 연락처" maxLength={11} {...phoneNumberRegister.mobile} />}
         </div>
         {(phoneNumberRegister.message) && <ErrorMessage message={phoneNumberRegister.message} />}
         <div>
