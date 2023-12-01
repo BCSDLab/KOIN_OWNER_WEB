@@ -7,6 +7,7 @@ export default function useCheckOwnerData() {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<OwnerData>({ mode: 'onSubmit' });
   const ownerNameRegister = register('ownerName', {
     required: { value: true, message: '대표자명을 입력해주세요.' },
@@ -45,8 +46,9 @@ export default function useCheckOwnerData() {
     phoneMiddleRegister,
     phoneEndRegister,
     fileRegister,
-    handleSubmit,
     errors,
     watch,
+    handleSubmit,
+    setValue,
   };
 }

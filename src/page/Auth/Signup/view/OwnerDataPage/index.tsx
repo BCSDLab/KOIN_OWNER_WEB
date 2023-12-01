@@ -8,6 +8,8 @@ import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
+import useModalStore from 'store/modalStore';
+import { useEffect } from 'react';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -16,10 +18,12 @@ type ButtonClickEvent = {
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const {
-    value: isOpen, setTrue: openSearchShop,
+    value: isOpen,
+    setTrue: openSearchShop,
     setFalse: closeSearchShop,
   } = useBooleanState(false);
   const { value: isActive, setTrue: setActive, setFalse: setUnActive } = useBooleanState(false);
+  const { searchShopState } = useModalStore();
   const {
     ownerNameRegister,
     shopNameNameRegister,
@@ -33,8 +37,10 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     handleSubmit,
     errors,
     watch,
+    setValue,
   } = useCheckOwnerData();
   const files = watch('registerFiles');
+
   const { uploadedFiles, addFile, deleteFile } = useFileController(files);
   const onSumbmit = () => {
     console.log(watch('ownerName'), watch('shopName'));
@@ -44,14 +50,20 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     console.log(clickEvent);
   };
 
+  useEffect(() => {
+    setValue('shopName', searchShopState);
+  }, [searchShopState, setValue]);
+
   const onClick = (index:number, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     deleteFile(index);
   };
+
   const handleDragOver = (event:React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setActive();
   };
+
   const handleDrop = (event:React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setUnActive();
@@ -167,7 +179,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         isOverflowVisible={false}
         modalSize="medium"
       >
-        <SearchShop open={isOpen} onCancel={openSearchShop} />
+        <SearchShop open={isOpen} onCancel={closeSearchShop} />
       </CustomModal>
       )}
     </>
