@@ -8,8 +8,6 @@ import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
-import useModalStore from 'store/modalStore';
-import { useEffect } from 'react';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -23,36 +21,28 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     setFalse: closeSearchShop,
   } = useBooleanState(false);
   const { value: isActive, setTrue: setActive, setFalse: setUnActive } = useBooleanState(false);
-  const { searchShopState } = useModalStore();
   const {
     ownerNameRegister,
-    shopNameNameRegister,
-    registrationNumberFrontRegister,
-    registrationNumberMiddleRegister,
-    registrationNumberEndRegister,
+    shopNameRegister,
+    registrationNumberRegister,
     fileRegister,
-    phoneFrontRegister,
-    phoneMiddleRegister,
-    phoneEndRegister,
+    phoneNumberRegister,
     handleSubmit,
     errors,
     watch,
-    setValue,
+    getPhoneNumber,
+    getRegisterNumber,
   } = useCheckOwnerData();
   const files = watch('registerFiles');
 
   const { uploadedFiles, addFile, deleteFile } = useFileController(files);
   const onSumbmit = () => {
     console.log(watch('ownerName'), watch('shopName'));
-    console.log(watch('registrationNumberFront'), watch('registrationNumberMiddle'), watch('registrationNumberEnd'));
-    console.log(watch('phoneFront'), watch('phoneMiddle'), watch('phoneEnd'));
+    console.log(getPhoneNumber());
+    console.log(getRegisterNumber());
     console.log(watch('registerFiles'));
     console.log(clickEvent);
   };
-
-  useEffect(() => {
-    setValue('shopName', searchShopState);
-  }, [searchShopState, setValue]);
 
   const onClick = (index:number, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
@@ -82,7 +72,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         <div>
           <span className={styles.form__label}>가게명</span>
           <div className={styles['input__store-name--wrapper']}>
-            <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} {...shopNameNameRegister} />
+            <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} {...shopNameRegister} />
             <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchShop} />
           </div>
         </div>
@@ -92,40 +82,38 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           {!isMobile ? (
             <div className={styles.input}>
               <div className={styles['form__input__registration-number']}>
-                <input className={styles['form__input__registration-number--first']} type="text" maxLength={3} {...registrationNumberFrontRegister} />
+                <input className={styles['form__input__registration-number--first']} type="text" maxLength={3} {...registrationNumberRegister.front} />
               </div>
               <div className={styles['form__input__registration-number']}>
-                <input className={styles['form__input__registration-number--middle']} type="text" maxLength={2} {...registrationNumberMiddleRegister} />
+                <input className={styles['form__input__registration-number--middle']} type="text" maxLength={2} {...registrationNumberRegister.middle} />
               </div>
               <div>
-                <input className={styles['form__input__registration-number--last']} type="text" maxLength={5} {...registrationNumberEndRegister} />
+                <input className={styles['form__input__registration-number--last']} type="text" maxLength={5} {...registrationNumberRegister.end} />
               </div>
             </div>
           )
             : <input className={styles.form__input} type="text" placeholder="사업자등록번호" />}
         </div>
-        {(errors.registrationNumberFront
-        || errors.registrationNumberMiddle
-        || errors.registrationNumberEnd)
-        && <ErrorMessage message="사업자 등록번호를 입력해주세요" />}
+        {(registrationNumberRegister.message)
+        && <ErrorMessage message={registrationNumberRegister.message} />}
         <div>
           <span className={styles.form__label}>개인 연락처</span>
           {!isMobile ? (
             <div className={styles.input}>
               <div className={styles['form__input__phone-number']}>
-                <input className={styles['form__input__phone-number--first']} type="text" maxLength={3} pattern="\d*" {...phoneFrontRegister} />
+                <input className={styles['form__input__phone-number--first']} type="text" maxLength={3} pattern="\d*" {...phoneNumberRegister.front} />
               </div>
               <div className={styles['form__input__phone-number']}>
-                <input className={styles['form__input__phone-number--middle']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneMiddleRegister} />
+                <input className={styles['form__input__phone-number--middle']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneNumberRegister.middle} />
               </div>
               <div>
-                <input className={styles['form__input__phone-number--last']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneEndRegister} />
+                <input className={styles['form__input__phone-number--last']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneNumberRegister.end} />
               </div>
             </div>
           )
             : <input className={styles.form__input} type="text" placeholder="개인 연락처" />}
         </div>
-        {(errors.phoneFront || errors.phoneMiddle || errors.phoneEnd) && <ErrorMessage message="전화번호를 입력해주세요" />}
+        {(phoneNumberRegister.message) && <ErrorMessage message={phoneNumberRegister.message} />}
         <div>
           <span className={styles.form__label}>파일첨부</span>
           <label
