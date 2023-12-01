@@ -101,13 +101,13 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
           {!isMobile ? (
             <div className={styles.input}>
               <div className={styles['form__input__phone-number']}>
-                <input className={styles['form__input__phone-number--first']} type="text" maxLength={3} pattern="\d*" {...phoneNumberRegister.front} />
+                <input className={styles['form__input__phone-number--first']} type="text" maxLength={3} {...phoneNumberRegister.front} />
               </div>
               <div className={styles['form__input__phone-number']}>
-                <input className={styles['form__input__phone-number--middle']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneNumberRegister.middle} />
+                <input className={styles['form__input__phone-number--middle']} type="text" maxLength={4} {...phoneNumberRegister.middle} />
               </div>
               <div>
-                <input className={styles['form__input__phone-number--last']} type="text" maxLength={4} pattern="^[0-9]+$" {...phoneNumberRegister.end} />
+                <input className={styles['form__input__phone-number--last']} type="text" maxLength={4} {...phoneNumberRegister.end} />
               </div>
             </div>
           )
