@@ -1,11 +1,11 @@
 import { useVerificationAuthCode } from 'query/register';
 import { useEffect, useRef, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/Register';
+import { User } from 'page/Auth/Signup/types/User';
 
 export default function useVerification(
   eamil:string,
-  setAuthenticate:(data:RegisterData) => void,
-  userData:RegisterData,
+  setAuthenticate:(data:User) => void,
+  userData:User,
 ) {
   const [code, setCode] = useState('');
   const [errorMessage, setMessage] = useState(null);

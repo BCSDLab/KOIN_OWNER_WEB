@@ -3,15 +3,15 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
-import { RegisterData } from 'page/Auth/Signup/types/Register';
+import { User } from 'page/Auth/Signup/types/User';
 
 import { SubmitHandler } from 'react-hook-form';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import styles from './UserPassword.module.scss';
 
 interface PasswordInputProps {
-  setPassword: (data:RegisterData) => void,
-  userData?: RegisterData
+  setPassword: (data:User) => void,
+  userData?: User
 }
 
 export default function UserPassword({ setPassword, userData }:PasswordInputProps) {
@@ -20,7 +20,7 @@ export default function UserPassword({ setPassword, userData }:PasswordInputProp
   const {
     passwordRegister, passwordConfirmRegister, errors: formErrors, handleSubmit,
   } = usePasswordConfirm();
-  const onSubmit:SubmitHandler<RegisterData> = (data) => {
+  const onSubmit:SubmitHandler<User> = (data) => {
     setPassword({ ...userData, password: data.password });
   };
   return (

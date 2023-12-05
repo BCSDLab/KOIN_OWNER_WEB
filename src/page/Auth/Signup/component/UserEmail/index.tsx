@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
-import { RegisterData } from 'page/Auth/Signup/types/Register';
+import { User } from 'page/Auth/Signup/types/User';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
@@ -9,8 +9,8 @@ import styles from './UserEmail.module.scss';
 
 type ButtonClickEvent = {
   goNext?: () => void;
-  userData: RegisterData,
-  setAuthenticate: (data:RegisterData) => void
+  userData:User,
+  setAuthenticate: (data:User) => void
 };
 
 export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent) {

@@ -4,10 +4,9 @@ import UserPassword from 'page/Auth/Signup/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/Register';
+import { User, UserParam } from 'page/Auth/Signup/types/User';
 import useStepStore from 'store/useStepStore';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
-import { RegisterParam } from 'model/register';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
@@ -16,8 +15,8 @@ type ButtonClickEventProps = {
 
 const useCheckEmailStep = () => {
   const [isFilled, setIsFilled] = useState(false);
-  const checkEmailStep = (userData:RegisterData) => {
-    if (RegisterParam.pick({ email: true, password: true }).safeParse(userData).success) {
+  const checkEmailStep = (userData:User) => {
+    if (UserParam.pick({ email: true, password: true }).safeParse(userData).success) {
       setIsFilled(true);
     }
   };
@@ -25,7 +24,7 @@ const useCheckEmailStep = () => {
 };
 export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
-  const [userData, setData] = useState<RegisterData>({});
+  const [userData, setData] = useState<User>({});
   const { isDone, checkUserDataStep } = useCheckNextStep();
   const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);

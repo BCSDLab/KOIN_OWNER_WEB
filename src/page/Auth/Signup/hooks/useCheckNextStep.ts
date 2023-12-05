@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/Register';
-import { RegisterParam } from 'model/register';
+import { User, UserParam } from 'page/Auth/Signup/types/User';
 import { Owner, OwnerParam } from 'page/Auth/Signup/types/Owner';
 
 export default function useCheckNextStep() {
   const [isDone, setDone] = useState(false);
 
-  const checkUserDataStep = (userData:RegisterData) => {
-    if (RegisterParam.safeParse(userData).success) {
+  const checkUserDataStep = (userData:User) => {
+    if (UserParam.safeParse(userData).success) {
       setDone(true);
     }
   };

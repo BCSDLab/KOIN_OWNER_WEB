@@ -1,5 +1,7 @@
+import { Owner } from './Owner';
+import { User } from './User';
+
 export type RegisterData = {
-  email?: string,
-  password?: string,
-  isAuthentication?: boolean
+  owner: Owner,
+  user: User
 };

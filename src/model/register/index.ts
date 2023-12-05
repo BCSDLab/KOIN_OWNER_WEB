@@ -19,21 +19,22 @@ export const AuthCodeResponse = z.object({
 });
 export type AuthCodeResponse = z.infer<typeof AuthCodeResponse>;
 
-const fileSchema = z.object({
-  name: z.string(),
-  size: z.number(),
-  type: z.string(),
-});
-
 export const RegisterParam = z.object({
+  attachment_urls: z.array(z.object({
+    file_url: z.string(),
+  })),
+  company_number: z.string(),
   email: z.string(),
+  name: z.string(),
   password: z.string(),
-  isAuthentication: z.boolean().refine((value) => value === true),
-  phoneNumber: z.string(),
-  ownerName: z.string(),
-  shopName: z.string(),
-  registrationNumber: z.string(),
-  registerFiles: z.array(fileSchema),
+  phone_number: z.string(),
+  shop_name: z.string(),
 });
 
 export type RegisterParam = z.infer<typeof RegisterParam>;
+
+export const FilesResponse = z.object({
+  files_urls: z.string(),
+});
+
+export type FilesResponse = z.infer<typeof FilesResponse>;
