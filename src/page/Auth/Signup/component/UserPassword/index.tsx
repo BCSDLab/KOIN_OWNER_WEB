@@ -3,7 +3,7 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterData } from 'page/Auth/Signup/types/Register';
 
 import { SubmitHandler } from 'react-hook-form';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';

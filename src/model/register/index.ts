@@ -19,10 +19,21 @@ export const AuthCodeResponse = z.object({
 });
 export type AuthCodeResponse = z.infer<typeof AuthCodeResponse>;
 
+const fileSchema = z.object({
+  name: z.string(),
+  size: z.number(),
+  type: z.string(),
+});
+
 export const RegisterParam = z.object({
   email: z.string(),
   password: z.string(),
   isAuthentication: z.boolean().refine((value) => value === true),
+  phoneNumber: z.string(),
+  ownerName: z.string(),
+  shopName: z.string(),
+  registrationNumber: z.string(),
+  registerFiles: z.array(fileSchema),
 });
 
 export type RegisterParam = z.infer<typeof RegisterParam>;

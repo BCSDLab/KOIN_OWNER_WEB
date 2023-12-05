@@ -8,6 +8,9 @@ import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
+import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
+import { Owner } from 'page/Auth/Signup/types/Owner';
+import { useEffect, useState } from 'react';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -15,6 +18,8 @@ type ButtonClickEvent = {
 };
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
+  const { isDone, checkOwnerDataStep } = useCheckNextStep();
+  const [ownerData, setData] = useState<Owner>({});
   const {
     value: isOpen,
     setTrue: openSearchShop,
@@ -28,19 +33,18 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     fileRegister,
     phoneNumberRegister,
     handleSubmit,
-    errors,
     watch,
-    getPhoneNumber,
-    getRegisterationNumber,
-  } = useCheckOwnerData(isMobile);
-  const files = watch('registerFiles');
+    errors,
+  } = useCheckOwnerData(isMobile, setData, ownerData);
 
-  const { uploadedFiles, addFile, deleteFile } = useFileController(files);
+  const { uploadedFiles, addFile, deleteFile } = useFileController(watch('registerFiles'));
+
+  useEffect(() => {
+    checkOwnerDataStep(ownerData);
+  }, [checkOwnerDataStep, ownerData]);
+
   const onSumbmit = () => {
-    console.log(watch('ownerName'), watch('shopName'));
-    console.log(getPhoneNumber());
-    console.log(getRegisterationNumber());
-    console.log(watch('registerFiles'));
+    console.log(ownerData);
     console.log(clickEvent);
   };
 
@@ -156,7 +160,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
         {errors.registerFiles && <ErrorMessage message={errors.registerFiles.message} />}
       </section>
       <div className={styles.buttons}>
-        <CustomButton buttonSize="large" content={isMobile ? '확인' : '다음'} onClick={handleSubmit(onSumbmit)} />
+        <CustomButton buttonSize="large" content={isMobile ? '확인' : '다음'} onClick={handleSubmit(onSumbmit)} disable={!isDone} />
       </div>
       {isOpen && (
       <CustomModal

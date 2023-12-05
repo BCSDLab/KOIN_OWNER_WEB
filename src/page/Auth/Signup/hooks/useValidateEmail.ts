@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterData } from 'page/Auth/Signup/types/Register';
 
 const REG_EX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 

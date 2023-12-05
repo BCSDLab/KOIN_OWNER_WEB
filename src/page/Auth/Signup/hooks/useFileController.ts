@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useFileController(fileList :FileList) {
+export default function useFileController(fileList? :FileList) {
   const [uploadedFiles, setUploadedFiles] = useState<Array<File>>([]);
 
   const addFiles = (files:FileList) => {

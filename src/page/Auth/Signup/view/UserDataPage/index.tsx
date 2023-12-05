@@ -4,7 +4,7 @@ import UserPassword from 'page/Auth/Signup/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterData } from 'page/Auth/Signup/types/Register';
 import useStepStore from 'store/useStepStore';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
 import { RegisterParam } from 'model/register';
@@ -26,7 +26,7 @@ const useCheckEmailStep = () => {
 export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const [userData, setData] = useState<RegisterData>({});
-  const { isDone, checkNextStep } = useCheckNextStep();
+  const { isDone, checkUserDataStep } = useCheckNextStep();
   const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);
   const { isFilled, checkEmailStep } = useCheckEmailStep();
@@ -41,8 +41,8 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
     if (isMobile) {
       checkEmailStep(userData);
     }
-    checkNextStep(userData);
-  }, [userData, checkNextStep, isMobile, checkEmailStep]);
+    checkUserDataStep(userData);
+  }, [userData, checkUserDataStep, isMobile, checkEmailStep]);
 
   const goEmailAuth = () => {
     setRegisterStep(1);

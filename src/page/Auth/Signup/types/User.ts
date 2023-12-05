@@ -1,4 +1,4 @@
-export type UserData = {
+export type User = {
   email?: string,
   password?: string,
   isAuthentication?: boolean

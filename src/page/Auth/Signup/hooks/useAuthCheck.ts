@@ -1,7 +1,7 @@
 import { useGenerateAuthCode } from 'query/register';
 import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterData } from 'page/Auth/Signup/types/Register';
 
 export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   const [email, setEmail] = useState('');

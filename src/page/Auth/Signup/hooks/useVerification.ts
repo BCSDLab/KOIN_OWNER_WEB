@@ -1,6 +1,6 @@
 import { useVerificationAuthCode } from 'query/register';
 import { useEffect, useRef, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { RegisterData } from 'page/Auth/Signup/types/Register';
 
 export default function useVerification(
   eamil:string,
