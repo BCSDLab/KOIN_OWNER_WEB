@@ -27,12 +27,20 @@ export default function useCheckOwnerData(
 
   const ownerNameRegister = register('ownerName', {
     required: { value: true, message: VALIDATIONMESSAGE.owerName },
-    onBlur: () => { setOwnerData({ ...ownerData, ownerName: watch('ownerName') }); },
+    onBlur: () => {
+      if (watch('ownerName') !== '') {
+        setOwnerData({ ...ownerData, ownerName: watch('ownerName') });
+      }
+    },
   });
 
   const shopNameRegister = register('shopName', {
     required: { value: true, message: VALIDATIONMESSAGE.shopName },
-    onBlur: () => { setOwnerData({ ...ownerData, shopName: watch('shopName') }); },
+    onBlur: () => {
+      if (watch('shopName') !== '') {
+        setOwnerData({ ...ownerData, shopName: watch('shopName') });
+      }
+    },
   });
 
   const registrationNumberRegister = {
@@ -42,7 +50,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{3,3}$/,
         message: '3자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, registrationNumberFront: watch('registrationNumberFront') }); },
+      onBlur: () => {
+        if (watch('registrationNumberFront') !== '') {
+          setOwnerData({ ...ownerData, registrationNumberFront: watch('registrationNumberFront') });
+        }
+      },
     }),
     middle: register('registrationNumberMiddle', {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
@@ -50,7 +62,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{2,2}$/,
         message: '2자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, registrationNumberMiddle: watch('registrationNumberMiddle') }); },
+      onBlur: () => {
+        if (watch('registrationNumberMiddle') !== '') {
+          setOwnerData({ ...ownerData, registrationNumberMiddle: watch('registrationNumberMiddle') });
+        }
+      },
     }),
     end: register('registrationNumberEnd', {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
@@ -58,7 +74,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{5,5}$/,
         message: '5자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, registrationNumberEnd: watch('registrationNumberEnd') }); },
+      onBlur: () => {
+        if (watch('registrationNumberEnd') !== '') {
+          setOwnerData({ ...ownerData, registrationNumberEnd: watch('registrationNumberEnd') });
+        }
+      },
     }),
     mobile: register('registrationNumberMobile', {
       required: { value: isMobile, message: VALIDATIONMESSAGE.registraionNumber },
@@ -66,7 +86,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{10,10}$/,
         message: '-를 제외하고 모두 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, registrationNumberMobile: watch('registrationNumberMobile') }); },
+      onBlur: () => {
+        if (watch('registrationNumberMobile') !== '') {
+          setOwnerData({ ...ownerData, registrationNumberMobile: watch('registrationNumberMobile') });
+        }
+      },
     }),
     message: errors.registrationNumberFront?.message
      || errors.registrationNumberMiddle?.message
@@ -81,7 +105,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{3,3}$/,
         message: '3자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, phoneFront: watch('phoneFront') }); },
+      onBlur: () => {
+        if (watch('phoneFront') !== '') {
+          setOwnerData({ ...ownerData, phoneFront: watch('phoneFront') });
+        }
+      },
     }),
     middle: register('phoneMiddle', {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
@@ -89,7 +117,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{4,4}$/,
         message: '4자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, phoneMiddle: watch('phoneMiddle') }); },
+      onBlur: () => {
+        if (watch('registrationNumberMiddle') !== '') {
+          setOwnerData({ ...ownerData, phoneMiddle: watch('phoneMiddle') });
+        }
+      },
     }),
     end: register('phoneEnd', {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
@@ -97,7 +129,11 @@ export default function useCheckOwnerData(
         value: /[0-9]{4,4}$/,
         message: '4자리 숫자를 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, phoneEnd: watch('phoneEnd') }); },
+      onBlur: () => {
+        if (watch('phoneEnd') !== '') {
+          setOwnerData({ ...ownerData, phoneEnd: watch('phoneEnd') });
+        }
+      },
     }),
     mobile: register('phoneMobile', {
       required: { value: isMobile, message: VALIDATIONMESSAGE.phoneNumber },
@@ -105,7 +141,11 @@ export default function useCheckOwnerData(
         value: /[0-9]$/,
         message: '-를 제외하고 모두 입력해주세요.',
       },
-      onBlur: () => { setOwnerData({ ...ownerData, phoneMobile: watch('phoneMobile') }); },
+      onBlur: () => {
+        if (watch('phoneMobile') !== '') {
+          setOwnerData({ ...ownerData, phoneMobile: watch('phoneMobile') });
+        }
+      },
     }),
     message: errors.phoneFront?.message
     || errors.phoneMiddle?.message
