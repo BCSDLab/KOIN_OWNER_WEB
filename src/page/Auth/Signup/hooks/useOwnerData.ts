@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Owner } from 'page/Auth/Signup/types/Owner';
 import useModalStore from 'store/modalStore';
 import { useCallback, useEffect } from 'react';
+import useRegisterInfo from 'store/registerStore';
 
 const VALIDATIONMESSAGE = {
   owerName: '대표자명을 입력해주세요',
@@ -11,11 +12,7 @@ const VALIDATIONMESSAGE = {
   file: '파일을 첨부해주세요',
 };
 
-export default function useCheckOwnerData(
-  isMobile:boolean,
-  setOwnerData:(data:Owner)=>void,
-  ownerData:Owner,
-) {
+export default function useCheckOwnerData(isMobile:boolean) {
   const {
     register,
     handleSubmit,
@@ -24,7 +21,7 @@ export default function useCheckOwnerData(
     setValue,
     setFocus,
   } = useForm<Owner>({ mode: 'onSubmit' });
-
+  const { ownerInfo: ownerData, setOwnerInfo: setOwnerData } = useRegisterInfo();
   const ownerNameRegister = register('ownerName', {
     required: { value: true, message: VALIDATIONMESSAGE.owerName },
     onBlur: () => {

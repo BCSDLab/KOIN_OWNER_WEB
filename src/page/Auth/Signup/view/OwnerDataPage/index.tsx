@@ -9,8 +9,8 @@ import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
-import { Owner } from 'page/Auth/Signup/types/Owner';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useRegisterInfo from 'store/registerStore';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
@@ -19,7 +19,7 @@ type ButtonClickEvent = {
 export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const { isDone, checkOwnerDataStep } = useCheckNextStep();
-  const [ownerData, setData] = useState<Owner>({});
+  const { ownerInfo: ownerData, userInfo } = useRegisterInfo();
   const {
     value: isOpen,
     setTrue: openSearchShop,
@@ -35,7 +35,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     handleSubmit,
     watch,
     errors,
-  } = useCheckOwnerData(isMobile, setData, ownerData);
+  } = useCheckOwnerData(isMobile);
 
   const { uploadedFiles, addFile, deleteFile } = useFileController(watch('registerFiles'));
 
@@ -44,7 +44,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   }, [checkOwnerDataStep, ownerData]);
 
   const onSumbmit = () => {
-    console.log(ownerData);
+    console.log({ userInfo, ownerData });
     console.log(clickEvent);
   };
 

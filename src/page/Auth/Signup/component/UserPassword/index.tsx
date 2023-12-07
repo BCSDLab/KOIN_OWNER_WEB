@@ -7,15 +7,12 @@ import { User } from 'page/Auth/Signup/types/User';
 
 import { SubmitHandler } from 'react-hook-form';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import useRegisterInfo from 'store/registerStore';
 import styles from './UserPassword.module.scss';
 
-interface PasswordInputProps {
-  setPassword: (data:User) => void,
-  userData?: User
-}
-
-export default function UserPassword({ setPassword, userData }:PasswordInputProps) {
+export default function UserPassword() {
   const { isMobile } = useMediaQuery();
+  const { userInfo: userData, setUserInfo: setPassword } = useRegisterInfo();
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const {
     passwordRegister, passwordConfirmRegister, errors: formErrors, handleSubmit,

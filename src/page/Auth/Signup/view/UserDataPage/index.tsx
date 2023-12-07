@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { User, UserParam } from 'page/Auth/Signup/types/User';
 import useStepStore from 'store/useStepStore';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
+import useRegisterInfo from 'store/registerStore';
 import styles from './UserData.module.scss';
 
 type ButtonClickEventProps = {
@@ -24,7 +25,7 @@ const useCheckEmailStep = () => {
 };
 export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
-  const [userData, setData] = useState<User>({});
+  const { userInfo } = useRegisterInfo();
   const { isDone, checkUserDataStep } = useCheckNextStep();
   const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);
@@ -38,10 +39,10 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
 
   useEffect(() => {
     if (isMobile) {
-      checkEmailStep(userData);
+      checkEmailStep(userInfo);
     }
-    checkUserDataStep(userData);
-  }, [userData, checkUserDataStep, isMobile, checkEmailStep]);
+    checkUserDataStep(userInfo);
+  }, [userInfo, checkUserDataStep, isMobile, checkEmailStep]);
 
   const goEmailAuth = () => {
     setRegisterStep(1);
@@ -53,9 +54,9 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
       ? (
         <>
           <section className={styles.form}>
-            <UserId setId={setData} userData={userData} />
-            <UserPassword setPassword={setData} userData={userData} />
-            <UserEmail setAuthenticate={setData} userData={userData} />
+            <UserId />
+            <UserPassword />
+            <UserEmail />
           </section>
           <div className={styles.buttons}>
             <CustomButton buttonSize="large" content="다음" onClick={goNext} disable={!isDone} />
@@ -67,10 +68,10 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
           <section className={styles.form}>
             {registerStep === 0 ? (
               <>
-                <UserId setId={setData} userData={userData} />
-                <UserPassword setPassword={setData} userData={userData} />
+                <UserId />
+                <UserPassword />
               </>
-            ) : <UserEmail setAuthenticate={setData} userData={userData} goNext={goNext} />}
+            ) : <UserEmail />}
           </section>
           <div className={styles.buttons}>
             {registerStep === 0 && <CustomButton buttonSize="large" content="이메일 인증하기" onClick={goEmailAuth} disable={!isFilled} />}

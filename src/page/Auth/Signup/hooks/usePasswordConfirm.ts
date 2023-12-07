@@ -11,8 +11,8 @@ export default function usePasswordConfirm() {
   const {
     register,
     formState: { errors },
-    getValues,
     handleSubmit,
+    watch,
   } = useForm<PasswordForm>();
 
   const passwordRegister = register('password', {
@@ -29,7 +29,7 @@ export default function usePasswordConfirm() {
       value: REG_EX,
       message: '특수문자 포함 영어와 숫자 조합 6~18 자리를 입력해주세요',
     },
-    validate: (password) => password === getValues('password') || '비밀번호가 일치하지 않습니다',
+    validate: (password) => password === watch('password') || '비밀번호가 일치하지 않습니다',
   });
   return {
     passwordRegister, errors, passwordConfirmRegister, handleSubmit,

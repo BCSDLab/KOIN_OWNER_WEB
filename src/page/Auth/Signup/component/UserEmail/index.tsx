@@ -1,20 +1,15 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
-import { User } from 'page/Auth/Signup/types/User';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import useRegisterInfo from 'store/registerStore';
 import styles from './UserEmail.module.scss';
 
-type ButtonClickEvent = {
-  goNext?: () => void;
-  userData:User,
-  setAuthenticate: (data:User) => void
-};
-
-export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent) {
+export default function UserEmail() {
   const { isMobile } = useMediaQuery();
+  const { userInfo: userData } = useRegisterInfo();
   const {
     emailHandleSubmit, errors: formErrors, emailDuplicateRegister, watch,
   } = useValidateEmail();
@@ -24,7 +19,7 @@ export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent
   const {
     verificationCode,
     codeInput, errorMessage: verificateError,
-  } = useVerification(email, setAuthenticate, userData);
+  } = useVerification(email);
 
   return (
     !isMobile
