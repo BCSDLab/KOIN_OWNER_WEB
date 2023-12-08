@@ -33,11 +33,10 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
     fileRegister,
     phoneNumberRegister,
     handleSubmit,
-    watch,
     errors,
   } = useCheckOwnerData(isMobile);
 
-  const { uploadedFiles, addFile, deleteFile } = useFileController(watch('registerFiles'));
+  const { addFiles, deleteFile } = useFileController();
 
   useEffect(() => {
     checkOwnerDataStep(ownerData);
@@ -61,8 +60,8 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   const handleDrop = (event:React.DragEvent<HTMLLabelElement>) => {
     event.preventDefault();
     setUnActive();
-    const file = event.dataTransfer.files[0];
-    addFile(file);
+    const file = Array.from(event.dataTransfer.files);
+    addFiles(file);
   };
 
   return (
@@ -129,9 +128,9 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
             onDrop={(e) => handleDrop(e)}
           >
             <input id="upload-button" className={styles['file-box__input']} type="file" {...fileRegister} multiple />
-            {uploadedFiles.length > 0 ? (
+            {ownerData.registerFiles ? (
               <div className={styles['file-box__files']}>
-                {uploadedFiles.map((file:File, index:number) => (
+                {ownerData.registerFiles.map((file:File, index:number) => (
                   <button type="button" className={styles['file-box__file']} onClick={(e) => onClick(index, e)}>
                     <FileImage />
                     <span className={styles['file-box__file--name']}>{file.name}</span>

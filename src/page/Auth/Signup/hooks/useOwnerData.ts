@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { Owner } from 'page/Auth/Signup/types/Owner';
 import useModalStore from 'store/modalStore';
 import { useCallback, useEffect } from 'react';
 import useRegisterInfo from 'store/registerStore';
+import useFileController from './useFileController';
 
 const VALIDATIONMESSAGE = {
   owerName: '대표자명을 입력해주세요',
@@ -10,6 +10,20 @@ const VALIDATIONMESSAGE = {
   registraionNumber: '사업자 등록번호를 입력해주세요',
   phoneNumber: '대표자 연락처를 입력해주세요',
   file: '파일을 첨부해주세요',
+};
+
+type OwnerInfo = {
+  ownerName:string,
+  shopName:string,
+  registrationNumberFront:string,
+  registrationNumberMiddle:string,
+  registrationNumberEnd:string,
+  registrationNumberMobile:string,
+  phoneFront:string,
+  phoneMiddle:string,
+  phoneEnd:string,
+  phoneMobile:string,
+  registerFiles:File[]
 };
 
 export default function useCheckOwnerData(isMobile:boolean) {
@@ -20,8 +34,9 @@ export default function useCheckOwnerData(isMobile:boolean) {
     watch,
     setValue,
     setFocus,
-  } = useForm<Owner>({ mode: 'onSubmit' });
+  } = useForm<OwnerInfo>({ mode: 'onSubmit' });
   const { ownerInfo: ownerData, setOwnerInfo: setOwnerData } = useRegisterInfo();
+  const { addFiles } = useFileController();
   const ownerNameRegister = register('ownerName', {
     required: { value: true, message: VALIDATIONMESSAGE.owerName },
     onBlur: () => {
@@ -152,7 +167,9 @@ export default function useCheckOwnerData(isMobile:boolean) {
 
   const fileRegister = register('registerFiles', {
     required: { value: true, message: VALIDATIONMESSAGE.file },
-    onChange: () => { setOwnerData({ ...ownerData, registerFiles: watch('registerFiles') }); },
+    onChange: () => {
+      addFiles(watch('registerFiles'));
+    },
   });
 
   const getPhoneNumber = useCallback(() => [watch('phoneFront'), watch('phoneMiddle'), watch('phoneEnd')], [watch]);

@@ -11,7 +11,7 @@ export type Owner = {
   phoneMiddle?:string,
   phoneEnd?:string,
   phoneMobile?:string,
-  registerFiles?:FileList
+  registerFiles?:File[] | null
 };
 
 const File = z.object({
