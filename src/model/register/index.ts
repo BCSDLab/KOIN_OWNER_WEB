@@ -24,6 +24,7 @@ export const RegisterParam = z.object({
     file_url: z.string(),
   })),
   company_number: z.string(),
+  company_id: z.string().optional(),
   email: z.string(),
   name: z.string(),
   password: z.string(),
@@ -34,7 +35,7 @@ export const RegisterParam = z.object({
 export type RegisterParam = z.infer<typeof RegisterParam>;
 
 export const FilesResponse = z.object({
-  files_urls: z.string(),
+  file_urls: z.string(),
 });
 
 export type FilesResponse = z.infer<typeof FilesResponse>;

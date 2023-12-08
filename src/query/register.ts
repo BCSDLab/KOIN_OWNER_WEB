@@ -1,5 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
-import { getEmailAuthCode, getEmailDuplicate, verificationAuthCode } from 'api/register';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  getEmailAuthCode, getEmailDuplicate, verificationAuthCode, getFileUrls, registerUser,
+} from 'api/register';
+import { RegisterParam } from 'model/register';
+import useRegisterInfo from 'store/registerStore';
 import useUploadToken from 'store/uploadToken';
 
 export const useCheckDuplicate = (email:string) => {
@@ -41,4 +45,27 @@ export const useVerificationAuthCode = (code:string, email:string) => {
   return {
     status, refetch, isError, error,
   };
+};
+
+export const useGetFileUrls = () => {
+  const { ownerInfo } = useRegisterInfo();
+  const { uploadToken } = useUploadToken();
+  const formData = new FormData();
+  ownerInfo.registerFiles?.forEach((file) => formData.append('files', file));
+  console.log(formData, ownerInfo);
+  const { status, data, refetch } = useQuery({
+    queryKey: ['getFileUrls'],
+    queryFn: () => getFileUrls(formData, uploadToken!),
+    enabled: false,
+  });
+
+  return { status, data, refetch };
+};
+
+export const useRegisterUser = () => {
+  const register = useMutation({
+    mutationKey: ['registerUser'],
+    mutationFn: (userParam:RegisterParam) => registerUser(userParam),
+  });
+  return { register };
 };

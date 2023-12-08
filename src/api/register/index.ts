@@ -1,10 +1,15 @@
-/* eslint-disable no-param-reassign */
 import { client } from 'api';
+import axios from 'axios';
+import API_PATH from 'config/constants';
 
 import {
-  AuthCodeParam, AuthCodeResponse, EmailRegisterParam, EmailRegisterResponse, RegisterParam,
+  AuthCodeParam,
+  AuthCodeResponse,
+  EmailRegisterParam,
+  EmailRegisterResponse,
+  FilesResponse,
+  RegisterParam,
 } from 'model/register';
-import useUploadToken from 'store/uploadToken';
 
 export const getEmailDuplicate = async (param: string) => {
   const { status } = await client.get(`/user/check/email?address=${param}`);
@@ -26,22 +31,16 @@ export const registerUser = async (param:RegisterParam) => {
   return status;
 };
 
-export const uploadFiles = async () => {
-  const { data } = await client.post('/owners/upload/files');
-  return data;
-};
-
-export const getFileUrls = async (param:FormData) => {
-  client.interceptors.request.use(
-    (config) => {
-      const { uploadToken } = useUploadToken();
-      if (uploadToken) {
-        config.headers.Authorization = `Bearer ${uploadToken}`;
-        config.headers['Content-Type'] = 'multipart/form-data';
-        config.data = param;
-        return config;
-      }
-      return uploadFiles();
+export const getFileUrls = async (param:FormData, token:string) => {
+  const registerClient = axios.create({
+    baseURL: `${API_PATH}`,
+    timeout: 2000,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data',
     },
-  );
+    data: param,
+  });
+  const { data } = await registerClient.post('/owners/upload/files');
+  return FilesResponse.parse(data);
 };
