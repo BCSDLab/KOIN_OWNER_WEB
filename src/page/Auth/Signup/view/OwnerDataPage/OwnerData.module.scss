@@ -3,16 +3,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  @include media.media-breakpoint-down(mobile) {
-    gap: 24px;
-  }
 
   &__label {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
+    margin-top: 16px;
 
     @include media.media-breakpoint-down(mobile) {
       display: none;
@@ -35,6 +31,7 @@
       padding: 0;
       font-size: 15px;
       padding-bottom: 8px;
+      margin-top: 24px;
 
       &::placeholder {
         color: #d2dae2;
@@ -43,6 +40,10 @@
       &:focus {
         border-bottom: 1px solid #252525;
         color: #252525;
+      }
+
+      &:nth-child(1) {
+        margin-top: 0;
       }
     }
 
@@ -146,6 +147,7 @@
     padding: 13px 16px;
     margin-right: 16px;
     height: 22px;
+    margin-top: 24px;
 
     @include media.media-breakpoint-down(mobile) {
       width: 77%;
@@ -193,8 +195,9 @@
 
   @include media.media-breakpoint-down(mobile) {
     width: calc(100% - 78px);
-    height: calc(125px - 10px);
-    padding: 36px 38px 32px;
+    height: calc(125px - 68px);
+    padding: 26px 38px 32px;
+    margin-top: 16px;
   }
 
   &__files {
@@ -315,9 +318,7 @@
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    bottom: 0;
-    margin: 0;
+    margin-top: 16px;
   }
 
   &__mobile-button {

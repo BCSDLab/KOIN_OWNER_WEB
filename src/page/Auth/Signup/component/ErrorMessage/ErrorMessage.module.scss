@@ -1,11 +1,9 @@
 .warn {
   display: flex;
   align-items: center;
-
-  // margin-top: 9px;
-  // padding-bottom: 16px;
   gap: 7px;
   height: 11px;
+  margin: 8px 0 0;
 
   &--phrase {
     display: block;
