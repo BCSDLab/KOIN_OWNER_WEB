@@ -11,17 +11,17 @@ import useFileController from 'page/Auth/Signup/hooks/useFileController';
 import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
 import { useEffect } from 'react';
 import useRegisterInfo from 'store/registerStore';
-import useRegister from 'page/Auth/Signup/hooks/useRegister';
+import { useGetFileUrls } from 'query/register';
 import styles from './OwnerData.module.scss';
 
 type ButtonClickEvent = {
-  clickEvent: () => void;
+  goNext: () => void;
 };
-export default function OwnerData({ clickEvent }:ButtonClickEvent) {
+export default function OwnerData({ goNext }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
   const { isDone, checkOwnerDataStep } = useCheckNextStep();
-  const { ownerInfo: ownerData, userInfo } = useRegisterInfo();
-  const { status, refetch } = useRegister();
+  const { ownerInfo: ownerData } = useRegisterInfo();
+  const fileMuation = useGetFileUrls(goNext);
   const {
     value: isOpen,
     setTrue: openSearchShop,
@@ -45,10 +45,7 @@ export default function OwnerData({ clickEvent }:ButtonClickEvent) {
   }, [checkOwnerDataStep, ownerData]);
 
   const onSumbmit = () => {
-    console.log({ userInfo, ownerData });
-    console.log(clickEvent);
-    console.log(status);
-    refetch();
+    fileMuation.mutate();
   };
 
   const onClick = (index:number, event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

@@ -39,8 +39,7 @@ export const getFileUrls = async (param:FormData, token:string) => {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'multipart/form-data',
     },
-    data: param,
   });
-  const { data } = await registerClient.post('/owners/upload/files');
+  const { data } = await registerClient.post('/owners/upload/files', param);
   return FilesResponse.parse(data);
 };

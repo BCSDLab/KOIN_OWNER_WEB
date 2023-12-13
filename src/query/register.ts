@@ -1,8 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  getEmailAuthCode, getEmailDuplicate, verificationAuthCode, getFileUrls, registerUser,
+  getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
-import { RegisterParam } from 'model/register';
+import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
+// import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
+import useModalStore from 'store/modalStore';
 import useRegisterInfo from 'store/registerStore';
 import useUploadToken from 'store/uploadToken';
 
@@ -47,25 +49,52 @@ export const useVerificationAuthCode = (code:string, email:string) => {
   };
 };
 
-export const useGetFileUrls = () => {
-  const { ownerInfo } = useRegisterInfo();
-  const { uploadToken } = useUploadToken();
-  const formData = new FormData();
-  ownerInfo.registerFiles?.forEach((file) => formData.append('files', file));
-  console.log(formData, ownerInfo);
-  const { status, data, refetch } = useQuery({
-    queryKey: ['getFileUrls'],
-    queryFn: () => getFileUrls(formData, uploadToken!),
-    enabled: false,
-  });
-
-  return { status, data, refetch };
-};
-
-export const useRegisterUser = () => {
+export const useRegisterUser = (goNext:()=>void) => {
+  const { userInfo, ownerInfo, resetRegisterInfo } = useRegisterInfo();
+  const { selectedShopId, searchShopState } = useModalStore();
   const register = useMutation({
     mutationKey: ['registerUser'],
-    mutationFn: (userParam:RegisterParam) => registerUser(userParam),
+    mutationFn: (fileUrls:string[]) => (
+      registerUser(parseRegisterData(
+        userInfo,
+        ownerInfo,
+        fileUrls,
+        selectedShopId,
+        searchShopState,
+      ))
+    ),
+    onSuccess: () => {
+      goNext();
+      resetRegisterInfo();
+    },
+    onError: () => {
+      alert('에러가 발생했습니다. 처음부터 다시 진행해주세요');
+      resetRegisterInfo();
+    },
   });
   return { register };
+};
+
+export const useGetFileUrls = (goNext:()=>void) => {
+  const { ownerInfo, resetRegisterInfo } = useRegisterInfo();
+  const { uploadToken } = useUploadToken();
+  const { register } = useRegisterUser(goNext);
+  const formData = new FormData();
+  ownerInfo.registerFiles?.forEach((file) => {
+    formData.append('files', file);
+  });
+  const fileMutation = useMutation({
+    mutationKey: ['getFileUrls'],
+    mutationFn: () => getFileUrls(formData, uploadToken!),
+    onSuccess: (data) => {
+      register.mutate(data.file_urls);
+    },
+    onError: () => {
+      alert('에러가 발생했습니다. 처음부터 다시 진행해주세요');
+      resetRegisterInfo();
+    },
+
+  });
+
+  return fileMutation;
 };

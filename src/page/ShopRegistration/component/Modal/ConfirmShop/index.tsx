@@ -4,6 +4,7 @@ import styles from './ConfirmShop.module.scss';
 interface ShopInfo {
   name: string;
   phone: string;
+  id: string;
 }
 
 interface ConfirmShopProps {
@@ -13,7 +14,7 @@ interface ConfirmShopProps {
 }
 
 export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmShopProps) {
-  const { setSearchShopState: setSearchStoreState } = useModalStore();
+  const { setSearchShopState: setSearchStoreState, setSelectedShopId } = useModalStore();
   if (!open) return null;
   return (
     <div className={styles.container}>
@@ -29,6 +30,7 @@ export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmSho
         className={styles['container__select-button']}
         onClick={() => {
           setSearchStoreState(selectedShop.name);
+          setSelectedShopId(selectedShop.id);
           onCancel();
         }}
       >
