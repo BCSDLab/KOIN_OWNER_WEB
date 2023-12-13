@@ -170,6 +170,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
     onChange: () => {
       addFiles(watch('registerFiles'));
     },
+    validate: () => (ownerData.registerFiles && ownerData.registerFiles.length >= 3) || '파일을 3개 이상 첨부해주세요',
   });
 
   const getPhoneNumber = useCallback(() => [watch('phoneFront'), watch('phoneMiddle'), watch('phoneEnd')], [watch]);
