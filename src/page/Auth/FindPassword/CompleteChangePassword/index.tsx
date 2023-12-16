@@ -1,7 +1,9 @@
 import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
+import { useNavigate } from 'react-router-dom';
 import styles from './CompleteChangePassword.module.scss';
 
 export default function CompleteChangePassword() {
+  const navigate = useNavigate();
   return (
     <div className={styles.template}>
       <div className={styles['circle-icon']}>
@@ -14,7 +16,7 @@ export default function CompleteChangePassword() {
           <br />
           새로운 비밀번호로 로그인 부탁드립니다.
         </div>
-        <button type="button" className={styles.content__button}>로그인 화면 바로가기</button>
+        <button type="button" className={styles.content__button} onClick={() => navigate('/login')}>로그인 화면 바로가기</button>
       </div>
     </div>
   );
