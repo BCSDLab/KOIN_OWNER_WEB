@@ -3,11 +3,20 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import useBooleanState from 'utils/hooks/useBooleanState';
+import { useState } from 'react';
+import { useNewPassword } from 'query/auth';
+import useAuthStore from 'store/useAuth';
 import styles from './NewPassword.module.scss';
 
 export default function NewPassword() {
+  const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const { emailInput } = useAuthStore();
+  const submit = useNewPassword();
+
   useRouteCheck('authCheck', '/find-password');
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
+
   return (
     <div className={styles.template}>
       <KoinLogo className={styles.logo} />
@@ -17,9 +26,11 @@ export default function NewPassword() {
           <div className={styles['input-container']}>
             <input
               className={styles.form__input}
-              type="password"
+              type={isBlind ? 'password' : 'text'}
               id="new-password"
               placeholder="비밀번호 입력 (필수)"
+              autoComplete="off"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button className={styles['cursor-pointer']} type="button" onClick={changeIsBlind}>
               {isBlind ? <BlindIcon /> : <ShowIcon />}
@@ -34,16 +45,26 @@ export default function NewPassword() {
           <div className={styles['form__input-container']}>
             <input
               className={styles.form__input}
-              type="password"
+              type={isBlind ? 'password' : 'text'}
               id="check-password"
               placeholder="비밀번호 확인 (필수)"
+              autoComplete="off"
+              onChange={(e) => setPasswordCheck(e.target.value)}
             />
             <button className={styles['cursor-pointer']} type="button" onClick={changeIsBlind}>
               {isBlind ? <BlindIcon /> : <ShowIcon />}
             </button>
           </div>
         </label>
-        <button type="button" className={styles.form__submit}>
+        <button
+          type="button"
+          className={styles.submit}
+          disabled={password !== passwordCheck || password === ''}
+          onClick={(e) => {
+            e.preventDefault();
+            submit({ emailInput, passwordInput: password });
+          }}
+        >
           다음
         </button>
       </form>

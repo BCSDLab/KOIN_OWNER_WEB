@@ -1,5 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { postLogin, findPasswordVerify, findPassword } from 'api/auth';
+import {
+  postLogin, findPasswordVerify, findPassword, newPassword,
+} from 'api/auth';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
@@ -54,6 +56,22 @@ export const useSubmit = () => {
     },
     onError: () => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
+    },
+  });
+  return submit;
+};
+
+export const useNewPassword = () => {
+  const navigate = useNavigate();
+  const { mutate: submit } = useMutation({
+    mutationFn: ({ emailInput, passwordInput }:
+    { emailInput: string, passwordInput: string }) => newPassword(
+      { address: emailInput, password: passwordInput },
+    ),
+    onSuccess: () => {
+      navigate('/complete-change-password', { replace: true });
+    },
+    onError: () => {
     },
   });
   return submit;
