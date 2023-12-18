@@ -1,9 +1,11 @@
 import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
 import { useNavigate } from 'react-router-dom';
+import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import styles from './CompleteChangePassword.module.scss';
 
 export default function CompleteChangePassword() {
   const navigate = useNavigate();
+  useRouteCheck('nextStep', '/new-password');
   return (
     <div className={styles.template}>
       <div className={styles['circle-icon']}>

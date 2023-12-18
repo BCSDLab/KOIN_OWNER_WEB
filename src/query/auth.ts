@@ -52,7 +52,7 @@ export const useSubmit = () => {
     }
     :VerifyInput) => findPassword({ address: emailInput, certificationCode: verifyInput }),
     onSuccess: () => {
-      navigate('/new-password', { state: { authCheck: true }, replace: true });
+      navigate('/new-password', { state: { nextStep: true }, replace: true });
     },
     onError: () => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
@@ -69,7 +69,7 @@ export const useNewPassword = () => {
       { address: emailInput, password: passwordInput },
     ),
     onSuccess: () => {
-      navigate('/complete-change-password', { replace: true });
+      navigate('/complete-change-password', { state: { nextStep: true }, replace: true });
     },
     onError: () => {
     },

@@ -14,7 +14,7 @@ export default function NewPassword() {
   const { emailInput } = useAuthStore();
   const submit = useNewPassword();
 
-  useRouteCheck('authCheck', '/find-password');
+  useRouteCheck('nextStep', '/find-password');
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
 
   return (
