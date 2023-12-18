@@ -11,11 +11,10 @@ import styles from './NewPassword.module.scss';
 export default function NewPassword() {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const { emailInput } = useAuthStore();
   const submit = useNewPassword();
-
   useRouteCheck('nextStep', '/find-password');
-  const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
 
   return (
     <div className={styles.template}>
