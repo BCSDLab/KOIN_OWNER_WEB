@@ -3,20 +3,23 @@ import { getEmailAuthCode, getEmailDuplicate, verificationAuthCode } from 'api/r
 import useUploadToken from 'store/uploadToken';
 
 export const useCheckDuplicate = (email:string) => {
-  const { status, refetch, error } = useQuery(['emailDuplicateCheck', email], () => getEmailDuplicate(email), { enabled: false });
+  const { status, refetch, error } = useQuery({
+    queryKey: ['emailDuplicateCheck', email],
+    queryFn: () => getEmailDuplicate(email),
+    enabled: false,
+  });
   return { status, refetch, error };
 };
 
 export const useGenerateAuthCode = (email:string) => {
   const {
     status, refetch, isError, error,
-  } = useQuery(
-    ['generateEmailAuthCode', email],
-    () => getEmailAuthCode({ address: email }),
-    {
-      enabled: false,
-    },
-  );
+  } = useQuery({
+    queryKey: ['generateEmailAuthCode', email],
+    queryFn: () => getEmailAuthCode({ address: email }),
+    enabled: false,
+  });
+
   return {
     status, refetch, isError, error,
   };
@@ -25,19 +28,16 @@ export const useGenerateAuthCode = (email:string) => {
 export const useVerificationAuthCode = (code:string, email:string) => {
   const { setUploadToken } = useUploadToken();
   const {
-    status, refetch, isError, error,
-  } = useQuery(
-    ['verificationCode', code],
-    () => verificationAuthCode({ certification_code: code, address: email }),
-    {
-      enabled: false,
-      onSuccess: (response) => {
-        if (response.token) {
-          setUploadToken(response.token);
-        }
-      },
-    },
-  );
+    status, refetch, isError, error, isSuccess, data,
+  } = useQuery({
+    queryKey: ['verificationCode', code],
+    queryFn: () => verificationAuthCode({ certification_code: code, address: email }),
+    enabled: false,
+  });
+  if (isSuccess && data.token) {
+    setUploadToken(data.token);
+  }
+
   return {
     status, refetch, isError, error,
   };
