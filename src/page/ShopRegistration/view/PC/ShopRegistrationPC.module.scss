@@ -1,0 +1,208 @@
+.wrapper {
+  position: relative;
+}
+
+.block {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__writing-icon {
+    margin-bottom: 72px;
+  }
+
+  &__title {
+    display: block;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #175c8e;
+    margin-bottom: 24px;
+    height: 53px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 80px;
+    color: #858585;
+
+    span {
+      line-height: 180%;
+    }
+  }
+
+  &__next-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 368px;
+    height: 48px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #175c8e;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 0 94px;
+
+  &__koin-logo {
+    width: 368px;
+    position: relative;
+    margin-bottom: 56px;
+    background-color: #ffffff;
+  }
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  &__title {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  &__image-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 210px;
+    height: 93px;
+    border: 1px solid #d2dae2;
+    padding: 53px 80px 54px;
+    cursor: pointer;
+  }
+
+  &__upload-file {
+    display: none;
+  }
+
+  &__main-menu {
+    width: 370px;
+    height: 202px;
+  }
+
+  &__cutlery-cross {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  &__text {
+    text-align: center;
+    font-size: 14px;
+    display: block;
+    color: #858585;
+    margin-top: 8px;
+  }
+
+  &__section {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  &__input {
+    width: 240px;
+    border: 1px solid #d2dae2;
+    height: 22px;
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+
+  &__input-large {
+    width: 336px;
+    border: 1px solid #d2dae2;
+    height: 22px;
+    padding: 13px 16px;
+
+    &:focus {
+      border-bottom: 1px solid black;
+    }
+  }
+
+  &__operate-time {
+    display: flex;
+    align-items: center;
+    width: 272px;
+    height: auto;
+    font-size: 16px;
+    color: #858585;
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 24px;
+    width: 368px;
+  }
+
+  &__checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #858585;
+    box-sizing: content-box;
+    cursor: pointer;
+
+    input[type="checkbox"]:checked + span {
+      color: #f7941e;
+    }
+  }
+
+  &__checkbox-input {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 1px solid #858585;
+    margin-right: 8px;
+    background-size: cover;
+    cursor: pointer;
+
+    &:checked {
+      border: 2px solid #f7941e;
+      padding: 1px;
+      background-clip: content-box;
+      background-color: #f7941e;
+    }
+  }
+
+  &__next-button {
+    width: 368px;
+    margin-top: 56px;
+  }
+}

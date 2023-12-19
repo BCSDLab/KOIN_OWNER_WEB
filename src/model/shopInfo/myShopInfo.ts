@@ -7,12 +7,12 @@ export const MyShop = z.object({
 
 export type MyShop = z.infer<typeof MyShop>;
 
-export const MyShopList = z.object({
+export const MyShopListRes = z.object({
   count: z.number(),
   shops: z.array(MyShop),
 });
 
-export type MyShopList = z.infer<typeof MyShopList>;
+export type MyShopListRes = z.infer<typeof MyShopListRes>;
 
 export const OpenInfo = z.object({
   day_of_week: z.string(),

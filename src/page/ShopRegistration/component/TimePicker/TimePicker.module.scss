@@ -1,0 +1,37 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 92px;
+
+  &__hour {
+    text-align: center;
+    font-size: 15px;
+    background-color: #ffffff;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--selected {
+      color: #c5c5c5;
+    }
+  }
+
+  &__minute {
+    text-align: center;
+    font-size: 15px;
+    background-color: #ffffff;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &--selected {
+      color: #c5c5c5;
+    }
+  }
+}
