@@ -19,10 +19,10 @@ const queryClient = new QueryClient({
       refetchOnReconnect: false,
       retry: 1,
       staleTime: 1000 * 60 * 5,
-      throwOnError: (err) => err instanceof ZodError,
+      onError: (err) => err instanceof ZodError,
     },
     mutations: {
-      throwOnError: (err) => err instanceof ZodError,
+      onError: (err) => err instanceof ZodError,
     },
   },
 });
