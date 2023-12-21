@@ -4,7 +4,7 @@ import getShopCategory from 'api/category';
 const useShopCategory = () => {
   const { data: categoryList } = useQuery({
     queryKey: ['shopCategory'],
-    queryFn: () => getShopCategory,
+    queryFn: () => getShopCategory(),
   });
   return { categoryList };
 };

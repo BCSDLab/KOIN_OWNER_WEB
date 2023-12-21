@@ -4,7 +4,7 @@ import { getShopList } from 'api/shop';
 const useShopList = () => {
   const { data: shopList, isError } = useQuery({
     queryKey: ['allshops'],
-    queryFn: () => getShopList,
+    queryFn: () => getShopList(),
   });
   return { shopList, isError };
 };
