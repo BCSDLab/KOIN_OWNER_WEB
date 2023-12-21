@@ -2,6 +2,8 @@ import { useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import useShopCategory from 'query/shopCategory';
 import cn from 'utils/ts/className';
+import { Category as CategoryProps } from 'model/category/storeCategory';
+import useModalStore from 'store/modalStore';
 import styles from './ShopCategory.module.scss';
 
 type Category = string;
@@ -10,6 +12,12 @@ export default function ShopCategory() {
   const { categoryList } = useShopCategory();
   const { increaseStep } = useStepStore();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const { setCategoryState } = useModalStore();
+
+  const handleCategoryClick = (category: CategoryProps) => {
+    setSelectedCategory(category.name);
+    setCategoryState([category.name, category.id]);
+  };
 
   return (
     <div className={styles.category}>
@@ -22,7 +30,7 @@ export default function ShopCategory() {
               [styles['category__menu--selected']]: category.name === selectedCategory,
             })}
             type="button"
-            onClick={() => setSelectedCategory(category.name)}
+            onClick={() => handleCategoryClick(category)}
             key={category.id}
           >
             <img className={styles.category__image} src={category.image_url} alt="" />
