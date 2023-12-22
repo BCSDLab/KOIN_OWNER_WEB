@@ -51,7 +51,7 @@ export default function ShopRegistrationPC() {
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
-  const { imgFile, imgRef, saveImgFile } = useImageUpload();
+  const { imageUrl, imgRef, saveImgFile } = useImageUpload();
 
   const {
     categoryState,
@@ -93,14 +93,18 @@ export default function ShopRegistrationPC() {
       open_time: openTimeArray[index],
     }));
     setValue('open', openValue);
-    setValue('image_urls', [imgFile]);
+    setValue('image_urls', [imageUrl]);
     setValue('name', searchShopState);
     setValue('category_ids', [categoryState[1]]);
-  }, [openTimeState, closeTimeState, imgFile]);
+  }, [openTimeState, closeTimeState, imageUrl]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
+
+  useEffect(() => {
+
+  });
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
@@ -150,8 +154,8 @@ export default function ShopRegistrationPC() {
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  {imgFile
-                    ? <img src={imgFile} className={styles['form__main-menu']} alt="" />
+                  {imageUrl
+                    ? <img src={imageUrl} className={styles['form__main-menu']} alt="" />
                     : (
                       <>
                         <Cutlery className={styles['form__cutlery-cross']} />
