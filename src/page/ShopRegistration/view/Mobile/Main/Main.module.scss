@@ -19,6 +19,28 @@
     }
   }
 
+  &__image-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 295px;
+    height: 200px;
+    border: 1px solid #858585;
+    margin-bottom: 32px;
+  }
+
+  &__upload-file {
+    display: none;
+  }
+
+  &__text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #858585;
+  }
+
   &__label {
     display: flex;
     justify-content: space-between;
