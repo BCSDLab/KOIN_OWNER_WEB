@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
+import useShopRegistrationStore from 'store/shopRegistration';
 
 export default function useImageUpload() {
-  const [imgFile, setImgFile] = useState('');
+  const { imageUrl, setImageUrl } = useShopRegistrationStore();
   const imgRef = useRef<HTMLInputElement>(null);
 
   const saveImgFile = () => {
@@ -11,7 +12,7 @@ export default function useImageUpload() {
     reader.onloadend = () => {
       const { result } = reader;
       if (typeof result === 'string') {
-        setImgFile(result);
+        setImageUrl(result);
       }
     };
     if (file) {
@@ -19,5 +20,5 @@ export default function useImageUpload() {
     }
   };
 
-  return { imgFile, imgRef, saveImgFile };
+  return { imageUrl, imgRef, saveImgFile };
 }
