@@ -18,7 +18,7 @@ export default function useOperateTimeState() {
   useEffect(() => {
     setOperateTimeState((prevOperateTimeState) => ({
       ...prevOperateTimeState,
-      holiday: `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일 ')}요일 정기 휴무`,
+      holiday: `매주 ${WEEK.filter((day) => shopClosedState[day]).join(' ')} 정기 휴무`,
       time: `${openTimeState[openDay]} ~ ${closeTimeState[openDay]}`,
     }));
   }, [openTimeState, closeTimeState, shopClosedState, openDay]);

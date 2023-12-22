@@ -39,6 +39,10 @@
   &__time-picker {
     display: flex;
     justify-content: center;
+
+    &--selected {
+      color: #c5c5c5;
+    }
   }
 
   &__checkbox {
