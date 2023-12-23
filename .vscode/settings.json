@@ -1,0 +1,8 @@
+{
+  "search.exclude": {
+    "**/yarn.lock": true,
+    "**/README.md": true,
+    "**/.eslintrc.json": true,
+    "**/tsconfig.json": true,
+  },
+}
