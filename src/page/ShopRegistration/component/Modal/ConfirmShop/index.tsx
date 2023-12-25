@@ -1,4 +1,4 @@
-import useModalStore from 'store/modalStore';
+import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './ConfirmShop.module.scss';
 
 interface ShopInfo {
@@ -13,7 +13,7 @@ interface ConfirmShopProps {
 }
 
 export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmShopProps) {
-  const { setSearchShopState: setSearchStoreState } = useModalStore();
+  const { setName } = useShopRegistrationStore();
   if (!open) return null;
   return (
     <div className={styles.container}>
@@ -28,7 +28,7 @@ export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmSho
         type="button"
         className={styles['container__select-button']}
         onClick={() => {
-          setSearchStoreState(selectedShop.name);
+          setName(selectedShop.name);
           onCancel();
         }}
       >
