@@ -28,6 +28,12 @@ export default function Sub() {
   const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
   const { shopClosedState } = useModalStore();
 
+  if (showOperateTime) {
+    return (
+      <OperateTimeMobile isOpen={showOperateTime} closeModal={closeOperateTime} />
+    );
+  }
+
   return (
     <div className={styles.form}>
       <label htmlFor="phone" className={styles.form__label}>
@@ -88,7 +94,6 @@ export default function Sub() {
         >
           수정
         </button>
-        <OperateTimeMobile isOpen={showOperateTime} closeModal={closeOperateTime} />
       </div>
       <label htmlFor="extra-info" className={styles.form__label}>
         기타정보
