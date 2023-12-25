@@ -20,6 +20,10 @@ export default function Sub() {
     setPhone, setDeliveryPrice, setDescription, setDelivery, setPayBank, setPayCard,
   } = useShopRegistrationStore();
 
+  const {
+    phone, deliveryPrice, description, delivery, payBank, payCard,
+  } = useShopRegistrationStore();
+
   const operateTimeState = useOperateTimeState();
   const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
   const { shopClosedState } = useModalStore();
@@ -32,6 +36,7 @@ export default function Sub() {
           type="text"
           id="phone"
           onChange={(e) => setPhone(e.target.value)}
+          value={phone}
           className={styles.form__input}
         />
       </label>
@@ -41,6 +46,7 @@ export default function Sub() {
           type="number"
           id="deliveryPrice"
           onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+          value={deliveryPrice}
           className={styles.form__input}
         />
       </label>
@@ -91,6 +97,7 @@ export default function Sub() {
           id="extra-info"
           className={styles.form__input}
           onChange={(e) => setDescription(e.target.value)}
+          value={description}
         />
       </label>
       <div className={styles.form__checkbox}>
@@ -100,6 +107,7 @@ export default function Sub() {
             id="delivery"
             onChange={(e) => setDelivery(e.target.checked)}
             className={styles['form__checkbox-input']}
+            checked={delivery}
           />
           <span>배달 가능</span>
         </label>
@@ -109,6 +117,7 @@ export default function Sub() {
             id="card"
             onChange={(e) => setPayCard(e.target.checked)}
             className={styles['form__checkbox-input']}
+            checked={payCard}
           />
           <span>카드 가능</span>
         </label>
@@ -118,6 +127,7 @@ export default function Sub() {
             id="bank"
             onChange={(e) => setPayBank(e.target.checked)}
             className={styles['form__checkbox-input']}
+            checked={payBank}
           />
           <span>계좌이체 가능</span>
         </label>

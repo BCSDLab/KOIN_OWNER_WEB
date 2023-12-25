@@ -7,7 +7,9 @@ import styles from './Main.module.scss';
 export default function Main() {
   const { increaseStep } = useStepStore();
   const { imageUrl, imgRef, saveImgFile } = useImageUpload();
-  const { setName, setAddress } = useShopRegistrationStore();
+  const {
+    name, setName, address, setAddress,
+  } = useShopRegistrationStore();
 
   return (
     <div className={styles.form}>
@@ -35,6 +37,7 @@ export default function Main() {
           type="text"
           id="name"
           onChange={(e) => setName(e.target.value)}
+          value={name}
           className={styles.form__input}
         />
       </label>
@@ -44,6 +47,7 @@ export default function Main() {
           type="text"
           id="address"
           onChange={(e) => setAddress(e.target.value)}
+          value={address}
           className={styles.form__input}
         />
       </label>
