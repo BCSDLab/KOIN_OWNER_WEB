@@ -55,14 +55,18 @@ export default function ShopRegistrationPC() {
   const { imageUrl, imgRef, saveImgFile } = useImageUpload();
 
   const {
-    searchShopState,
-    setSearchShopState,
     openTimeState,
     closeTimeState,
     shopClosedState,
   } = useModalStore();
 
-  const { categoryId, category } = useShopRegistrationStore();
+  const {
+    setName, setDelivery, setPayCard, setPayBank,
+  } = useShopRegistrationStore();
+
+  const {
+    categoryId, category, name, delivery, payCard, payBank,
+  } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
 
@@ -96,7 +100,7 @@ export default function ShopRegistrationPC() {
     }));
     setValue('open', openValue);
     setValue('image_urls', [imageUrl]);
-    setValue('name', searchShopState);
+    setValue('name', name);
     setValue('category_ids', [categoryId]);
   }, [openTimeState, closeTimeState, imageUrl]);
 
@@ -200,9 +204,9 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={searchShopState}
+                    value={name}
                     onChange={(e) => {
-                      setSearchShopState(e.target.value);
+                      setName(e.target.value);
                     }}
                   />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
@@ -272,15 +276,36 @@ export default function ShopRegistrationPC() {
               <InputBox content="기타정보" id="description" register={register} inputType="text" />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} {...register('delivery')} />
+                  <input
+                    type="checkbox"
+                    id="delivery"
+                    className={styles['form__checkbox-input']}
+                    {...register('delivery')}
+                    onChange={(e) => setDelivery(e.target.checked)}
+                    checked={delivery}
+                  />
                   <span>배달 가능</span>
                 </label>
                 <label htmlFor="card" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="card" className={styles['form__checkbox-input']} {...register('pay_card')} />
+                  <input
+                    type="checkbox"
+                    id="card"
+                    className={styles['form__checkbox-input']}
+                    {...register('pay_card')}
+                    onChange={(e) => setPayCard(e.target.checked)}
+                    checked={payCard}
+                  />
                   <span>카드 가능</span>
                 </label>
                 <label htmlFor="bank" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="bank" className={styles['form__checkbox-input']} {...register('pay_bank')} />
+                  <input
+                    type="checkbox"
+                    id="bank"
+                    className={styles['form__checkbox-input']}
+                    {...register('pay_bank')}
+                    onChange={(e) => setPayBank(e.target.checked)}
+                    checked={payBank}
+                  />
                   <span>계좌이체 가능</span>
                 </label>
               </div>
