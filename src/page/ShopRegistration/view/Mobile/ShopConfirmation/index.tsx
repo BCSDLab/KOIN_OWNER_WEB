@@ -1,62 +1,145 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import useStepStore from 'store/useStepStore';
+import useShopRegistrationStore from 'store/shopRegistration';
+import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { OwnerShop } from 'model/shopInfo/ownerShop';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { postShop } from 'api/shop';
+import { useEffect } from 'react';
+import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import useModalStore from 'store/modalStore';
+import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation() {
-  const { increaseStep } = useStepStore();
+  const { increaseStep, setStep } = useStepStore();
+  const {
+    category,
+    categoryId,
+    name, address, phone, deliveryPrice, description, delivery, payBank, payCard,
+  } = useShopRegistrationStore();
+  const operateTimeState = useOperateTimeState();
+
+  const { handleSubmit, setValue } = useForm<OwnerShop>({
+    resolver: zodResolver(OwnerShop),
+  });
+
+  const mutation = useMutation({
+    mutationFn: (form: OwnerShop) => postShop(form),
+    onSuccess: () => setStep(5),
+  });
+
+  const onSubmit: SubmitHandler<OwnerShop> = (data) => {
+    mutation.mutate(data);
+  };
+
+  const { openTimeState, closeTimeState, shopClosedState } = useModalStore();
+  const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
+
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const shopClosedArray = Object.values(shopClosedState);
+
+  useEffect(() => {
+    const openValue = DAY_OF_WEEK.map((day, index) => ({
+      close_time: closeTimeArray[index],
+      closed: shopClosedArray[index],
+      day_of_week: day,
+      open_time: openTimeArray[index],
+    }));
+    setValue('category_ids', [categoryId]);
+    setValue('name', name);
+    setValue('address', address);
+    setValue('phone', phone);
+    setValue('delivery_price', deliveryPrice);
+    setValue('description', description);
+    setValue('delivery', delivery);
+    setValue('pay_bank', payBank);
+    setValue('pay_card', payCard);
+    setValue('open', openValue);
+  }, []);
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
         <div className={styles.form__info}>
           <span className={styles.form__title}>카테고리</span>
-          <span className={styles.form__value}>족발</span>
+          <span className={styles.form__value}>{category}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>가게명</span>
-          <span className={styles.form__value}>가장 맛있는 족발</span>
+          <span className={styles.form__value}>{name}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>주소정보</span>
-          <span className={styles.form__value}>천안시 동남구 충절로 880 가동 1층</span>
+          <span className={styles.form__value}>{address}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>전화번호</span>
-          <span className={styles.form__value}>010-1234-5678</span>
+          <span className={styles.form__value}>{phone}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>배달금액</span>
-          <span className={styles.form__value}>무료</span>
+          <span className={styles.form__value}>{deliveryPrice}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>운영시간</span>
           <span className={styles.form__value}>
-            11:00~21:00
-            <br />
-            매주 화요일 정기 휴무
+            <span>
+              {
+                isAllSameTime && !hasClosedDay ? (
+                  <div>
+                    {operateTimeState.time}
+                  </div>
+                )
+                  : null
+              }
+              {
+                isSpecificDayClosedAndAllSameTime ? (
+                  <div>
+                    <div>{operateTimeState.time}</div>
+                    <div>{operateTimeState.holiday}</div>
+                  </div>
+                ) : null
+              }
+              {
+                !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+                  <>
+                    {WEEK.map((day) => (
+                      <div key={day}>
+                        {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                      </div>
+                    ))}
+                  </>
+                ) : null
+              }
+            </span>
           </span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>기타정보</span>
-          <span className={styles.form__value}>3대째 다져온 고집스러운 맛</span>
+          <span className={styles.form__value}>{description}</span>
         </div>
         <div className={styles.form__checkbox}>
           <label htmlFor="delivery" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} />
+            <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} readOnly checked={delivery} />
             <span>배달 가능</span>
           </label>
           <label htmlFor="card" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="card" className={styles['form__checkbox-input']} />
+            <input type="checkbox" id="card" className={styles['form__checkbox-input']} readOnly checked={payCard} />
             <span>카드 가능</span>
           </label>
           <label htmlFor="bank" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="bank" className={styles['form__checkbox-input']} />
+            <input type="checkbox" id="bank" className={styles['form__checkbox-input']} readOnly checked={payBank} />
             <span>계좌이체 가능</span>
           </label>
         </div>
       </div>
       <div className={styles.form__button}>
-        <button type="button" onClick={increaseStep}>등록</button>
+        <button type="submit" onClick={increaseStep}>등록</button>
       </div>
-    </>
+    </form>
   );
 }
