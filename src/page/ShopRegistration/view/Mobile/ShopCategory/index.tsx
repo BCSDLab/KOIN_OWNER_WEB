@@ -1,40 +1,38 @@
-import { useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import useShopCategory from 'query/shopCategory';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/storeCategory';
-import useModalStore from 'store/modalStore';
+import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './ShopCategory.module.scss';
-
-type Category = string;
 
 export default function ShopCategory() {
   const { categoryList } = useShopCategory();
   const { increaseStep } = useStepStore();
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  const { setCategoryState } = useModalStore();
+  const {
+    category, setCategory, setCategoryId,
+  } = useShopRegistrationStore();
 
-  const handleCategoryClick = (category: CategoryProps) => {
-    setSelectedCategory(category.name);
-    setCategoryState([category.name, category.id]);
+  const handleCategoryClick = (categoryInfo: CategoryProps) => {
+    setCategory(categoryInfo.name);
+    setCategoryId(categoryInfo.id);
   };
 
   return (
     <div className={styles.category}>
       <div className={styles.category__title}>카테고리를 골라주세요.</div>
       <div className={styles.category__wrapper}>
-        {categoryList?.shop_categories.filter((_, index) => index > 0).map((category) => (
+        {categoryList?.shop_categories.filter((_, index) => index > 0).map((categoryInfo) => (
           <button
             className={cn({
               [styles.category__menu]: true,
-              [styles['category__menu--selected']]: category.name === selectedCategory,
+              [styles['category__menu--selected']]: categoryInfo.name === category,
             })}
             type="button"
-            onClick={() => handleCategoryClick(category)}
-            key={category.id}
+            onClick={() => handleCategoryClick(categoryInfo)}
+            key={categoryInfo.id}
           >
-            <img className={styles.category__image} src={category.image_url} alt="" />
-            <span className={styles.category__type}>{category.name}</span>
+            <img className={styles.category__image} src={categoryInfo.image_url} alt="" />
+            <span className={styles.category__type}>{categoryInfo.name}</span>
           </button>
         ))}
       </div>

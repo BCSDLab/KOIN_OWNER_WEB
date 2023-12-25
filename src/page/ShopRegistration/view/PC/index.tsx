@@ -25,6 +25,7 @@ import { postShop } from 'api/shop';
 import useImageUpload from 'utils/hooks/useImageUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
+import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -54,13 +55,14 @@ export default function ShopRegistrationPC() {
   const { imageUrl, imgRef, saveImgFile } = useImageUpload();
 
   const {
-    categoryState,
     searchShopState,
     setSearchShopState,
     openTimeState,
     closeTimeState,
     shopClosedState,
   } = useModalStore();
+
+  const { categoryId, category } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
 
@@ -95,16 +97,12 @@ export default function ShopRegistrationPC() {
     setValue('open', openValue);
     setValue('image_urls', [imageUrl]);
     setValue('name', searchShopState);
-    setValue('category_ids', [categoryState[1]]);
+    setValue('category_ids', [categoryId]);
   }, [openTimeState, closeTimeState, imageUrl]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
-
-  useEffect(() => {
-
-  });
 
   // step 1일 때 그리고 모바일에서 PC로 변경 될 때 카테고리 모달을 자동으로 켜줌
   useEffect(() => {
@@ -170,7 +168,7 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={categoryState[0]}
+                    value={category}
                     readOnly
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />

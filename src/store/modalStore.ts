@@ -4,12 +4,10 @@ import { WEEK } from 'utils/constant/week';
 type OperatingTime = { [key in typeof WEEK[number]]: string | null };
 
 interface ModalStore {
-  categoryState: [string, number];
   searchShopState: string;
   openTimeState: OperatingTime;
   closeTimeState: OperatingTime;
   shopClosedState: { [key: string]: boolean };
-  setCategoryState: (state: [string, number]) => void;
   setSearchShopState: (state: string) => void;
   setOpenTimeState: (state: OperatingTime) => void;
   setCloseTimeState: (state: OperatingTime) => void;
@@ -37,12 +35,10 @@ const initialShopClosed = {
 };
 
 const useModalStore = create<ModalStore>((set) => ({
-  categoryState: ['', 0],
   searchShopState: '',
   openTimeState: initialOperatingTime,
   closeTimeState: initialOperatingTime,
   shopClosedState: initialShopClosed,
-  setCategoryState: (state) => set({ categoryState: state }),
   setSearchShopState: (state) => set({ searchShopState: state }),
   setOpenTimeState: (state) => set(() => ({ openTimeState: state })),
   setCloseTimeState: (state) => set(() => ({ closeTimeState: state })),

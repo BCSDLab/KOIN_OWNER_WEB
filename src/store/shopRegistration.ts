@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 interface ShopRegistrationStore {
   address: string;
+  category: string;
   categoryId: number;
   deliveryPrice: number;
   description: string;
@@ -12,6 +13,7 @@ interface ShopRegistrationStore {
   payBank: boolean;
   payCard: boolean;
   setAddress: (address: string) => void;
+  setCategory: (category: string) => void;
   setCategoryId: (categoryId: number) => void;
   setDeliveryPrice: (deliveryPrice: number) => void;
   setDescription: (description: string) => void;
@@ -25,6 +27,7 @@ interface ShopRegistrationStore {
 
 const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   address: '',
+  category: '',
   categoryId: 0,
   deliveryPrice: 0,
   description: '',
@@ -35,6 +38,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   payBank: false,
   payCard: false,
   setAddress: (address: string) => set({ address }),
+  setCategory: (category: string) => set({ category }),
   setCategoryId: (categoryId: number) => set({ categoryId }),
   setDeliveryPrice: (deliveryPrice: number) => set({ deliveryPrice }),
   setDescription: (description: string) => set({ description }),
