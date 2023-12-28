@@ -31,7 +31,11 @@ export default function NewPassword() {
               autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button className={styles['cursor-pointer']} type="button" onClick={changeIsBlind}>
+            <button
+              className={styles['cursor-pointer']}
+              type="button"
+              onClick={changeIsBlind}
+            >
               {isBlind ? <BlindIcon /> : <ShowIcon />}
             </button>
           </div>
@@ -50,14 +54,18 @@ export default function NewPassword() {
               autoComplete="off"
               onChange={(e) => setPasswordCheck(e.target.value)}
             />
-            <button className={styles['cursor-pointer']} type="button" onClick={changeIsBlind}>
+            <button
+              className={styles['cursor-pointer']}
+              type="button"
+              onClick={changeIsBlind}
+            >
               {isBlind ? <BlindIcon /> : <ShowIcon />}
             </button>
           </div>
         </label>
         <button
           type="button"
-          className={styles.submit}
+          className={styles.form__button}
           disabled={password !== passwordCheck || password === ''}
           onClick={(e) => {
             e.preventDefault();
