@@ -3,11 +3,11 @@ import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
 import { useState } from 'react';
 import cn from 'utils/ts/className';
 import { useVerifyEmail, useSubmit } from 'query/auth';
-import useAuthStore from 'store/useAuth';
+import useEmailAuthStore from 'store/useEmailAuth';
 import styles from './SendAuthNumber.module.scss';
 
 export default function FindPassword() {
-  const { emailInput, setEmailInput } = useAuthStore();
+  const { emailInput, setEmailInput } = useEmailAuthStore();
   const [verifyInput, setVerifyInput] = useState('');
   const { verifyEmail } = useVerifyEmail();
   const submit = useSubmit();

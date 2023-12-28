@@ -5,14 +5,14 @@ import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState } from 'react';
 import { useNewPassword } from 'query/auth';
-import useAuthStore from 'store/useAuth';
+import useEmailAuthStore from 'store/useEmailAuth';
 import styles from './NewPassword.module.scss';
 
 export default function NewPassword() {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
-  const { emailInput } = useAuthStore();
+  const { emailInput } = useEmailAuthStore();
   const submit = useNewPassword();
   useRouteCheck('nextStep', '/find-password');
 

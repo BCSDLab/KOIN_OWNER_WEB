@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-interface Auth {
+interface EmailAuth {
   emailInput: string;
   setEmailInput: (email: string) => void;
 }
 
-const useAuthStore = create<Auth>((set) => ({
+const useEmailAuthStore = create<EmailAuth>((set) => ({
   emailInput: '',
   setEmailInput: (email: string) => set({ emailInput: email }),
 }));
 
-export default useAuthStore;
+export default useEmailAuthStore;
