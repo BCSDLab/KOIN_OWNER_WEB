@@ -29,15 +29,7 @@ const useTermCheck = (ref:React.RefObject<HTMLDivElement>) => {
   }, [isKoinTermAgree, isUserTermAgree]);
   useEffect(() => {
     if (isAllAgree && ref.current) {
-      console.log(
-        ref.current.scrollHeight,
-        ref.current.scrollTop,
-      );
       ref.current.scrollTo({ top: ref.current.scrollHeight });
-      console.log(
-        ref.current.scrollHeight,
-        ref.current.scrollTop,
-      );
     }
   }, [isAllAgree, ref]);
   return {
