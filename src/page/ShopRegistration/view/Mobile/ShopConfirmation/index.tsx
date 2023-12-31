@@ -11,15 +11,25 @@ import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
+import useImageUpload from 'utils/hooks/useImageUpload';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation() {
-  const { increaseStep, setStep } = useStepStore();
+  const { setStep } = useStepStore();
   const {
     category,
     categoryId,
-    name, address, phone, deliveryPrice, description, delivery, payBank, payCard,
+    name,
+    address,
+    phone,
+    deliveryPrice,
+    description,
+    delivery,
+    payBank,
+    payCard,
   } = useShopRegistrationStore();
+
+  const { imageUrl } = useImageUpload();
   const operateTimeState = useOperateTimeState();
 
   const { handleSubmit, setValue } = useForm<OwnerShop>({
@@ -49,18 +59,18 @@ export default function ShopConfirmation() {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
+    setValue('image_urls', [imageUrl]);
     setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);
     setValue('phone', phone);
-    setValue('delivery_price', deliveryPrice);
+    if (typeof deliveryPrice === 'number') setValue('delivery_price', deliveryPrice);
     setValue('description', description);
     setValue('delivery', delivery);
     setValue('pay_bank', payBank);
     setValue('pay_card', payCard);
     setValue('open', openValue);
   }, []);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
@@ -138,7 +148,7 @@ export default function ShopConfirmation() {
         </div>
       </div>
       <div className={styles.form__button}>
-        <button type="submit" onClick={increaseStep}>등록</button>
+        <button type="submit">등록</button>
       </div>
     </form>
   );
