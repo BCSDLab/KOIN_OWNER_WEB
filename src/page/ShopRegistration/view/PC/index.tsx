@@ -65,7 +65,7 @@ export default function ShopRegistrationPC() {
   } = useShopRegistrationStore();
 
   const {
-    categoryId, category, name, delivery, payCard, payBank,
+    categoryId, category, name, delivery, payCard, payBank, deliveryPrice,
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
@@ -102,6 +102,7 @@ export default function ShopRegistrationPC() {
     setValue('image_urls', [imageUrl]);
     setValue('name', name);
     setValue('category_ids', [categoryId]);
+    setValue('delivery_price', Number(deliveryPrice));
   }, [openTimeState, closeTimeState, imageUrl]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {

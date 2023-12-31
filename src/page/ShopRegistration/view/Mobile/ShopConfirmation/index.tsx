@@ -64,7 +64,7 @@ export default function ShopConfirmation() {
     setValue('name', name);
     setValue('address', address);
     setValue('phone', phone);
-    if (typeof deliveryPrice === 'number') setValue('delivery_price', deliveryPrice);
+    setValue('delivery_price', Number(deliveryPrice));
     setValue('description', description);
     setValue('delivery', delivery);
     setValue('pay_bank', payBank);

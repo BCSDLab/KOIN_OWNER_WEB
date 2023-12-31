@@ -57,7 +57,7 @@ export default function Sub() {
         <input
           type="number"
           id="deliveryPrice"
-          onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+          onChange={(e) => setDeliveryPrice(e.target.value)}
           value={deliveryPrice}
           className={styles.form__input}
         />

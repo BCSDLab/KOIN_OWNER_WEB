@@ -4,7 +4,7 @@ interface ShopRegistrationStore {
   address: string;
   category: string;
   categoryId: number;
-  deliveryPrice: number | '';
+  deliveryPrice: number | string;
   description: string;
   imageUrl: string;
   name: string;
@@ -15,7 +15,7 @@ interface ShopRegistrationStore {
   setAddress: (address: string) => void;
   setCategory: (category: string) => void;
   setCategoryId: (categoryId: number) => void;
-  setDeliveryPrice: (deliveryPrice: number) => void;
+  setDeliveryPrice: (deliveryPrice: number | string) => void;
   setDescription: (description: string) => void;
   setImageUrl: (imageUrl: string) => void;
   setName: (name: string) => void;
@@ -40,7 +40,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   setAddress: (address: string) => set({ address }),
   setCategory: (category: string) => set({ category }),
   setCategoryId: (categoryId: number) => set({ categoryId }),
-  setDeliveryPrice: (deliveryPrice: number) => set({ deliveryPrice }),
+  setDeliveryPrice: (deliveryPrice: number | string) => set({ deliveryPrice }),
   setDescription: (description: string) => set({ description }),
   setImageUrl: (imageUrl: string) => set({ imageUrl }),
   setName: (name: string) => set({ name }),
