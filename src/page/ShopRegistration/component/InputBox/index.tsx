@@ -13,9 +13,7 @@ interface InputBoxProps {
 
 function formatPhoneNumber(inputNumber: string) {
   const phoneNumber = inputNumber.replace(/\D/g, '');
-
   const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-
   return formattedPhoneNumber;
 }
 
@@ -36,8 +34,7 @@ export default function InputBox({
     if (id === 'delivery_price') setDeliveryPrice(Number(inputValue));
     if (id === 'description') setDescription(inputValue);
     if (id === 'phone') {
-      const formattedNumber = formatPhoneNumber(inputValue);
-      setPhone(formattedNumber);
+      setPhone(formatPhoneNumber(inputValue));
     }
   };
 

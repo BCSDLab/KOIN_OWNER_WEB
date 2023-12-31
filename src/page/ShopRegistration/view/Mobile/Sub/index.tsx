@@ -28,6 +28,12 @@ export default function Sub() {
   const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
   const { shopClosedState } = useModalStore();
 
+  const formatPhoneNumber = (inputNumber: string) => {
+    const phoneNumber = inputNumber.replace(/\D/g, '');
+    const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    return formattedPhoneNumber;
+  };
+
   if (showOperateTime) {
     return (
       <OperateTimeMobile isOpen={showOperateTime} closeModal={closeOperateTime} />
@@ -41,7 +47,7 @@ export default function Sub() {
         <input
           type="text"
           id="phone"
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
           value={phone}
           className={styles.form__input}
         />
