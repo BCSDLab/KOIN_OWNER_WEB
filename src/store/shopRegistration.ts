@@ -4,7 +4,7 @@ interface ShopRegistrationStore {
   address: string;
   category: string;
   categoryId: number;
-  deliveryPrice: number;
+  deliveryPrice: number | '';
   description: string;
   imageUrl: string;
   name: string;
@@ -29,7 +29,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   address: '',
   category: '',
   categoryId: 0,
-  deliveryPrice: 0,
+  deliveryPrice: '',
   description: '',
   imageUrl: '',
   name: '',
