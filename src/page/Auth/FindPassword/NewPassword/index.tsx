@@ -12,7 +12,7 @@ export default function NewPassword() {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
-  const { emailInput } = useEmailAuthStore();
+  const { email } = useEmailAuthStore();
   const submit = useNewPassword();
   useRouteCheck('nextStep', '/find-password');
 
@@ -69,7 +69,7 @@ export default function NewPassword() {
           disabled={password !== passwordCheck || password === ''}
           onClick={(e) => {
             e.preventDefault();
-            submit({ emailInput, passwordInput: password });
+            submit({ email, password });
           }}
         >
           다음

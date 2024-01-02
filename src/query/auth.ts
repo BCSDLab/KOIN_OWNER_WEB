@@ -64,9 +64,9 @@ export const useSubmit = () => {
 export const useNewPassword = () => {
   const navigate = useNavigate();
   const { mutate: submit } = useMutation({
-    mutationFn: ({ emailInput, passwordInput }:
-    { emailInput: string, passwordInput: string }) => newPassword(
-      { address: emailInput, password: passwordInput },
+    mutationFn: ({ email, password }:
+    { email: string, password: string }) => newPassword(
+      { address: email, password },
     ),
     onSuccess: () => {
       navigate('/complete-change-password', { state: { nextStep: true }, replace: true });
