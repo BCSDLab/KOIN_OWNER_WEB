@@ -37,10 +37,10 @@ export const useLogin = () => {
 };
 
 export const useVerifyEmail = () => {
-  const { mutate, isPending, isSuccess } = useMutation({
+  const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
   });
-  return { verifyEmail: { mutate, isPending, isSuccess } };
+  return { verifyEmail: { mutate, isLoading, isSuccess } };
 };
 
 export const useSubmit = () => {
