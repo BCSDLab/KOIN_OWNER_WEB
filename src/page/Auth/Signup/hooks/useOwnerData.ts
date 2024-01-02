@@ -5,7 +5,7 @@ import useRegisterInfo from 'store/registerStore';
 import useFileController from './useFileController';
 
 const VALIDATIONMESSAGE = {
-  owerName: '대표자명을 입력해주세요',
+  ownerName: '대표자명을 입력해주세요',
   shopName: '가게명을 입력해주세요',
   registraionNumber: '사업자 등록번호를 입력해주세요',
   phoneNumber: '대표자 연락처를 입력해주세요',
@@ -38,7 +38,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
   const { ownerInfo: ownerData, setOwnerInfo: setOwnerData } = useRegisterInfo();
   const { addFiles } = useFileController();
   const ownerNameRegister = register('ownerName', {
-    required: { value: true, message: VALIDATIONMESSAGE.owerName },
+    required: { value: true, message: VALIDATIONMESSAGE.ownerName },
     onBlur: () => {
       if (watch('ownerName') !== '') {
         setOwnerData({ ...ownerData, ownerName: watch('ownerName') });

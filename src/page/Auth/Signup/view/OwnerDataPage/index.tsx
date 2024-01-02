@@ -44,7 +44,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
     checkOwnerDataStep(ownerData);
   }, [checkOwnerDataStep, ownerData]);
 
-  const onSumbmit = () => {
+  const onSubmit = () => {
     fileMuation.mutate();
   };
 
@@ -160,7 +160,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
         {errors.registerFiles && <ErrorMessage message={errors.registerFiles.message} />}
       </section>
       <div className={styles.buttons}>
-        <CustomButton buttonSize="large" content={isMobile ? '확인' : '다음'} onClick={handleSubmit(onSumbmit)} disable={!isDone} />
+        <CustomButton buttonSize="large" content={isMobile ? '확인' : '다음'} onClick={handleSubmit(onSubmit)} disable={!isDone} />
       </div>
       {isOpen && (
       <CustomModal
