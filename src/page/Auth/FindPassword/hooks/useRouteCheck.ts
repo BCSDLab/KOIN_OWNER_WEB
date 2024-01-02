@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const useRouteCheck = (prevRoute: string, entryRoute: string) => {
+export enum Route {
+  NEXT_STEP = 'nextStep',
+}
+
+export const useRouteCheck = (prevRoute: Route, entryRoute: string) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -12,5 +16,3 @@ const useRouteCheck = (prevRoute: string, entryRoute: string) => {
     }
   }, [location.state, navigate, entryRoute, prevRoute]);
 };
-
-export default useRouteCheck;

@@ -1,7 +1,7 @@
 import { ReactComponent as KoinLogo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
-import useRouteCheck from 'page/Auth/FindPassword/hooks/useRouteCheck';
+import { useRouteCheck, Route } from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState } from 'react';
 import { useNewPassword } from 'query/auth';
@@ -14,7 +14,7 @@ export default function NewPassword() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
   const { email } = useEmailAuthStore();
   const submit = useNewPassword();
-  useRouteCheck('nextStep', '/find-password');
+  useRouteCheck(Route.NEXT_STEP, '/find-password');
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     submit({ email, password });
