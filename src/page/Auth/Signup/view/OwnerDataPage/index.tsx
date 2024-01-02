@@ -75,8 +75,8 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
         {errors.ownerName && <ErrorMessage message={errors.ownerName.message} />}
         <div>
           <span className={styles.form__label}>가게명</span>
-          <div className={styles['input__store-name--wrapper']}>
-            <input className={styles['input__store-name']} type="text" placeholder={isMobile ? '가게명' : ''} {...shopNameRegister} />
+          <div className={styles['input__shop-name--wrapper']}>
+            <input className={styles['input__shop-name']} type="text" placeholder={isMobile ? '가게명' : ''} {...shopNameRegister} />
             <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchShop} />
           </div>
         </div>
