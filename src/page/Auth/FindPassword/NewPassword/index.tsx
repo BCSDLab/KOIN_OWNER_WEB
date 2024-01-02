@@ -15,6 +15,10 @@ export default function NewPassword() {
   const { email } = useEmailAuthStore();
   const submit = useNewPassword();
   useRouteCheck('nextStep', '/find-password');
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    submit({ email, password });
+  };
 
   return (
     <div className={styles.template}>
@@ -67,10 +71,7 @@ export default function NewPassword() {
           type="button"
           className={styles.form__button}
           disabled={password !== passwordCheck || password === ''}
-          onClick={(e) => {
-            e.preventDefault();
-            submit({ email, password });
-          }}
+          onClick={handleSubmit}
         >
           다음
         </button>
