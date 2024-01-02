@@ -7,7 +7,7 @@ const useMyShop = () => {
 
   const { data: myShop } = useQuery({
     queryKey: ['myShop', myShopQueryKey],
-    queryFn: getMyShopList,
+    queryFn: () => getMyShopList(),
   });
 
   const selectedShopId = (idx:number) => {
