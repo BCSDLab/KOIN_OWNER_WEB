@@ -16,6 +16,13 @@
     color: #175c8e;
     font-size: 15px;
     font-weight: 500;
+
+    &--complete {
+      color: #175c8e;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
   }
 
   &__header-condition {
@@ -109,7 +116,6 @@
 
   &__add-price-button {
     display: flex;
-    align-items: center;
     margin-top: 16px;
     gap: 8px;
     background-color: white;
@@ -128,6 +134,14 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__price-info-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
   }
 }
 
@@ -276,4 +290,12 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.price-info-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 500;
 }

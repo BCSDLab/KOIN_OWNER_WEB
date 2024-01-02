@@ -86,9 +86,19 @@
 
   &__new-image {
     display: flex;
+    align-items: center;
+
+    &__container {
+      display: flex;
+      overflow-x: auto;
+      margin-top: 16px;
+      gap: 16px;
+      white-space: nowrap;
+      align-items: center;
+      height: 155px;
+    }
 
     &__add-btn {
-      margin-top: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -115,5 +125,32 @@
       font-size: 13px;
       font-weight: 400;
     }
+
+    &__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 137px;
+      height: 137px;
+    }
+
+    &__selected-image {
+      width: 137px;
+      height: 137px;
+    }
+  }
+
+  &__delete-img-button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7941e;
+    width: 16.765px;
+    height: 16.765px;
+    border-radius: 50%;
   }
 }
