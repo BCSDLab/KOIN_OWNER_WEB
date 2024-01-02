@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
 
 interface VerifyInput {
-  emailInput: string;
-  verifyInput: string;
+  email: string;
+  verify: string;
 }
 
 export const useLogin = () => {
@@ -47,10 +47,10 @@ export const useSubmit = () => {
   const navigate = useNavigate();
   const { mutate: submit } = useMutation({
     mutationFn: ({
-      emailInput,
-      verifyInput,
+      email,
+      verify,
     }
-    :VerifyInput) => findPassword({ address: emailInput, certificationCode: verifyInput }),
+    :VerifyInput) => findPassword({ address: email, certificationCode: verify }),
     onSuccess: () => {
       navigate('/new-password', { state: { nextStep: true }, replace: true });
     },

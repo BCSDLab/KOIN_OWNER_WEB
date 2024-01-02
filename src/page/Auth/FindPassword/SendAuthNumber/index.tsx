@@ -7,8 +7,8 @@ import useEmailAuthStore from 'store/useEmailAuth';
 import styles from './SendAuthNumber.module.scss';
 
 export default function FindPassword() {
-  const { emailInput, setEmailInput } = useEmailAuthStore();
-  const [verifyInput, setVerifyInput] = useState('');
+  const { email, setEmail } = useEmailAuthStore();
+  const [verify, setVerify] = useState('');
   const { verifyEmail } = useVerifyEmail();
   const submit = useSubmit();
 
@@ -25,14 +25,14 @@ export default function FindPassword() {
                   [styles.form__input]: true,
                   [styles['form__input--auth']]: true,
                 })}
-                onChange={(e) => setEmailInput(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 type="text"
                 id="email"
               />
               <button
                 type="button"
                 className={styles['auth-button']}
-                onClick={() => verifyEmail.mutate(emailInput)}
+                onClick={() => verifyEmail.mutate(email)}
                 disabled={verifyEmail.isLoading}
               >
                 {verifyEmail.isSuccess ? '재발송' : '인증번호 발송'}
@@ -45,14 +45,14 @@ export default function FindPassword() {
               className={styles.form__input}
               type="text"
               id="auth-num"
-              onChange={(e) => setVerifyInput(e.target.value)}
+              onChange={(e) => setVerify(e.target.value)}
             />
           </label>
           <button
             type="submit"
             onClick={(e) => {
               e.preventDefault();
-              submit({ emailInput, verifyInput });
+              submit({ email, verify });
             }}
             className={styles.submit}
             disabled={!verifyEmail.isSuccess}
