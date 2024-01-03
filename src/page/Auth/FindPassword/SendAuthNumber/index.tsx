@@ -33,7 +33,7 @@ export default function FindPassword() {
                 type="button"
                 className={styles['auth-button']}
                 onClick={() => verifyEmail.mutate(email)}
-                disabled={verifyEmail.isLoading}
+                disabled={verifyEmail.isPending}
               >
                 {verifyEmail.isSuccess ? '재발송' : '인증번호 발송'}
               </button>
