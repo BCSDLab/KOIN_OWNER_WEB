@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export enum Route {
-  NEXT_STEP = 'nextStep',
-}
+type Route = 'new-password' | 'find-password';
 
 export const useRouteCheck = (prevRoute: Route, entryRoute: string) => {
   const location = useLocation();

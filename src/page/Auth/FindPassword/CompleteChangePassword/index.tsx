@@ -1,11 +1,11 @@
 import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
 import { useNavigate } from 'react-router-dom';
-import { useRouteCheck, Route } from 'page/Auth/FindPassword/hooks/useRouteCheck';
+import { useRouteCheck } from 'page/Auth/FindPassword/hooks/useRouteCheck';
 import styles from './CompleteChangePassword.module.scss';
 
 export default function CompleteChangePassword() {
   const navigate = useNavigate();
-  useRouteCheck(Route.NEXT_STEP, '/new-password');
+  useRouteCheck('new-password', '/new-password');
 
   return (
     <div className={styles.template}>
