@@ -1,4 +1,3 @@
-// 필요한 모듈과 컴포넌트 임포트
 import { createPortal } from 'react-dom';
 import { useRef } from 'react';
 import { ReactComponent as CancleIcon } from 'assets/svg/addmenu/mobile-cancle-icon.svg';
@@ -7,11 +6,11 @@ import styles from './AddMenuImgModal.module.scss';
 interface AddMenuImgModalProps {
   isOpen: boolean;
   onCancel: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
-  onImageSelect: (image: string) => void; // 이미지 선택 콜백 함수
+  onImageSelect: (image: string) => void;
 }
 
 export default function AddMenuImgModal({ isOpen, onCancel, onImageSelect }: AddMenuImgModalProps) {
-  const fileInputRef = useRef<HTMLInputElement>(null); // 파일 입력을 위한 ref
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -29,7 +28,7 @@ export default function AddMenuImgModal({ isOpen, onCancel, onImageSelect }: Add
   };
 
   const triggerFileInput = () => {
-    fileInputRef.current?.click(); // 파일 입력 트리거
+    fileInputRef.current?.click();
   };
 
   if (!isOpen) return null;

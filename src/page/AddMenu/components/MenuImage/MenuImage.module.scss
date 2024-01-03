@@ -152,5 +152,9 @@
     width: 16.765px;
     height: 16.765px;
     border-radius: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

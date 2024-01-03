@@ -44,7 +44,7 @@ export default function AddMenu() {
             <div className={styles['mobile__menu-content']}>
               <MenuDetail isComplete={isComplete} />
               <MobileDivide />
-              <MenuImage />
+              <MenuImage isComplete={isComplete} />
             </div>
           </div>
           <div className={styles['mobile__button-container']}>
@@ -129,7 +129,7 @@ export default function AddMenu() {
           </div>
           <div className={styles.content}>
             <div className={styles.content__left}>
-              <MenuImage />
+              <MenuImage isComplete={isComplete} />
             </div>
             <div className={styles.content__right}>
               <MenuName isComplete={isComplete} />

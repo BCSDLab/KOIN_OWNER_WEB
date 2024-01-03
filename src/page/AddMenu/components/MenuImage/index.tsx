@@ -6,7 +6,11 @@ import { useState } from 'react';
 import AddMenuImgModal from 'page/AddMenu/components/AddMenuImgModal';
 import styles from './MenuImage.module.scss';
 
-export default function MenuImage() {
+interface MenuImageProps {
+  isComplete:boolean;
+}
+
+export default function MenuImage({ isComplete }:MenuImageProps) {
   const { isMobile } = useMediaQuery();
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [ableselecrteImage, setableselecrteImage] = useState(true);
@@ -53,14 +57,16 @@ export default function MenuImage() {
             {selectedImages.map((image, index) => (
               <div key={image} className={styles['mobile__new-image__item']}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected-image']} />
-                <button
-                  type="button"
-                  onClick={() => handleDeleteImage(image)}
-                  className={styles['mobile__delete-img-button']}
-                  aria-label="Delete image"
-                >
-                  <MobileDeleteImgIcon className={styles['mobile__delete-img-button__icon']} />
-                </button>
+                {isComplete || (
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(image)}
+                    className={styles['mobile__delete-img-button']}
+                    aria-label="Delete image"
+                  >
+                    <MobileDeleteImgIcon className={styles['mobile__delete-img-button__icon']} />
+                  </button>
+                )}
               </div>
             ))}
           </div>
