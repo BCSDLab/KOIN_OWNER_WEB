@@ -37,10 +37,10 @@ export const useLogin = () => {
 };
 
 export const useVerifyEmail = () => {
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
   });
-  return { verifyEmail: { mutate, isLoading, isSuccess } };
+  return { verifyEmail: { mutate, isPending, isSuccess } };
 };
 
 export const useSubmit = () => {
@@ -52,7 +52,7 @@ export const useSubmit = () => {
     }
     :VerifyInput) => findPassword({ address: email, certificationCode: verify }),
     onSuccess: () => {
-      navigate('/new-password', { state: { nextStep: true }, replace: true });
+      navigate('/new-password', { state: { 'find-password': true }, replace: true });
     },
     onError: () => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
@@ -69,7 +69,7 @@ export const useNewPassword = () => {
       { address: email, password },
     ),
     onSuccess: () => {
-      navigate('/complete-change-password', { state: { nextStep: true }, replace: true });
+      navigate('/complete-change-password', { state: { 'new-password': true }, replace: true });
     },
     onError: () => {
     },
