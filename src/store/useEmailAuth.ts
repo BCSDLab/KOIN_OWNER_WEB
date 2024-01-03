@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface EmailAuth {
   email: string;
@@ -11,7 +11,7 @@ const useEmailAuthStore = create(persist<EmailAuth>((set) => ({
   setEmail: (email: string) => set({ email }),
 }), {
   name: 'email-storage',
-  getStorage: () => sessionStorage,
+  storage: createJSONStorage(() => sessionStorage),
 }));
 
 export default useEmailAuthStore;
