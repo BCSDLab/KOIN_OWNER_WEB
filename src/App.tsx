@@ -8,7 +8,7 @@ import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePasswor
 import AuthLayout from 'layout/AuthLayout';
 
 import MyStorePage from 'page/MyShopPage';
-import StoreRegistration from 'page/StoreRegistration';
+import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     <Routes>
       <Route path="/" element={<DefaultLayout />}>
         <Route path="/" element={<MyStorePage />} />
-        <Route path="/store-registration" element={<StoreRegistration />} />
+        <Route path="/store-registration" element={<ShopRegistration />} />
         <Route path="/add-menu" element={<AddMenu />} />
       </Route>
       <Route element={<AuthLayout />}>
