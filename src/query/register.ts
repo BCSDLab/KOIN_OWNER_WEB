@@ -3,7 +3,6 @@ import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
 import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
-// import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
 import useModalStore from 'store/modalStore';
 import useRegisterInfo from 'store/registerStore';
 import useUploadToken from 'store/uploadToken';
@@ -77,7 +76,6 @@ export const useRegisterUser = (goNext:()=>void) => {
 
 export const useGetFileUrls = (goNext:()=>void) => {
   const { ownerInfo, resetRegisterInfo } = useRegisterInfo();
-  const { uploadToken } = useUploadToken();
   const { register } = useRegisterUser(goNext);
   const formData = new FormData();
   ownerInfo.registerFiles?.forEach((file) => {
@@ -85,7 +83,7 @@ export const useGetFileUrls = (goNext:()=>void) => {
   });
   const fileMutation = useMutation({
     mutationKey: ['getFileUrls'],
-    mutationFn: () => getFileUrls(formData, uploadToken!),
+    mutationFn: () => getFileUrls(formData),
     onSuccess: (data) => {
       register.mutate(data.file_urls);
     },

@@ -1,7 +1,4 @@
-import { client } from 'api';
-import axios from 'axios';
-import API_PATH from 'config/constants';
-
+import { client, multipartClient } from 'api';
 import {
   AuthCodeParam,
   AuthCodeResponse,
@@ -31,15 +28,7 @@ export const registerUser = async (param:RegisterParam) => {
   return status;
 };
 
-export const getFileUrls = async (param:FormData, token:string) => {
-  const registerClient = axios.create({
-    baseURL: `${API_PATH}`,
-    timeout: 2000,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-  const { data } = await registerClient.post('/owners/upload/files', param);
+export const getFileUrls = async (param:FormData) => {
+  const { data } = await multipartClient.post('/owners/upload/files', param);
   return FilesResponse.parse(data);
 };
