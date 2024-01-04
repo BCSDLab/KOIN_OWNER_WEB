@@ -1,16 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
 import useStepStore from 'store/useStepStore';
 import useImageUpload from 'utils/hooks/useImageUpload';
 import useShopRegistrationStore from 'store/shopRegistration';
+import { useEffect } from 'react';
 import styles from './Main.module.scss';
 
 export default function Main() {
   const { increaseStep } = useStepStore();
-  const { imageUrl, imgRef, saveImgFile } = useImageUpload();
+  const { imgUrl, imgRef, saveImgFile } = useImageUpload();
   const {
-    name, setName, address, setAddress,
+    name, setName, address, setAddress, imageUrl, setImageUrl,
   } = useShopRegistrationStore();
 
+  useEffect(() => {
+    if (imgUrl !== '') setImageUrl(imgUrl);
+  }, [imgUrl]);
   return (
     <div className={styles.form}>
       <label className={styles['form__image-upload']} htmlFor="mainMenuImage">

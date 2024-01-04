@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
-import useImageUpload from 'utils/hooks/useImageUpload';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation() {
@@ -19,6 +18,7 @@ export default function ShopConfirmation() {
   const {
     category,
     categoryId,
+    imageUrl,
     name,
     address,
     phone,
@@ -29,7 +29,6 @@ export default function ShopConfirmation() {
     payCard,
   } = useShopRegistrationStore();
 
-  const { imageUrl } = useImageUpload();
   const operateTimeState = useOperateTimeState();
 
   const { handleSubmit, setValue } = useForm<OwnerShop>({
