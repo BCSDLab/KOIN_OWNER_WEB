@@ -6,7 +6,7 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
 import { User, UserParam } from 'page/Auth/Signup/types/User';
 import useStepStore from 'store/useStepStore';
-import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
+import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
 import useRegisterInfo from 'store/registerStore';
 import styles from './UserData.module.scss';
 
@@ -14,23 +14,22 @@ type ButtonClickEventProps = {
   goNext: () => void;
 };
 
-const useCheckEmailStep = () => {
+const useCheckEmail = () => {
   const [isFilled, setIsFilled] = useState(false);
-  const checkEmailStep = (userData:User) => {
+  const checkEmail = (userData:User) => {
     if (UserParam.pick({ email: true, password: true }).safeParse(userData).success) {
       setIsFilled(true);
     }
   };
-  return { isFilled, checkEmailStep };
+  return { isFilled, checkEmail };
 };
 export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
   const { userInfo } = useRegisterInfo();
-  const { isDone, checkUserDataStep } = useCheckNextStep();
+  const { isDone, checkUserData } = useCheckNext();
   const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);
-  const { isFilled, checkEmailStep } = useCheckEmailStep();
-
+  const { isFilled, checkEmail } = useCheckEmail();
   useEffect(() => {
     if (step === 1) {
       setRegisterStep(0);
@@ -39,10 +38,10 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
 
   useEffect(() => {
     if (isMobile) {
-      checkEmailStep(userInfo);
+      checkEmail(userInfo);
     }
-    checkUserDataStep(userInfo);
-  }, [userInfo, checkUserDataStep, isMobile, checkEmailStep]);
+    checkUserData(userInfo);
+  }, [userInfo, checkUserData, isMobile, checkEmail]);
 
   const goEmailAuth = () => {
     setRegisterStep(1);

@@ -8,7 +8,7 @@ import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
-import useCheckNextStep from 'page/Auth/Signup/hooks/useCheckNextStep';
+import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
 import { useEffect } from 'react';
 import useRegisterInfo from 'store/registerStore';
 import { useGetFileUrls } from 'query/register';
@@ -19,7 +19,7 @@ type ButtonClickEvent = {
 };
 export default function OwnerData({ goNext }:ButtonClickEvent) {
   const { isMobile } = useMediaQuery();
-  const { isDone, checkOwnerDataStep } = useCheckNextStep();
+  const { isDone, checkOwnerData } = useCheckNext();
   const { ownerInfo: ownerData } = useRegisterInfo();
   const fileMuation = useGetFileUrls(goNext);
   const {
@@ -41,8 +41,8 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
   const { addFiles, deleteFile } = useFileController();
 
   useEffect(() => {
-    checkOwnerDataStep(ownerData);
-  }, [checkOwnerDataStep, ownerData]);
+    checkOwnerData(ownerData);
+  }, [checkOwnerData, ownerData]);
 
   const onSubmit = () => {
     fileMuation.mutate();

@@ -11,7 +11,7 @@ export default function UserEmail() {
   const { isMobile } = useMediaQuery();
   const { userInfo: userData } = useRegisterInfo();
   const {
-    emailHandleSubmit, errors: formErrors, emailDuplicateRegister,
+    emailHandleSubmit, errors, emailDuplicateRegister,
   } = useValidateEmail();
   const {
     isOpen, onSubmit, email, refetch,
@@ -28,7 +28,7 @@ export default function UserEmail() {
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
-            { formErrors.email && <ErrorMessage message={formErrors.email.message} />}
+            { errors.email && <ErrorMessage message={errors.email.message} />}
             {isOpen && <input className={styles['input--code']} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
           {isOpen ? (

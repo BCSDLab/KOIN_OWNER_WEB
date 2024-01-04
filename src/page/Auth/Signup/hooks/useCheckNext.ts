@@ -2,16 +2,16 @@ import { useState } from 'react';
 import { User, UserParam } from 'page/Auth/Signup/types/User';
 import { Owner, OwnerParam } from 'page/Auth/Signup/types/Owner';
 
-export default function useCheckNextStep() {
+export default function useCheckNext() {
   const [isDone, setDone] = useState(false);
 
-  const checkUserDataStep = (userData:User) => {
+  const checkUserData = (userData:User) => {
     if (UserParam.safeParse(userData).success) {
       setDone(true);
     }
   };
 
-  const checkOwnerDataStep = (data:Owner) => {
+  const checkOwnerData = (data:Owner) => {
     const ownerData = {
       ownerName: data.ownerName,
       shopName: data.shopName,
@@ -24,5 +24,5 @@ export default function useCheckNextStep() {
     }
   };
 
-  return { isDone, checkUserDataStep, checkOwnerDataStep };
+  return { isDone, checkUserData, checkOwnerData };
 }
