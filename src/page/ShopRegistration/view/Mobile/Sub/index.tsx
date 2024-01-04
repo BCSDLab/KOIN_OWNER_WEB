@@ -44,7 +44,7 @@ export default function Sub() {
 
   const handleNextClick = () => {
     if (category === '' || name === '' || address === '' || phone === '' || deliveryPrice === '') {
-      alert('필수 입력사항을 입력해주세요.');
+      // TODO: 필수 입력 사항이 없을 때 알림 컴포넌트 띄우기
     } else increaseStep();
   };
 
