@@ -1,5 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { useState } from 'react';
+import cn from 'utils/ts/className';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
@@ -14,7 +15,7 @@ interface MenuPriceProps {
 export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const { isMobile } = useMediaQuery();
   const [priceInputs, setPriceInputs] = useState([{ id: 1, size: '', price: '' }]);
-
+  const [isSingleMenu, setIsSingleMenu] = useState(false);
   const updatePriceInput = (id: number, field: string, newValue: string) => {
     setPriceInputs(
       priceInputs.map((input) => (input.id === id ? { ...input, [field]: newValue } : input)),
@@ -26,7 +27,13 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const deletePriceInput = (id : number) => {
     setPriceInputs(priceInputs.filter((input) => input.id !== id));
   };
-
+  const handleIsSingleMenu = () => {
+    if (isSingleMenu) {
+      setIsSingleMenu(false);
+    } else {
+      setIsSingleMenu(true);
+    }
+  };
   return (
     <div>
       {isMobile ? (
@@ -130,7 +137,18 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 <div className={styles.header__title}>가격</div>
                 <div className={styles.header__condition}>
                   <div className={styles['header__condition-text']}>단일메뉴</div>
-                  <CheckCircleIcon className={styles['header__condition-icon']} />
+                  <button
+                    type="button"
+                    className={styles['header__condition-button']}
+                    onClick={handleIsSingleMenu}
+                  >
+                    <CheckCircleIcon
+                      className={cn({
+                        [styles['header__condition-icon']]: true,
+                        [styles['header__condition-icon--seleted']]: isSingleMenu,
+                      })}
+                    />
+                  </button>
                 </div>
               </div>
               {priceInputs.map((input) => (
