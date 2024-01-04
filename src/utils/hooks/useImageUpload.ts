@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 export default function useImageUpload() {
-  const [imgUrl, setImgUrl] = useState('');
+  const [imageFile, setImageFile] = useState('');
   const imgRef = useRef<HTMLInputElement>(null);
 
   const saveImgFile = () => {
@@ -11,7 +11,7 @@ export default function useImageUpload() {
     reader.onloadend = () => {
       const { result } = reader;
       if (typeof result === 'string') {
-        setImgUrl(result);
+        setImageFile(result);
       }
     };
     if (file) {
@@ -19,5 +19,5 @@ export default function useImageUpload() {
     }
   };
 
-  return { imgUrl, imgRef, saveImgFile };
+  return { imageFile, imgRef, saveImgFile };
 }

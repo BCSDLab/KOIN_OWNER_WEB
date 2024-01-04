@@ -52,7 +52,7 @@ export default function ShopRegistrationPC() {
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
-  const { imgUrl, imgRef, saveImgFile } = useImageUpload();
+  const { imageFile, imgRef, saveImgFile } = useImageUpload();
 
   const {
     openTimeState,
@@ -92,7 +92,7 @@ export default function ShopRegistrationPC() {
   const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
-    if (imgUrl !== '') setImageUrl(imgUrl);
+    if (imageFile !== '') setImageUrl(imageFile);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
@@ -104,7 +104,7 @@ export default function ShopRegistrationPC() {
     setValue('name', name);
     setValue('category_ids', [categoryId]);
     setValue('delivery_price', Number(deliveryPrice));
-  }, [openTimeState, closeTimeState, imgUrl]);
+  }, [openTimeState, closeTimeState, imageFile]);
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };

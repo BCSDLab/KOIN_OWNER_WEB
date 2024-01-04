@@ -8,14 +8,14 @@ import styles from './Main.module.scss';
 
 export default function Main() {
   const { increaseStep } = useStepStore();
-  const { imgUrl, imgRef, saveImgFile } = useImageUpload();
+  const { imageFile, imgRef, saveImgFile } = useImageUpload();
   const {
     name, setName, address, setAddress, imageUrl, setImageUrl,
   } = useShopRegistrationStore();
 
   useEffect(() => {
-    if (imgUrl !== '') setImageUrl(imgUrl);
-  }, [imgUrl]);
+    if (imageFile !== '') setImageUrl(imageFile);
+  }, [imageFile]);
   return (
     <div className={styles.form}>
       <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
