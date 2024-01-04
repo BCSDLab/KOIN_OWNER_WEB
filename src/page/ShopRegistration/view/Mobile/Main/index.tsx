@@ -28,7 +28,7 @@ export default function Main() {
           ref={imgRef}
         />
         {imageUrl
-          ? <img src={imageUrl} className={styles['form__main-menu']} alt="" />
+          ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
           : (
             <>
               <EmptyImgIcon />
