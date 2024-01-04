@@ -1,10 +1,12 @@
 import { z } from 'zod';
 
-export type User = {
-  email?: string,
-  password?: string,
-  isAuthentication?: boolean
-};
+interface Data {
+  email: string,
+  password: string,
+  isAuthentication: boolean
+}
+
+export type User = Partial<Data>;
 
 export const UserParam = z.object({
   email: z.string(),

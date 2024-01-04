@@ -1,18 +1,19 @@
 import { z } from 'zod';
 
-export type Owner = {
-  ownerName?:string,
-  shopName?:string,
-  registrationNumberFront?:string,
-  registrationNumberMiddle?:string,
-  registrationNumberEnd?:string,
-  registrationNumberMobile?:string,
-  phoneFront?:string,
-  phoneMiddle?:string,
-  phoneEnd?:string,
-  phoneMobile?:string,
-  registerFiles?:File[] | null
-};
+interface Data {
+  ownerName:string,
+  shopName:string,
+  registrationNumberFront:string,
+  registrationNumberMiddle:string,
+  registrationNumberEnd:string,
+  registrationNumberMobile:string,
+  phoneFront:string,
+  phoneMiddle:string,
+  phoneEnd:string,
+  phoneMobile:string,
+  registerFiles:File[] | null
+}
+export type Owner = Partial<Data>;
 
 const File = z.object({
   name: z.string(),
