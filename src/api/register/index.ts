@@ -28,7 +28,9 @@ export const registerUser = async (param:RegisterParam) => {
   return status;
 };
 
-export const getFileUrls = async (param:FormData) => {
+export const getFileUrls = async (param:FormData, token:string) => {
+  multipartClient.defaults.headers.common.Authorization = `Bearer ${token}`;
+  console.log('asdf', multipartClient);
   const { data } = await multipartClient.post('/owners/upload/files', param);
   return FilesResponse.parse(data);
 };
