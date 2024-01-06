@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 
 interface OptionPrices {
+  id: number;
   option: string;
-  price: number;
+  price: number | string;
 }
 
 interface AddMenuStore {

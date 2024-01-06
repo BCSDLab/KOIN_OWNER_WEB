@@ -1,11 +1,12 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { useState } from 'react';
-import cn from 'utils/ts/className';
+import useAddMenuStore from 'store/addMenu';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
-import { ReactComponent as CheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
+import { ReactComponent as MobileCheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
+import { ReactComponent as CheckCircleIcon } from 'assets/svg/addmenu/single-menu-check.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
+import { ReactComponent as SelectedCheck } from 'assets/svg/addmenu/selected-check.svg';
 import styles from './MenuPrice.module.scss';
 
 interface MenuPriceProps {
@@ -14,25 +15,27 @@ interface MenuPriceProps {
 
 export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const { isMobile } = useMediaQuery();
-  const [priceInputs, setPriceInputs] = useState([{ id: 1, size: '', price: '' }]);
-  const [isSingleMenu, setIsSingleMenu] = useState(false);
-  const updatePriceInput = (id: number, field: string, newValue: string) => {
-    setPriceInputs(
-      priceInputs.map((input) => (input.id === id ? { ...input, [field]: newValue } : input)),
+  const {
+    optionPrices, setOptionPrices, isSingle, setIsSingle,
+  } = useAddMenuStore();
+
+  const updatePriceInput = (index: number, field: string, newValue: string | number) => {
+    const updatedOptionPrices = optionPrices.map(
+      (price, idx) => (index === idx ? { ...price, [field]: newValue } : price),
     );
+    setOptionPrices(updatedOptionPrices);
   };
+
   const addPriceInput = () => {
-    setPriceInputs([...priceInputs, { id: priceInputs.length + 1, size: '', price: '' }]);
+    const newId = optionPrices.length;
+    setOptionPrices([...optionPrices, { id: newId, option: '', price: '' }]);
   };
-  const deletePriceInput = (id : number) => {
-    setPriceInputs(priceInputs.filter((input) => input.id !== id));
+
+  const deletePriceInput = (index: number) => {
+    setOptionPrices(optionPrices.filter((_, idx) => idx !== index));
   };
   const handleIsSingleMenu = () => {
-    if (isSingleMenu) {
-      setIsSingleMenu(false);
-    } else {
-      setIsSingleMenu(true);
-    }
+    setIsSingle(!isSingle);
   };
   return (
     <div>
@@ -43,11 +46,11 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.mobile__header}>
                 <div className={styles['mobile__header-title--complete']}>가격</div>
               </div>
-              {priceInputs.map((input) => (
+              {optionPrices.map((input) => (
                 <div key={input.id} className={styles['mobile__price-info-text-box']}>
                   <div className={styles['mobile__price-info-text']}>
                     <div className={styles['mobile__price-info-text__size']}>
-                      {input.size}
+                      {input.option}
                     </div>
                     <div>
                       /
@@ -66,16 +69,22 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 <div className={styles['mobile__header-title']}>가격</div>
                 <div className={styles['mobile__header-condition']}>
                   <div className={styles['mobile__header-condition__text']}>단일메뉴</div>
-                  <CheckCircleIcon className={styles['mobile__header-condition__icon']} />
+                  <button
+                    type="button"
+                    className={styles['mobile__header__condition-button']}
+                    onClick={handleIsSingleMenu}
+                  >
+                    <MobileCheckCircleIcon className={styles['mobile__header-condition__icon']} />
+                  </button>
                 </div>
               </div>
-              {priceInputs.map((input) => (
+              {optionPrices.map((input) => (
                 <div key={input.id} className={styles['mobile__price-info-input-box']}>
                   <div className={styles['mobile__price-info-inputs']}>
                     <input
                       className={styles['mobile__price-info-inputs__size-input']}
                       placeholder="예) 소 (1~2 인분)"
-                      value={input.size}
+                      value={input.option}
                       onChange={(e) => updatePriceInput(input.id, 'size', e.target.value)}
                     />
                     <div className={styles['mobile__price-info-inputs__price-input-box']}>
@@ -114,11 +123,11 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.header}>
                 <div className={styles.header__title}>가격</div>
               </div>
-              {priceInputs.map((input) => (
+              {optionPrices.map((input) => (
                 <div key={input.id} className={styles['price-info-text-box']}>
                   <div className={styles['price-info-text']}>
                     <div className={styles['price-info-text__size']}>
-                      {input.size}
+                      {input.option}
                     </div>
                     <div>
                       /
@@ -142,22 +151,22 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                     className={styles['header__condition-button']}
                     onClick={handleIsSingleMenu}
                   >
-                    <CheckCircleIcon
-                      className={cn({
-                        [styles['header__condition-icon']]: true,
-                        [styles['header__condition-icon--seleted']]: isSingleMenu,
-                      })}
-                    />
+                    {isSingle ? (
+                      <SelectedCheck className={styles['header__condition-icon']} />
+                    ) : (
+                      <CheckCircleIcon className={styles['header__condition-icon']} />
+                    )}
                   </button>
+
                 </div>
               </div>
-              {priceInputs.map((input) => (
+              {optionPrices.map((input) => (
                 <div key={input.id} className={styles['price-info-input-box']}>
                   <div className={styles['price-info-inputs']}>
                     <input
                       className={styles['price-info-inputs__size-input']}
                       placeholder="예) 소 (1~2 인분)"
-                      value={input.size}
+                      value={input.option}
                       onChange={(e) => updatePriceInput(input.id, 'size', e.target.value)}
                     />
                     <div className={styles['price-info-inputs__price-input-box']}>
