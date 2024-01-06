@@ -1,5 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { useState } from 'react';
+import useAddMenuStore from 'store/addMenu';
 import styles from './MenuDetail.module.scss';
 
 interface MenuCategoryProps {
@@ -7,9 +7,9 @@ interface MenuCategoryProps {
 }
 export default function MenuDetail({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
-  const [detail, setDetail] = useState('');
+  const { description, setDescription } = useAddMenuStore();
   const handleDetailChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDetail(e.target.value);
+    setDescription(e.target.value);
   };
   return (
     <div>
@@ -17,13 +17,13 @@ export default function MenuDetail({ isComplete }:MenuCategoryProps) {
         <div className={styles.mobile__container}>
           <div className={styles.mobile__caption}>메뉴구성</div>
           {isComplete ? (
-            <div className={styles['mobile__menu-detail-input--complete']}>{detail}</div>
+            <div className={styles['mobile__menu-detail-input--complete']}>{description}</div>
           ) : (
             <textarea
               className={styles['mobile__menu-detail-input']}
               placeholder=" 예) 불족발(소,중,대) + 막국수 + 랜덤 서비스 음료(500ml)"
               onChange={handleDetailChange}
-              value={detail}
+              value={description}
             />
           )}
         </div>
@@ -31,13 +31,13 @@ export default function MenuDetail({ isComplete }:MenuCategoryProps) {
         <div className={styles.container}>
           <div className={styles.caption}>메뉴구성</div>
           {isComplete ? (
-            <div className={styles['menu-detail-input--complete']}>{detail}</div>
+            <div className={styles['menu-detail-input--complete']}>{description}</div>
           ) : (
             <textarea
               className={styles['menu-detail-input']}
               placeholder=" 예) 불족발(소,중,대) + 막국수 + 랜덤 서비스 음료(500ml)"
               onChange={handleDetailChange}
-              value={detail}
+              value={description}
             />
           )}
         </div>

@@ -28,7 +28,9 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
 
   const addPriceInput = () => {
     const newId = optionPrices.length;
-    setOptionPrices([...optionPrices, { id: newId, option: '', price: '' }]);
+    if (!isSingle) {
+      setOptionPrices([...optionPrices, { id: newId, option: '', price: '' }]);
+    }
   };
 
   const deletePriceInput = (index: number) => {
@@ -167,7 +169,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       className={styles['price-info-inputs__size-input']}
                       placeholder="예) 소 (1~2 인분)"
                       value={input.option}
-                      onChange={(e) => updatePriceInput(input.id, 'size', e.target.value)}
+                      onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
                     />
                     <div className={styles['price-info-inputs__price-input-box']}>
                       <input

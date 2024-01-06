@@ -30,7 +30,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   imageUrl: [],
   isSingle: false,
   name: '',
-  optionPrices: [],
+  optionPrices: [{ id: 0, option: '', price: '' }],
   singlePrice: 0,
   setCategoryIds: (categoryIds) => set({ categoryIds }),
   setDescription: (description) => set({ description }),
