@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import useAddMenuStore from 'store/addMenu';
+import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import styles from './MenuCategory.module.scss';
 
@@ -14,22 +16,23 @@ interface MenuCategoryProps {
 
 export default function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
-  const [menuCategories/* , setMenuCategories */] = useState<MenuCategory[]>([
-    { id: 1, name: '이벤트 메뉴' },
-    { id: 2, name: '대표 메뉴' },
-    { id: 3, name: '사이드 메뉴' },
-    { id: 4, name: '세트 메뉴' },
-  ]);
+  const { shopData } = useMyShop();
+  const { setCategoryIds } = useAddMenuStore();
   const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
   const appendSelectCategory = (category: MenuCategory) => {
     if (selectedCategories.some((alreadySelected) => alreadySelected.id === category.id)) {
-      setSelectedCategories(
-        selectedCategories.filter((alreadySelected) => alreadySelected.id !== category.id),
+      const newSelected = selectedCategories.filter(
+        (alreadySelected) => alreadySelected.id !== category.id,
       );
+      setSelectedCategories(newSelected);
+      setCategoryIds(newSelected.map((cat) => cat.id));
     } else {
-      setSelectedCategories([...selectedCategories, category]);
+      const newSelected = [...selectedCategories, category];
+      setSelectedCategories(newSelected);
+      setCategoryIds(newSelected.map((cat) => cat.id));
     }
   };
+
   return (
     <div>
       {isMobile ? (
@@ -68,7 +71,7 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
                 <GearIcon className={styles['mobile__category-header__icon']} />
               </div>
               <div className={styles['mobile__category-button-container']}>
-                {menuCategories.map((category) => (
+                {shopData && shopData.menu_categories.map((category) => (
                   <button
                     key={category.id}
                     className={cn({
@@ -121,7 +124,7 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
                 <GearIcon className={styles['category-header__icon']} />
               </div>
               <div className={styles['category-button-container']}>
-                {menuCategories.map((category) => (
+                {shopData && shopData.menu_categories.map((category) => (
                   <button
                     key={category.id}
                     className={cn({

@@ -1,5 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { useState } from 'react';
+import useAddMenuStore from 'store/addMenu';
 import styles from './MenuName.module.scss';
 
 interface MenuNameProps {
@@ -8,7 +8,7 @@ interface MenuNameProps {
 
 export default function MenuName({ isComplete }: MenuNameProps) {
   const { isMobile } = useMediaQuery();
-  const [name, setName] = useState('');
+  const { name, setName } = useAddMenuStore();
   const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
