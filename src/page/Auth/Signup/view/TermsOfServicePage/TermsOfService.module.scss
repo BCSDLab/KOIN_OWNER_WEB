@@ -53,6 +53,8 @@
   width: 100%;
 
   @include media.media-breakpoint-down(mobile) {
+    position: absolute;
+    bottom: 0;
     width: 100%;
     background-color: #ffffff;
     display: flex;

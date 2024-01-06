@@ -3,16 +3,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  @include media.media-breakpoint-down(mobile) {
-    gap: 24px;
-  }
 
   &__label {
     display: block;
     font-size: 18px;
     margin-bottom: 8px;
+    margin-top: 16px;
 
     @include media.media-breakpoint-down(mobile) {
       display: none;
@@ -23,6 +19,8 @@
     width: calc(100% - 34px);
     border: 1px solid #d2dae2;
     padding: 13px 16px;
+    height: 22px;
+    font-size: 14px;
 
     @include media.media-breakpoint-down(mobile) {
       width: 100%;
@@ -33,6 +31,7 @@
       padding: 0;
       font-size: 15px;
       padding-bottom: 8px;
+      margin-top: 24px;
 
       &::placeholder {
         color: #d2dae2;
@@ -41,6 +40,10 @@
       &:focus {
         border-bottom: 1px solid #252525;
         color: #252525;
+      }
+
+      &:nth-child(1) {
+        margin-top: 0;
       }
     }
 
@@ -54,6 +57,7 @@
         text-align: center;
         width: calc(88px - 34px);
         padding: 10px 16px;
+        height: 22px;
       }
 
       &--middle {
@@ -62,6 +66,7 @@
         text-align: center;
         width: calc(72px - 52px);
         padding: 10px 26px;
+        height: 22px;
       }
 
       &--last {
@@ -70,6 +75,48 @@
         text-align: center;
         width: calc(144px - 94px);
         padding: 10px 47px;
+        height: 22px;
+      }
+
+      &::after {
+        display: block;
+        content: "";
+        width: 16px;
+        height: 0;
+        border: 1px solid black;
+        margin: 6px;
+      }
+    }
+
+    &__phone-number {
+      display: flex;
+      align-items: center;
+
+      &--first {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: calc(88px - 34px);
+        padding: 10px 16px;
+        height: 22px;
+      }
+
+      &--middle {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: 108px;
+        padding: 10px 0;
+        height: 22px;
+      }
+
+      &--last {
+        border: 1px solid #d2dae2;
+        font-size: 18px;
+        text-align: center;
+        width: 108px;
+        padding: 10px 0;
+        height: 22px;
       }
 
       &::after {
@@ -87,18 +134,93 @@
 .input {
   display: flex;
   align-items: center;
+
+  &__shop-name {
+    &--wrapper {
+      display: flex;
+      align-items: end;
+    }
+
+    width: calc(272px - 34px);
+    font-size: 14px;
+    border: 1px solid #d2dae2;
+    padding: 13px 16px;
+    margin-right: 16px;
+    height: 22px;
+    margin-top: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 77%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #d2dae2;
+      color: #d2dae2;
+      padding: 0;
+      font-size: 15px;
+      padding-bottom: 8px;
+
+      &::placeholder {
+        color: #d2dae2;
+      }
+
+      &:focus {
+        border-bottom: 1px solid #252525;
+        color: #252525;
+      }
+    }
+  }
 }
 
 .file-box {
-  width: calc(368px - 64px);
-  height: calc(218px - 85px);
+  display: block;
+  width: calc(368px - 50px);
+  height: calc(218px - 48px);
   border: 1px dashed #d2dae2;
-  padding: 45px 31px 40px;
+  padding: 24px;
+  overflow-y: scroll;
+  z-index: 999;
+
+  &:hover {
+    border: 1px dashed #252525;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &.active {
+    background-color: #efeef3;
+    border: 1px dashed #252525;
+  }
 
   @include media.media-breakpoint-down(mobile) {
     width: calc(100% - 78px);
     height: calc(125px - 68px);
-    padding: 36px 38px 32px;
+    padding: 26px 38px 32px;
+    margin-top: 16px;
+  }
+
+  &__files {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__file {
+    all: unset;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: start;
+
+    &--name {
+      width: 90%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 15px;
+      color: #858585;
+    }
   }
 
   &__command {
@@ -106,6 +228,7 @@
     font-size: 14px;
     display: block;
     margin-top: 21px;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       font-size: 12px;
@@ -119,6 +242,7 @@
     font-size: 14px;
     display: block;
     color: #858585;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       margin: 0;
@@ -132,10 +256,12 @@
     border: 1px solid #f7941e;
     border-radius: 13%;
     margin: 0 auto;
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    pointer-events: none;
 
     @include media.media-breakpoint-down(mobile) {
       width: 18px;
@@ -192,9 +318,7 @@
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    bottom: 0;
-    margin: 0;
+    margin-top: 16px;
   }
 
   &__mobile-button {

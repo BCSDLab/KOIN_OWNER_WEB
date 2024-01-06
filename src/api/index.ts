@@ -3,6 +3,7 @@
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import API_PATH from 'config/constants';
 import { RefreshParams, RefreshResponse } from 'model/auth';
+import useUploadToken from 'store/uploadToken';
 
 const client = axios.create({
   baseURL: `${API_PATH}`,
@@ -12,6 +13,15 @@ const client = axios.create({
 const accessClient = axios.create({
   baseURL: `${API_PATH}`,
   timeout: 2000,
+});
+
+const multipartClient = axios.create({
+  baseURL: `${API_PATH}`,
+  timeout: 2000,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('upload_token')}`,
+    'Content-Type': 'multipart/form-data',
+  },
 });
 
 const refresh = async (config: InternalAxiosRequestConfig) => {
@@ -63,4 +73,12 @@ accessClient.interceptors.response.use(
   },
 );
 
-export { client, accessClient };
+multipartClient.interceptors.request.use(
+  (config) => {
+    const { uploadToken } = useUploadToken();
+    config.headers.Authorization = `Bearer ${uploadToken}`;
+    config.headers['Content-Type'] = 'multipart/form-data';
+    return config;
+  },
+);
+export { client, accessClient, multipartClient };
