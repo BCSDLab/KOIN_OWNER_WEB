@@ -11,8 +11,8 @@ export default function usePasswordConfirm() {
   const {
     register,
     formState: { errors },
-    getValues,
     handleSubmit,
+    getValues,
   } = useForm<PasswordForm>();
 
   const passwordRegister = register('password', {

@@ -1,6 +1,11 @@
-import { client } from 'api';
+import { client, multipartClient } from 'api';
 import {
-  AuthCodeParam, AuthCodeResponse, EmailRegisterParam, EmailRegisterResponse,
+  AuthCodeParam,
+  AuthCodeResponse,
+  EmailRegisterParam,
+  EmailRegisterResponse,
+  FilesResponse,
+  RegisterParam,
 } from 'model/register';
 
 export const getEmailDuplicate = async (param: string) => {
@@ -16,4 +21,14 @@ export const getEmailAuthCode = async (param: EmailRegisterParam) => {
 export const verificationAuthCode = async (param:AuthCodeParam) => {
   const { data } = await client.post<AuthCodeResponse>('/owners/verification/code', param);
   return AuthCodeResponse.parse(data);
+};
+
+export const registerUser = async (param:RegisterParam) => {
+  const { status } = await client.post('/owners/register', param);
+  return status;
+};
+
+export const getFileUrls = async (param:FormData) => {
+  const { data } = await multipartClient.post('/owners/upload/files', param);
+  return FilesResponse.parse(data);
 };

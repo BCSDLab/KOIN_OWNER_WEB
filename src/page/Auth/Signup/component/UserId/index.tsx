@@ -1,24 +1,18 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useCheckEmailDuplicate from 'page/Auth/Signup/hooks/useCheckEmailDuplicate';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import styles from './UserId.module.scss';
 
-interface EmailInputProps {
-  setId: (data:RegisterData) => void,
-  userData: RegisterData
-}
-
-export default function UserId({ setId, userData }:EmailInputProps) {
+export default function UserId() {
   const { isMobile } = useMediaQuery();
   const {
     emailHandleSubmit, errors: formErros, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
     status, onSubmit, onMobileSubmit, email, errorMessage: requestError,
-  } = useCheckEmailDuplicate(userData, setId, isMobile);
+  } = useCheckEmailDuplicate(isMobile);
 
   return (
     <form
