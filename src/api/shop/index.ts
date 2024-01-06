@@ -25,6 +25,6 @@ export const getShopList = async () => {
   return ShopListRes.parse(data);
 };
 
-export const addMenu = (shopid:number, param: NewMenu) => client.post(`/owner/shops/${shopid}/menus`, param);
+export const addMenu = (shopid:number, param: NewMenu) => accessClient.post(`/owner/shops/${shopid}/menus`, param);
 
 export const postShop = (data: OwnerShop) => accessClient.post('/owner/shops', data);

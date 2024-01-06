@@ -1,6 +1,8 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState } from 'react';
+import useMyShop from 'query/shop';
+import useAddMenuStore from 'store/addMenu';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -13,6 +15,7 @@ import MobileDivide from './components/MobileDivide';
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
+
   const toggleConfirmClick = () => {
     setIsComplete((prevState) => !prevState);
   };
@@ -21,6 +24,33 @@ export default function AddMenu() {
     setTrue: openGoMyShopModal,
     setFalse: closeGOMyShopModal,
   } = useBooleanState(false);
+  const {
+    categoryIds,
+    description,
+    imageUrl,
+    isSingle,
+    name,
+    optionPrices,
+    singlePrice,
+  } = useAddMenuStore();
+  const { addMenuMutation } = useMyShop();
+
+  const addMenu = () => {
+    const newMenuData = {
+      category_ids: categoryIds,
+      description,
+      image_urls: imageUrl,
+      is_single: isSingle,
+      name,
+      option_prices: optionPrices.map(({ option, price }) => ({
+        option,
+        price: typeof price === 'string' ? parseFloat(price) : price,
+      })),
+      single_price: singlePrice,
+    };
+
+    addMenuMutation(newMenuData);
+  };
   return (
     <div>
       {isMobile ? (
@@ -138,7 +168,11 @@ export default function AddMenu() {
               <MenuDetail isComplete={isComplete} />
             </div>
           </div>
-          <GoMyShopModal isOpen={isGoMyShopModal} onCancel={closeGOMyShopModal} />
+          <GoMyShopModal
+            isOpen={isGoMyShopModal}
+            onCancel={closeGOMyShopModal}
+            onConfirm={addMenu}
+          />
         </div>
       )}
     </div>

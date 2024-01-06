@@ -7,7 +7,7 @@ export const OptionPrice = z.object({
 export type OptionPrice = z.infer<typeof OptionPrice>;
 
 export const NewMenu = z.object({
-  category_id: z.array(z.string()),
+  category_ids: z.array(z.number()),
   description: z.string().nullable(),
   image_urls: z.array(z.string()),
   is_single: z.boolean(),
