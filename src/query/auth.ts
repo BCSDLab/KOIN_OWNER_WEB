@@ -1,12 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { postLogin, findPasswordVerify, findPassword } from 'api/auth';
+import {
+  postLogin, findPasswordVerify, findPassword, newPassword,
+} from 'api/auth';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
 
 interface VerifyInput {
-  emailInput: string;
-  verifyInput: string;
+  email: string;
+  verify: string;
 }
 
 export const useLogin = () => {
@@ -35,25 +37,41 @@ export const useLogin = () => {
 };
 
 export const useVerifyEmail = () => {
-  const { mutate, isLoading, isSuccess } = useMutation({
+  const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
   });
-  return { verifyEmail: { mutate, isLoading, isSuccess } };
+  return { verifyEmail: { mutate, isPending, isSuccess } };
 };
 
 export const useSubmit = () => {
   const navigate = useNavigate();
   const { mutate: submit } = useMutation({
     mutationFn: ({
-      emailInput,
-      verifyInput,
+      email,
+      verify,
     }
-    :VerifyInput) => findPassword({ address: emailInput, certificationCode: verifyInput }),
+    :VerifyInput) => findPassword({ address: email, certificationCode: verify }),
     onSuccess: () => {
-      navigate('/new-password', { state: { authCheck: true }, replace: true });
+      navigate('/new-password', { state: { 'find-password': true }, replace: true });
     },
     onError: () => {
       // TODO: 이메일 인증 실패 시 UI 처리 필요
+    },
+  });
+  return submit;
+};
+
+export const useNewPassword = () => {
+  const navigate = useNavigate();
+  const { mutate: submit } = useMutation({
+    mutationFn: ({ email, password }:
+    { email: string, password: string }) => newPassword(
+      { address: email, password },
+    ),
+    onSuccess: () => {
+      navigate('/complete-change-password', { state: { 'new-password': true }, replace: true });
+    },
+    onError: () => {
     },
   });
   return submit;

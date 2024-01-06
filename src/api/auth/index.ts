@@ -28,3 +28,5 @@ export const findPassword = ({
   address,
   certification_code: certificationCode,
 });
+
+export const newPassword = ({ address, password }: { address: string, password: string }) => client.put('/owners/password/reset', { address, password });
