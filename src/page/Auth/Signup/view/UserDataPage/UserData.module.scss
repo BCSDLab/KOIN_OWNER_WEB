@@ -7,13 +7,16 @@
 }
 
 .buttons {
+  margin-top: 145px;
+
   @include media.media-breakpoint-down(mobile) {
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    margin: 0;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    bottom: 0;
   }
 
   &__mobile-button {

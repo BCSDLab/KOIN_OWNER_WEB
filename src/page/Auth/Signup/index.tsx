@@ -21,7 +21,7 @@ export default function Signup() {
   const STEPS = [
     <TermsOfService clickEvent={goNext} termsRef={termsRef} />,
     <UserData goNext={goNext} />,
-    <OwnerData clickEvent={goNext} />,
+    <OwnerData goNext={goNext} />,
   ];
   return (
     <div className={styles.page}>

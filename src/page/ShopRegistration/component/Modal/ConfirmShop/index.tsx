@@ -4,6 +4,7 @@ import styles from './ConfirmShop.module.scss';
 interface ShopInfo {
   name: string;
   phone: string;
+  id: string;
 }
 
 interface ConfirmShopProps {

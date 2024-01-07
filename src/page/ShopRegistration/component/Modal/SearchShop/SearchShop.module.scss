@@ -56,6 +56,9 @@
   }
 
   &__title {
+    display: block;
+    max-width: 220px;
+    text-align: start;
     font-size: 15px;
   }
 

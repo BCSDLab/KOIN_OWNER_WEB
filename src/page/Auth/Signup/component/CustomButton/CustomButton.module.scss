@@ -51,4 +51,22 @@
       background-color: #c4c4c4;
     }
   }
+
+  &--mobile-small {
+    width: 83px;
+    height: 37px;
+    font-weight: 500;
+    font-size: 15px;
+    background-color: #175c8e;
+    color: #ffffff;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      background-color: #c4c4c4;
+    }
+  }
 }

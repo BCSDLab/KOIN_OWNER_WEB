@@ -1,15 +1,14 @@
 import { useVerificationAuthCode } from 'query/register';
 import { useEffect, useRef, useState } from 'react';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import useRegisterInfo from 'store/registerStore';
 
 export default function useVerification(
   eamil:string,
-  setAuthenticate:(data:RegisterData) => void,
-  userData:RegisterData,
 ) {
   const [code, setCode] = useState('');
   const [errorMessage, setMessage] = useState(null);
   const codeInput = useRef<HTMLInputElement>(null);
+  const { userInfo: userData, setUserInfo: setAuthenticate } = useRegisterInfo();
   const {
     status, refetch, isError, error,
   } = useVerificationAuthCode(code, eamil);

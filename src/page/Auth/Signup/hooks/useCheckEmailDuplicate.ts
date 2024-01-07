@@ -1,21 +1,19 @@
 import { useCheckDuplicate } from 'query/register';
 import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { User } from 'page/Auth/Signup/types/User';
+import useRegisterInfo from 'store/registerStore';
 
-export default function useCheckEmailDuplicate(
-  userData:RegisterData,
-  setId: (data:RegisterData) => void,
-  isMobile: boolean,
-) {
+export default function useCheckEmailDuplicate(isMobile: boolean) {
   const [email, setEmail] = useState<string>('');
   const [errorMessage, setMessage] = useState('');
   const { status, refetch, error } = useCheckDuplicate(email);
+  const { userInfo: userData, setUserInfo: setId } = useRegisterInfo();
 
-  const onSubmit:SubmitHandler<RegisterData> = (data) => {
+  const onSubmit:SubmitHandler<User> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
   };
-  const onMobileSubmit:SubmitHandler<RegisterData> = (data) => {
+  const onMobileSubmit:SubmitHandler<User> = (data) => {
     if (isMobile) {
       onSubmit(data);
     }

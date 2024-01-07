@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
+import { User } from 'page/Auth/Signup/types/User';
 
 const REG_EX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -9,7 +9,7 @@ export default function useValidateEmail() {
     handleSubmit: emailHandleSubmit,
     formState: { errors },
     watch,
-  } = useForm<RegisterData>({ mode: 'onSubmit' });
+  } = useForm<User>({ mode: 'onSubmit' });
   const emailDuplicateRegister = emailRegister('email', {
     required: { value: true, message: '이메일을 입력해주세요.' },
     pattern: {

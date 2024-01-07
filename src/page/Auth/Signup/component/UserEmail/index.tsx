@@ -1,30 +1,25 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
-import { RegisterData } from 'page/Auth/Signup/types/RegisterData';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import useRegisterInfo from 'store/registerStore';
 import styles from './UserEmail.module.scss';
 
-type ButtonClickEvent = {
-  goNext?: () => void;
-  userData: RegisterData,
-  setAuthenticate: (data:RegisterData) => void
-};
-
-export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent) {
+export default function UserEmail() {
   const { isMobile } = useMediaQuery();
+  const { userInfo: userData } = useRegisterInfo();
   const {
-    emailHandleSubmit, errors: formErrors, emailDuplicateRegister, watch,
+    emailHandleSubmit, errors, emailDuplicateRegister,
   } = useValidateEmail();
   const {
-    isOpen, onSubmit, errorMessage: requestError, email, refetch,
+    isOpen, onSubmit, email, refetch,
   } = useAuthCheck(userData.email ? userData.email : '', isMobile);
   const {
     verificationCode,
     codeInput, errorMessage: verificateError,
-  } = useVerification(email, setAuthenticate, userData);
+  } = useVerification(email);
 
   return (
     !isMobile
@@ -33,28 +28,30 @@ export default function UserEmail({ userData, setAuthenticate }:ButtonClickEvent
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
-            {isOpen && <input className={styles.input} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
+            { errors.email && <ErrorMessage message={errors.email.message} />}
+            {isOpen && <input className={styles['input--code']} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
-          { formErrors.email && <ErrorMessage message={formErrors.email.message} />}
-          {(!formErrors.email && requestError && email === watch().email)
-           && <ErrorMessage message={requestError} />}
-          { verificateError && <ErrorMessage message={verificateError} />}
           {isOpen ? (
             <>
-              <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
-              <CustomButton
-                buttonSize="large"
-                content="인증완료"
-                onClick={verificationCode}
-                disable={userData.isAuthentication}
-              />
+              { verificateError ? <ErrorMessage message={verificateError} />
+                : <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>}
+              <div className={styles.button}>
+                <CustomButton
+                  buttonSize="large"
+                  content="인증완료"
+                  onClick={verificationCode}
+                  disable={userData.isAuthentication}
+                />
+              </div>
             </>
           ) : (
-            <CustomButton
-              buttonSize="large"
-              content="인증번호발송"
-              submit
-            />
+            <div className={styles.button}>
+              <CustomButton
+                buttonSize="large"
+                content="인증번호발송"
+                submit
+              />
+            </div>
           )}
         </form>
       )

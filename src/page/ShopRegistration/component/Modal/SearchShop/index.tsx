@@ -15,6 +15,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
   const [selectedStore, setSelectedStore] = useState({
     name: '',
     phone: '',
+    id: '',
   });
   const { value: showConfirmStore, setValue: setConfirmStore } = useBooleanState(false);
   const [searchText, setSearchText] = useState('');
@@ -22,16 +23,18 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
   const { shopList, isError } = useShopList();
 
   function handleClickStore(e: React.MouseEvent<HTMLButtonElement>) {
-    const { name, phone } = JSON.parse(e.currentTarget.value);
+    const { name, phone, id } = JSON.parse(e.currentTarget.value);
     if (!showConfirmStore) {
       setSelectedStore({
         name,
         phone,
+        id,
       });
     } else {
       setSelectedStore({
         name: '',
         phone: '',
+        id: '',
       });
     }
   }
@@ -94,6 +97,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
             value={JSON.stringify({
               name: shop.name,
               phone: shop.phone,
+              id: shop.id,
             })}
             type="button"
             onClick={(e) => {
