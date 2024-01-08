@@ -1,34 +1,36 @@
 import useShopCategory from 'query/shopCategory';
-import { useState } from 'react';
 import cn from 'utils/ts/className';
-import useModalStore from 'store/modalStore';
 import { Category as CategoryProps } from 'model/category/storeCategory';
+import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './Category.module.scss';
 
 export default function Category() {
-  const [selectedCategory, setSelectedCategory] = useState('');
   const { categoryList } = useShopCategory();
-  const { setCategoryState } = useModalStore();
+  const { category, setCategory, setCategoryId } = useShopRegistrationStore();
 
-  const handleCategoryClick = (category: CategoryProps) => {
-    setSelectedCategory(category.name);
-    setCategoryState([category.name, category.id]);
+  const handleCategoryClick = (categoryInfo: CategoryProps) => {
+    setCategory(categoryInfo.name);
+    setCategoryId(categoryInfo.id);
   };
 
   return (
     <div className={styles.category}>
-      {categoryList?.shop_categories.filter((_, index) => index > 0).map((category) => (
+      {categoryList?.shop_categories.filter((_, index) => index > 0).map((categoryInfo) => (
         <button
           className={cn({
             [styles.category__menu]: true,
-            [styles['category__menu--selected']]: category.name === selectedCategory,
+            [styles['category__menu--selected']]: categoryInfo.name === category,
           })}
           type="button"
-          onClick={() => { handleCategoryClick(category); }}
-          key={category.id}
+          onClick={() => { handleCategoryClick(categoryInfo); }}
+          key={categoryInfo.id}
         >
-          <img className={styles.category__image} src={category.image_url} alt="" />
-          <span className={styles.category__type}>{category.name}</span>
+          <img
+            className={styles.category__image}
+            src={categoryInfo.image_url}
+            alt={categoryInfo.name}
+          />
+          <span className={styles.category__type}>{categoryInfo.name}</span>
         </button>
       ))}
     </div>

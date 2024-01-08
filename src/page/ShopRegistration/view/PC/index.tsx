@@ -25,6 +25,7 @@ import { postShop } from 'api/shop';
 import useImageUpload from 'utils/hooks/useImageUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
+import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -51,16 +52,21 @@ export default function ShopRegistrationPC() {
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
-  const { imgFile, imgRef, saveImgFile } = useImageUpload();
+  const { imageFile, imgRef, saveImgFile } = useImageUpload();
 
   const {
-    categoryState,
-    searchShopState,
-    setSearchShopState,
     openTimeState,
     closeTimeState,
     shopClosedState,
   } = useModalStore();
+
+  const {
+    setImageUrl, setName, setDelivery, setPayCard, setPayBank,
+  } = useShopRegistrationStore();
+
+  const {
+    imageUrl, categoryId, category, name, delivery, payCard, payBank, deliveryPrice,
+  } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
 
@@ -86,6 +92,7 @@ export default function ShopRegistrationPC() {
   const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
+    if (imageFile !== '') setImageUrl(imageFile);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
@@ -93,11 +100,11 @@ export default function ShopRegistrationPC() {
       open_time: openTimeArray[index],
     }));
     setValue('open', openValue);
-    setValue('image_urls', [imgFile]);
-    setValue('name', searchShopState);
-    setValue('category_ids', [categoryState[1]]);
-  }, [openTimeState, closeTimeState, imgFile]);
-
+    setValue('image_urls', [imageUrl]);
+    setValue('name', name);
+    setValue('category_ids', [categoryId]);
+    setValue('delivery_price', Number(deliveryPrice));
+  }, [openTimeState, closeTimeState, imageFile]);
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
@@ -150,8 +157,8 @@ export default function ShopRegistrationPC() {
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  {imgFile
-                    ? <img src={imgFile} className={styles['form__main-menu']} alt="" />
+                  {imageUrl
+                    ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
                     : (
                       <>
                         <Cutlery className={styles['form__cutlery-cross']} />
@@ -166,7 +173,7 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={categoryState[0]}
+                    value={category}
                     readOnly
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
@@ -198,9 +205,9 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles.form__input}
-                    value={searchShopState}
+                    value={name}
                     onChange={(e) => {
-                      setSearchShopState(e.target.value);
+                      setName(e.target.value);
                     }}
                   />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
@@ -270,15 +277,36 @@ export default function ShopRegistrationPC() {
               <InputBox content="기타정보" id="description" register={register} inputType="text" />
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} {...register('delivery')} />
+                  <input
+                    type="checkbox"
+                    id="delivery"
+                    className={styles['form__checkbox-input']}
+                    {...register('delivery')}
+                    onChange={(e) => setDelivery(e.target.checked)}
+                    checked={delivery}
+                  />
                   <span>배달 가능</span>
                 </label>
                 <label htmlFor="card" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="card" className={styles['form__checkbox-input']} {...register('pay_card')} />
+                  <input
+                    type="checkbox"
+                    id="card"
+                    className={styles['form__checkbox-input']}
+                    {...register('pay_card')}
+                    onChange={(e) => setPayCard(e.target.checked)}
+                    checked={payCard}
+                  />
                   <span>카드 가능</span>
                 </label>
                 <label htmlFor="bank" className={styles['form__checkbox-label']}>
-                  <input type="checkbox" id="bank" className={styles['form__checkbox-input']} {...register('pay_bank')} />
+                  <input
+                    type="checkbox"
+                    id="bank"
+                    className={styles['form__checkbox-input']}
+                    {...register('pay_bank')}
+                    onChange={(e) => setPayBank(e.target.checked)}
+                    checked={payBank}
+                  />
                   <span>계좌이체 가능</span>
                 </label>
               </div>
