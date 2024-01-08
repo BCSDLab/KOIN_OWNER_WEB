@@ -21,7 +21,15 @@ export default function Sub() {
   } = useShopRegistrationStore();
 
   const {
-    phone, deliveryPrice, description, delivery, payBank, payCard,
+    category,
+    name,
+    address,
+    phone,
+    deliveryPrice,
+    description,
+    delivery,
+    payBank,
+    payCard,
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
@@ -32,6 +40,12 @@ export default function Sub() {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
     return formattedPhoneNumber;
+  };
+
+  const handleNextClick = () => {
+    if (category === '' || name === '' || address === '' || phone === '' || deliveryPrice === '') {
+      // TODO: 필수 입력 사항이 없을 때 알림 컴포넌트 띄우기
+    } else increaseStep();
   };
 
   if (showOperateTime) {
@@ -144,7 +158,7 @@ export default function Sub() {
         </label>
       </div>
       <div className={styles.form__button}>
-        <button type="button" onClick={increaseStep}>다음</button>
+        <button type="button" onClick={handleNextClick}>다음</button>
       </div>
     </div>
   );

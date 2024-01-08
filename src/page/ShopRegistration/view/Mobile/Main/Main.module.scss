@@ -35,6 +35,11 @@
     display: none;
   }
 
+  &__main-menu {
+    max-width: 295px;
+    max-height: 200px;
+  }
+
   &__text {
     margin-top: 8px;
     font-size: 14px;

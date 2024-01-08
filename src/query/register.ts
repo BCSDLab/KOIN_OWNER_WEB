@@ -31,20 +31,16 @@ export const useGenerateAuthCode = (email:string) => {
 };
 
 export const useVerificationAuthCode = (code:string, email:string) => {
-  const { setUploadToken } = useUploadToken();
   const {
-    status, refetch, isError, error, isSuccess, data,
+    status, refetch, isError, error, data,
   } = useQuery({
     queryKey: ['verificationCode', code],
     queryFn: () => verificationAuthCode({ certification_code: code, address: email }),
     enabled: false,
   });
-  if (isSuccess && data.token) {
-    setUploadToken(data.token);
-  }
 
   return {
-    status, refetch, isError, error,
+    status, refetch, isError, error, data,
   };
 };
 
@@ -67,7 +63,7 @@ export const useRegisterUser = (goNext:()=>void) => {
       resetRegisterInfo();
     },
     onError: () => {
-      alert('에러가 발생했습니다. 처음부터 다시 진행해주세요');
+      alert('회원가입 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
       resetRegisterInfo();
     },
   });
@@ -78,17 +74,18 @@ export const useGetFileUrls = (goNext:()=>void) => {
   const { ownerInfo, resetRegisterInfo } = useRegisterInfo();
   const { register } = useRegisterUser(goNext);
   const formData = new FormData();
+  const { uploadToken } = useUploadToken();
   ownerInfo.registerFiles?.forEach((file) => {
     formData.append('files', file);
   });
   const fileMutation = useMutation({
     mutationKey: ['getFileUrls'],
-    mutationFn: () => getFileUrls(formData),
+    mutationFn: () => getFileUrls(formData, uploadToken!),
     onSuccess: (data) => {
       register.mutate(data.file_urls);
     },
     onError: () => {
-      alert('에러가 발생했습니다. 처음부터 다시 진행해주세요');
+      alert('파일 업로드 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
       resetRegisterInfo();
     },
 
