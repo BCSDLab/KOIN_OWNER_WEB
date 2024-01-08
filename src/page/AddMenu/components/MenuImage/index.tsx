@@ -48,7 +48,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
             </button>
             {imageUrl.map((image, index) => (
               <div key={image} className={styles['mobile__new-image__item']}>
-                <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected-image']} />
+                <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />
                 {!isComplete && (
                   <button
                     type="button"
@@ -76,7 +76,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
           <div className={styles['new-image__container']}>
             {imageUrl.map((image, index) => (
               <div key={image} className={styles['new-image__item']}>
-                <img src={image} alt={`Selected ${index + 1}`} className={styles['new-image__selected-image']} />
+                <img src={image} alt={`Selected ${index + 1}`} className={styles['new-image__selected']} />
                 {!isComplete && (
                 <button
                   type="button"
