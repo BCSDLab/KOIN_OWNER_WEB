@@ -32,7 +32,7 @@
     "lint": "yarn lint:eslint && yarn lint:stylelint",
     "lint:eslint": "eslint src/ --ext .tsx,.ts",
     "lint:stylelint": "stylelint \"src/**/*.scss\" --config .stylelint.json",
-    "typecheck": "tsc"
+    "typecheck": "tsc --project tsconfig.json"
   },
   "eslintConfig": {
     "extends": [
