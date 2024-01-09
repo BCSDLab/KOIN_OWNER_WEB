@@ -25,6 +25,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
   const handleAddImage = () => {
     imgRef.current?.click();
   };
+
   const handleDeleteImage = (image: string) => {
     removeImageUrl(image);
   };
@@ -38,6 +39,21 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
             <div className={styles.mobile__header__condition}>(최대 이미지 3장)</div>
           </div>
           <div className={styles['mobile__new-image__container']}>
+            {imageUrl.map((image, index) => (
+              <div key={image} className={styles['mobile__new-image__item']}>
+                <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />
+                {!isComplete && (
+                <button
+                  type="button"
+                  onClick={() => handleDeleteImage(image)}
+                  className={styles['mobile__delete-img-button']}
+                  aria-label="Delete image"
+                >
+                  <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                </button>
+                )}
+              </div>
+            ))}
             <button
               type="button"
               className={styles['mobile__new-image__add-btn']}
@@ -46,25 +62,10 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
               <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
             </button>
-            {imageUrl.map((image, index) => (
-              <div key={image} className={styles['mobile__new-image__item']}>
-                <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />
-                {!isComplete && (
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteImage(image)}
-                    className={styles['mobile__delete-img-button']}
-                    aria-label="Delete image"
-                  >
-                    <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
-                  </button>
-                )}
-              </div>
-            ))}
           </div>
           <AddMenuImgModal
             isOpen={isAddMenuImgModal}
-            onCancel={closeAddMenuImgModal}
+            closeModal={closeAddMenuImgModal}
           />
         </div>
       ) : (
