@@ -69,9 +69,8 @@
 
   &__selected {
     flex-shrink: 0;
-    width: 100%;
-    width: 264px;
-    height: 176px;
+    max-width: 264px;
+    max-height: 176px;
   }
 
   &__delete-img-button {
@@ -174,8 +173,8 @@
     }
 
     &__selected {
-      width: 137px;
-      height: 137px;
+      max-width: 137px;
+      max-height: 137px;
     }
   }
 
