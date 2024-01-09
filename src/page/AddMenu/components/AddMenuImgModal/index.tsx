@@ -6,10 +6,10 @@ import styles from './AddMenuImgModal.module.scss';
 
 interface AddMenuImgModalProps {
   isOpen: boolean;
-  onCancel: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
+  closeModal: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
 }
 
-export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalProps) {
+export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalProps) {
   const { imgRef, saveImgFile } = useMenuImageUpload();
 
   const handleFileChange = () => {
@@ -23,9 +23,9 @@ export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalPro
   if (!isOpen) return null;
 
   return createPortal(
-    <div className={styles.modal} onClick={onCancel} onKeyDown={onCancel} role="button" tabIndex={0}>
-      <div className={styles.content} onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()} role="presentation">
-        <button type="button" className={styles['cancel-button']} onClick={onCancel}>
+    <div className={styles.modal} onClick={closeModal} onKeyDown={closeModal} role="button" tabIndex={0}>
+      <div className={styles.content} onClick={(e) => e.stopPropagation()} role="presentation">
+        <button type="button" className={styles['cancel-button']} onClick={closeModal}>
           <CancelIcon className={styles.cancelIcon} />
         </button>
         <span className={styles['content__main-text']}>이미지 추가</span>
@@ -33,7 +33,7 @@ export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalPro
         <div className={styles['content__button-container']}>
           <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFileChange} ref={imgRef} />
           <button type="button" className={styles['content__album-button']} onClick={triggerFileInput}>사진 앨범</button>
-          <button type="button" className={styles['content__camera-button']} onClick={onCancel}>카메라 촬영</button>
+          <button type="button" className={styles['content__camera-button']} onClick={closeModal}>카메라 촬영</button>
         </div>
       </div>
     </div>,

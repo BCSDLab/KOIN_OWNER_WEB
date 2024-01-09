@@ -31,7 +31,11 @@ export default function ShopCategory() {
             onClick={() => handleCategoryClick(categoryInfo)}
             key={categoryInfo.id}
           >
-            <img className={styles.category__image} src={categoryInfo.image_url} alt="" />
+            <img
+              className={styles.category__image}
+              src={categoryInfo.image_url}
+              alt={categoryInfo.name}
+            />
             <span className={styles.category__type}>{categoryInfo.name}</span>
           </button>
         ))}
