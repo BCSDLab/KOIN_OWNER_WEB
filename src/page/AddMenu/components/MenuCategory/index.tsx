@@ -20,17 +20,11 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { setCategoryIds } = useAddMenuStore();
   const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
   const appendSelectCategory = (category: MenuCategory) => {
-    if (selectedCategories.some((alreadySelected) => alreadySelected.id === category.id)) {
-      const newSelected = selectedCategories.filter(
-        (alreadySelected) => alreadySelected.id !== category.id,
-      );
-      setSelectedCategories(newSelected);
-      setCategoryIds(newSelected.map((cat) => cat.id));
-    } else {
-      const newSelected = [...selectedCategories, category];
-      setSelectedCategories(newSelected);
-      setCategoryIds(newSelected.map((cat) => cat.id));
-    }
+    const newSelected = selectedCategories.some((c) => c.id === category.id)
+      ? selectedCategories.filter((c) => c.id !== category.id)
+      : [...selectedCategories, category];
+    setSelectedCategories(newSelected);
+    setCategoryIds(newSelected.map((cat) => cat.id));
   };
 
   return (
