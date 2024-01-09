@@ -23,7 +23,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
             <span className={styles['mobile__name-text']}>{name}</span>
           ) : (
             <input
-              className={styles.mobile__nameInput}
+              className={styles['mobile__name-input']}
               placeholder="예) 불족발 + 막국수 저녁 SET"
               onChange={handleNameChange}
               value={name}
@@ -39,7 +39,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
             <span className={styles['name-text']}>{name}</span>
           ) : (
             <input
-              className={styles.nameInput}
+              className={styles['name-input']}
               placeholder="예) 불족발 + 막국수 저녁 SET"
               onChange={handleNameChange}
               value={name}
