@@ -44,7 +44,7 @@ export default function AddMenu() {
       name,
       option_prices: optionPrices.map(({ option, price }) => ({
         option,
-        price: typeof price === 'string' ? parseFloat(price) : price,
+        price: typeof price === 'string' ? parseInt(price, 10) : price,
       })),
       single_price: singlePrice,
     };
