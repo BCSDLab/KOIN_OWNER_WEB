@@ -74,6 +74,7 @@ export default function ShopRegistrationPC() {
     isAllSameTime,
     hasClosedDay,
     isSpecificDayClosedAndAllSameTime,
+    isAllClosed,
   } = CheckSameTime();
 
   const {
@@ -248,7 +249,7 @@ export default function ShopRegistrationPC() {
                         ) : null
                       }
                       {
-                        !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+                        !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
                           <>
                             {WEEK.map((day) => (
                               <div key={day}>
@@ -256,6 +257,11 @@ export default function ShopRegistrationPC() {
                               </div>
                             ))}
                           </>
+                        ) : null
+                      }
+                      {
+                        isAllClosed ? (
+                          <span>매일 휴무</span>
                         ) : null
                       }
                     </div>
