@@ -22,7 +22,7 @@ export default function AddMenu() {
   const {
     value: isGoMyShopModal,
     setTrue: openGoMyShopModal,
-    setFalse: closeGOMyShopModal,
+    setFalse: closeGoMyShopModal,
   } = useBooleanState(false);
   const {
     categoryIds,
@@ -170,7 +170,7 @@ export default function AddMenu() {
           </div>
           <GoMyShopModal
             isOpen={isGoMyShopModal}
-            onCancel={closeGOMyShopModal}
+            onCancel={closeGoMyShopModal}
             onConfirm={addMenu}
           />
         </div>
