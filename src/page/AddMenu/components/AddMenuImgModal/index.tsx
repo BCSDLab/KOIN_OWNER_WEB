@@ -24,7 +24,7 @@ export default function AddMenuImgModal({ isOpen, onCancel }: AddMenuImgModalPro
 
   return createPortal(
     <div className={styles.modal} onClick={onCancel} onKeyDown={onCancel} role="button" tabIndex={0}>
-      <div className={styles.content} onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()} role="presentation">
+      <div className={styles.content} onClick={(e) => e.stopPropagation()} role="presentation">
         <button type="button" className={styles['cancel-button']} onClick={onCancel}>
           <CancelIcon className={styles.cancelIcon} />
         </button>
