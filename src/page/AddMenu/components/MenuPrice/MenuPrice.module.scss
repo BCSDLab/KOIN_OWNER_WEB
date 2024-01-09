@@ -16,6 +16,13 @@
     color: #175c8e;
     font-size: 15px;
     font-weight: 500;
+
+    &--complete {
+      color: #175c8e;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
   }
 
   &__header-condition {
@@ -44,17 +51,18 @@
   &__price-info-input-box {
     margin-top: 10px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 4px;
   }
 
   &__price-info-inputs {
     display: flex;
+    width: 100%;
     align-items: center;
     gap: 8px;
-    width: 100%;
 
-    input {
+    &__size-input {
       width: 100%;
       height: 35px;
       border: 0.5px solid #898a8d;
@@ -67,21 +75,33 @@
         font-weight: 400;
       }
     }
+
+    &__price-input-box {
+      position: relative;
+      width: 100%;
+    }
+
+    &__price-input {
+      width: 100%;
+      height: 35px;
+      border: 0.5px solid #898a8d;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    &__price-input-won {
+      box-sizing: border-box;
+      position: absolute;
+      right: 8px;
+      top: 32%;
+      color: #a1a1a1;
+      font-size: 13px;
+      font-weight: 400;
+    }
   }
 
-  &__price-input-box {
-    position: relative;
-    width: 100%;
-  }
-
-  &__price-input-won {
-    box-sizing: border-box;
-    position: absolute;
-    right: 8px;
-    top: 32%;
-    color: #a1a1a1;
-    font-size: 13px;
-    font-weight: 400;
+  &__cancle-button {
+    background-color: white;
   }
 
   &__cancle-icon {
@@ -96,9 +116,9 @@
 
   &__add-price-button {
     display: flex;
-    align-items: center;
     margin-top: 16px;
     gap: 8px;
+    background-color: white;
 
     &__icon {
       width: 12px;
@@ -114,6 +134,14 @@
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__price-info-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
   }
 }
 
@@ -140,6 +168,10 @@
     gap: 17.5px;
   }
 
+  &__condition-button {
+    background-color: white;
+  }
+
   &__condition-text {
     color: #a1a1a1;
     text-align: right;
@@ -161,13 +193,19 @@
   }
 }
 
-.price-info-inputs {
+.price-info-input-box {
   margin-top: 24px;
   display: flex;
   gap: 16px;
   align-items: center;
+}
 
-  .size-input {
+.price-info-inputs {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  &__size-input {
     box-sizing: border-box;
     width: 335px;
     height: 62px;
@@ -184,16 +222,16 @@
       font-weight: 400;
     }
   }
-}
 
-.prcie-input-box {
-  position: relative;
-  box-sizing: border-box;
-  width: 335px;
-  height: 62px;
-  border: 0.5px solid #858585;
+  &__price-input-box {
+    position: relative;
+    box-sizing: border-box;
+    width: 335px;
+    height: 62px;
+    border: 0.5px solid #858585;
+  }
 
-  .price-input {
+  &__price-input {
     text-align: right;
     box-sizing: border-box;
     width: 303px;
@@ -206,7 +244,7 @@
     outline: none;
   }
 
-  .price-input-won {
+  &__price-input-won {
     position: absolute;
     top: 32%;
     right: 10px;
@@ -216,12 +254,18 @@
   }
 }
 
-.cancle-icon {
+.cancle-button {
   width: 24px;
   height: 24px;
+  background-color: white;
 
-  &:hover {
-    cursor: pointer;
+  &__icon {
+    width: 24px;
+    height: 24px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -231,7 +275,7 @@
   margin-top: 16px;
   gap: 8px;
   height: 28px;
-  width: 107px;
+  background-color: white;
 
   &__icon {
     width: 24px;
@@ -249,4 +293,12 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.price-info-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 500;
 }

@@ -5,9 +5,10 @@ import styles from './GoMyShopModal.module.scss';
 interface CheckModalProps {
   isOpen: boolean;
   onCancel: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
+  onConfirm: () => void;
 }
 
-export default function GoMyShopModal({ isOpen, onCancel }: CheckModalProps) {
+export default function GoMyShopModal({ isOpen, onCancel, onConfirm }: CheckModalProps) {
   if (!isOpen) return null;
   return createPortal(
     <div
@@ -29,6 +30,7 @@ export default function GoMyShopModal({ isOpen, onCancel }: CheckModalProps) {
           <button
             type="button"
             className={styles['content__goMyShop-button']}
+            onClick={onConfirm}
           >
             내 상점으로
           </button>

@@ -24,15 +24,18 @@
     flex-direction: column;
     align-items: center;
     margin-top: 24px;
+    gap: 32px;
     padding: 40px;
     width: 266px;
     height: 613px;
-    border: 0.5px solid var(--stroke, #858585);
+    border: 0.5px solid #858585;
     background: #fff;
+    overflow-y: auto;
   }
 
   &__add-btn {
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     gap: 32px;
     justify-content: center;
@@ -40,6 +43,7 @@
     width: 264px;
     height: 176px;
     border: 1px dashed #858585;
+    background-color: white;
 
     &:hover {
       cursor: pointer;
@@ -51,6 +55,39 @@
     text-align: center;
     font-size: 20px;
     font-weight: 400;
+  }
+
+  &__item {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 264px;
+    height: 176px;
+  }
+
+  &__selected {
+    flex-shrink: 0;
+    max-width: 264px;
+    max-height: 176px;
+  }
+
+  &__delete-img-button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7941e;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
@@ -86,9 +123,19 @@
 
   &__new-image {
     display: flex;
+    align-items: center;
+
+    &__container {
+      display: flex;
+      overflow-x: auto;
+      margin-top: 16px;
+      gap: 16px;
+      white-space: nowrap;
+      align-items: center;
+      height: 155px;
+    }
 
     &__add-btn {
-      margin-top: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -114,6 +161,37 @@
       text-align: center;
       font-size: 13px;
       font-weight: 400;
+    }
+
+    &__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 137px;
+      height: 137px;
+    }
+
+    &__selected {
+      max-width: 137px;
+      max-height: 137px;
+    }
+  }
+
+  &__delete-img-button {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7941e;
+    width: 16.765px;
+    height: 16.765px;
+    border-radius: 50%;
+
+    &:hover {
+      cursor: pointer;
     }
   }
 }

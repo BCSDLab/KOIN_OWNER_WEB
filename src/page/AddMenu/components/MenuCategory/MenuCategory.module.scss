@@ -63,6 +63,18 @@ $button-text-color: #252525;
   }
 }
 
+.category-text-container {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.category-text {
+  font-size: 20px;
+  font-weight: 500;
+}
+
 .mobile {
   &__container {
     width: 100%;
@@ -119,5 +131,12 @@ $button-text-color: #252525;
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &__category-text-container {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 }
