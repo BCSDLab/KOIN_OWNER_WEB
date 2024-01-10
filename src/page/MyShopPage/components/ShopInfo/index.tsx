@@ -1,5 +1,6 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './ShopInfo.module.scss';
 
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
@@ -90,11 +91,13 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               <img src={shopInfo.image_urls[0]} alt="main" className={styles['store__imgs-main-pic']} />
             </div>
             <div className={styles.store__subimgs}>
-              <div className={styles.store__subimg}>
-                <img src={shopInfo.image_urls[1]} alt="main" className={styles['store__subimgs-pic']} />
+              <div className={styles['store__empty-img']}>
+                <CUTLERY className={styles['store__empty-img-icon']} />
+                <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
               </div>
-              <div className={styles.store__subimg}>
-                <img src={shopInfo.image_urls[2]} alt="main" className={styles['store__subimgs-pic']} />
+              <div className={styles['store__empty-img']}>
+                <CUTLERY className={styles['store__empty-img-icon']} />
+                <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
               </div>
             </div>
           </div>
