@@ -1,9 +1,10 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import {
-  getMyShopList, getShopInfo, getMenuInfoList, addMenu,
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu, postMenuCategory,
 } from 'api/shop';
 import useUserStore from 'store/user';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import { MenuCategoryNames } from 'model/shopInfo/menuCategory';
 
 const useMyShop = () => {
   const myShopQueryKey = useUserStore.getState().user?.company_number;
@@ -41,8 +42,22 @@ const useMyShop = () => {
     },
   });
 
+  const { mutate: addMenuCategoryMutation, isError: addMenuCategoryError } = useMutation({
+    mutationFn: (param: MenuCategoryNames) => {
+      if (typeof shopId === 'number') {
+        return postMenuCategory(shopId, param);
+      }
+      throw new Error('Invalid shopId');
+    },
+  });
+
   return {
-    shopData, menuData, addMenuMutation, addMenuError,
+    shopData,
+    menuData,
+    addMenuMutation,
+    addMenuError,
+    addMenuCategoryMutation,
+    addMenuCategoryError,
   };
 };
 

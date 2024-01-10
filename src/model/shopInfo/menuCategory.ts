@@ -42,6 +42,12 @@ export const MenuCategory = z.object({
 
 export type MenuCategory = z.infer<typeof MenuCategory>;
 
+export const MenuCategoryName = z.object({
+  name: z.string(),
+});
+export const MenuCategoryNames = z.array(MenuCategoryName);
+export type MenuCategoryNames = z.infer<typeof MenuCategoryNames>;
+
 export const MenuInfoRes = z.object({
   count: z.number(),
   menu_categories: z.array(MenuCategory),

@@ -26,6 +26,7 @@ import useImageUpload from 'utils/hooks/useImageUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
+import useMyShop from 'query/shop';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -53,7 +54,7 @@ export default function ShopRegistrationPC() {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
   const { imageFile, imgRef, saveImgFile } = useImageUpload();
-
+  const { addMenuCategoryMutation } = useMyShop();
   const {
     openTimeState,
     closeTimeState,
@@ -75,16 +76,24 @@ export default function ShopRegistrationPC() {
     hasClosedDay,
     isSpecificDayClosedAndAllSameTime,
   } = CheckSameTime();
-
+  // 카테고리가 없어서 생기는 문제를 해결하기 위한 기본 카테고리
+  const defaultMenucategory = [
+    { name: '이벤트 메뉴' },
+    { name: '대표 메뉴' },
+    { name: '사이드 메뉴' },
+    { name: '세트 메뉴' }];
   const {
     register, handleSubmit, setValue,
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
-
+  // 카테고리가 없어서 생기는 문제를 해결하기 위해서 상점 생성 후 기본 카테고리 생성하는 로직
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
-    onSuccess: () => setStep(5),
+    onSuccess: () => {
+      setStep(5);
+      addMenuCategoryMutation(defaultMenucategory);
+    },
   });
 
   const openTimeArray = Object.values(openTimeState);
