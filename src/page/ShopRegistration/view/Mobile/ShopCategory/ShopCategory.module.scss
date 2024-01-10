@@ -47,7 +47,7 @@
   &__button {
     display: flex;
     justify-content: flex-end;
-    margin-top: 155px;
+    margin-top: 130px;
 
     button {
       padding: 8px 40px;
@@ -56,6 +56,10 @@
       font-size: 15px;
       color: #ffffff;
       cursor: pointer;
+    }
+
+    &--error {
+      margin-top: 111px;
     }
   }
 }

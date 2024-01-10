@@ -3,22 +3,41 @@ import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobi
 import useStepStore from 'store/useStepStore';
 import useImageUpload from 'utils/hooks/useImageUpload';
 import useShopRegistrationStore from 'store/shopRegistration';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import cn from 'utils/ts/className';
 import styles from './Main.module.scss';
 
 export default function Main() {
+  const [isError, setIsError] = useState(false);
   const { increaseStep } = useStepStore();
   const { imageFile, imgRef, saveImgFile } = useImageUpload();
   const {
     name, setName, address, setAddress, imageUrl, setImageUrl,
   } = useShopRegistrationStore();
 
+  const handleNextClick = () => {
+    if (name === '' || address === '' || imageUrl === '') {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      increaseStep();
+    }
+  };
+
   useEffect(() => {
     if (imageFile !== '') setImageUrl(imageFile);
   }, [imageFile]);
   return (
     <div className={styles.form}>
-      <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
+      <label
+        className={cn({
+          [styles['form__image-upload']]: true,
+          [styles['form__image-upload--error']]: imageUrl === '' && isError,
+        })}
+        htmlFor="mainMenuImage"
+      >
         <input
           type="file"
           accept="image/*"
@@ -36,7 +55,16 @@ export default function Main() {
             </>
           )}
       </label>
-      <label htmlFor="name" className={styles.form__label}>
+      <div className={styles['form__image-error-message']}>
+        {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+      </div>
+      <label
+        htmlFor="name"
+        className={cn({
+          [styles.form__label]: true,
+          [styles['form__label--error']]: name === '' && isError,
+        })}
+      >
         가게명
         <input
           type="text"
@@ -46,7 +74,16 @@ export default function Main() {
           className={styles.form__input}
         />
       </label>
-      <label htmlFor="address" className={styles.form__label}>
+      <div className={styles['form__error-message']}>
+        {name === '' && isError && <ErrorMessage message={ERRORMESSAGE.name} />}
+      </div>
+      <label
+        htmlFor="address"
+        className={cn({
+          [styles.form__label]: true,
+          [styles['form__label--error']]: address === '' && isError,
+        })}
+      >
         주소정보
         <input
           type="text"
@@ -56,8 +93,11 @@ export default function Main() {
           className={styles.form__input}
         />
       </label>
+      <div className={styles['form__error-message']}>
+        {address === '' && isError && <ErrorMessage message={ERRORMESSAGE.address} />}
+      </div>
       <div className={styles.form__button}>
-        <button type="button" onClick={increaseStep}>다음</button>
+        <button type="button" onClick={handleNextClick}>다음</button>
       </div>
     </div>
   );
