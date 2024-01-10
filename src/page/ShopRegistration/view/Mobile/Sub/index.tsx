@@ -33,7 +33,12 @@ export default function Sub() {
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
-  const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
+  const {
+    isAllSameTime,
+    hasClosedDay,
+    isSpecificDayClosedAndAllSameTime,
+    isAllClosed,
+  } = CheckSameTime();
   const { shopClosedState } = useModalStore();
 
   const formatPhoneNumber = (inputNumber: string) => {
@@ -96,7 +101,7 @@ export default function Sub() {
             ) : null
           }
           {
-            !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+            !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
               <>
                 {WEEK.map((day) => (
                   <div key={day}>
@@ -104,6 +109,11 @@ export default function Sub() {
                   </div>
                 ))}
               </>
+            ) : null
+          }
+          {
+            isAllClosed ? (
+              <span>매일 휴무</span>
             ) : null
           }
         </span>
