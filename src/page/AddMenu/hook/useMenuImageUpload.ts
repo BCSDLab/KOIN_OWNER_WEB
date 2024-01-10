@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import useUploadFile from 'query/upload';
 import useAddMenuStore from 'store/addMenu';
 
-export default function useMenuImageUpload() {
+export default function useMenuImageUpload(closeModal: () => void) {
   const imgRef = useRef<HTMLInputElement>(null);
   const { setImageUrl } = useAddMenuStore();
   const { uploadFile } = useUploadFile();
@@ -17,6 +17,7 @@ export default function useMenuImageUpload() {
 
       if (data?.data?.file_url) {
         setImageUrl(`https://${data.data.file_url}`);
+        closeModal();
       }
     }
   };

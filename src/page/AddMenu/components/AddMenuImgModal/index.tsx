@@ -10,11 +10,10 @@ interface AddMenuImgModalProps {
 }
 
 export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalProps) {
-  const { imgRef, saveImgFile } = useMenuImageUpload();
+  const { imgRef, saveImgFile } = useMenuImageUpload(closeModal);
 
   const handleFileChange = () => {
     saveImgFile();
-    closeModal();
   };
 
   const triggerFileInput = () => {
