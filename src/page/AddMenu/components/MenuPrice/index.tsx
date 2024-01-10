@@ -3,10 +3,11 @@ import useAddMenuStore from 'store/addMenu';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
-import { ReactComponent as MobileCheckCircleIcon } from 'assets/svg/mystore/check-circle.svg';
+import { ReactComponent as MobileCheckCircleIcon } from 'assets/svg/addmenu/mobile-single-menu-check.svg';
 import { ReactComponent as CheckCircleIcon } from 'assets/svg/addmenu/single-menu-check.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
 import { ReactComponent as SelectedCheck } from 'assets/svg/addmenu/selected-check.svg';
+import { ReactComponent as MobileselectedCheck } from 'assets/svg/addmenu/mobile-single-menu-check-selected.svg';
 import styles from './MenuPrice.module.scss';
 
 interface MenuPriceProps {
@@ -73,10 +74,14 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   <div className={styles['mobile__header-condition__text']}>단일메뉴</div>
                   <button
                     type="button"
-                    className={styles['mobile__header__condition-button']}
+                    className={styles['mobile__header-condition__button']}
                     onClick={handleIsSingleMenu}
                   >
-                    <MobileCheckCircleIcon className={styles['mobile__header-condition__icon']} />
+                    {isSingle ? (
+                      <MobileselectedCheck className={styles['mobile__header__condition-icon']} />
+                    ) : (
+                      <MobileCheckCircleIcon className={styles['mobile__header-condition__icon']} />
+                    )}
                   </button>
                 </div>
               </div>
