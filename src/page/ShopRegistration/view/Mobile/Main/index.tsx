@@ -12,7 +12,9 @@ import styles from './Main.module.scss';
 export default function Main() {
   const [isError, setIsError] = useState(false);
   const { increaseStep } = useStepStore();
-  const { imageFile, imgRef, saveImgFile } = useImageUpload();
+  const {
+    imageFile, imgRef, saveImgFile, isUploadError,
+  } = useImageUpload();
   const {
     name, setName, address, setAddress, imageUrl, setImageUrl,
   } = useShopRegistrationStore();
@@ -57,6 +59,7 @@ export default function Main() {
       </label>
       <div className={styles['form__image-error-message']}>
         {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+        {imageUrl !== '' && isUploadError && <ErrorMessage message={ERRORMESSAGE.imageUpload} />}
       </div>
       <label
         htmlFor="name"

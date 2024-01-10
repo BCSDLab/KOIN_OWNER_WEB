@@ -54,7 +54,9 @@ export default function ShopRegistrationPC() {
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
-  const { imageFile, imgRef, saveImgFile } = useImageUpload();
+  const {
+    imageFile, imgRef, saveImgFile, isUploadError,
+  } = useImageUpload();
   const [isError, setIsError] = useState(false);
 
   const {
@@ -192,6 +194,7 @@ export default function ShopRegistrationPC() {
                     )}
                 </label>
                 {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+                {imageUrl !== '' && isUploadError && <ErrorMessage message={ERRORMESSAGE.imageUpload} />}
               </div>
               <div>
                 <span className={styles.form__title}>카테고리</span>
