@@ -30,15 +30,16 @@ export default function CheckSameTime() {
       return time === nonClosedCloseTime;
     });
   }, [closeTimeArray, storeClosedArray]);
+  const isAllClosed = storeClosedArray.every((closed) => closed);
   const isSpecificDayClosedAndAllSameTime = hasClosedDay
     && isAllSameOpenTimeExceptClosedDays
-    && isAllSameCloseTimeExceptClosedDays;
-
+    && isAllSameCloseTimeExceptClosedDays && !isAllClosed;
   return {
     isAllSameTime,
     hasClosedDay,
     isAllSameOpenTimeExceptClosedDays,
     isAllSameCloseTimeExceptClosedDays,
     isSpecificDayClosedAndAllSameTime,
+    isAllClosed,
   };
 }
