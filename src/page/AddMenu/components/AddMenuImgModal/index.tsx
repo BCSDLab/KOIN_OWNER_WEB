@@ -6,7 +6,7 @@ import styles from './AddMenuImgModal.module.scss';
 
 interface AddMenuImgModalProps {
   isOpen: boolean;
-  closeModal: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
+  closeModal: (event?: React.MouseEvent | React.KeyboardEvent) => void;
 }
 
 export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalProps) {
@@ -14,6 +14,7 @@ export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalP
 
   const handleFileChange = () => {
     saveImgFile();
+    closeModal();
   };
 
   const triggerFileInput = () => {

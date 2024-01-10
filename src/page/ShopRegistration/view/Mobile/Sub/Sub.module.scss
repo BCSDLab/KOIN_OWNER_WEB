@@ -6,11 +6,15 @@
   &__label {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 19px;
     align-items: center;
     font-weight: 500;
     font-size: 14px;
     color: #175c8e;
+
+    &--error {
+      margin-bottom: 0;
+    }
 
     span {
       width: 160px;
@@ -94,5 +98,9 @@
       background-clip: content-box;
       background-color: #f7941e;
     }
+  }
+
+  &__error-message {
+    margin-bottom: 5px;
   }
 }

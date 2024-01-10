@@ -7,6 +7,10 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
+import { useState } from 'react';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import cn from 'utils/ts/className';
 import styles from './Sub.module.scss';
 
 export default function Sub() {
@@ -21,9 +25,6 @@ export default function Sub() {
   } = useShopRegistrationStore();
 
   const {
-    category,
-    name,
-    address,
     phone,
     deliveryPrice,
     description,
@@ -33,8 +34,14 @@ export default function Sub() {
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
-  const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
+  const {
+    isAllSameTime,
+    hasClosedDay,
+    isSpecificDayClosedAndAllSameTime,
+    isAllClosed,
+  } = CheckSameTime();
   const { shopClosedState } = useModalStore();
+  const [isError, setIsError] = useState(false);
 
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
@@ -42,10 +49,15 @@ export default function Sub() {
     return formattedPhoneNumber;
   };
 
+  const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
+  const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (category === '' || name === '' || address === '' || phone === '' || deliveryPrice === '') {
-      // TODO: 필수 입력 사항이 없을 때 알림 컴포넌트 띄우기
-    } else increaseStep();
+    if (phone === '' || deliveryPrice === '' || !isValidPhoneNumber) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      increaseStep();
+    }
   };
 
   if (showOperateTime) {
@@ -56,7 +68,13 @@ export default function Sub() {
 
   return (
     <div className={styles.form}>
-      <label htmlFor="phone" className={styles.form__label}>
+      <label
+        htmlFor="phone"
+        className={cn({
+          [styles.form__label]: true,
+          [styles['form__label--error']]: (phone === '' || !isValidPhoneNumber) && isError,
+        })}
+      >
         전화번호
         <input
           type="text"
@@ -66,16 +84,29 @@ export default function Sub() {
           className={styles.form__input}
         />
       </label>
-      <label htmlFor="deliveryPrice" className={styles.form__label}>
+      <div className={styles['form__error-message']}>
+        {phone === '' && isError && <ErrorMessage message={ERRORMESSAGE.phone} />}
+        {(!isValidPhoneNumber && phone !== '' && isError) && <ErrorMessage message={ERRORMESSAGE.invalidPhone} />}
+      </div>
+      <label
+        htmlFor="deliveryPrice"
+        className={cn({
+          [styles.form__label]: true,
+          [styles['form__label--error']]: deliveryPrice === '' && isError,
+        })}
+      >
         배달금액
         <input
-          type="number"
+          type="text"
           id="deliveryPrice"
           onChange={(e) => setDeliveryPrice(e.target.value)}
           value={deliveryPrice}
           className={styles.form__input}
         />
       </label>
+      <div className={styles['form__error-message']}>
+        {deliveryPrice === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
+      </div>
       <div className={styles.form__label}>
         운영시간
         <span>
@@ -96,7 +127,7 @@ export default function Sub() {
             ) : null
           }
           {
-            !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+            !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
               <>
                 {WEEK.map((day) => (
                   <div key={day}>
@@ -104,6 +135,11 @@ export default function Sub() {
                   </div>
                 ))}
               </>
+            ) : null
+          }
+          {
+            isAllClosed ? (
+              <span>매일 휴무</span>
             ) : null
           }
         </span>
