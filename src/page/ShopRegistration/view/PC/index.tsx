@@ -2,7 +2,7 @@
 import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -26,6 +26,8 @@ import useImageUpload from 'utils/hooks/useImageUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -53,6 +55,7 @@ export default function ShopRegistrationPC() {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
   const { imageFile, imgRef, saveImgFile } = useImageUpload();
+  const [isError, setIsError] = useState(false);
 
   const {
     openTimeState,
@@ -61,11 +64,21 @@ export default function ShopRegistrationPC() {
   } = useModalStore();
 
   const {
-    setImageUrl, setName, setDelivery, setPayCard, setPayBank,
+    setImageUrl, setOwner, setName, setDelivery, setPayCard, setPayBank,
   } = useShopRegistrationStore();
 
   const {
-    imageUrl, categoryId, category, name, delivery, payCard, payBank, deliveryPrice,
+    imageUrl,
+    categoryId,
+    category,
+    owner,
+    name,
+    delivery,
+    payCard,
+    payBank,
+    deliveryPrice,
+    address,
+    phone,
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
@@ -86,6 +99,17 @@ export default function ShopRegistrationPC() {
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => setStep(5),
   });
+
+  const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
+  const isValidPhoneNumber = phoneNumberPattern.test(phone);
+  const handleNextClick = () => {
+    if (imageUrl === '' || name === '' || category === '' || deliveryPrice === '' || address === '' || phone === '' || !isValidPhoneNumber) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      openConfirmPopup();
+    }
+  };
 
   const openTimeArray = Object.values(openTimeState);
   const closeTimeArray = Object.values(closeTimeState);
@@ -166,6 +190,7 @@ export default function ShopRegistrationPC() {
                       </>
                     )}
                 </label>
+                {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
               </div>
               <div>
                 <span className={styles.form__title}>카테고리</span>
@@ -178,6 +203,7 @@ export default function ShopRegistrationPC() {
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
                 </div>
+                {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
               </div>
               <CustomModal
                 buttonText="다음"
@@ -196,8 +222,13 @@ export default function ShopRegistrationPC() {
                   <input
                     type="text"
                     className={styles['form__input-large']}
+                    value={owner}
+                    onChange={(e) => {
+                      setOwner(e.target.value);
+                    }}
                   />
                 </div>
+                {owner === '' && isError && <ErrorMessage message={ERRORMESSAGE.owner} />}
               </div>
               <div>
                 <span className={styles.form__title}>가게명</span>
@@ -212,6 +243,7 @@ export default function ShopRegistrationPC() {
                   />
                   <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
                 </div>
+                {name === '' && isError && <ErrorMessage message={ERRORMESSAGE.name} />}
               </div>
               <CustomModal
                 title="가게검색"
@@ -223,9 +255,19 @@ export default function ShopRegistrationPC() {
               >
                 <SearchShop open={showSearchShop} onCancel={closeSearchShop} />
               </CustomModal>
-              <InputBox content="주소정보" id="address" register={register} inputType="text" />
-              <InputBox content="전화번호" id="phone" register={register} inputType="tel" />
-              <InputBox content="배달금액" id="delivery_price" register={register} inputType="number" />
+              <div>
+                <InputBox content="주소정보" id="address" register={register} inputType="text" />
+                {address === '' && isError && <ErrorMessage message={ERRORMESSAGE.address} />}
+              </div>
+              <div>
+                <InputBox content="전화번호" id="phone" register={register} inputType="tel" />
+                {phone === '' && isError && <ErrorMessage message={ERRORMESSAGE.phone} />}
+                {(!isValidPhoneNumber && phone !== '' && isError) && <ErrorMessage message={ERRORMESSAGE.invalidPhone} />}
+              </div>
+              <div>
+                <InputBox content="배달금액" id="delivery_price" register={register} inputType="text" />
+                {deliveryPrice === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
+              </div>
               <div>
                 <span className={styles.form__title}>운영시간</span>
                 <div className={styles.form__section}>
@@ -314,7 +356,7 @@ export default function ShopRegistrationPC() {
                 <CustomButton
                   content="다음"
                   buttonSize="large"
-                  onClick={openConfirmPopup}
+                  onClick={handleNextClick}
                 />
               </div>
               <ConfirmPopup
