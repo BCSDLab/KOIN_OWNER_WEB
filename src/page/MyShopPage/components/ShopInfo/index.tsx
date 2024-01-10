@@ -53,7 +53,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
-                <div className={styles.detail}>
+                <div className={styles.detail} key={item.data}>
                   <div className={styles.detail__title}>{item.title}</div>
                   <div className={styles.detail__data}>
                     {item.data}
@@ -75,7 +75,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
-                <div className={styles.detail}>
+                <div className={styles.detail} key={item.data}>
                   <div className={styles.detail__title}>{item.title}</div>
                   <div className={styles.detail__data}>
                     {item.data}
