@@ -15,13 +15,12 @@ interface MenuImageProps {
 export default function MenuImage({ isComplete }: MenuImageProps) {
   const { isMobile } = useMediaQuery();
   const { imageUrl, removeImageUrl } = useAddMenuStore();
-  const { imgRef, saveImgFile } = useMenuImageUpload();
   const {
     value: isAddMenuImgModal,
     setTrue: openAddMenuImgModal,
     setFalse: closeAddMenuImgModal,
   } = useBooleanState(false);
-
+  const { imgRef, saveImgFile } = useMenuImageUpload(closeAddMenuImgModal);
   const handleAddImage = () => {
     imgRef.current?.click();
   };
