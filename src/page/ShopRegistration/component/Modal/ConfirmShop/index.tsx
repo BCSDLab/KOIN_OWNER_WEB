@@ -14,7 +14,7 @@ interface ConfirmShopProps {
 }
 
 export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmShopProps) {
-  const { setName } = useShopRegistrationStore();
+  const { setName, setShopId } = useShopRegistrationStore();
   if (!open) return null;
   return (
     <div className={styles.container}>
@@ -29,6 +29,7 @@ export default function ConfirmShop({ open, onCancel, selectedShop }: ConfirmSho
         type="button"
         className={styles['container__select-button']}
         onClick={() => {
+          setShopId(selectedShop.id);
           setName(selectedShop.name);
           onCancel();
         }}
