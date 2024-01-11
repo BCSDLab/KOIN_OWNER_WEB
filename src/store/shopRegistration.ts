@@ -12,6 +12,7 @@ interface ShopRegistrationStore {
   delivery: boolean;
   payBank: boolean;
   payCard: boolean;
+  shopId:null | number;
   setAddress: (address: string) => void;
   setCategory: (category: string) => void;
   setCategoryId: (categoryId: number) => void;
@@ -37,6 +38,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   delivery: false,
   payBank: false,
   payCard: false,
+  shopId: null,
   setAddress: (address: string) => set({ address }),
   setCategory: (category: string) => set({ category }),
   setCategoryId: (categoryId: number) => set({ categoryId }),

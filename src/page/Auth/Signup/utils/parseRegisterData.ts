@@ -5,13 +5,13 @@ const parseRegisterData = (
   userInfo:User,
   ownerInfo:Owner,
   fileUrls:string[] | undefined,
-  selectedShopId:string,
+  selectedShopId:number | null,
   searchShopState:string,
 ) => {
   const companyNumber = ownerInfo.registrationNumberMobile ? ownerInfo.registrationNumberMobile : `${ownerInfo.registrationNumberFront}-${ownerInfo.registrationNumberMiddle}-${ownerInfo.registrationNumberEnd}`;
   const phoneNumber = ownerInfo.phoneMobile ? ownerInfo.phoneMobile : `${ownerInfo.phoneFront}-${ownerInfo.phoneMiddle}-${ownerInfo.phoneEnd}`;
   const attachmentUrls = fileUrls!.map((file) => ({ file_url: `https://${file}` }));
-  const shopId = ownerInfo.shopName === searchShopState ? Number(selectedShopId) : null;
+  const shopId = ownerInfo.shopName === searchShopState ? selectedShopId : null;
   return {
     attachment_urls: attachmentUrls,
     company_number: companyNumber,

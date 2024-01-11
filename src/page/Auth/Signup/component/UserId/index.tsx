@@ -31,9 +31,9 @@ export default function UserId() {
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>
-      {formErros.email && <ErrorMessage message={formErros.email.message} />}
+      {formErros.email && <ErrorMessage messages={[formErros.email.message]} />}
       {!formErros.email && watch().email === email && requestError
-      && <ErrorMessage message={requestError} />}
+      && <ErrorMessage messages={[requestError]} />}
       {!formErros.email && watch().email === email && status === 'success'
       && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
     </form>

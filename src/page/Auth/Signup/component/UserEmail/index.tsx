@@ -11,10 +11,10 @@ export default function UserEmail() {
   const { isMobile } = useMediaQuery();
   const { userInfo: userData } = useRegisterInfo();
   const {
-    emailHandleSubmit, errors, emailDuplicateRegister,
+    emailHandleSubmit, errors, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    isOpen, onSubmit, email, refetch,
+    isOpen, onSubmit, email, refetch, errorMessage,
   } = useAuthCheck(userData.email ? userData.email : '', isMobile);
   const {
     verificationCode,
@@ -28,12 +28,17 @@ export default function UserEmail() {
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
-            { errors.email && <ErrorMessage message={errors.email.message} />}
+            { (errors.email || (errorMessage && watch().email === email)) && (
+            <ErrorMessage messages={
+              [errors.email?.message, errorMessage].filter((msg) => typeof msg === 'string')
+            }
+            />
+            )}
             {isOpen && <input className={styles['input--code']} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
           {isOpen ? (
             <>
-              { verificateError ? <ErrorMessage message={verificateError} />
+              { verificateError ? <ErrorMessage messages={[verificateError]} />
                 : <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>}
               <div className={styles.button}>
                 <CustomButton
@@ -67,7 +72,7 @@ export default function UserEmail() {
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
-            {verificateError && <ErrorMessage message={verificateError} />}
+            {verificateError && <ErrorMessage messages={[verificateError]} />}
             <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
           </div>
           <div className={styles.buttons}>
