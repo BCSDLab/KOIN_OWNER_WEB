@@ -3,9 +3,13 @@ import useShopCategory from 'query/shopCategory';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/storeCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
+import { useState } from 'react';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import styles from './ShopCategory.module.scss';
 
 export default function ShopCategory() {
+  const [isError, setIsError] = useState(false);
   const { categoryList } = useShopCategory();
   const { increaseStep } = useStepStore();
   const {
@@ -15,6 +19,15 @@ export default function ShopCategory() {
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setCategory(categoryInfo.name);
     setCategoryId(categoryInfo.id);
+  };
+
+  const handleNextClick = () => {
+    if (category === '') {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      increaseStep();
+    }
   };
 
   return (
@@ -40,8 +53,13 @@ export default function ShopCategory() {
           </button>
         ))}
       </div>
-      <div className={styles.category__button}>
-        <button type="button" onClick={increaseStep}>다음</button>
+      {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+      <div className={cn({
+        [styles.category__button]: true,
+        [styles['category__button--error']]: category === '' && isError,
+      })}
+      >
+        <button type="button" onClick={handleNextClick}>다음</button>
       </div>
     </div>
   );

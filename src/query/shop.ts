@@ -1,9 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { getMyShopList, getShopInfo, getMenuInfoList } from 'api/shop';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu,
+} from 'api/shop';
 import useUserStore from 'store/user';
+import { NewMenu } from 'model/shopInfo/newMenu';
 
 const useMyShop = () => {
   const myShopQueryKey = useUserStore.getState().user?.company_number;
+  const queryClient = useQueryClient();
 
   const { data: myShop } = useQuery({
     queryKey: ['myShop', myShopQueryKey],
@@ -29,7 +33,21 @@ const useMyShop = () => {
     enabled: !!shopId,
   });
 
-  return { shopData, menuData };
+  const { mutate: addMenuMutation, isError: addMenuError } = useMutation({
+    mutationFn: (param: NewMenu) => {
+      if (typeof shopId === 'number') {
+        return addMenu(shopId, param);
+      }
+      throw new Error('Invalid shopId');
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myMenuInfo', shopId] });
+    },
+  });
+
+  return {
+    shopData, menuData, addMenuMutation, addMenuError,
+  };
 };
 
 export default useMyShop;

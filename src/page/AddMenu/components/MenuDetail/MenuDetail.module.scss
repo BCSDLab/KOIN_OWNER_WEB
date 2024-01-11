@@ -17,14 +17,20 @@
   height: 153px;
   flex-shrink: 0;
   padding: 16px;
-  border: 0.5px solid var(--stroke, #858585);
-  color: var(--text-color, #252525);
+  border: 0.5px solid #858585;
+  color: #252525;
   font-size: 20px;
   font-weight: 500;
   resize: none;
 
+  &--complete {
+    margin-top: 24px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
   &::placeholder {
-    color: var(--stroke, #858585);
+    color: #858585;
     font-size: 20px;
     font-weight: 400;
   }
@@ -51,6 +57,12 @@
     border: 0.5px solid #898a8d;
     resize: none;
     box-sizing: border-box;
+
+    &--complete {
+      margin-top: 8px;
+      font-size: 15px;
+      font-weight: 400;
+    }
 
     &::placeholder {
       color: #a1a1a1;

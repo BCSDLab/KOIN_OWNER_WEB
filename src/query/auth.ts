@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import {
   postLogin, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
+import { getMyShopList } from 'api/shop';
 import { LoginForm } from 'model/auth';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
@@ -13,19 +14,26 @@ interface VerifyInput {
 
 export const useLogin = () => {
   const navigate = useNavigate();
-  const { prevPath } = usePrevPathStore((state) => state);
+  const { setPrevPath } = usePrevPathStore((state) => state);
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
       email: variables.email, password: variables.password,
     }),
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
       if (data.token) { sessionStorage.setItem('access_token', data.token); }
 
       if (variables.isAutoLogin) {
         localStorage.setItem('refresh_token', data.refresh_token);
       }
-      navigate(prevPath, { replace: true });
+
+      const myShopData = await getMyShopList();
+      if (myShopData.count > 0) {
+        setPrevPath('/');
+        navigate('/');
+      } else {
+        navigate('/store-registration');
+      }
     },
     onError: () => {
       sessionStorage.removeItem('access_token');
