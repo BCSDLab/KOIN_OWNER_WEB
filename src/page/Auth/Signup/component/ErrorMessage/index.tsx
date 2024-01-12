@@ -3,7 +3,7 @@ import styles from './ErrorMessage.module.scss';
 
 interface ErrorMessageProps {
   messages?: (string | undefined)[]
-  message?:string
+  message?:string | undefined
 }
 
 export default function ErrorMessage({ messages, message }:ErrorMessageProps) {

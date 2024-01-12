@@ -3,6 +3,7 @@ import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState } from 'react';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
+import { useNavigate } from 'react-router-dom';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -51,6 +52,12 @@ export default function AddMenu() {
 
     addMenuMutation(newMenuData);
   };
+  const navigate = useNavigate();
+
+  const goMyShop = () => {
+    navigate('/');
+  };
+
   return (
     <div>
       {isMobile ? (
@@ -100,7 +107,7 @@ export default function AddMenu() {
                 <button
                   className={styles['mobile__button-cancel']}
                   type="button"
-                  onClick={openGoMyShopModal}
+                  onClick={goMyShop}
                 >
                   취소
                 </button>
