@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
+
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -109,7 +110,7 @@ export default function AddMenu() {
                 <button
                   className={styles['mobile__button-cancel']}
                   type="button"
-                  onClick={openGoMyShopModal}
+                  onClick={goMyShop}
                 >
                   취소
                 </button>
