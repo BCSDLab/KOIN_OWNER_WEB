@@ -13,6 +13,7 @@ interface ShopRegistrationStore {
   delivery: boolean;
   payBank: boolean;
   payCard: boolean;
+  shopId:string;
   setAddress: (address: string) => void;
   setCategory: (category: string) => void;
   setCategoryId: (categoryId: number) => void;
@@ -25,6 +26,7 @@ interface ShopRegistrationStore {
   setDelivery: (delivery: boolean) => void;
   setPayBank: (payBank: boolean) => void;
   setPayCard: (payCard: boolean) => void;
+  setShopId: (shopId:string) => void;
 }
 
 const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
@@ -40,6 +42,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   delivery: false,
   payBank: false,
   payCard: false,
+  shopId: '',
   setAddress: (address: string) => set({ address }),
   setCategory: (category: string) => set({ category }),
   setCategoryId: (categoryId: number) => set({ categoryId }),
@@ -52,6 +55,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   setDelivery: (delivery: boolean) => set({ delivery }),
   setPayBank: (payBank: boolean) => set({ payBank }),
   setPayCard: (payCard: boolean) => set({ payCard }),
+  setShopId: (shopId:string) => set({ shopId }),
 }));
 
 export default useShopRegistrationStore;

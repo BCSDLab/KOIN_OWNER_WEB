@@ -5,22 +5,31 @@ import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useRegisterInfo from 'store/registerStore';
+import useTimer from 'page/Auth/Signup/hooks/useTimer';
 import styles from './UserEmail.module.scss';
 
 export default function UserEmail() {
   const { isMobile } = useMediaQuery();
   const { userInfo: userData } = useRegisterInfo();
   const {
-    emailHandleSubmit, errors, emailDuplicateRegister,
+    emailHandleSubmit, errors, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    isOpen, onSubmit, email, refetch,
+    isOpen, onSubmit: emailSubmit, email, refetch, errorMessage,
   } = useAuthCheck(userData.email ? userData.email : '', isMobile);
   const {
     verificationCode,
     codeInput, errorMessage: verificateError,
   } = useVerification(email);
-
+  const { getTime, startTimer } = useTimer(300);
+  const onSubmit = <T extends {}>(data:T) => {
+    startTimer();
+    emailSubmit(data);
+  };
+  const reSubmit = () => {
+    startTimer();
+    refetch();
+  };
   return (
     !isMobile
       ? (
@@ -28,13 +37,18 @@ export default function UserEmail() {
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
-            { errors.email && <ErrorMessage message={errors.email.message} />}
+            { (errors.email || (errorMessage && watch().email === email)) && (
+            <ErrorMessage messages={
+              [errors.email?.message, errorMessage].filter((msg) => typeof msg === 'string')
+            }
+            />
+            )}
             {isOpen && <input className={styles['input--code']} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
           {isOpen ? (
             <>
-              { verificateError ? <ErrorMessage message={verificateError} />
-                : <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>}
+              { verificateError ? <ErrorMessage messages={[verificateError]} />
+                : <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>}
               <div className={styles.button}>
                 <CustomButton
                   buttonSize="large"
@@ -67,11 +81,11 @@ export default function UserEmail() {
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
-            {verificateError && <ErrorMessage message={verificateError} />}
-            <span className={styles['email-check__alert']}>* 제한시간 5 : 00</span>
+            {verificateError && <ErrorMessage messages={[verificateError]} />}
+            <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>
           </div>
           <div className={styles.buttons}>
-            <CustomButton buttonSize="mobile" content="재발송" onClick={refetch} />
+            <CustomButton buttonSize="mobile" content="재발송" onClick={reSubmit} />
             <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} />
           </div>
         </>
