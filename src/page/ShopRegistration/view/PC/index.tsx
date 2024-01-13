@@ -55,7 +55,7 @@ export default function ShopRegistrationPC() {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
   const {
-    imageFile, imgRef, saveImgFile, isUploadError,
+    imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const [isError, setIsError] = useState(false);
 
@@ -119,7 +119,7 @@ export default function ShopRegistrationPC() {
   const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
-    if (imageFile !== '') setImageUrl(imageFile);
+    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
@@ -193,8 +193,8 @@ export default function ShopRegistrationPC() {
                       </>
                     )}
                 </label>
-                {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
-                {imageUrl !== '' && isUploadError && <ErrorMessage message={ERRORMESSAGE.imageUpload} />}
+                {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+                {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
               </div>
               <div>
                 <span className={styles.form__title}>카테고리</span>

@@ -36,7 +36,7 @@ export default function UserPassword() {
           {isBlind ? <BlindIcon /> : <ShowIcon />}
         </button>
         )}
-        {formErrors.password ? (<ErrorMessage message={formErrors.password.message} />
+        {formErrors.password ? (<ErrorMessage message={[formErrors.password.message]} />
         ) : <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>}
       </div>
       <div className={styles.form__input} onChange={handleSubmit(onSubmit)}>
@@ -47,7 +47,7 @@ export default function UserPassword() {
         </button>
         )}
         {formErrors.passwordConfirm
-        && <ErrorMessage message={formErrors.passwordConfirm.message} />}
+        && <ErrorMessage message={[formErrors.passwordConfirm.message]} />}
       </div>
     </div>
   );
