@@ -31,7 +31,7 @@ export default function UserId() {
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>
-      {formErros.email && <ErrorMessage message={formErros.email.message} />}
+      {formErros.email && <ErrorMessage message={[formErros.email.message]} />}
       {!formErros.email && watch().email === email && requestError
       && <ErrorMessage message={requestError} />}
       {!formErros.email && watch().email === email && status === 'success'

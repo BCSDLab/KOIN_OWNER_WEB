@@ -4,7 +4,7 @@ import UserPassword from 'page/Auth/Signup/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import { useEffect, useState } from 'react';
-import { User, UserParam } from 'page/Auth/Signup/types/User';
+import { User } from 'page/Auth/Signup/types/User';
 import useStepStore from 'store/useStepStore';
 import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
 import useRegisterInfo from 'store/registerStore';
@@ -17,8 +17,10 @@ type ButtonClickEventProps = {
 const useCheckEmail = () => {
   const [isFilled, setIsFilled] = useState(false);
   const checkEmail = (userData:User) => {
-    if (UserParam.pick({ email: true, password: true }).safeParse(userData).success) {
+    if (userData.email && userData.password) {
       setIsFilled(true);
+    } else {
+      setIsFilled(false);
     }
   };
   return { isFilled, checkEmail };
@@ -47,7 +49,6 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
     setRegisterStep(1);
     increaseStep();
   };
-
   return (
     !isMobile
       ? (

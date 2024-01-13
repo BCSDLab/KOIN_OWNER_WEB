@@ -5,7 +5,7 @@ import { User } from 'page/Auth/Signup/types/User';
 
 export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   const [email, setEmail] = useState('');
-  const [errorMessage, setMessage] = useState<string | null>('');
+  const [errorMessage, setMessage] = useState<string>();
   const [isOpen, setOpen] = useState(false);
   const {
     status, refetch, isError, error,
@@ -30,8 +30,8 @@ export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   useEffect(() => {
     if (status === 'success') {
       setOpen(true);
-    } else {
-      setMessage(Object(error).response?.data.message);
+    } else if (Object(error).response) {
+      setMessage(() => Object(error).response.data.message);
     }
   }, [status, isError, error]);
 
