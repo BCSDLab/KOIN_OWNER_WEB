@@ -72,7 +72,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
           <span className={styles.form__label}>대표자명</span>
           <input className={styles.form__input} type="text" placeholder={isMobile ? '대표자명(실명)' : ''} {...ownerNameRegister} />
         </div>
-        {errors.ownerName && <ErrorMessage messages={[errors.ownerName.message]} />}
+        {errors.ownerName && <ErrorMessage message={[errors.ownerName.message]} />}
         <div>
           <span className={styles.form__label}>가게명</span>
           <div className={styles['input__shop-name--wrapper']}>
@@ -80,7 +80,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
             <CustomButton content="가게검색" buttonSize={isMobile ? 'mobile-small' : 'small'} onClick={openSearchShop} />
           </div>
         </div>
-        {errors.shopName && <ErrorMessage messages={[errors.shopName.message]} />}
+        {errors.shopName && <ErrorMessage message={[errors.shopName.message]} />}
         <div>
           <span className={styles.form__label}>사업자등록번호</span>
           {!isMobile ? (
@@ -99,7 +99,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
             : <input className={styles.form__input} type="text" placeholder="사업자등록번호" maxLength={10} {...registrationNumberRegister.mobile} />}
         </div>
         {(registrationNumberRegister.message)
-        && <ErrorMessage messages={[registrationNumberRegister.message]} />}
+        && <ErrorMessage message={[registrationNumberRegister.message]} />}
         <div>
           <span className={styles.form__label}>개인 연락처</span>
           {!isMobile ? (
@@ -117,7 +117,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
           )
             : <input className={styles.form__input} type="text" placeholder="개인 연락처" maxLength={11} {...phoneNumberRegister.mobile} />}
         </div>
-        {(phoneNumberRegister.message) && <ErrorMessage messages={[phoneNumberRegister.message]} />}
+        {(phoneNumberRegister.message) && <ErrorMessage message={[phoneNumberRegister.message]} />}
         <div>
           <span className={styles.form__label}>파일첨부</span>
           <label
@@ -157,7 +157,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
           </div>
           )}
         </div>
-        {errors.registerFiles && <ErrorMessage messages={[errors.registerFiles.message]} />}
+        {errors.registerFiles && <ErrorMessage message={[errors.registerFiles.message]} />}
       </section>
       <div className={styles.buttons}>
         <CustomButton buttonSize="large" content={isMobile ? '확인' : '다음'} onClick={handleSubmit(onSubmit)} disable={!isDone} />

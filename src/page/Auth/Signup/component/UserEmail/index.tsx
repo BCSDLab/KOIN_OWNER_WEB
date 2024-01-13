@@ -38,7 +38,7 @@ export default function UserEmail() {
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
             { (errors.email || (errorMessage && watch().email === email)) && (
-            <ErrorMessage messages={
+            <ErrorMessage message={
               [errors.email?.message, errorMessage].filter((msg) => typeof msg === 'string')
             }
             />
@@ -47,7 +47,7 @@ export default function UserEmail() {
           </div>
           {isOpen ? (
             <>
-              { verificateError ? <ErrorMessage messages={[verificateError]} />
+              { verificateError ? <ErrorMessage message={[verificateError]} />
                 : <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>}
               <div className={styles.button}>
                 <CustomButton
@@ -81,7 +81,7 @@ export default function UserEmail() {
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
-            {verificateError && <ErrorMessage messages={[verificateError]} />}
+            {verificateError && <ErrorMessage message={[verificateError]} />}
             <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>
           </div>
           <div className={styles.buttons}>

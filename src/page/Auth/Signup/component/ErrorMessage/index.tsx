@@ -2,16 +2,16 @@ import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
 import styles from './ErrorMessage.module.scss';
 
 interface ErrorMessageProps {
-  messages?: (string | undefined)[]
-  message?:string | undefined
+  message:string | (string | undefined)[]
 }
 
-export default function ErrorMessage({ messages, message }:ErrorMessageProps) {
+export default function ErrorMessage({ message }:ErrorMessageProps) {
   return (
     <div className={styles.warn}>
       <Warn />
-      {message ? <span className={styles['warn--phrase']}>{message}</span>
-        : messages && <span className={styles['warn--phrase']}>{messages[0]}</span>}
+      <span className={styles['warn--phrase']}>
+        {typeof message === 'string' ? message : message[0]}
+      </span>
     </div>
   );
 }
