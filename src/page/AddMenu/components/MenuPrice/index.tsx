@@ -18,7 +18,14 @@ interface MenuPriceProps {
 export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const { isMobile } = useMediaQuery();
   const {
-    optionPrices, setOptionPrices, isSingle, setIsSingle, singlePrice, setSinglePrice, name,
+    optionPrices,
+    setOptionPrices,
+    isSingle,
+    setIsSingle,
+    singlePrice,
+    setSinglePrice,
+    name,
+    resetOptionPrice,
   } = useAddMenuStore();
 
   const updatePriceInput = (index: number, field: string, newValue: string | number) => {
@@ -40,6 +47,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
   };
   const handleIsSingleMenu = () => {
     setIsSingle(!isSingle);
+    resetOptionPrice();
   };
   return (
     <div>
