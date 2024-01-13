@@ -13,14 +13,14 @@ export default function Main() {
   const [isError, setIsError] = useState(false);
   const { increaseStep } = useStepStore();
   const {
-    imageFile, imgRef, saveImgFile, isUploadError,
+    imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const {
     name, setName, address, setAddress, imageUrl, setImageUrl,
   } = useShopRegistrationStore();
 
   const handleNextClick = () => {
-    if (name === '' || address === '' || imageUrl === '') {
+    if (name === '' || address === '' || imageUrl === '' || uploadError !== '') {
       setIsError(true);
     } else {
       setIsError(false);
@@ -29,14 +29,14 @@ export default function Main() {
   };
 
   useEffect(() => {
-    if (imageFile !== '') setImageUrl(imageFile);
+    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
   }, [imageFile]);
   return (
     <div className={styles.form}>
       <label
         className={cn({
           [styles['form__image-upload']]: true,
-          [styles['form__image-upload--error']]: imageUrl === '' && isError,
+          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrl === '' && isError),
         })}
         htmlFor="mainMenuImage"
       >
@@ -58,8 +58,8 @@ export default function Main() {
           )}
       </label>
       <div className={styles['form__image-error-message']}>
-        {imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
-        {imageUrl !== '' && isUploadError && <ErrorMessage message={ERRORMESSAGE.imageUpload} />}
+        {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+        {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
       </div>
       <label
         htmlFor="name"
