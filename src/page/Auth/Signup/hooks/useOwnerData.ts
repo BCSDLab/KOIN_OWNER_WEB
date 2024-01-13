@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
-import useModalStore from 'store/modalStore';
 import { useCallback, useEffect } from 'react';
 import useRegisterInfo from 'store/registerStore';
+import useShopRegistrationStore from 'store/shopRegistration';
 import useFileController from './useFileController';
 
 const VALIDATIONMESSAGE = {
@@ -176,11 +176,11 @@ export default function useCheckOwnerData(isMobile:boolean) {
   const getPhoneNumber = useCallback(() => [watch('phoneFront'), watch('phoneMiddle'), watch('phoneEnd')], [watch]);
   const getRegisterationNumber = useCallback(() => [watch('registrationNumberFront'), watch('registrationNumberMiddle'), watch('registrationNumberEnd')], [watch]);
 
-  const { searchShopState } = useModalStore();
+  const { name } = useShopRegistrationStore();
 
   useEffect(() => {
-    setValue('shopName', searchShopState);
-  }, [searchShopState, setValue]);
+    setValue('shopName', name);
+  }, [name, setValue]);
 
   const registerNumberFront = watch('registrationNumberFront') ? watch('registrationNumberFront') : null;
   const registerNumberMiddle = watch('registrationNumberMiddle') ? watch('registrationNumberMiddle') : null;
