@@ -31,10 +31,6 @@
     align-items: center;
     gap: 9px;
 
-    &:hover {
-      cursor: pointer;
-    }
-
     &__text {
       color: #a1a1a1;
       text-align: right;
@@ -52,6 +48,10 @@
     &__icon {
       width: 16px;
       height: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -75,6 +75,15 @@
       border: 0.5px solid #898a8d;
       padding: 8px;
       box-sizing: border-box;
+
+      &--disabled {
+        width: 100%;
+        height: 35px;
+        border: 0.5px solid #898a8d;
+        background-color: #c4c4c4;
+        padding: 8px;
+        box-sizing: border-box;
+      }
 
       &::placeholder {
         color: #a1a1a1;
@@ -222,6 +231,16 @@
     font-size: 20px;
     font-weight: 500;
     outline: none;
+
+    &--disabled {
+      box-sizing: border-box;
+      width: 335px;
+      height: 62px;
+      border: 0.5px solid #858585;
+      padding: 16px;
+      background-color: #c4c4c4;
+      outline: none;
+    }
 
     &::placeholder {
       color: #a1a1a1;

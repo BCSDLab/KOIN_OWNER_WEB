@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
-
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -49,10 +48,10 @@ export default function AddMenu() {
       is_single: isSingle,
       name,
       option_prices: optionPrices.map(({ option, price }) => ({
-        option,
+        option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
       })),
-      single_price: singlePrice,
+      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
     };
 
     addMenuMutation(newMenuData);

@@ -3,7 +3,7 @@ import { create } from 'zustand';
 interface OptionPrices {
   id: number;
   option: string;
-  price: number | string;
+  price: number;
 }
 
 interface AddMenuStore {
@@ -22,6 +22,8 @@ interface AddMenuStore {
   setName: (name: string) => void;
   setOptionPrices: (optionPrices: OptionPrices[]) => void;
   setSinglePrice: (singlePrice: number) => void;
+  resetOptionPrice: () => void;
+  resetAddMenuStore: () => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
@@ -30,7 +32,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   imageUrl: [],
   isSingle: false,
   name: '',
-  optionPrices: [{ id: 0, option: '', price: '' }],
+  optionPrices: [{ id: 0, option: '', price: 0 }],
   singlePrice: 0,
   setCategoryIds: (categoryIds) => set({ categoryIds }),
   setDescription: (description) => set({ description }),
@@ -44,6 +46,16 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setName: (name) => set({ name }),
   setOptionPrices: (optionPrices) => set({ optionPrices }),
   setSinglePrice: (singlePrice) => set({ singlePrice }),
+  resetOptionPrice: () => set({ optionPrices: [{ id: 0, option: '', price: 0 }] }),
+  resetAddMenuStore: () => set({
+    categoryIds: [],
+    description: '',
+    imageUrl: [],
+    isSingle: false,
+    name: '',
+    optionPrices: [{ id: 0, option: '', price: 0 }],
+    singlePrice: 0,
+  }),
 }));
 
 export default useAddMenuStore;
