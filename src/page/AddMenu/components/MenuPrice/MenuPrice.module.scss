@@ -31,10 +31,6 @@
     align-items: center;
     gap: 9px;
 
-    &:hover {
-      cursor: pointer;
-    }
-
     &__text {
       color: #a1a1a1;
       text-align: right;
@@ -52,6 +48,10 @@
     &__icon {
       width: 16px;
       height: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
