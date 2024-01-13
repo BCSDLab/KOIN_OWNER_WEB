@@ -1,6 +1,5 @@
-export const ERRORMESSAGE = {
+export const ERRORMESSAGE: { [key: string]: string } = {
   image: '이미지를 등록해주세요.',
-  imageUpload: '이미지 등록에 실패했습니다. 다시 시도해주세요.',
   category: '카테고리를 선택해주세요.',
   owner: '대표자명을 입력해주세요',
   name: '가게명을 입력해주세요',
@@ -8,4 +7,10 @@ export const ERRORMESSAGE = {
   phone: '전화번호를 입력해주세요.',
   deliveryPrice: '배달금액을 입력해주세요.',
   invalidPhone: '전화번호 형식이 올바르지 않습니다.',
+  networkError: '네트워크 오류가 발생했습니다. 다시 시도해주세요.',
+  401: '이미지 등록에 실패했습니다. 다시 시도해주세요.',
+  404: '존재하지 않는 도메인입니다.',
+  413: '파일 용량을 10MB 이내로 줄여주세요.',
+  415: '파일 형식이 올바르지 않습니다.',
+  422: '유효하지 않은 파일입니다.',
 };
