@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
 import { ReactComponent as MobileDeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import AddMenuImgModal from 'page/AddMenu/components/AddMenuImgModal';
 import useAddMenuStore from 'store/addMenu';
-import useMenuImageUpload from 'page/AddMenu/hook/useMenuImageUpload';
+import useImageUpload from 'utils/hooks/useImageUpload';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import styles from './MenuImage.module.scss';
 
 interface MenuImageProps {
@@ -14,21 +16,29 @@ interface MenuImageProps {
 
 export default function MenuImage({ isComplete }: MenuImageProps) {
   const { isMobile } = useMediaQuery();
-  const { imageUrl, removeImageUrl } = useAddMenuStore();
+  const { imageUrl, setImageUrl, removeImageUrl } = useAddMenuStore();
   const {
     value: isAddMenuImgModal,
     setTrue: openAddMenuImgModal,
     setFalse: closeAddMenuImgModal,
   } = useBooleanState(false);
-  const { imgRef, saveImgFile } = useMenuImageUpload(closeAddMenuImgModal);
+  const {
+    imageFile, imgRef, saveImgFile, uploadError,
+  } = useImageUpload();
   const handleAddImage = () => {
     imgRef.current?.click();
   };
-
   const handleDeleteImage = (image: string) => {
     removeImageUrl(image);
   };
-
+  const handleImageChange = async () => {
+    await saveImgFile();
+  };
+  useEffect(() => {
+    if (imageFile) {
+      setImageUrl(imageFile);
+    }
+  }, [imageFile, setImageUrl]);
   return (
     <div>
       {isMobile ? (
@@ -101,10 +111,11 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               type="file"
               accept="image/*"
               style={{ display: 'none' }}
-              onChange={saveImgFile}
+              onChange={handleImageChange}
               ref={imgRef}
             />
           </div>
+          {uploadError && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
         </div>
       )}
     </div>
