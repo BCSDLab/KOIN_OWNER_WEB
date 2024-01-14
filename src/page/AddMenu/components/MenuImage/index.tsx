@@ -115,7 +115,9 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               ref={imgRef}
             />
           </div>
-          {uploadError && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
+          <div className={styles['image-error-message']}>
+            {uploadError && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
+          </div>
         </div>
       )}
     </div>
