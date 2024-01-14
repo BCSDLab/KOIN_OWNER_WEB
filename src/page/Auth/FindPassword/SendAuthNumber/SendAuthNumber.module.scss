@@ -33,6 +33,14 @@
     &--auth {
       width: 255px;
     }
+
+    &--error{
+      border: 1px solid #F7941E;
+    }
+
+    &--normal{
+      border: 1px solid #d2dae2;
+    }
   }
 
   &__label {
@@ -44,6 +52,14 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    gap: 8px;
+  }
+
+  &__error{
+    display: flex;
+    color:#F7941E;
+    font-size: 12px;
+    align-items: center;
     gap: 8px;
   }
 }
