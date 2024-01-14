@@ -3,13 +3,30 @@ import {
   postLogin, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
 import { getMyShopList } from 'api/shop';
+import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import usePrevPathStore from 'store/path';
 
 interface VerifyInput {
   email: string;
   verify: string;
+}
+
+interface ErrorResponse {
+  response: undefined | {
+    message: string;
+    data: {
+      code: number;
+      message: string;
+      violations: {
+        field: string;
+        message: string;
+      }[];
+    }
+  }
+  message: string;
 }
 
 export const useLogin = () => {
@@ -45,15 +62,26 @@ export const useLogin = () => {
 };
 
 export const useVerifyEmail = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
+    onError: (error: AxiosError<ErrorResponse>) => {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data.message || error.message);
+      }
+    },
   });
-  return { verifyEmail: { mutate, isPending, isSuccess } };
+  return {
+    verifyEmail: {
+      mutate, isPending, isSuccess, errorMessage,
+    },
+  };
 };
 
 export const useSubmit = () => {
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const { mutate: submit } = useMutation({
+  const { mutate: submit, isSuccess, isError } = useMutation({
     mutationFn: ({
       email,
       verify,
@@ -62,11 +90,18 @@ export const useSubmit = () => {
     onSuccess: () => {
       navigate('/new-password', { state: { 'find-password': true }, replace: true });
     },
-    onError: () => {
-      // TODO: 이메일 인증 실패 시 UI 처리 필요
+    onError: (error: ErrorResponse) => {
+      setErrorMessage(error.response?.data?.message || error.message);
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data?.violations[0] || error.response?.data.message);
+      }
     },
   });
-  return submit;
+  return {
+    authNumber: {
+      submit, isSuccess, isError, errorMessage,
+    },
+  };
 };
 
 export const useNewPassword = () => {
