@@ -22,16 +22,13 @@ export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalP
   };
   const handleImageChange = async () => {
     await saveImgFile();
-    if (imageFile) {
-      closeModal();
-    }
   };
   useEffect(() => {
-    if (imageFile) {
+    if (imageFile && !uploadError) {
       setImageUrl(imageFile);
       closeModal();
     }
-  }, [imageFile, setImageUrl, closeModal]);
+  }, [imageFile, uploadError, setImageUrl, closeModal]);
 
   if (!isOpen) return null;
 
