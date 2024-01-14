@@ -34,11 +34,11 @@
       width: 255px;
     }
 
-    &--error{
-      border: 1px solid #F7941E;
+    &--error {
+      border: 1px solid #f7941e;
     }
 
-    &--normal{
+    &--normal {
       border: 1px solid #d2dae2;
     }
   }
@@ -55,9 +55,9 @@
     gap: 8px;
   }
 
-  &__error{
+  &__error {
     display: flex;
-    color:#F7941E;
+    color: #f7941e;
     font-size: 12px;
     align-items: center;
     gap: 8px;
