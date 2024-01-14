@@ -1,5 +1,5 @@
 interface ClassName {
-  [key: string]: boolean;
+  [key: string]: boolean | string;
 }
 
 const classNames = (className: ClassName) => Object.entries(className)
