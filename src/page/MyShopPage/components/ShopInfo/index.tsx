@@ -1,10 +1,18 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
+import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import styles from './ShopInfo.module.scss';
 
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
   const { isMobile } = useMediaQuery();
+
+  const holidayIndex = shopInfo.open.filter((day) => day.closed)
+    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
+  const holiday = holidayIndex.map((day) => WEEK[day]);
+
+  const openDayIndex = shopInfo.open.filter((day) => !day.closed)
+    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
 
   const content = [
     {
@@ -13,13 +21,11 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
     },
     {
       title: '운영시간',
-      data: (shopInfo.open[0].open_time && shopInfo.open[0].close_time) ? (
-        `${shopInfo.open[0].open_time}~${shopInfo.open[0].close_time}`
-      ) : `${'미등록'}`,
+      data: `${shopInfo.open[openDayIndex[0]].open_time} ~ ${shopInfo.open[openDayIndex[0]].close_time}`,
     },
     {
       title: '휴무일',
-      data: shopInfo.open[0].day_of_week,
+      data: `매주 ${holiday.join('요일, ')}요일`,
     },
     {
       title: '주소정보',
@@ -54,7 +60,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
-                <div className={styles.detail} key={item.data}>
+                <div className={styles.detail} key={item.title}>
                   <div className={styles.detail__title}>{item.title}</div>
                   <div className={styles.detail__data}>
                     {item.data}
@@ -76,7 +82,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
-                <div className={styles.detail} key={item.data}>
+                <div className={styles.detail} key={item.title}>
                   <div className={styles.detail__title}>{item.title}</div>
                   <div className={styles.detail__data}>
                     {item.data}
