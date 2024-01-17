@@ -16,7 +16,7 @@ export const getShopInfo = async (param: MyShopParam) => {
 };
 
 export const getMenuInfoList = async (param: MyShopParam) => {
-  const { data } = await accessClient.get<MenuInfoRes>(`/owner/shops/${param.id}/menus`);
+  const { data } = await accessClient.get<MenuInfoRes>(`/owner/shops/menus?shopId=${param.id}`);
   return MenuInfoRes.parse(data);
 };
 
