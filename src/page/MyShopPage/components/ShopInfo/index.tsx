@@ -1,13 +1,18 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
-import { WEEK } from 'utils/constant/week';
+import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import styles from './ShopInfo.module.scss';
 
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
   const { isMobile } = useMediaQuery();
-  const holiday = shopInfo.open.filter((day) => day.closed).map((_, index) => WEEK[index]);
-  const openDayIndex = shopInfo.open.filter((day) => !day.closed).map((_, index) => index);
+
+  const holidayIndex = shopInfo.open.filter((day) => day.closed)
+    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
+  const holiday = holidayIndex.map((day) => WEEK[day]);
+
+  const openDayIndex = shopInfo.open.filter((day) => !day.closed)
+    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
 
   const content = [
     {
