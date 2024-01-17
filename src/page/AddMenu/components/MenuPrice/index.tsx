@@ -1,5 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
+import cn from 'utils/ts/className';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
@@ -17,7 +18,14 @@ interface MenuPriceProps {
 export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const { isMobile } = useMediaQuery();
   const {
-    optionPrices, setOptionPrices, isSingle, setIsSingle,
+    optionPrices,
+    setOptionPrices,
+    isSingle,
+    setIsSingle,
+    singlePrice,
+    setSinglePrice,
+    name,
+    resetOptionPrice,
   } = useAddMenuStore();
 
   const updatePriceInput = (index: number, field: string, newValue: string | number) => {
@@ -30,7 +38,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
   const addPriceInput = () => {
     const newId = optionPrices.length;
     if (!isSingle) {
-      setOptionPrices([...optionPrices, { id: newId, option: '', price: '' }]);
+      setOptionPrices([...optionPrices, { id: newId, option: '', price: 0 }]);
     }
   };
 
@@ -39,6 +47,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
   };
   const handleIsSingleMenu = () => {
     setIsSingle(!isSingle);
+    resetOptionPrice();
   };
   return (
     <div>
@@ -49,22 +58,38 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.mobile__header}>
                 <div className={styles['mobile__header-title--complete']}>가격</div>
               </div>
-              {optionPrices.map((input) => (
-                <div key={input.id} className={styles['mobile__price-info-text-box']}>
+              {isSingle ? (
+                <div className={styles['mobile__price-info-text-box']}>
                   <div className={styles['mobile__price-info-text']}>
                     <div className={styles['mobile__price-info-text__size']}>
-                      {input.option}
+                      {name}
                     </div>
                     <div>
                       /
                     </div>
                     <div className={styles['mobile__price-info-text__price']}>
-                      {input.price}
+                      {singlePrice}
                       원
                     </div>
                   </div>
                 </div>
-              ))}
+              )
+                : optionPrices.map((input) => (
+                  <div key={input.id} className={styles['mobile__price-info-text-box']}>
+                    <div className={styles['mobile__price-info-text']}>
+                      <div className={styles['mobile__price-info-text__size']}>
+                        {input.option}
+                      </div>
+                      <div>
+                        /
+                      </div>
+                      <div className={styles['mobile__price-info-text__price']}>
+                        {input.price}
+                        원
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </>
           ) : (
             <>
@@ -89,17 +114,29 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 <div key={input.id} className={styles['mobile__price-info-input-box']}>
                   <div className={styles['mobile__price-info-inputs']}>
                     <input
-                      className={styles['mobile__price-info-inputs__size-input']}
-                      placeholder="예) 소 (1~2 인분)"
+                      className={cn({
+                        [styles['mobile__price-info-inputs__size-input']]: true,
+                        [styles['mobile__price-info-inputs__size-input--disabled']]: isSingle,
+                      })}
+                      placeholder={isSingle ? '' : '예) 소 (1~2 인분)'}
                       value={input.option}
-                      onChange={(e) => updatePriceInput(input.id, 'size', e.target.value)}
+                      onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
+                      disabled={isSingle}
                     />
                     <div className={styles['mobile__price-info-inputs__price-input-box']}>
-                      <input
-                        className={styles['mobile__price-info-inputs__price-input']}
-                        value={input.price}
-                        onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
-                      />
+                      {isSingle ? (
+                        <input
+                          className={styles['mobile__price-info-inputs__price-input']}
+                          value={singlePrice === 0 ? '' : singlePrice}
+                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
+                        />
+                      ) : (
+                        <input
+                          className={styles['mobile__price-info-inputs__price-input']}
+                          value={input.price === 0 ? '' : input.price}
+                          onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
+                        />
+                      )}
                       <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>
                     </div>
                   </div>
@@ -130,22 +167,38 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.header}>
                 <div className={styles.header__title}>가격</div>
               </div>
-              {optionPrices.map((input) => (
-                <div key={input.id} className={styles['price-info-text-box']}>
+              {isSingle ? (
+                <div className={styles['price-info-text-box']}>
                   <div className={styles['price-info-text']}>
                     <div className={styles['price-info-text__size']}>
-                      {input.option}
+                      {name}
                     </div>
                     <div>
                       /
                     </div>
                     <div className={styles['price-info-text__price']}>
-                      {input.price}
+                      {singlePrice}
                       원
                     </div>
                   </div>
                 </div>
-              ))}
+              )
+                : optionPrices.map((input) => (
+                  <div key={input.id} className={styles['price-info-text-box']}>
+                    <div className={styles['price-info-text']}>
+                      <div className={styles['price-info-text__size']}>
+                        {input.option}
+                      </div>
+                      <div>
+                        /
+                      </div>
+                      <div className={styles['price-info-text__price']}>
+                        {input.price}
+                        원
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </>
           ) : (
             <>
@@ -171,17 +224,29 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 <div key={input.id} className={styles['price-info-input-box']}>
                   <div className={styles['price-info-inputs']}>
                     <input
-                      className={styles['price-info-inputs__size-input']}
-                      placeholder="예) 소 (1~2 인분)"
+                      className={cn({
+                        [styles['price-info-inputs__size-input']]: true,
+                        [styles['price-info-inputs__size-input--disabled']]: isSingle,
+                      })}
+                      placeholder={isSingle ? '' : '예) 소 (1~2 인분)'}
                       value={input.option}
                       onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
+                      disabled={isSingle}
                     />
                     <div className={styles['price-info-inputs__price-input-box']}>
-                      <input
-                        className={styles['price-info-inputs__price-input']}
-                        value={input.price}
-                        onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
-                      />
+                      {isSingle ? (
+                        <input
+                          className={styles['price-info-inputs__price-input']}
+                          value={singlePrice === 0 ? '' : singlePrice}
+                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
+                        />
+                      ) : (
+                        <input
+                          className={styles['price-info-inputs__price-input']}
+                          value={input.price === 0 ? '' : input.price}
+                          onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
+                        />
+                      )}
                       <p className={styles['price-info-inputs__price-input-won']}>원</p>
                     </div>
                   </div>

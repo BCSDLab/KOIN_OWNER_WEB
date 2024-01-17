@@ -3,12 +3,13 @@ import {
   getMyShopList, getShopInfo, getMenuInfoList, addMenu,
 } from 'api/shop';
 import useUserStore from 'store/user';
+import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
 
 const useMyShop = () => {
   const myShopQueryKey = useUserStore.getState().user?.company_number;
   const queryClient = useQueryClient();
-
+  const { resetAddMenuStore } = useAddMenuStore();
   const { data: myShop } = useQuery({
     queryKey: ['myShop', myShopQueryKey],
     queryFn: () => getMyShopList(),
@@ -41,6 +42,7 @@ const useMyShop = () => {
       throw new Error('Invalid shopId');
     },
     onSuccess: () => {
+      resetAddMenuStore();
       queryClient.invalidateQueries({ queryKey: ['myMenuInfo', shopId] });
     },
   });

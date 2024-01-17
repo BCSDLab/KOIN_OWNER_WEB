@@ -7,7 +7,7 @@ export default function useVerification(
   eamil:string,
 ) {
   const [code, setCode] = useState('');
-  const [errorMessage, setMessage] = useState(null);
+  const [errorMessage, setMessage] = useState();
   const codeInput = useRef<HTMLInputElement>(null);
   const { userInfo: userData, setUserInfo: setAuthenticate } = useRegisterInfo();
   const {
@@ -29,7 +29,7 @@ export default function useVerification(
   useEffect(() => {
     if (status === 'success' && !userData.isAuthentication && data) {
       setAuthenticate({ ...userData, isAuthentication: true });
-      setMessage(null);
+      setMessage(undefined);
       setUploadToken(data.token);
     } else if (isError) {
       setMessage(Object(error).response.data.violations[0]);

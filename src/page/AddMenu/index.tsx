@@ -1,9 +1,9 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
-import { useNavigate } from 'react-router-dom';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -16,7 +16,11 @@ import MobileDivide from './components/MobileDivide';
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const navigate = useNavigate();
 
+  const goMyShop = () => {
+    navigate('/');
+  };
   const toggleConfirmClick = () => {
     setIsComplete((prevState) => !prevState);
   };
@@ -44,20 +48,18 @@ export default function AddMenu() {
       is_single: isSingle,
       name,
       option_prices: optionPrices.map(({ option, price }) => ({
-        option,
+        option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
       })),
-      single_price: singlePrice,
+      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
     };
 
     addMenuMutation(newMenuData);
   };
-  const navigate = useNavigate();
-
-  const goMyShop = () => {
-    navigate('/');
+  const confirmAddMenu = () => {
+    addMenu();
+    goMyShop();
   };
-
   return (
     <div>
       {isMobile ? (
@@ -97,7 +99,7 @@ export default function AddMenu() {
                 <button
                   className={styles['mobile__button-check']}
                   type="button"
-                  onClick={openGoMyShopModal}
+                  onClick={confirmAddMenu}
                 >
                   확인
                 </button>
