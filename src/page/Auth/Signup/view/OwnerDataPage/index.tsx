@@ -128,7 +128,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
             onDragLeave={setUnActive}
             onDrop={(e) => handleDrop(e)}
           >
-            <input id="upload-button" className={styles['file-box__input']} type="file" {...fileRegister} multiple />
+            <input id="upload-button" className={styles['file-box__input']} type="file" {...fileRegister} multiple accept=".jpg, .jpeg, .png, .gif, .pdf" />
             {ownerData.registerFiles ? (
               <div className={styles['file-box__files']}>
                 {ownerData.registerFiles.map((file:File, index:number) => (
