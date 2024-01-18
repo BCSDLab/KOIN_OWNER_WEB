@@ -92,7 +92,7 @@ export default function UserEmail() {
           </div>
           <div className={styles.buttons}>
             <CustomButton buttonSize="mobile" content="재발송" onClick={reSubmit} />
-            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} />
+            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} disable={(!codeInput.current || codeInput.current.value.length < 6)} />
           </div>
         </>
       )
