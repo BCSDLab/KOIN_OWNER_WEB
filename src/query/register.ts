@@ -49,8 +49,8 @@ export const useRegisterUser = (goNext:()=>void) => {
   const { selectedShopId, searchShopState } = useModalStore();
   const register = useMutation({
     mutationKey: ['registerUser'],
-    mutationFn: (fileUrls:string[]) => (
-      registerUser(parseRegisterData(
+    mutationFn: async (fileUrls:string[]) => (
+      registerUser(await parseRegisterData(
         userInfo,
         ownerInfo,
         fileUrls,

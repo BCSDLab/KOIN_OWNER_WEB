@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useNewPassword } from 'query/auth';
 import useEmailAuthStore from 'store/useEmailAuth';
 import cn from 'utils/ts/className';
+import sha256 from 'utils/ts/SHA-256';
 import styles from './NewPassword.module.scss';
 
 export default function NewPassword() {
@@ -43,10 +44,11 @@ export default function NewPassword() {
     }
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const hashedPassword = await sha256(password);
     if (!passwordError) {
-      submit({ email, password });
+      submit({ email, password: hashedPassword });
     }
   };
 

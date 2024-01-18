@@ -11,6 +11,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
 import { useState } from 'react';
+import sha256 from 'utils/ts/SHA-256';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
@@ -31,8 +32,9 @@ export default function Login() {
     resolver: zodResolver(LoginParams),
   });
 
-  const onSubmit: SubmitHandler<LoginParams> = (data) => {
-    login({ email: data.email, password: data.password, isAutoLogin });
+  const onSubmit: SubmitHandler<LoginParams> = async (data) => {
+    const hashedPassword = await sha256(data.password);
+    login({ email: data.email, password: hashedPassword, isAutoLogin });
   };
 
   const onError = () => {
