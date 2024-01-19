@@ -2,10 +2,17 @@ import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import useBooleanState from 'utils/hooks/useBooleanState';
+import CustomModal from 'component/common/CustomModal';
 import styles from './ShopInfo.module.scss';
 
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
   const { isMobile } = useMediaQuery();
+  const {
+    setTrue: openEditShopInfoModal,
+    setFalse: closeEditShopInfoModal,
+    value: isEditShopInfoModalOpen,
+  } = useBooleanState(false);
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
     .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
@@ -89,7 +96,25 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   </div>
                 </div>
               ))}
-              <button type="button" className={styles['store__update-btn']}>가게 정보 수정</button>
+              <button
+                type="button"
+                className={styles['store__update-btn']}
+                onClick={openEditShopInfoModal}
+              >
+                가게 정보 수정
+              </button>
+              {isEditShopInfoModalOpen && (
+                <CustomModal
+                  title="가게 정보 수정"
+                  modalSize="extra-large"
+                  hasFooter={false}
+                  isOpen={isEditShopInfoModalOpen}
+                  onCancel={closeEditShopInfoModal}
+                  isOverflowVisible
+                >
+                  <div>만들어야 해</div>
+                </CustomModal>
+              )}
             </div>
           </div>
           <div className={styles.store__imgs}>
