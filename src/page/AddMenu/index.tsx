@@ -151,7 +151,7 @@ export default function AddMenu() {
                   <button
                     className={styles['header__button-cancel']}
                     type="button"
-                    onClick={openGoMyShopModal}
+                    onClick={goMyShop}
                   >
                     취소
                   </button>

@@ -3,8 +3,8 @@ import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
 import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
-import useModalStore from 'store/modalStore';
 import useRegisterInfo from 'store/registerStore';
+import useShopRegistrationStore from 'store/shopRegistration';
 import useUploadToken from 'store/uploadToken';
 
 export const useCheckDuplicate = (email:string) => {
@@ -46,16 +46,16 @@ export const useVerificationAuthCode = (code:string, email:string) => {
 
 export const useRegisterUser = (goNext:()=>void) => {
   const { userInfo, ownerInfo, resetRegisterInfo } = useRegisterInfo();
-  const { selectedShopId, searchShopState } = useModalStore();
+  const { shopId, name } = useShopRegistrationStore();
   const register = useMutation({
     mutationKey: ['registerUser'],
-    mutationFn: (fileUrls:string[]) => (
-      registerUser(parseRegisterData(
+    mutationFn: async (fileUrls:string[]) => (
+      registerUser(await parseRegisterData(
         userInfo,
         ownerInfo,
         fileUrls,
-        selectedShopId,
-        searchShopState,
+        shopId,
+        name,
       ))
     ),
     onSuccess: () => {
