@@ -1,5 +1,4 @@
 .mobilestore {
-  height: 570px;
   border-bottom: 1px solid #d2dae2;
 
   &__imgs {
@@ -35,7 +34,7 @@
   &__name {
     font-weight: 500;
     font-size: 28px;
-    line-height: 15px;
+    line-height: 30px;
     align-items: center;
     color: #252525;
     margin-right: 8px;
@@ -70,7 +69,7 @@
     display: flex;
     justify-content: center;
     position: absolute;
-    width: 120px;
+    width: 110px;
     height: 40px;
     bottom: 20px;
     right: 30px;
@@ -91,7 +90,6 @@
 
 .store {
   display: flex;
-  height: 305px;
   border-bottom: 1px solid #d2dae2;
 
   &__info {
@@ -131,6 +129,26 @@
     display: flex;
     align-items: center;
     text-align: center;
+    min-width: 75px;
+
+    &--long {
+      margin-right: 8px;
+      box-sizing: border-box;
+      padding: 10px;
+      width: auto;
+      height: 24px;
+      border: 1px solid #f7941e;
+      border-radius: 13.5px;
+      color: #f7941e;
+      font-family: "Noto Sans", sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      min-width: 97px;
+    }
   }
 
   &__content {
