@@ -11,11 +11,11 @@ export default function WorkInProcess() {
         <Error />
       </div>
       <div className={styles.content}>
-        <div className={styles.content__title}>Page Not Found</div>
+        <div className={styles.content__title}>개발 중인 페이지입니다</div>
         <div className={styles.content__description}>
-          죄송합니다. 현재 찾을 수 없는 페이지를 요청 하셨습니다.
+          죄송합니다. 현재 개발 중인 페이지입니다.
           <br />
-          주소가 잘못 입력되었거나, 개발 중인 페이지일 수 있습니다.
+          최대한 빠르게 오픈하도록 하겠습니다.
         </div>
         <button
           type="button"
