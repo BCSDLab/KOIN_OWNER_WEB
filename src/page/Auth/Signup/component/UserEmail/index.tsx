@@ -6,6 +6,7 @@ import useVerification from 'page/Auth/Signup/hooks/useVerification';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useRegisterInfo from 'store/registerStore';
 import useTimer from 'page/Auth/Signup/hooks/useTimer';
+import { useEffect } from 'react';
 import styles from './UserEmail.module.scss';
 
 export default function UserEmail() {
@@ -21,7 +22,7 @@ export default function UserEmail() {
     verificationCode,
     codeInput, errorMessage: verificateError,
   } = useVerification(email);
-  const { getTime, startTimer } = useTimer(300);
+  const { getTime, startTimer, stopTimer } = useTimer(300);
   const onSubmit = <T extends {}>(data:T) => {
     startTimer();
     emailSubmit(data);
@@ -30,6 +31,11 @@ export default function UserEmail() {
     startTimer();
     refetch();
   };
+  useEffect(() => {
+    if (userData.isAuthentication) {
+      stopTimer();
+    }
+  }, [stopTimer, userData.isAuthentication]);
   return (
     !isMobile
       ? (
@@ -86,7 +92,7 @@ export default function UserEmail() {
           </div>
           <div className={styles.buttons}>
             <CustomButton buttonSize="mobile" content="재발송" onClick={reSubmit} />
-            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} />
+            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} disable={(!codeInput.current || codeInput.current.value.length < 6)} />
           </div>
         </>
       )
