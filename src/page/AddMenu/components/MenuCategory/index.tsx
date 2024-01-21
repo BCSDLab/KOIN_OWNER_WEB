@@ -139,7 +139,7 @@ export function MenuCategory({ isComplete }:MenuCategoryProps) {
           )}
         </div>
       )}
-      <span className={styles['error-message']}>{categoryError}</span>
+      {categoryError && <span className={styles['error-message']}>{categoryError}</span>}
     </div>
   );
 }

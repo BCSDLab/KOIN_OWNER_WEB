@@ -24,6 +24,7 @@ interface AddMenuStore {
   setSinglePrice: (singlePrice: number) => void;
   resetOptionPrice: () => void;
   resetAddMenuStore: () => void;
+  resetCategoryIds: () => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
@@ -56,6 +57,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
     optionPrices: [{ id: 0, option: '', price: 0 }],
     singlePrice: 0,
   }),
+  resetCategoryIds: () => set({ categoryIds: [] }),
 }));
 
 export default useAddMenuStore;

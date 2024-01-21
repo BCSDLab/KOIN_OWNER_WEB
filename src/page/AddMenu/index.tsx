@@ -9,6 +9,7 @@ import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
+// eslint-disable-next-line import/no-cycle
 import { MenuCategory } from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
@@ -28,8 +29,9 @@ export default function AddMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  const { resetCategoryIds } = useAddMenuStore();
   const goMyShop = () => {
+    resetCategoryIds();
     navigate('/');
   };
   const {
