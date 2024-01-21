@@ -4,6 +4,7 @@ import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
+import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
 import styles from './ShopInfo.module.scss';
 
 export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
@@ -112,7 +113,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   onCancel={closeEditShopInfoModal}
                   isOverflowVisible
                 >
-                  <div>만들어야 해</div>
+                  <EditShopInfoModal shopInfo={shopInfo} />
                 </CustomModal>
               )}
             </div>
