@@ -23,9 +23,12 @@ export default function useTimer(targetTime:number) {
     }, 1000);
   }, [targetTime]);
 
+  const stopTimer = () => {
+    clearInterval(timer.current);
+  };
   useEffect(() => {
     if (time === 0) {
-      clearInterval(timer.current);
+      stopTimer();
     }
   }, [time]);
 
@@ -35,5 +38,5 @@ export default function useTimer(targetTime:number) {
 
   const getTime = () => getTimeString(time);
 
-  return { getTime, startTimer };
+  return { getTime, startTimer, stopTimer };
 }

@@ -32,17 +32,36 @@ export default function FindPassword() {
         <form className={styles.form}>
           <label className={styles.form__label} htmlFor="email">
             이메일 입력
+            <input
+              className={cn({
+                [styles.form__input]: true,
+                [styles['form__input--error']]: verifyEmail.errorMessage,
+                [styles['form__input--normal']]: verifyEmail.isSuccess,
+              })}
+              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="email"
+            />
+            {!verifyEmail.isSuccess && (
+            <span className={styles.form__error}>
+              {verifyEmail.errorMessage && <ErrorIcon />}
+              {verifyEmail.errorMessage}
+            </span>
+            )}
+          </label>
+          <label className={styles.form__label} htmlFor="auth-num">
+            인증번호 입력
             <div className={styles['auth-container']}>
               <input
                 className={cn({
                   [styles.form__input]: true,
                   [styles['form__input--auth']]: true,
-                  [styles['form__input--error']]: verifyEmail.errorMessage,
-                  [styles['form__input--normal']]: verifyEmail.isSuccess,
+                  [styles['form__input--error']]: authNumber.errorMessage,
+                  [styles['form__input--normal']]: authNumber.isSuccess,
                 })}
-                onChange={(e) => setEmail(e.target.value)}
                 type="text"
-                id="email"
+                id="auth-num"
+                onChange={(e) => setVerify(e.target.value)}
               />
               <button
                 type="button"
@@ -53,24 +72,6 @@ export default function FindPassword() {
                 {verifyEmail.isSuccess ? '재발송' : '인증번호 발송'}
               </button>
             </div>
-            {!verifyEmail.isSuccess && (
-            <span className={styles.form__error}>
-              {verifyEmail.errorMessage && <ErrorIcon />}
-              {verifyEmail.errorMessage}
-            </span>
-            )}
-          </label>
-          <label className={styles.form__label} htmlFor="auth-num">
-            인증번호 보내기
-            <input
-              className={cn({
-                [styles.form__input]: true,
-                [styles['form__input--error']]: authNumber.errorMessage,
-              })}
-              type="text"
-              id="auth-num"
-              onChange={(e) => setVerify(e.target.value)}
-            />
             {!authNumber.isSuccess && (
             <span className={styles.form__error}>
               {authNumber.errorMessage && <ErrorIcon />}

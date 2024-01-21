@@ -65,6 +65,7 @@ export const useRegisterUser = (goNext:()=>void) => {
     onError: () => {
       alert('회원가입 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
       resetRegisterInfo();
+      window.location.reload();
     },
   });
   return { register };
@@ -87,6 +88,7 @@ export const useGetFileUrls = (goNext:()=>void) => {
     onError: () => {
       alert('파일 업로드 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
       resetRegisterInfo();
+      window.location.reload();
     },
 
   });
