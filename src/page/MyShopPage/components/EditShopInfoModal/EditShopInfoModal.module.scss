@@ -2,8 +2,14 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 100%;
-  height: 100%;
+  width: 752px;
+  height: calc(75vh - 78px);
+  margin-left: 40px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &__header {
     display: flex;
@@ -34,6 +40,33 @@
     width: 704px;
     border-top: 1px solid #a1a1a1;
     margin-top: 34px;
+  }
+
+  &__buttons {
+    display: flex;
+    width: 704px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    margin-bottom: 24px;
+
+    &--cancel {
+      width: 114px;
+      height: 48px;
+      background-color: #858585;
+      font-size: 18px;
+      color: #ffffff;
+      margin-right: 24px;
+      cursor: pointer;
+    }
+
+    &--confirm {
+      width: 114px;
+      height: 48px;
+      background-color: #17518e;
+      font-size: 18px;
+      color: #ffffff;
+      cursor: pointer;
+    }
   }
 }
 
@@ -87,5 +120,71 @@
     font-size: 16px;
     color: #a1a1a1;
     margin-top: 16px;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 22px;
+}
+
+.main-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 24px;
+  margin-bottom: 24px;
+
+  &__header {
+    font-size: 18px;
+    color: #17518e;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  &__input {
+    width: 328px;
+    height: 21px;
+    padding: 8px 0 8px 12px;
+  }
+
+  &__checkboxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #858585;
+    height: 24px;
+    box-sizing: content-box;
+    cursor: pointer;
+
+    input[type="checkbox"]:checked + span {
+      font-size: 16px;
+      color: #f7941e;
+    }
+  }
+
+  &__checkbox-input {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    box-sizing: border-box;
+    border: 1px solid #858585;
+    margin-right: 8px;
+    background-size: cover;
+    cursor: pointer;
+
+    &:checked {
+      border: 1px solid #f7941e;
+      padding: 2px;
+      background-clip: content-box;
+      background-color: #f7941e;
+    }
   }
 }
