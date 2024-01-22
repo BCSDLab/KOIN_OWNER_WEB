@@ -47,7 +47,7 @@ const CATEGORY: Category[] = [
       },
       {
         title: '가게추가',
-        link: '/store-add',
+        link: '/shop-add',
         newFlag: true,
         planFlag: true,
         tag: null,

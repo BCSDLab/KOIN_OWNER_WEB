@@ -78,7 +78,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
               <h1 className={styles.store__name}>{shopInfo.name}</h1>
               {shopInfo.delivery && (<div className={styles.store__keywords}>#배달 가능</div>)}
               {shopInfo.pay_card && (<div className={styles.store__keywords}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles.store__keywords}>#계좌이체 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles['store__keywords--long']}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
