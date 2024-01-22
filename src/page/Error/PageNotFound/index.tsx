@@ -1,8 +1,8 @@
-import { ReactComponent as Error } from 'assets/svg/error/WIP-error.svg';
+import { ReactComponent as Error } from 'assets/svg/error/page-not-found-error.svg';
 import { useNavigate } from 'react-router-dom';
-import styles from './WorkInProcess.module.scss';
+import styles from './PageNotFound.module.scss';
 
-export default function WorkInProcess() {
+export default function PageNotFound() {
   const navigate = useNavigate();
 
   return (

@@ -10,7 +10,7 @@ import AuthLayout from 'layout/AuthLayout';
 import MyStorePage from 'page/MyShopPage';
 import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
-import WorkInProcess from 'page/Error/WorkInProcess';
+import PageNotFound from 'page/Error/PageNotFound';
 
 function App() {
   return (
@@ -19,12 +19,12 @@ function App() {
         <Route path="/" element={<MyStorePage />} />
         <Route path="/store-registration" element={<ShopRegistration />} />
         <Route path="/add-menu" element={<AddMenu />} />
-        <Route path="/modify-info" element={<WorkInProcess />} />
-        <Route path="/store-info" element={<WorkInProcess />} />
-        <Route path="/menu-management" element={<WorkInProcess />} />
-        <Route path="/order-management" element={<WorkInProcess />} />
-        <Route path="/sales-management" element={<WorkInProcess />} />
-        <Route path="/shop-add" element={<WorkInProcess />} />
+        <Route path="/modify-info" element={<PageNotFound />} />
+        <Route path="/store-info" element={<PageNotFound />} />
+        <Route path="/menu-management" element={<PageNotFound />} />
+        <Route path="/order-management" element={<PageNotFound />} />
+        <Route path="/sales-management" element={<PageNotFound />} />
+        <Route path="/shop-add" element={<PageNotFound />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
