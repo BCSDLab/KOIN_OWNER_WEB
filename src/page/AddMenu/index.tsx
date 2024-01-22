@@ -70,7 +70,6 @@ export default function AddMenu() {
       })),
       single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
     };
-
     addMenuMutation(newMenuData);
   };
   const confirmAddMenu = () => {
@@ -84,6 +83,7 @@ export default function AddMenu() {
     },
     [resetCategoryIds, setCategoryError],
   );
+
   return (
     <div>
       {isMobile ? (
