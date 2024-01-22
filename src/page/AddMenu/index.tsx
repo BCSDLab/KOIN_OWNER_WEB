@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
@@ -30,8 +30,8 @@ export default function AddMenu() {
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const navigate = useNavigate();
   const { resetCategoryIds } = useAddMenuStore();
+  const { setCategoryError } = useCategoryErrorStore();
   const goMyShop = () => {
-    resetCategoryIds();
     navigate('/');
   };
   const {
@@ -49,7 +49,6 @@ export default function AddMenu() {
     singlePrice,
   } = useAddMenuStore();
   const { addMenuMutation } = useMyShop();
-  const { setCategoryError } = useCategoryErrorStore();
   const toggleConfirmClick = () => {
     if (categoryIds.length === 0) {
       setCategoryError('카테고리를 1개 이상 선택해주세요.');
@@ -78,6 +77,13 @@ export default function AddMenu() {
     addMenu();
     goMyShop();
   };
+  useEffect(
+    () => {
+      resetCategoryIds();
+      setCategoryError('');
+    },
+    [resetCategoryIds, setCategoryError],
+  );
   return (
     <div>
       {isMobile ? (
