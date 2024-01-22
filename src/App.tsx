@@ -18,6 +18,7 @@ function App() {
         <Route path="/" element={<MyStorePage />} />
         <Route path="/store-registration" element={<ShopRegistration />} />
         <Route path="/add-menu" element={<AddMenu />} />
+        <Route path="/add-menu/:menuId" element={<AddMenu />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />

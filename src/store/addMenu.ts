@@ -1,19 +1,20 @@
 import { create } from 'zustand';
+import { Menu } from 'model/shopInfo/menuCategory';
 
 interface OptionPrices {
-  id: number;
   option: string;
   price: number;
 }
 
 interface AddMenuStore {
+  menuId: number;
   categoryIds: number[];
   description: string;
   imageUrl: string[];
   isSingle: boolean;
   name: string;
-  optionPrices: OptionPrices[];
-  singlePrice: number;
+  optionPrices: OptionPrices[] | null;
+  singlePrice: number | null;
   setCategoryIds: (categoryIds: number[]) => void;
   setDescription: (description: string) => void;
   setImageUrl: (newImageUrl: string) => void;
@@ -24,9 +25,11 @@ interface AddMenuStore {
   setSinglePrice: (singlePrice: number) => void;
   resetOptionPrice: () => void;
   resetAddMenuStore: () => void;
+  setMenuInfo: (menuData : Menu) => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
+  menuId: 0,
   categoryIds: [],
   description: '',
   imageUrl: [],
@@ -46,16 +49,28 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setName: (name) => set({ name }),
   setOptionPrices: (optionPrices) => set({ optionPrices }),
   setSinglePrice: (singlePrice) => set({ singlePrice }),
-  resetOptionPrice: () => set({ optionPrices: [{ id: 0, option: '', price: 0 }] }),
+  resetOptionPrice: () => set({ optionPrices: [{ option: '', price: 0 }] }),
   resetAddMenuStore: () => set({
     categoryIds: [],
     description: '',
     imageUrl: [],
     isSingle: false,
     name: '',
-    optionPrices: [{ id: 0, option: '', price: 0 }],
+    optionPrices: [{ option: '', price: 0 }],
     singlePrice: 0,
   }),
+  setMenuInfo: (menuData) => {
+    set({
+      menuId: menuData.id,
+      categoryIds: menuData.category_ids,
+      description: menuData.description !== null ? menuData.description : undefined,
+      imageUrl: menuData.image_urls,
+      isSingle: menuData.is_single,
+      name: menuData.name,
+      optionPrices: menuData.option_prices,
+      singlePrice: menuData.single_price,
+    });
+  },
 }));
 
 export default useAddMenuStore;

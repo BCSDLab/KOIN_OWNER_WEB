@@ -7,6 +7,7 @@ export const MenuBase = z.object({
   is_hidden: z.boolean(),
   is_single: z.boolean(),
   description: z.string().nullable(),
+  category_ids: z.array(z.number()),
 });
 
 export type MenuBase = z.infer<typeof MenuBase>;

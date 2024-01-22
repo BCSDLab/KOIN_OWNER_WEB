@@ -7,7 +7,7 @@ import styles from './MyShopPage.module.scss';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
-  const { shopData, menuData } = useMyShop();
+  const { shopData, menusData } = useMyShop();
   return (
     <div>
       {isMobile ? (
@@ -27,7 +27,7 @@ export default function MyShopPage() {
           {shopData && (
           <StoreInfo shopInfo={shopData} />
           )}
-          {menuData && menuData.menu_categories.map((category) => (
+          {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.id}
               menuCategory={category}
@@ -51,7 +51,7 @@ export default function MyShopPage() {
           {shopData && (
           <StoreInfo shopInfo={shopData} />
           )}
-          {menuData && menuData.menu_categories.map((category) => (
+          {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.name}
               menuCategory={category}
