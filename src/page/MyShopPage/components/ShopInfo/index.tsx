@@ -113,7 +113,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   onCancel={closeEditShopInfoModal}
                   isOverflowVisible
                 >
-                  <EditShopInfoModal shopInfo={shopInfo} />
+                  <EditShopInfoModal shopInfo={shopInfo} closeModal={closeEditShopInfoModal} />
                 </CustomModal>
               )}
             </div>

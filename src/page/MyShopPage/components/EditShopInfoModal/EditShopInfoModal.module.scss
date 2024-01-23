@@ -148,6 +148,18 @@
     padding: 8px 0 8px 12px;
   }
 
+  &__operate-time {
+    width: 220px;
+    min-height: 37px;
+  }
+
+  &__button {
+    width: 88px;
+    height: 37px;
+    background-color: #17518e;
+    color: #ffffff;
+  }
+
   &__checkboxes {
     display: grid;
     grid-template-columns: 1fr 1fr;
