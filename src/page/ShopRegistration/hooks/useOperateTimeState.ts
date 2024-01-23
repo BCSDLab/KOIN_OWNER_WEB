@@ -24,7 +24,9 @@ export default function useOperateTimeState() {
   }, [openTimeState, closeTimeState, shopClosedState, openDay]);
 
   WEEK.forEach((day) => {
-    operateTimeState[day] = shopClosedState[day] ? `매주 ${day} 정기 휴무` : `${openTimeState[day]} ~ ${closeTimeState[day]}`;
+    const openTime = openTimeState[day] || '00:00';
+    const closeTime = closeTimeState[day] || '00:00';
+    operateTimeState[day] = shopClosedState[day] ? `매주 ${day} 정기 휴무` : `${openTime} ~ ${closeTime}`;
   });
 
   return operateTimeState;
