@@ -58,11 +58,10 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
   } = CheckSameTime();
 
   const {
-    handleSubmit, setValue, formState: { errors },
+    handleSubmit, setValue,
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
-  console.log(errors);
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
