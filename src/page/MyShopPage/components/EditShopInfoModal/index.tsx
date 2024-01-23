@@ -40,20 +40,16 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     name, address, phone, deliveryPrice, description, delivery, payBank, payCard,
   } = useShopRegistrationStore();
 
-  const holidayIndex = shopInfo.open.filter((day) => day.closed)
-    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
-  const holiday = holidayIndex.map((day) => WEEK[day]);
-
   const {
     openTimeState,
     closeTimeState,
     shopClosedState,
-    setOpenTimeState,
-    setCloseTimeState,
-    setShopClosedState,
   } = useModalStore();
 
-  const operateTimeState = useOperateTimeState();
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const shopClosedArray = Object.values(shopClosedState);
+
   const {
     isAllSameTime,
     hasClosedDay,
@@ -61,9 +57,12 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     isAllClosed,
   } = CheckSameTime();
 
-  const { register, handleSubmit, setValue } = useForm<OwnerShop>({
+  const {
+    handleSubmit, setValue, formState: { errors },
+  } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
+  console.log(errors);
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
@@ -84,20 +83,25 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
     shopInfo.open.forEach((day, index) => {
-      setOpenTimeState({
-        ...openTimeState,
-        [WEEK[index]]: day.open_time,
-      });
-      setCloseTimeState({
-        ...closeTimeState,
-        [WEEK[index]]: day.close_time,
-      });
-      setShopClosedState({
-        ...shopClosedState,
-        [WEEK[index]]: day.closed,
-      });
+      useModalStore.setState((prev) => ({
+        ...prev,
+        openTimeState: {
+          ...prev.openTimeState,
+          [WEEK[index]]: day.open_time,
+        },
+        closeTimeState: {
+          ...prev.closeTimeState,
+          [WEEK[index]]: day.close_time,
+        },
+        shopClosedState: {
+          ...prev.shopClosedState,
+          [WEEK[index]]: day.closed,
+        },
+      }));
     });
   }, []);
+  const operateTimeState = useOperateTimeState();
+  const holiday = `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`;
 
   useEffect(() => {
     if (imageFile) {
@@ -109,7 +113,24 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     if (imageUrlList.length > 0) {
       setValue('image_urls', imageUrlList);
     }
-  }, [imageUrlList]);
+    const openValue = DAY_OF_WEEK.map((day, index) => ({
+      close_time: closeTimeArray[index],
+      closed: shopClosedArray[index],
+      day_of_week: day,
+      open_time: openTimeArray[index],
+    }));
+    setValue('open', openValue);
+    setValue('delivery_price', Number(deliveryPrice));
+    setValue('category_ids', [1, shopInfo.shop_categories[0].id]);
+    setValue('description', description);
+    setValue('delivery', delivery);
+    setValue('pay_bank', payBank);
+    setValue('pay_card', payCard);
+    setValue('name', name);
+    setValue('phone', phone);
+    setValue('address', address);
+  }, [imageUrlList, openTimeState, closeTimeState, shopClosedState, deliveryPrice,
+    description, delivery, payBank, payCard, name, phone, address]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
@@ -157,7 +178,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             type="text"
             id="name"
             value={name}
-            {...register('name')}
             onChange={(e) => setName(e.target.value)}
             className={styles['main-info__input']}
           />
@@ -168,7 +188,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             type="text"
             id="address"
             value={address}
-            {...register('address')}
             onChange={(e) => setAddress(e.target.value)}
             className={styles['main-info__input']}
           />
@@ -179,7 +198,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             type="text"
             id="phone"
             value={phone}
-            {...register('phone')}
             onChange={(e) => setPhone(e.target.value)}
             className={styles['main-info__input']}
           />
@@ -190,17 +208,14 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             type="text"
             id="deliveryPrice"
             value={deliveryPrice}
-            {...register('delivery_price')}
             onChange={(e) => setDeliveryPrice(e.target.value)}
             className={styles['main-info__input']}
           />
         </label>
         <div className={styles['main-info']}>
           <span className={styles['main-info__header']}>운영시간</span>
-          <div>
-            <div
-              className={styles['main-info__operate-time']}
-            >
+          <div className={styles['main-info__operate-time']}>
+            <div className={styles['main-info__operate-time--content']}>
               {
                 isAllSameTime && !hasClosedDay ? (
                   <div>
@@ -237,9 +252,9 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             <button
               type="button"
               onClick={openOperateTimeModal}
-              className={styles['main-info__button']}
+              className={styles['main-info__operate-time--button']}
             >
-              시간수정
+              시간 수정
             </button>
             {isOperateTimeModalOpen && (
             <CustomModal
@@ -262,7 +277,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             type="text"
             id="description"
             value={description}
-            {...register('description')}
             onChange={(e) => setDescription(e.target.value)}
             className={styles['main-info__input']}
           />
@@ -274,6 +288,7 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             id="closedDay"
             value={holiday}
             className={styles['main-info__input']}
+            readOnly
           />
         </label>
         <div className={styles['main-info__checkboxes']}>
@@ -282,7 +297,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               type="checkbox"
               id="delivery"
               className={styles['main-info__checkbox-input']}
-              {...register('delivery')}
               onChange={(e) => setDelivery(e.target.checked)}
               checked={delivery}
             />
@@ -293,7 +307,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               type="checkbox"
               id="payCard"
               className={styles['main-info__checkbox-input']}
-              {...register('pay_card')}
               onChange={(e) => setPayCard(e.target.checked)}
               checked={payCard}
             />
@@ -304,7 +317,6 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               type="checkbox"
               id="payBank"
               className={styles['main-info__checkbox-input']}
-              {...register('pay_bank')}
               onChange={(e) => setPayBank(e.target.checked)}
               checked={payBank}
             />

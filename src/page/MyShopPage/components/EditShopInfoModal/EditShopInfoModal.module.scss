@@ -149,15 +149,20 @@
   }
 
   &__operate-time {
-    width: 220px;
-    min-height: 37px;
-  }
+    display: flex;
 
-  &__button {
-    width: 88px;
-    height: 37px;
-    background-color: #17518e;
-    color: #ffffff;
+    &--content {
+      width: 252px;
+      min-height: 37px;
+    }
+
+    &--button {
+      width: 88px;
+      height: 37px;
+      background-color: #17518e;
+      color: #ffffff;
+      cursor: pointer;
+    }
   }
 
   &__checkboxes {
