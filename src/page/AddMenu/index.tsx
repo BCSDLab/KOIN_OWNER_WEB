@@ -13,6 +13,7 @@ import { MenuCategory } from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
 import MobileDivide from './components/MobileDivide';
+import useFormValidation from './hook/useFormValidation';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
@@ -38,18 +39,11 @@ export default function AddMenu() {
     singlePrice,
   } = useAddMenuStore();
   const { addMenuMutation } = useMyShop();
+  const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
-    if (name.length === 0) {
-      setMenuError('메뉴명을 입력해주세요.');
-      return;
+    if (validateFields()) {
+      setIsComplete((prevState) => !prevState);
     }
-    if (categoryIds.length === 0) {
-      setCategoryError('카테고리를 1개 이상 선택해주세요.');
-      return;
-    }
-    setMenuError('');
-    setCategoryError('');
-    setIsComplete((prevState) => !prevState);
   };
   const addMenu = () => {
     const newMenuData = {
