@@ -79,11 +79,13 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
 
   useEffect(() => {
     if (isOpenTimePicker) {
-      time.hour = openTimeState[operatingDay]?.slice(0, 2) || '00:00';
-      time.minute = openTimeState[operatingDay]?.slice(3, 5) || '00:00';
+      const openTime = openTimeState[operatingDay];
+      time.hour = openTime ? openTime.slice(0, 2) : '00';
+      time.minute = openTime ? openTime.slice(3, 5) : '00';
     } else {
-      time.hour = closeTimeState[operatingDay]?.slice(0, 2) || '00:00';
-      time.minute = closeTimeState[operatingDay]?.slice(3, 5) || '00:00';
+      const closeTime = closeTimeState[operatingDay];
+      time.hour = closeTime ? closeTime.slice(0, 2) : '00';
+      time.minute = closeTime ? closeTime.slice(3, 5) : '00';
     }
   }, []);
   return (
