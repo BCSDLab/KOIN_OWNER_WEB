@@ -4,33 +4,23 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
-import { create } from 'zustand';
+import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
-// eslint-disable-next-line import/no-cycle
 import { MenuCategory } from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
 import MobileDivide from './components/MobileDivide';
-
-interface CategoryErrorStore {
-  categoryError: string;
-  setCategoryError: (error: string) => void;
-}
-
-export const useCategoryErrorStore = create<CategoryErrorStore>((set) => ({
-  categoryError: '',
-  setCategoryError: (error) => set({ categoryError: error }),
-}));
+import useFormValidation from './hook/useFormValidation';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { resetCategoryIds } = useAddMenuStore();
-  const { setCategoryError } = useCategoryErrorStore();
+  const { resetMenuName, resetCategoryIds } = useAddMenuStore();
+  const { setMenuError, setCategoryError } = useErrorMessageStore();
   const goMyShop = () => {
     navigate('/');
   };
@@ -49,13 +39,11 @@ export default function AddMenu() {
     singlePrice,
   } = useAddMenuStore();
   const { addMenuMutation } = useMyShop();
+  const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
-    if (categoryIds.length === 0) {
-      setCategoryError('카테고리를 1개 이상 선택해주세요.');
-      return;
+    if (validateFields()) {
+      setIsComplete((prevState) => !prevState);
     }
-    setCategoryError('');
-    setIsComplete((prevState) => !prevState);
   };
   const addMenu = () => {
     const newMenuData = {
@@ -78,10 +66,12 @@ export default function AddMenu() {
   };
   useEffect(
     () => {
+      resetMenuName();
       resetCategoryIds();
+      setMenuError('');
       setCategoryError('');
     },
-    [resetCategoryIds, setCategoryError],
+    [resetMenuName, setMenuError, resetCategoryIds, setCategoryError],
   );
 
   return (
