@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const MenuBase = z.object({
+export const MonoMenuBase = z.object({
   id: z.number(),
   name: z.string(),
   image_urls: z.array(z.string()),
@@ -9,6 +9,10 @@ export const MenuBase = z.object({
   description: z.string().nullable(),
   category_ids: z.array(z.number()),
 });
+
+export type MonoMenuBase = z.infer<typeof MonoMenuBase>;
+
+const MenuBase = MonoMenuBase.omit({ category_ids: true });
 
 export type MenuBase = z.infer<typeof MenuBase>;
 
@@ -31,9 +35,32 @@ export const MultiPriceMenu = MenuBase.extend({
 
 export type MultiPriceMenu = z.infer<typeof MultiPriceMenu>;
 
+export const SinglePriceMonoMenu = MonoMenuBase.extend({
+  single_price: z.number(),
+  option_prices: z.null(),
+});
+
+export type SinglePriceMonoMenu = z.infer<typeof SinglePriceMonoMenu>;
+
+export const MultiPriceMonoMenu = MonoMenuBase.extend({
+  single_price: z.null(),
+  option_prices: z.array(
+    z.object({
+      option: z.string(),
+      price: z.number(),
+    }),
+  ),
+});
+
+export type MultiPriceMonoMenu = z.infer<typeof MultiPriceMonoMenu>;
+
 export const Menu = z.union([SinglePriceMenu, MultiPriceMenu]);
 
 export type Menu = z.infer<typeof Menu>;
+
+export const MonoMenu = z.union([SinglePriceMonoMenu, MultiPriceMonoMenu]);
+
+export type MonoMenu = z.infer<typeof MonoMenu>;
 
 export const MenuCategory = z.object({
   id: z.number(),

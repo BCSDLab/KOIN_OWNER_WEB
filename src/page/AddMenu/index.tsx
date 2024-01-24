@@ -2,7 +2,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import assert from 'assert';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
 import { create } from 'zustand';
@@ -11,7 +10,7 @@ import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
 // eslint-disable-next-line import/no-cycle
-import { MenuCategory } from './components/MenuCategory';
+import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
 import MobileDivide from './components/MobileDivide';
@@ -50,8 +49,6 @@ export default function AddMenu() {
     singlePrice,
   } = useAddMenuStore();
   const { addMenuMutation } = useMyShop();
-  assert(optionPrices != null, 'single메뉴입니다.');
-  assert(singlePrice != null, 'multi메뉴입니다.');
   const toggleConfirmClick = () => {
     if (categoryIds.length === 0) {
       setCategoryError('카테고리를 1개 이상 선택해주세요.');
@@ -67,11 +64,11 @@ export default function AddMenu() {
       image_urls: imageUrl,
       is_single: isSingle,
       name,
-      option_prices: optionPrices.map(({ option, price }) => ({
+      option_prices: optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
-      })),
-      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
+      })) || [],
+      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
     };
     addMenuMutation(newMenuData);
   };
@@ -178,7 +175,7 @@ export default function AddMenu() {
                   <button
                     className={styles['header__button-cancel']}
                     type="button"
-                    onClick={openGoMyShopModal}
+                    onClick={goMyShop}
                   >
                     취소
                   </button>

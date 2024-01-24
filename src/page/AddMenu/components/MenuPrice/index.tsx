@@ -1,7 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import cn from 'utils/ts/className';
-import assert from 'assert';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
@@ -28,25 +27,24 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
     name,
     resetOptionPrice,
   } = useAddMenuStore();
-  assert(optionPrices != null, 'single메뉴입니다.');
-  assert(singlePrice != null, 'multi메뉴입니다.');
-  const updatePriceInput = (optionValue: string, field: string, newValue: string | number) => {
-    const updatedOptionPrices = optionPrices.map(
-      (price) => (price.option === optionValue ? { ...price, [field]: newValue } : price),
+
+  const updatePriceInput = (index: number, field: string, newValue: string | number) => {
+    const updatedOptionPrices = (optionPrices || []).map(
+      (price, idx) => (index === idx ? { ...price, [field]: newValue } : price),
     );
     setOptionPrices(updatedOptionPrices);
   };
 
   const addPriceInput = () => {
+    const newId = (optionPrices || []).length;
     if (!isSingle) {
-      setOptionPrices([...(optionPrices || []), { option: '', price: 0 }]);
+      setOptionPrices([...(optionPrices || []), { id: newId, option: '', price: 0 }]);
     }
   };
 
-  const deletePriceInput = (optionValue: string) => {
-    setOptionPrices(optionPrices.filter((price) => price.option !== optionValue));
+  const deletePriceInput = (index: number) => {
+    setOptionPrices((optionPrices || []).filter((_, idx) => idx !== index));
   };
-
   const handleIsSingleMenu = () => {
     setIsSingle(!isSingle);
     resetOptionPrice();
@@ -76,8 +74,8 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   </div>
                 </div>
               )
-                : optionPrices.map((input) => (
-                  <div key={input.option} className={styles['mobile__price-info-text-box']}>
+                : (optionPrices || []).map((input) => (
+                  <div key={input.id} className={styles['mobile__price-info-text-box']}>
                     <div className={styles['mobile__price-info-text']}>
                       <div className={styles['mobile__price-info-text__size']}>
                         {input.option}
@@ -112,8 +110,8 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   </button>
                 </div>
               </div>
-              {optionPrices.map((input) => (
-                <div key={input.option} className={styles['mobile__price-info-input-box']}>
+              {(optionPrices || []).map((input) => (
+                <div key={input.id} className={styles['mobile__price-info-input-box']}>
                   <div className={styles['mobile__price-info-inputs']}>
                     <input
                       className={cn({
@@ -122,21 +120,21 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       })}
                       placeholder={isSingle ? '' : '예) 소 (1~2 인분)'}
                       value={input.option}
-                      onChange={(e) => updatePriceInput(input.option, 'option', e.target.value)}
+                      onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
                       disabled={isSingle}
                     />
                     <div className={styles['mobile__price-info-inputs__price-input-box']}>
                       {isSingle ? (
                         <input
                           className={styles['mobile__price-info-inputs__price-input']}
-                          value={singlePrice === 0 ? '' : singlePrice}
+                          value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
                           onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
                         />
                       ) : (
                         <input
                           className={styles['mobile__price-info-inputs__price-input']}
                           value={input.price === 0 ? '' : input.price}
-                          onChange={(e) => updatePriceInput(input.option, 'price', e.target.value)}
+                          onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
                         />
                       )}
                       <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>
@@ -145,7 +143,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   <button
                     type="button"
                     className={styles['mobile__cancle-button']}
-                    onClick={() => deletePriceInput(input.option)}
+                    onClick={() => deletePriceInput(input.id)}
                   >
                     <MobileDeleteIcon className={styles['mobile__cancle-icon']} />
                   </button>
@@ -185,8 +183,8 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   </div>
                 </div>
               )
-                : optionPrices.map((input) => (
-                  <div key={input.option} className={styles['price-info-text-box']}>
+                : (optionPrices || []).map((input) => (
+                  <div key={input.id} className={styles['price-info-text-box']}>
                     <div className={styles['price-info-text']}>
                       <div className={styles['price-info-text__size']}>
                         {input.option}
@@ -219,11 +217,10 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       <CheckCircleIcon className={styles['header__condition-icon']} />
                     )}
                   </button>
-
                 </div>
               </div>
-              {optionPrices.map((input) => (
-                <div key={input.option} className={styles['price-info-input-box']}>
+              {(optionPrices || []).map((input) => (
+                <div key={input.id} className={styles['price-info-input-box']}>
                   <div className={styles['price-info-inputs']}>
                     <input
                       className={cn({
@@ -232,21 +229,21 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       })}
                       placeholder={isSingle ? '' : '예) 소 (1~2 인분)'}
                       value={input.option}
-                      onChange={(e) => updatePriceInput(input.option, 'option', e.target.value)}
+                      onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
                       disabled={isSingle}
                     />
                     <div className={styles['price-info-inputs__price-input-box']}>
                       {isSingle ? (
                         <input
                           className={styles['price-info-inputs__price-input']}
-                          value={singlePrice === 0 ? '' : singlePrice}
+                          value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
                           onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
                         />
                       ) : (
                         <input
                           className={styles['price-info-inputs__price-input']}
                           value={input.price === 0 ? '' : input.price}
-                          onChange={(e) => updatePriceInput(input.option, 'price', e.target.value)}
+                          onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
                         />
                       )}
                       <p className={styles['price-info-inputs__price-input-won']}>원</p>
@@ -255,7 +252,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   <button
                     type="button"
                     className={styles['cancle-button']}
-                    onClick={() => deletePriceInput(input.option)}
+                    onClick={() => deletePriceInput(input.id)}
                   >
                     <DeleteIcon className={styles['cancle-button__icon']} />
                   </button>

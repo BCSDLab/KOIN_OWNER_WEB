@@ -1,9 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
+  const navigate = useNavigate();
+  const handleMenuClick = (menuId: number) => {
+    navigate(`/add-menu/${menuId}`);
+  };
   return (
     <div>
       <div className={styles.category__title}>
@@ -14,7 +19,12 @@ export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuC
       <div className={styles['menu__slide-wrapper']}>
         <div className={styles.menu__content}>
           {menuCategory.menus.map((menu) => (
-            <div key={menu.name} className={styles.menu__item}>
+            <button
+              type="button"
+              key={menu.name}
+              className={styles.menu__item}
+              onClick={() => handleMenuClick(menu.id)}
+            >
               {menu.image_urls?.length === 0 ? (
                 <div className={styles['menu__non-img-border']}>
                   <div className={styles['menu__empty-img']}>
@@ -41,7 +51,7 @@ export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuC
                   )}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

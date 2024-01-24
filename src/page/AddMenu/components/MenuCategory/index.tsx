@@ -15,7 +15,7 @@ interface MenuCategory {
 interface MenuCategoryProps {
   isComplete: boolean;
 }
-export function MenuCategory({ isComplete }:MenuCategoryProps) {
+export default function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
   const { shopData } = useMyShop();
   const { setCategoryIds } = useAddMenuStore();

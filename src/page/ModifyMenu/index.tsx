@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import assert from 'assert';
 import useMenuInfo from 'query/menu';
@@ -43,37 +43,35 @@ export default function ModifyMenu() {
     setMenuInfo,
   } = useAddMenuStore();
   // 처음 메뉴 데이터 초기화
-  setMenuInfo(menuData);
-  assert(optionPrices != null, 'single메뉴입니다.');
-  assert(singlePrice != null, 'multi메뉴입니다.');
+  useEffect(() => {
+    if (menuData) {
+      setMenuInfo(menuData);
+    }
+  }, [menuData, setMenuInfo]);
   const createMenuData = () => {
     if (isSingle) {
       return {
-        id: Number(menuId),
         category_ids: categoryIds,
         description,
         image_urls: imageUrl,
         is_single: isSingle,
         name,
-        single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
-        option_prices: null,
-        is_hidden: false,
+        single_price: typeof singlePrice === 'string' ? Number(singlePrice) : singlePrice || 0,
+        option_prices: [],
       };
     }
 
     return {
-      id: Number(menuId),
       category_ids: categoryIds,
       description,
       image_urls: imageUrl,
       is_single: isSingle,
       name,
-      single_price: null,
-      option_prices: optionPrices.map(({ option, price }) => ({
+      single_price: 0,
+      option_prices: optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
-        price: typeof price === 'string' ? parseInt(price, 10) : price,
-      })),
-      is_hidden: false,
+        price: typeof price === 'string' ? Number(price) : price,
+      })) || [],
     };
   };
 

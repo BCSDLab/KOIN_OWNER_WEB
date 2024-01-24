@@ -1,5 +1,5 @@
 import { MyShopListRes, MyShopInfoRes, MyShopParam } from 'model/shopInfo/myShopInfo';
-import { Menu, MenuInfoRes } from 'model/shopInfo/menuCategory';
+import { MenuInfoRes } from 'model/shopInfo/menuCategory';
 import { ShopListRes } from 'model/shopInfo/allShopInfo';
 import { accessClient, client } from 'api';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
@@ -34,4 +34,4 @@ export const getMenu = async (menuId: number) => {
   return data;
 };
 
-export const modifyMenu = (menuId:number, param:Menu) => accessClient.put(`/owner/shops/menus/${menuId}`, param);
+export const modifyMenu = (menuId:number, param:NewMenu) => accessClient.put(`/owner/shops/menus/${menuId}`, param);

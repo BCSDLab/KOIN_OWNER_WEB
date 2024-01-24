@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { Menu } from 'model/shopInfo/menuCategory';
+import { MonoMenu } from 'model/shopInfo/menuCategory';
 
 interface OptionPrices {
+  id: number;
   option: string;
   price: number;
 }
@@ -26,7 +27,7 @@ interface AddMenuStore {
   resetOptionPrice: () => void;
   resetAddMenuStore: () => void;
   resetCategoryIds: () => void;
-  setMenuInfo: (menuData : Menu) => void;
+  setMenuInfo: (menuData : MonoMenu) => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
@@ -50,28 +51,36 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setName: (name) => set({ name }),
   setOptionPrices: (optionPrices) => set({ optionPrices }),
   setSinglePrice: (singlePrice) => set({ singlePrice }),
-  resetOptionPrice: () => set({ optionPrices: [{ option: '', price: 0 }] }),
+  resetOptionPrice: () => set({ optionPrices: [{ id: 0, option: '', price: 0 }] }),
   resetAddMenuStore: () => set({
     categoryIds: [],
     description: '',
     imageUrl: [],
     isSingle: false,
     name: '',
-    optionPrices: [{ option: '', price: 0 }],
+    optionPrices: [{ id: 0, option: '', price: 0 }],
     singlePrice: 0,
   }),
   resetCategoryIds: () => set({ categoryIds: [] }),
-  setMenuInfo: (menuData) => {
-    set({
-      menuId: menuData.id,
-      categoryIds: menuData.category_ids,
-      description: menuData.description !== null ? menuData.description : undefined,
-      imageUrl: menuData.image_urls,
-      isSingle: menuData.is_single,
-      name: menuData.name,
-      optionPrices: menuData.option_prices,
-      singlePrice: menuData.single_price,
-    });
+  setMenuInfo: (menuData: MonoMenu) => {
+    if ('option_prices' in menuData) {
+      const newOptionPrices = menuData.option_prices?.map((param, index) => ({
+        id: index,
+        option: param.option,
+        price: param.price,
+      }));
+
+      set({
+        menuId: menuData.id,
+        categoryIds: menuData.category_ids,
+        description: menuData.description !== null ? menuData.description : undefined,
+        imageUrl: menuData.image_urls,
+        isSingle: menuData.is_single,
+        name: menuData.name,
+        optionPrices: newOptionPrices,
+        singlePrice: 'single_price' in menuData ? menuData.single_price : null,
+      });
+    }
   },
 }));
 
