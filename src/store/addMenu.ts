@@ -28,6 +28,7 @@ interface AddMenuStore {
   resetAddMenuStore: () => void;
   resetCategoryIds: () => void;
   setMenuInfo: (menuData : MonoMenu) => void;
+  resetMenuName: () => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
@@ -82,6 +83,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
       });
     }
   },
+  resetMenuName: () => set({ name: '' }),
 }));
 
 export default useAddMenuStore;
