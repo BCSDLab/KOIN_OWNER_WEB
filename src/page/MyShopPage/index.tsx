@@ -1,6 +1,7 @@
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -8,6 +9,13 @@ import styles from './MyShopPage.module.scss';
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const { shopData, menuData } = useMyShop();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!shopData) {
+      navigate('/store-registration');
+    }
+  }, [shopData, navigate]);
+
   return (
     <div>
       {isMobile ? (
