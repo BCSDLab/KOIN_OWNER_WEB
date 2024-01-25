@@ -40,14 +40,16 @@ export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuC
               <div>
                 <span className={styles.menu__name} key={menu.name}>{menu.name}</span>
                 <div className={styles.menu__price}>
-                  {menu.option_prices ? menu.option_prices.map((option) => ( // 옵션 가격이 있을 경우
-                    <span className={styles['menu__price-unit']} key={option.option}>
-                      {`${option.option}:${option.price.toLocaleString()}원`}
-                    </span>
-                  )) : ( // 단일 가격이 있을 경우
-                    <span className={styles['menu__price-unit']}>
-                      {`${menu.single_price.toLocaleString()}원`}
-                    </span>
+                  {menu.option_prices ? menu.option_prices
+                    .sort((a, b) => a.price - b.price)
+                    .map((option) => ( // 옵션 가격이 있을 경우
+                      <span className={styles['menu__price-unit']} key={option.option}>
+                        {`${option.option}:${option.price.toLocaleString()}원`}
+                      </span>
+                    )) : ( // 단일 가격이 있을 경우
+                      <span className={styles['menu__price-unit']}>
+                        {`${menu.single_price.toLocaleString()}원`}
+                      </span>
                   )}
                 </div>
               </div>
