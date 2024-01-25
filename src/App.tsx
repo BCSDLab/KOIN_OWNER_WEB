@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<MyStorePage />} />
         <Route path="/store-registration" element={<ShopRegistration />} />
         <Route path="/add-menu" element={<AddMenu />} />
-        <Route path="/add-menu/:menuId" element={<ModifyMenu />} />
+        <Route path="/modify-menu/:menuId" element={<ModifyMenu />} />
         <Route path="/modify-info" element={<PageNotFound />} />
         <Route path="/store-info" element={<PageNotFound />} />
         <Route path="/menu-management" element={<PageNotFound />} />
