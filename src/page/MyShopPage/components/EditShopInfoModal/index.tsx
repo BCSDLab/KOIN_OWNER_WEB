@@ -386,37 +386,37 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               <div className={styles['main-info__operate-time']}>
                 <div className={styles['main-info__operate-time--content']}>
                   {
-                isAllSameTime && !hasClosedDay ? (
-                  <div>
-                    {operateTimeState.time}
-                  </div>
-                )
-                  : null
-              }
-                  {
-                isSpecificDayClosedAndAllSameTime ? (
-                  <div>
-                    <div>{operateTimeState.time}</div>
-                    <div>{operateTimeState.holiday}</div>
-                  </div>
-                ) : null
-              }
-                  {
-                !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
-                  <>
-                    {WEEK.map((day) => (
-                      <div key={day}>
-                        {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                    isAllSameTime && !hasClosedDay ? (
+                      <div>
+                        {operateTimeState.time}
                       </div>
-                    ))}
-                  </>
-                ) : null
-              }
+                    )
+                      : null
+                  }
                   {
-                isAllClosed ? (
-                  <span>매일 휴무</span>
-                ) : null
-              }
+                    isSpecificDayClosedAndAllSameTime ? (
+                      <div>
+                        <div>{operateTimeState.time}</div>
+                        <div>{operateTimeState.holiday}</div>
+                      </div>
+                    ) : null
+                  }
+                  {
+                    !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
+                      <>
+                        {WEEK.map((day) => (
+                          <div key={day}>
+                            {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                          </div>
+                        ))}
+                      </>
+                    ) : null
+                  }
+                  {
+                    isAllClosed ? (
+                      <span>매일 휴무</span>
+                    ) : null
+                  }
                 </div>
                 <button
                   type="button"
