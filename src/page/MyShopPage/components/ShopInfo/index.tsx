@@ -2,18 +2,21 @@ import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
-import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
 import styles from './ShopInfo.module.scss';
 
-export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
+interface ShopInfoProps {
+  shopInfo: MyShopInfoRes;
+  openEditShopInfoModal: () => void;
+  closeEditShopInfoModal: () => void;
+  isEditShopInfoModalOpen: boolean;
+}
+
+export default function ShopInfo({
+  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, isEditShopInfoModalOpen,
+}: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
-  const {
-    setTrue: openEditShopInfoModal,
-    setFalse: closeEditShopInfoModal,
-    value: isEditShopInfoModalOpen,
-  } = useBooleanState(false);
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
     .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
@@ -33,7 +36,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
     },
     {
       title: '휴무일',
-      data: `매주 ${holiday.join('요일, ')}요일`,
+      data: holiday.length > 0 ? `매주 ${holiday.join('요일, ')}요일` : '없음',
     },
     {
       title: '주소정보',
@@ -46,7 +49,6 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
       title: '기타 정보',
       data: shopInfo.description,
     },
-
   ];
   return (
     <div>
@@ -75,7 +77,13 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   </div>
                 </div>
               ))}
-              <button type="button" className={styles['mobilestore__update-btn']}>가게 정보 수정</button>
+              <button
+                type="button"
+                className={styles['mobilestore__update-btn']}
+                onClick={openEditShopInfoModal}
+              >
+                가게 정보 수정
+              </button>
             </div>
           </div>
         </div>
