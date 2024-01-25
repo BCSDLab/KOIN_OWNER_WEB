@@ -7,7 +7,7 @@ import styles from './CatagoryMenuList.module.scss';
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
   const navigate = useNavigate();
   const handleMenuClick = (menuId: number) => {
-    navigate(`/add-menu/${menuId}`);
+    navigate(`/modify-menu/${menuId}`);
   };
   return (
     <div>
