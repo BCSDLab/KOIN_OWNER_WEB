@@ -1,5 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable consistent-return */
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
