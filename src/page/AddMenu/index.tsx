@@ -195,6 +195,8 @@ export default function AddMenu() {
             isOpen={isGoMyShopModal}
             onCancel={closeGoMyShopModal}
             onConfirm={addMenu}
+            mainMessage="신규 메뉴 추가 완료되었습니다."
+            subMessage="메뉴 관리에서 기존 메뉴의 정보 수정이 가능합니다."
           />
         </div>
       )}

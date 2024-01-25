@@ -205,6 +205,8 @@ export default function ModifyMenu() {
             isOpen={isGoMyShopModal}
             onCancel={closeGoMyShopModal}
             onConfirm={modifyMenu}
+            mainMessage="메뉴 수정이 완료되었습니다."
+            subMessage="메뉴 관리에서 기존 메뉴의 정보 수정이 가능합니다."
           />
         </div>
       )}
