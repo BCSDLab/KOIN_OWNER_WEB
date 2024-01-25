@@ -10,7 +10,7 @@
   background-color: #00000066;
 }
 
-@mixin commonHeaderStyles {
+@mixin common-header-styles {
   position: sticky;
   top: 0;
   display: flex;
@@ -98,15 +98,15 @@
 
   &__header {
     &--small {
-      @include commonHeaderStyles;
+      @include common-header-styles;
     }
 
     &--medium {
-      @include commonHeaderStyles;
+      @include common-header-styles;
     }
 
     &--large {
-      @include commonHeaderStyles;
+      @include common-header-styles;
     }
 
     &--extra-large {
