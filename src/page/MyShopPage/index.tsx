@@ -2,6 +2,7 @@ import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBooleanState';
+import { useEffect } from 'react';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -9,12 +10,16 @@ import EditShopInfoModal from './components/EditShopInfoModal';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
-  const { shopData, menuData } = useMyShop();
+  const { shopData, menuData, refetchShopData } = useMyShop();
   const {
     setTrue: openEditShopInfoModal,
     setFalse: closeEditShopInfoModal,
     value: isEditShopInfoModalOpen,
   } = useBooleanState(false);
+
+  useEffect(() => {
+    refetchShopData();
+  }, [refetchShopData, isEditShopInfoModalOpen]);
 
   if (isMobile && shopData && isEditShopInfoModalOpen) {
     return (

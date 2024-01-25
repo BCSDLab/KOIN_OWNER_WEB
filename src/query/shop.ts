@@ -22,7 +22,7 @@ const useMyShop = () => {
 
   const shopId = selectedShopId(0);
 
-  const { data: shopData } = useQuery({
+  const { data: shopData, refetch: refetchShopData } = useQuery({
     queryKey: ['myShopInfo', shopId],
     queryFn: () => getShopInfo({ id: shopId! }),
     enabled: !!shopId,
@@ -48,7 +48,7 @@ const useMyShop = () => {
   });
 
   return {
-    shopData, menuData, addMenuMutation, addMenuError,
+    shopData, menuData, addMenuMutation, addMenuError, refetchShopData,
   };
 };
 
