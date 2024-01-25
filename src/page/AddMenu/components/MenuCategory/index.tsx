@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
@@ -19,16 +19,21 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { shopData } = useMyShop();
   const { categoryIds, setCategoryIds } = useAddMenuStore();
   const { categoryError } = useErrorMessageStore();
-  const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>(
-    () => shopData?.menu_categories.filter(({ id }) => categoryIds.includes(id)) ?? [],
-  );
+  const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
   const appendSelectCategory = (category: MenuCategory) => {
-    const newSelected = selectedCategories.some((c) => c.id === category.id)
+    const newSelected = selectedCategories.map(({ id }) => id).includes(category.id)
       ? selectedCategories.filter((c) => c.id !== category.id)
       : [...selectedCategories, category];
     setSelectedCategories(newSelected);
     setCategoryIds(newSelected.map((cat) => cat.id));
   };
+  useEffect(() => {
+    if (shopData) {
+      setSelectedCategories(shopData.menu_categories.filter(({ id }) => categoryIds.includes(id)));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shopData, categoryIds]);
+
   return (
     <div>
       {isMobile ? (

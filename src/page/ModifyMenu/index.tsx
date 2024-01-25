@@ -47,7 +47,7 @@ export default function ModifyMenu() {
     if (menuData) {
       setMenuInfo(menuData);
     }
-  }, [menuData, setMenuInfo, categoryIds]);
+  }, [menuData, setMenuInfo]);
   const createMenuData = () => {
     if (isSingle) {
       return {
