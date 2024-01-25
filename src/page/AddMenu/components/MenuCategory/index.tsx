@@ -17,18 +17,18 @@ interface MenuCategoryProps {
 export default function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
   const { shopData } = useMyShop();
-  const { setCategoryIds } = useAddMenuStore();
+  const { categoryIds, setCategoryIds } = useAddMenuStore();
   const { categoryError } = useErrorMessageStore();
-  const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>(
+    () => shopData?.menu_categories.filter(({ id }) => categoryIds.includes(id)) ?? [],
+  );
   const appendSelectCategory = (category: MenuCategory) => {
     const newSelected = selectedCategories.some((c) => c.id === category.id)
       ? selectedCategories.filter((c) => c.id !== category.id)
       : [...selectedCategories, category];
-
     setSelectedCategories(newSelected);
     setCategoryIds(newSelected.map((cat) => cat.id));
   };
-
   return (
     <div>
       {isMobile ? (
