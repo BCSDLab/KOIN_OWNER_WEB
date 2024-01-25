@@ -4,7 +4,6 @@ import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { getMe } from 'api/auth';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -12,28 +11,18 @@ import styles from './MyShopPage.module.scss';
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const {
-    shopData, menuData,
+    shopData, menuData, isLoading,
   } = useMyShop();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const shopCount = async function getShopCount() {
-      try {
-        const res = await getMe();
-        const shopsCount = res.shops.length;
-        return shopsCount;
-      } catch (error) {
-        alert('내정보를 불러오는데 실패했습니다.');
-        navigate('/login');
-      }
-    };
-    (async () => {
-      const count = await shopCount();
-      if (count === 0) {
+  useEffect(
+    () => {
+      if (!shopData && !isLoading) {
         navigate('/store-registration');
       }
-    })();
-  }, [navigate]);
+    },
+    [shopData, navigate, isLoading],
+  );
 
   return (
     <div>
