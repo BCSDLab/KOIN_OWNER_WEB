@@ -1,20 +1,31 @@
 import TimePicker from 'page/ShopRegistration/component/TimePicker';
 import { WEEK } from 'utils/constant/week';
-import useModalStore from 'store/modalStore';
+import useModalStore, { OperatingTime } from 'store/modalStore';
 import cn from 'utils/ts/className';
 import styles from './OperateTimePC.module.scss';
 
 export default function OperateTimePC() {
   const { shopClosedState } = useModalStore();
 
-  const handleShopClosedChange = (day: string) => {
-    useModalStore.setState((prev) => ({
-      ...prev,
-      shopClosedState: {
-        ...prev.shopClosedState,
-        [day]: !prev.shopClosedState[day],
-      },
-    }));
+  const handleShopClosedChange = (day: typeof WEEK[number]) => {
+    useModalStore.setState((prev) => {
+      const newState: {
+        openTimeState: OperatingTime;
+        closeTimeState: OperatingTime;
+        shopClosedState: { [key: string]: boolean }
+      } = {
+        ...prev,
+        shopClosedState: {
+          ...prev.shopClosedState,
+          [day]: !prev.shopClosedState[day],
+        },
+      };
+      if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
+        newState.openTimeState[day] = '00:00';
+        newState.closeTimeState[day] = '00:00';
+      }
+      return newState;
+    });
   };
   return (
     <table className={styles.table}>

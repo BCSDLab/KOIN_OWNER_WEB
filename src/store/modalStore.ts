@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { WEEK } from 'utils/constant/week';
 
-type OperatingTime = { [key in typeof WEEK[number]]: string | null };
+export type OperatingTime = { [key in typeof WEEK[number]]: string | null };
 
 interface ModalStore {
   openTimeState: OperatingTime;
