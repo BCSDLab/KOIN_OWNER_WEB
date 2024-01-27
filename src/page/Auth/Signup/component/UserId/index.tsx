@@ -11,13 +11,13 @@ export default function UserId() {
     emailHandleSubmit, errors: formErros, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    status, onSubmit, onMobileSubmit, email, errorMessage,
+    status, onSubmit, email, errorMessage,
   } = useCheckEmailDuplicate(isMobile);
 
   return (
     <form
       className={styles.form}
-      onChange={isMobile ? emailHandleSubmit(onMobileSubmit) : () => {}}
+      onChange={isMobile ? emailHandleSubmit(onSubmit) : () => {}}
       onSubmit={emailHandleSubmit(onSubmit)}
     >
       {!isMobile && <span className={styles.form__label}>아이디</span>}
