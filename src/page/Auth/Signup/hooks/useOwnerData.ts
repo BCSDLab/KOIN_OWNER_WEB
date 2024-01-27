@@ -115,7 +115,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{3,3}$/,
-        message: '3자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.phoneNumber,
       },
       onBlur: () => {
         if (watch('phoneFront') !== '') {
@@ -127,7 +127,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{4,4}$/,
-        message: '4자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.phoneNumber,
       },
       onBlur: () => {
         if (watch('registrationNumberMiddle') !== '') {
@@ -139,7 +139,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.phoneNumber },
       pattern: {
         value: /[0-9]{4,4}$/,
-        message: '4자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.phoneNumber,
       },
       onBlur: () => {
         if (watch('phoneEnd') !== '') {
