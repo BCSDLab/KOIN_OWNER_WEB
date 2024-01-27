@@ -6,10 +6,9 @@ import useRegisterInfo from 'store/registerStore';
 
 export default function useCheckEmailDuplicate(isMobile: boolean) {
   const [email, setEmail] = useState<string>('');
-  const [errorMessage, setMessage] = useState<string | null>();
   const { status, refetch, error } = useCheckDuplicate(email);
   const { userInfo: userData, setUserInfo: setId } = useRegisterInfo();
-
+  const errorMessage:string | undefined = status === 'error' ? Object(error).response.data.message : null;
   const onSubmit:SubmitHandler<User> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
   };
@@ -25,15 +24,14 @@ export default function useCheckEmailDuplicate(isMobile: boolean) {
   }, [email, refetch]);
   useEffect(() => {
     if (status === 'success' && userData.email !== email) {
-      setMessage(null);
       setId({ ...userData, email });
     } else if (Object(error).response) {
-      setMessage(Object(error).response.data.message);
       if (userData.email) {
         setId({ ...userData, email: undefined });
       }
     }
   }, [status, setId, email, error, userData]);
+
   return {
     status, onSubmit, onMobileSubmit, email, errorMessage,
   };
