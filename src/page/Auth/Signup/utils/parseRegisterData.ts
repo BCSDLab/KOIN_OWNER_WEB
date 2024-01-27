@@ -1,7 +1,8 @@
 import { User } from 'page/Auth/Signup/types/User';
 import { Owner } from 'page/Auth/Signup/types/Owner';
+import sha256 from 'utils/ts/SHA-256';
 
-const parseRegisterData = (
+const parseRegisterData = async (
   userInfo:User,
   ownerInfo:Owner,
   fileUrls:string[] | undefined,
@@ -12,13 +13,15 @@ const parseRegisterData = (
   const phoneNumber = ownerInfo.phoneMobile ? ownerInfo.phoneMobile : `${ownerInfo.phoneFront}-${ownerInfo.phoneMiddle}-${ownerInfo.phoneEnd}`;
   const attachmentUrls = fileUrls!.map((file) => ({ file_url: `https://${file}` }));
   const shopId = ownerInfo.shopName === searchShopState ? Number(selectedShopId) : null;
+  const hashedPassword = await sha256(userInfo.password!);
+
   return {
     attachment_urls: attachmentUrls,
     company_number: companyNumber,
     shop_id: shopId,
     email: userInfo.email!,
     name: ownerInfo.ownerName!,
-    password: userInfo.password!,
+    password: hashedPassword,
     phone_number: phoneNumber,
     shop_name: ownerInfo.shopName!,
   };

@@ -1,5 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
+import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
 import styles from './MenuName.module.scss';
 
 interface MenuNameProps {
@@ -9,9 +10,11 @@ interface MenuNameProps {
 export default function MenuName({ isComplete }: MenuNameProps) {
   const { isMobile } = useMediaQuery();
   const { name, setName } = useAddMenuStore();
+  const { menuError } = useErrorMessageStore();
   const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
+
   return (
     <div>
       {isMobile ? (
@@ -45,6 +48,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
               value={name}
             />
           )}
+          {menuError && <span className={styles['error-message']}>{menuError}</span>}
         </div>
       )}
     </div>

@@ -2,17 +2,16 @@
 
 <!--
 - Write here your development contents 
-- e.g.) Make a main page.
 -->
 
 ## Please check if the PR fulfills these requirements
 
 - [ ] It's submitted to `develop` branch, __not__ the `main` branch
 - [ ] The commit message follows our guidelines
-- [ ] Did you merge recent `deveop` branch?
-
+- [ ] Did you merge recent `develop` branch?
 
 ### Screenshot
 
-
 ### Precautions (main files for this PR ...)
+
+Close #ISSUE_NUMBER

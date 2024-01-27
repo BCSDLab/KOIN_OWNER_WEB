@@ -4,6 +4,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
+import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
 import styles from './MenuCategory.module.scss';
 
 interface MenuCategory {
@@ -13,16 +14,17 @@ interface MenuCategory {
 interface MenuCategoryProps {
   isComplete: boolean;
 }
-
-export default function MenuCategory({ isComplete }:MenuCategoryProps) {
+export function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
   const { shopData } = useMyShop();
   const { setCategoryIds } = useAddMenuStore();
+  const { categoryError } = useErrorMessageStore();
   const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
   const appendSelectCategory = (category: MenuCategory) => {
     const newSelected = selectedCategories.some((c) => c.id === category.id)
       ? selectedCategories.filter((c) => c.id !== category.id)
       : [...selectedCategories, category];
+
     setSelectedCategories(newSelected);
     setCategoryIds(newSelected.map((cat) => cat.id));
   };
@@ -136,6 +138,7 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
           )}
         </div>
       )}
+      {categoryError && <span className={styles['error-message']}>{categoryError}</span>}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
@@ -11,6 +11,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
 import { useState } from 'react';
+import sha256 from 'utils/ts/SHA-256';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
@@ -20,6 +21,7 @@ export default function Login() {
   const { isMobile } = useMediaQuery();
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
+  const navigate = useNavigate();
 
   const isError = isServerError || isFormError;
 
@@ -30,8 +32,9 @@ export default function Login() {
     resolver: zodResolver(LoginParams),
   });
 
-  const onSubmit: SubmitHandler<LoginParams> = (data) => {
-    login({ email: data.email, password: data.password, isAutoLogin });
+  const onSubmit: SubmitHandler<LoginParams> = async (data) => {
+    const hashedPassword = await sha256(data.password);
+    login({ email: data.email, password: hashedPassword, isAutoLogin });
   };
 
   const onError = () => {
@@ -97,9 +100,9 @@ export default function Login() {
             로그인
           </button>
           {isMobile && (
-          <button className={styles.form__button} type="button">
-            회원가입
-          </button>
+            <button className={styles.form__button} type="button" onClick={() => navigate('/signup')}>
+              회원가입
+            </button>
           )}
           <div className={styles.option}>
             {isMobile

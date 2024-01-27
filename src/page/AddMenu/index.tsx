@@ -1,28 +1,28 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
+import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
-import MenuCategory from './components/MenuCategory';
+import { MenuCategory } from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
 import MobileDivide from './components/MobileDivide';
+import useFormValidation from './hook/useFormValidation';
 
 export default function AddMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const navigate = useNavigate();
-
+  const { resetMenuName, resetCategoryIds } = useAddMenuStore();
+  const { setMenuError, setCategoryError } = useErrorMessageStore();
   const goMyShop = () => {
     navigate('/');
-  };
-  const toggleConfirmClick = () => {
-    setIsComplete((prevState) => !prevState);
   };
   const {
     value: isGoMyShopModal,
@@ -39,7 +39,12 @@ export default function AddMenu() {
     singlePrice,
   } = useAddMenuStore();
   const { addMenuMutation } = useMyShop();
-
+  const { validateFields } = useFormValidation();
+  const toggleConfirmClick = () => {
+    if (validateFields()) {
+      setIsComplete((prevState) => !prevState);
+    }
+  };
   const addMenu = () => {
     const newMenuData = {
       category_ids: categoryIds,
@@ -53,13 +58,22 @@ export default function AddMenu() {
       })),
       single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice,
     };
-
     addMenuMutation(newMenuData);
   };
   const confirmAddMenu = () => {
     addMenu();
     goMyShop();
   };
+  useEffect(
+    () => {
+      resetMenuName();
+      resetCategoryIds();
+      setMenuError('');
+      setCategoryError('');
+    },
+    [resetMenuName, setMenuError, resetCategoryIds, setCategoryError],
+  );
+
   return (
     <div>
       {isMobile ? (
@@ -151,7 +165,7 @@ export default function AddMenu() {
                   <button
                     className={styles['header__button-cancel']}
                     type="button"
-                    onClick={openGoMyShopModal}
+                    onClick={goMyShop}
                   >
                     취소
                   </button>
