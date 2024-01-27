@@ -20,13 +20,9 @@ export default function UserEmail() {
   } = useAuthCheck(userData.email ? userData.email : '', isMobile);
   const {
     verificationCode,
-    codeInput, errorMessage: verificateError,
+    codeInput, errorMessage: verificateError, status,
   } = useVerification(email);
   const { getTime, startTimer, stopTimer } = useTimer(300);
-  const onSubmit = <T extends {}>(data:T) => {
-    startTimer();
-    emailSubmit(data);
-  };
   const reSubmit = () => {
     startTimer();
     refetch();
@@ -36,10 +32,15 @@ export default function UserEmail() {
       stopTimer();
     }
   }, [stopTimer, userData.isAuthentication]);
+  useEffect(() => {
+    if (status === 'success') {
+      startTimer();
+    }
+  }, [startTimer, status]);
   return (
     !isMobile
       ? (
-        <form className={styles['email-check']} onSubmit={emailHandleSubmit(onSubmit)}>
+        <form className={styles['email-check']} onSubmit={emailHandleSubmit(emailSubmit)}>
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
