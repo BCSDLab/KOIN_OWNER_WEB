@@ -60,7 +60,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{3,3}$/,
-        message: '3자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.registraionNumber,
       },
       onBlur: () => {
         if (watch('registrationNumberFront') !== '') {
@@ -72,7 +72,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{2,2}$/,
-        message: '2자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.registraionNumber,
       },
       onBlur: () => {
         if (watch('registrationNumberMiddle') !== '') {
@@ -84,7 +84,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       required: { value: !isMobile, message: VALIDATIONMESSAGE.registraionNumber },
       pattern: {
         value: /[0-9]{5,5}$/,
-        message: '5자리 숫자를 입력해주세요.',
+        message: VALIDATIONMESSAGE.registraionNumber,
       },
       onBlur: () => {
         if (watch('registrationNumberEnd') !== '') {
