@@ -1,26 +1,45 @@
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
+import useBooleanState from 'utils/hooks/useBooleanState';
 import { useEffect } from 'react';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
+import EditShopInfoModal from './components/EditShopInfoModal';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const {
-    shopData, menuData, isLoading,
+    shopData, menuData, refetchShopData, isLoading,
   } = useMyShop();
   const navigate = useNavigate();
+  const {
+    setTrue: openEditShopInfoModal,
+    setFalse: closeEditShopInfoModal,
+    value: isEditShopInfoModalOpen,
+  } = useBooleanState(false);
 
-  useEffect(
-    () => {
-      if (!shopData && !isLoading) {
-        navigate('/store-registration');
-      }
-    },
-    [shopData, navigate, isLoading],
-  );
+  useEffect(() => {
+    refetchShopData();
+  }, [refetchShopData, isEditShopInfoModalOpen]);
+
+  useEffect(() => {
+    if (!shopData && !isLoading) {
+      navigate('/shop-registration');
+    }
+  }, [shopData, navigate, isLoading]);
+
+  if (isMobile && shopData && isEditShopInfoModalOpen) {
+    return (
+      <>
+        <div className={styles.mobileheader}>
+          <h1 className={styles.mobileheader__title}>가게정보</h1>
+        </div>
+        <EditShopInfoModal shopInfo={shopData} closeModal={closeEditShopInfoModal} />
+      </>
+    );
+  }
 
   return (
     <div>
@@ -39,7 +58,12 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-          <StoreInfo shopInfo={shopData} />
+            <StoreInfo
+              shopInfo={shopData}
+              openEditShopInfoModal={openEditShopInfoModal}
+              closeEditShopInfoModal={closeEditShopInfoModal}
+              isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+            />
           )}
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
@@ -63,7 +87,12 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-          <StoreInfo shopInfo={shopData} />
+            <StoreInfo
+              shopInfo={shopData}
+              openEditShopInfoModal={openEditShopInfoModal}
+              closeEditShopInfoModal={closeEditShopInfoModal}
+              isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+            />
           )}
           {menuData && menuData.menu_categories.map((category) => (
             <CatagoryMenuList
