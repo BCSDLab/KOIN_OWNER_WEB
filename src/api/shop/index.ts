@@ -11,7 +11,7 @@ export const getMyShopList = async () => {
 };
 
 export const getShopInfo = async (param: MyShopParam) => {
-  const { data } = await accessClient.get<MyShopInfoRes>(`/owner/shops/${param.id}`);
+  const { data } = await accessClient.get<MyShopInfoRes>(`/owner/shops/${param.id || ''}`);
   return MyShopInfoRes.parse(data);
 };
 
