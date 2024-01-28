@@ -47,7 +47,8 @@ export default function UserPassword() {
         </button>
         )}
         {formErrors.passwordConfirm
-        && <ErrorMessage message={[formErrors.passwordConfirm.message]} />}
+          ? (<ErrorMessage message={[formErrors.passwordConfirm.message]} />)
+          : (<span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>)}
       </div>
     </div>
   );
