@@ -4,8 +4,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-// eslint-disable-next-line import/no-cycle
-import { useCategoryErrorStore } from 'page/AddMenu';
+import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
 import styles from './MenuCategory.module.scss';
 
 interface MenuCategory {
@@ -19,7 +18,7 @@ export function MenuCategory({ isComplete }:MenuCategoryProps) {
   const { isMobile } = useMediaQuery();
   const { shopData } = useMyShop();
   const { setCategoryIds } = useAddMenuStore();
-  const { categoryError } = useCategoryErrorStore();
+  const { categoryError } = useErrorMessageStore();
   const [selectedCategories, setSelectedCategories] = useState<MenuCategory[]>([]);
   const appendSelectCategory = (category: MenuCategory) => {
     const newSelected = selectedCategories.some((c) => c.id === category.id)

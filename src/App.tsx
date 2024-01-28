@@ -11,29 +11,32 @@ import MyStorePage from 'page/MyShopPage';
 import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
 import PageNotFound from 'page/Error/PageNotFound';
+import { Suspense } from 'react';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<DefaultLayout />}>
-        <Route path="/" element={<MyStorePage />} />
-        <Route path="/store-registration" element={<ShopRegistration />} />
-        <Route path="/add-menu" element={<AddMenu />} />
-        <Route path="/modify-info" element={<PageNotFound />} />
-        <Route path="/store-info" element={<PageNotFound />} />
-        <Route path="/menu-management" element={<PageNotFound />} />
-        <Route path="/order-management" element={<PageNotFound />} />
-        <Route path="/sales-management" element={<PageNotFound />} />
-        <Route path="/shop-add" element={<PageNotFound />} />
-      </Route>
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/find-password" element={<FindPassword />} />
-        <Route path="/new-password" element={<NewPassword />} />
-        <Route path="/complete-change-password" element={<CompleteChangePassword />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<div />}>
+      <Routes>
+        <Route path="/" element={<DefaultLayout />}>
+          <Route path="/" element={<MyStorePage />} />
+          <Route path="/store-registration" element={<ShopRegistration />} />
+          <Route path="/add-menu" element={<AddMenu />} />
+          <Route path="/modify-info" element={<PageNotFound />} />
+          <Route path="/store-info" element={<PageNotFound />} />
+          <Route path="/menu-management" element={<PageNotFound />} />
+          <Route path="/order-management" element={<PageNotFound />} />
+          <Route path="/sales-management" element={<PageNotFound />} />
+          <Route path="/shop-add" element={<PageNotFound />} />
+        </Route>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/find-password" element={<FindPassword />} />
+          <Route path="/new-password" element={<NewPassword />} />
+          <Route path="/complete-change-password" element={<CompleteChangePassword />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

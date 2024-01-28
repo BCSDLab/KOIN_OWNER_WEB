@@ -1,4 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation, useQuery, useQueryClient, useSuspenseQuery,
+} from '@tanstack/react-query';
 import {
   getMyShopList, getShopInfo, getMenuInfoList, addMenu,
 } from 'api/shop';
@@ -10,27 +12,22 @@ const useMyShop = () => {
   const myShopQueryKey = useUserStore.getState().user?.company_number;
   const queryClient = useQueryClient();
   const { resetAddMenuStore } = useAddMenuStore();
-  const { data: myShop } = useQuery({
+  const { data: myShop } = useSuspenseQuery({
     queryKey: ['myShop', myShopQueryKey],
     queryFn: () => getMyShopList(),
   });
 
-  const selectedShopId = (idx:number) => {
-    if (myShop?.shops.length === 0) return null;
-    return myShop?.shops[idx].id;
-  }; // shops가 있을때 인자로 가진 인덱스의 가게 id를 리턴
+  const shopId = myShop.shops[0]?.id;
 
-  const shopId = selectedShopId(0);
-
-  const { data: shopData, refetch: refetchShopData } = useQuery({
+  const { data: shopData, refetch: refetchShopData, isLoading } = useQuery({
     queryKey: ['myShopInfo', shopId],
-    queryFn: () => getShopInfo({ id: shopId! }),
+    queryFn: () => getShopInfo({ id: shopId }),
     enabled: !!shopId,
   });
 
   const { data: menuData } = useQuery({
     queryKey: ['myMenuInfo', shopId],
-    queryFn: () => getMenuInfoList({ id: shopId! }),
+    queryFn: () => getMenuInfoList({ id: shopId }),
     enabled: !!shopId,
   });
 
@@ -48,7 +45,7 @@ const useMyShop = () => {
   });
 
   return {
-    shopData, menuData, addMenuMutation, addMenuError, refetchShopData,
+    shopData, menuData, addMenuMutation, addMenuError, refetchShopData, isLoading,
   };
 };
 
