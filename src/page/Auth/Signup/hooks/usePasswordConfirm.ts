@@ -46,6 +46,9 @@ export default function usePasswordConfirm() {
       }
     } else {
       clearErrors('passwordConfirm');
+      if (!userData.password && passwordValue !== '') {
+        setPassword({ ...userData, password: passwordValue });
+      }
     }
   }, [clearErrors, passwordConfirmValue, passwordValue, setError, setPassword, userData, watch]);
   return {
