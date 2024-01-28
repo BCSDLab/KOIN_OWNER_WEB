@@ -8,6 +8,8 @@ export default function useCheckNext() {
   const checkUserData = (userData:User) => {
     if (UserParam.safeParse(userData).success) {
       setDone(true);
+    } else {
+      setDone(false);
     }
   };
 
@@ -21,6 +23,8 @@ export default function useCheckNext() {
     };
     if (OwnerParam.safeParse(ownerData).success) {
       setDone(true);
+    } else {
+      setDone(false);
     }
   };
 

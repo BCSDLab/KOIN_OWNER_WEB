@@ -3,17 +3,17 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { SubmitHandler } from 'react-hook-form';
+import useRegisterInfo from 'store/registerStore';
 import { User } from 'page/Auth/Signup/types/User';
 
-import { SubmitHandler } from 'react-hook-form';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
-import useRegisterInfo from 'store/registerStore';
 import styles from './UserPassword.module.scss';
 
 export default function UserPassword() {
   const { isMobile } = useMediaQuery();
-  const { userInfo: userData, setUserInfo: setPassword } = useRegisterInfo();
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState(true);
+  const { userInfo: userData, setUserInfo: setPassword } = useRegisterInfo();
   const {
     passwordRegister, passwordConfirmRegister, errors: formErrors, handleSubmit,
   } = usePasswordConfirm();
