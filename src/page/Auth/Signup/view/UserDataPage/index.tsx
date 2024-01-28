@@ -27,7 +27,7 @@ const useCheckEmail = () => {
 };
 export default function UserData({ goNext }:ButtonClickEventProps) {
   const { isMobile } = useMediaQuery();
-  const { userInfo } = useRegisterInfo();
+  const { userInfo, resetRegisterInfo } = useRegisterInfo();
   const { isDone, checkUserData } = useCheckNext();
   const { increaseStep, step } = useStepStore();
   const [registerStep, setRegisterStep] = useState(0);
@@ -35,8 +35,9 @@ export default function UserData({ goNext }:ButtonClickEventProps) {
   useEffect(() => {
     if (step === 1) {
       setRegisterStep(0);
+      resetRegisterInfo();
     }
-  }, [step]);
+  }, [resetRegisterInfo, step]);
 
   useEffect(() => {
     if (isMobile) {
