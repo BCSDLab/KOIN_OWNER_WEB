@@ -31,7 +31,7 @@ export default function InputBox({
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     if (id === 'address') setAddress(inputValue);
-    if (id === 'delivery_price') setDeliveryPrice(inputValue);
+    if (id === 'delivery_price') setDeliveryPrice(Number(inputValue));
     if (id === 'description') setDescription(inputValue);
     if (id === 'phone') {
       setPhone(formatPhoneNumber(inputValue));

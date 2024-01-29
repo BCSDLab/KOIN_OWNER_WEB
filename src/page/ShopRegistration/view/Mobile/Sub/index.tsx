@@ -52,7 +52,7 @@ export default function Sub() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (phone === '' || deliveryPrice === '' || !isValidPhoneNumber) {
+    if (phone === '' || deliveryPrice === 0 || !isValidPhoneNumber) {
       setIsError(true);
     } else {
       setIsError(false);
@@ -92,20 +92,20 @@ export default function Sub() {
         htmlFor="deliveryPrice"
         className={cn({
           [styles.form__label]: true,
-          [styles['form__label--error']]: deliveryPrice === '' && isError,
+          [styles['form__label--error']]: deliveryPrice === 0 && isError,
         })}
       >
         배달금액
         <input
           type="text"
           id="deliveryPrice"
-          onChange={(e) => setDeliveryPrice(e.target.value)}
-          value={deliveryPrice}
+          onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+          value={deliveryPrice === 0 ? '' : deliveryPrice}
           className={styles.form__input}
         />
       </label>
       <div className={styles['form__error-message']}>
-        {deliveryPrice === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
+        {deliveryPrice === 0 && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
       </div>
       <div className={styles.form__label}>
         운영시간
