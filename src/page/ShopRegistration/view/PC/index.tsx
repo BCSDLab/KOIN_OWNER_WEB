@@ -385,8 +385,6 @@ export default function ShopRegistrationPC() {
                     }}
                   />
                 </div>
-                {deliveryPrice === 0
-                  && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
               </div>
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
