@@ -102,7 +102,7 @@ export default function ShopRegistrationPC() {
   } = CheckSameTime();
 
   const {
-    register, handleSubmit, setValue,
+    register, handleSubmit, setValue, formState: { errors },
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
@@ -127,7 +127,6 @@ export default function ShopRegistrationPC() {
       openConfirmPopup();
     }
   };
-
   const openTimeArray = Object.values(openTimeState);
   const closeTimeArray = Object.values(closeTimeState);
   const shopClosedArray = Object.values(shopClosedState);
@@ -301,7 +300,8 @@ export default function ShopRegistrationPC() {
                     }}
                   />
                 </div>
-                {phone === '' && isError && <ErrorMessage message={ERRORMESSAGE.owner} />}
+                {phone === '' && isError && <ErrorMessage message={ERRORMESSAGE.phone} />}
+                {phone !== '' && !isValidPhoneNumber && isError && <ErrorMessage message={ERRORMESSAGE.invalidPhone} />}
               </div>
               <div>
                 <span className={styles.form__title}>배달금액</span>
@@ -310,7 +310,7 @@ export default function ShopRegistrationPC() {
                     type="number"
                     className={styles['form__input-large']}
                     value={deliveryPrice === 0 ? '' : deliveryPrice}
-                    {...register('delivery_price')}
+                    {...register('delivery_price', { valueAsNumber: true })}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}
@@ -433,6 +433,7 @@ export default function ShopRegistrationPC() {
               <ConfirmPopup
                 isOpen={showConfirmPopup}
                 onCancel={closeConfirmPopup}
+                errors={errors}
               />
             </form>
           </div>
