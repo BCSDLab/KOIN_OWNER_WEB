@@ -112,6 +112,11 @@ export default function ShopRegistrationPC() {
     onSuccess: () => setStep(5),
   });
 
+  const formatPhoneNumber = (inputNumber: string) => {
+    const phoneNumber = inputNumber.replace(/\D/g, '');
+    const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    return formattedPhoneNumber;
+  };
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
@@ -292,7 +297,7 @@ export default function ShopRegistrationPC() {
                     value={phone}
                     {...register('phone')}
                     onChange={(e) => {
-                      setPhone(e.target.value);
+                      setPhone(formatPhoneNumber(e.target.value));
                     }}
                   />
                 </div>
