@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { MonoMenu } from 'model/shopInfo/menuCategory';
 
 interface OptionPrices {
   id: number;
@@ -7,13 +8,14 @@ interface OptionPrices {
 }
 
 interface AddMenuStore {
+  menuId: number;
   categoryIds: number[];
   description: string;
   imageUrl: string[];
   isSingle: boolean;
   name: string;
-  optionPrices: OptionPrices[];
-  singlePrice: number;
+  optionPrices: OptionPrices[] | null;
+  singlePrice: number | null;
   setCategoryIds: (categoryIds: number[]) => void;
   setDescription: (description: string) => void;
   setImageUrl: (newImageUrl: string) => void;
@@ -25,10 +27,12 @@ interface AddMenuStore {
   resetOptionPrice: () => void;
   resetAddMenuStore: () => void;
   resetCategoryIds: () => void;
+  setMenuInfo: (menuData : MonoMenu) => void;
   resetMenuName: () => void;
 }
 
 const useAddMenuStore = create<AddMenuStore>((set) => ({
+  menuId: 0,
   categoryIds: [],
   description: '',
   imageUrl: [],
@@ -59,6 +63,26 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
     singlePrice: 0,
   }),
   resetCategoryIds: () => set({ categoryIds: [] }),
+  setMenuInfo: (menuData: MonoMenu) => {
+    if ('option_prices' in menuData) {
+      const newOptionPrices = menuData.option_prices?.map((param, index) => ({
+        id: index,
+        option: param.option,
+        price: param.price,
+      }));
+
+      set({
+        menuId: menuData.id,
+        categoryIds: menuData.category_ids,
+        description: menuData.description !== null ? menuData.description : undefined,
+        imageUrl: menuData.image_urls,
+        isSingle: menuData.is_single,
+        name: menuData.name,
+        optionPrices: newOptionPrices,
+        singlePrice: 'single_price' in menuData ? menuData.single_price : null,
+      });
+    }
+  },
   resetMenuName: () => set({ name: '' }),
 }));
 

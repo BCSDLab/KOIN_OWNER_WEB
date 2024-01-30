@@ -1,9 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
+  const navigate = useNavigate();
+  const handleMenuClick = (menuId: number) => {
+    navigate(`/modify-menu/${menuId}`);
+  };
   return (
     <div>
       <div className={styles.category__title}>
@@ -14,7 +19,12 @@ export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuC
       <div className={styles['menu__slide-wrapper']}>
         <div className={styles.menu__content}>
           {menuCategory.menus.map((menu) => (
-            <div key={menu.name} className={styles.menu__item}>
+            <button
+              type="button"
+              key={menu.name}
+              className={styles.menu__item}
+              onClick={() => handleMenuClick(menu.id)}
+            >
               {menu.image_urls?.length === 0 ? (
                 <div className={styles['menu__non-img-border']}>
                   <div className={styles['menu__empty-img']}>
@@ -30,18 +40,20 @@ export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuC
               <div>
                 <span className={styles.menu__name} key={menu.name}>{menu.name}</span>
                 <div className={styles.menu__price}>
-                  {menu.option_prices ? menu.option_prices.map((option) => ( // 옵션 가격이 있을 경우
-                    <span className={styles['menu__price-unit']} key={option.option}>
-                      {`${option.option}:${option.price.toLocaleString()}원`}
-                    </span>
-                  )) : ( // 단일 가격이 있을 경우
-                    <span className={styles['menu__price-unit']}>
-                      {`${menu.single_price.toLocaleString()}원`}
-                    </span>
+                  {menu.option_prices ? menu.option_prices
+                    .sort((a, b) => a.price - b.price)
+                    .map((option) => ( // 옵션 가격이 있을 경우
+                      <span className={styles['menu__price-unit']} key={option.option}>
+                        {`${option.option}:${option.price.toLocaleString()}원`}
+                      </span>
+                    )) : ( // 단일 가격이 있을 경우
+                      <span className={styles['menu__price-unit']}>
+                        {`${menu.single_price.toLocaleString()}원`}
+                      </span>
                   )}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>

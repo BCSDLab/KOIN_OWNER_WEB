@@ -11,7 +11,7 @@ import EditShopInfoModal from './components/EditShopInfoModal';
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const {
-    shopData, menuData, refetchShopData, isLoading,
+    shopData, menusData, refetchShopData, isLoading,
   } = useMyShop();
   const navigate = useNavigate();
   const {
@@ -65,7 +65,7 @@ export default function MyShopPage() {
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
             />
           )}
-          {menuData && menuData.menu_categories.map((category) => (
+          {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.id}
               menuCategory={category}
@@ -94,7 +94,7 @@ export default function MyShopPage() {
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
             />
           )}
-          {menuData && menuData.menu_categories.map((category) => (
+          {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList
               key={category.name}
               menuCategory={category}

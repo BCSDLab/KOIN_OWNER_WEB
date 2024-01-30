@@ -1,28 +1,31 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useMyShop from 'query/shop';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import assert from 'assert';
+import useMenuInfo from 'query/menu';
 import useAddMenuStore from 'store/addMenu';
-import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
-import MenuImage from './components/MenuImage';
-import MenuName from './components/MenuName';
-import styles from './AddMenu.module.scss';
-import MenuPrice from './components/MenuPrice';
-import MenuCategory from './components/MenuCategory';
-import MenuDetail from './components/MenuDetail';
-import GoMyShopModal from './components/GoMyShop';
-import MobileDivide from './components/MobileDivide';
-import useFormValidation from './hook/useFormValidation';
+import MenuImage from 'page/AddMenu/components/MenuImage';
+import MenuName from 'page/AddMenu/components/MenuName';
+import styles from 'page/AddMenu/AddMenu.module.scss';
+import MenuPrice from 'page/AddMenu/components/MenuPrice';
+import MenuCategory from 'page/AddMenu/components/MenuCategory';
+import MenuDetail from 'page/AddMenu/components/MenuDetail';
+import GoMyShopModal from 'page/AddMenu/components/GoMyShop';
+import MobileDivide from 'page/AddMenu/components/MobileDivide';
 
-export default function AddMenu() {
+export default function ModifyMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const { menuId } = useParams();
+  assert(menuId != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
-  const { resetMenuName, resetCategoryIds } = useAddMenuStore();
-  const { setMenuError, setCategoryError } = useErrorMessageStore();
+  const { menuData, modifyMenuMutation } = useMenuInfo(Number(menuId));
   const goMyShop = () => {
     navigate('/');
+  };
+  const toggleConfirmClick = () => {
+    setIsComplete((prevState) => !prevState);
   };
   const {
     value: isGoMyShopModal,
@@ -37,43 +40,50 @@ export default function AddMenu() {
     name,
     optionPrices,
     singlePrice,
+    setMenuInfo,
   } = useAddMenuStore();
-  const { addMenuMutation } = useMyShop();
-  const { validateFields } = useFormValidation();
-  const toggleConfirmClick = () => {
-    if (validateFields()) {
-      setIsComplete((prevState) => !prevState);
+  // 처음 메뉴 데이터 초기화
+  useEffect(() => {
+    if (menuData) {
+      setMenuInfo(menuData);
     }
-  };
-  const addMenu = () => {
-    const newMenuData = {
+  }, [menuData, setMenuInfo]);
+  const createMenuData = () => {
+    if (isSingle) {
+      return {
+        category_ids: categoryIds,
+        description,
+        image_urls: imageUrl,
+        is_single: isSingle,
+        name,
+        single_price: typeof singlePrice === 'string' ? Number(singlePrice) : singlePrice || 0,
+        option_prices: [],
+      };
+    }
+
+    return {
       category_ids: categoryIds,
       description,
       image_urls: imageUrl,
       is_single: isSingle,
       name,
+      single_price: 0,
       option_prices: optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
-        price: typeof price === 'string' ? parseInt(price, 10) : price,
+        price: typeof price === 'string' ? Number(price) : price,
       })) || [],
-      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
     };
-    addMenuMutation(newMenuData);
   };
-  const confirmAddMenu = () => {
-    addMenu();
+
+  const modifyMenu = () => {
+    const newMenuData = createMenuData();
+    modifyMenuMutation(newMenuData);
+  };
+
+  const confirmModifyMenu = () => {
+    modifyMenu();
     goMyShop();
   };
-  useEffect(
-    () => {
-      resetMenuName();
-      resetCategoryIds();
-      setMenuError('');
-      setCategoryError('');
-    },
-    [resetMenuName, setMenuError, resetCategoryIds, setCategoryError],
-  );
-
   return (
     <div>
       {isMobile ? (
@@ -113,7 +123,7 @@ export default function AddMenu() {
                 <button
                   className={styles['mobile__button-check']}
                   type="button"
-                  onClick={confirmAddMenu}
+                  onClick={confirmModifyMenu}
                 >
                   확인
                 </button>
@@ -141,7 +151,7 @@ export default function AddMenu() {
       ) : (
         <div className={styles.container}>
           <div className={styles.header}>
-            <h1 className={styles.header__title}>메뉴 추가</h1>
+            <h1 className={styles.header__title}>메뉴 수정</h1>
             <div className={styles['header__button-container']}>
               {isComplete ? (
                 <>
@@ -194,8 +204,8 @@ export default function AddMenu() {
           <GoMyShopModal
             isOpen={isGoMyShopModal}
             onCancel={closeGoMyShopModal}
-            onConfirm={addMenu}
-            mainMessage="신규 메뉴 추가 완료되었습니다."
+            onConfirm={modifyMenu}
+            mainMessage="메뉴 수정이 완료되었습니다."
             subMessage="메뉴 관리에서 기존 메뉴의 정보 수정이 가능합니다."
           />
         </div>

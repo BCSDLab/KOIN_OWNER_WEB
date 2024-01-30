@@ -25,7 +25,7 @@ const useMyShop = () => {
     enabled: !!shopId,
   });
 
-  const { data: menuData } = useQuery({
+  const { data: menusData } = useQuery({
     queryKey: ['myMenuInfo', shopId],
     queryFn: () => getMenuInfoList({ id: shopId }),
     enabled: !!shopId,
@@ -45,7 +45,7 @@ const useMyShop = () => {
   });
 
   return {
-    shopData, menuData, addMenuMutation, addMenuError, refetchShopData, isLoading,
+    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading,
   };
 };
 

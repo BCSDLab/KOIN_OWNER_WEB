@@ -6,9 +6,13 @@ interface CheckModalProps {
   isOpen: boolean;
   onCancel: (event: React.MouseEvent | React.KeyboardEvent<Element>) => void;
   onConfirm: () => void;
+  mainMessage: string;
+  subMessage:string;
 }
 
-export default function GoMyShopModal({ isOpen, onCancel, onConfirm }: CheckModalProps) {
+export default function GoMyShopModal({
+  isOpen, onCancel, onConfirm, mainMessage, subMessage,
+}: CheckModalProps) {
   if (!isOpen) return null;
   return createPortal(
     <div
@@ -24,8 +28,8 @@ export default function GoMyShopModal({ isOpen, onCancel, onConfirm }: CheckModa
         onKeyDown={(e) => e.stopPropagation()}
         role="presentation"
       >
-        <span className={styles['content__main-text']}>신규 메뉴 추가 완료되었습니다.</span>
-        <span className={styles['content__sub-text']}>메뉴 관리에서 기존 메뉴의 정보 수정이 가능합니다.</span>
+        <span className={styles['content__main-text']}>{mainMessage}</span>
+        <span className={styles['content__sub-text']}>{subMessage}</span>
         <Link to="/">
           <button
             type="button"
