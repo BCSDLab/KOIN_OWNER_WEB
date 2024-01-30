@@ -11,7 +11,7 @@ export const getMyShopList = async () => {
 };
 
 export const getShopInfo = async (param: MyShopParam) => {
-  const { data } = await accessClient.get<MyShopInfoRes>(`/owner/shops/${param.id}`);
+  const { data } = await accessClient.get<MyShopInfoRes>(`/owner/shops/${param.id || ''}`);
   return MyShopInfoRes.parse(data);
 };
 
@@ -35,3 +35,5 @@ export const getMenu = async (menuId: number) => {
 };
 
 export const modifyMenu = (menuId:number, param:NewMenu) => accessClient.put(`/owner/shops/menus/${menuId}`, param);
+
+export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner/shops/${id}`, data);

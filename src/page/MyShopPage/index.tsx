@@ -1,39 +1,49 @@
-/* eslint-disable no-alert */
-/* eslint-disable consistent-return */
 import useMyShop from 'query/shop';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
+import useBooleanState from 'utils/hooks/useBooleanState';
 import { useEffect } from 'react';
-import { getMe } from 'api/auth';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
+import EditShopInfoModal from './components/EditShopInfoModal';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const {
+<<<<<<< HEAD
     shopData, menusData,
+=======
+    shopData, menuData, refetchShopData, isLoading,
+>>>>>>> origin/develop
   } = useMyShop();
   const navigate = useNavigate();
+  const {
+    setTrue: openEditShopInfoModal,
+    setFalse: closeEditShopInfoModal,
+    value: isEditShopInfoModalOpen,
+  } = useBooleanState(false);
 
   useEffect(() => {
-    const shopCount = async function getShopCount() {
-      try {
-        const res = await getMe();
-        const shopsCount = res.shops.length;
-        return shopsCount;
-      } catch (error) {
-        alert('내정보를 불러오는데 실패했습니다.');
-        navigate('/login');
-      }
-    };
-    (async () => {
-      const count = await shopCount();
-      if (count === 0) {
-        navigate('/store-registration');
-      }
-    })();
-  }, [navigate]);
+    refetchShopData();
+  }, [refetchShopData, isEditShopInfoModalOpen]);
+
+  useEffect(() => {
+    if (!shopData && !isLoading) {
+      navigate('/shop-registration');
+    }
+  }, [shopData, navigate, isLoading]);
+
+  if (isMobile && shopData && isEditShopInfoModalOpen) {
+    return (
+      <>
+        <div className={styles.mobileheader}>
+          <h1 className={styles.mobileheader__title}>가게정보</h1>
+        </div>
+        <EditShopInfoModal shopInfo={shopData} closeModal={closeEditShopInfoModal} />
+      </>
+    );
+  }
 
   return (
     <div>
@@ -52,7 +62,12 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-          <StoreInfo shopInfo={shopData} />
+            <StoreInfo
+              shopInfo={shopData}
+              openEditShopInfoModal={openEditShopInfoModal}
+              closeEditShopInfoModal={closeEditShopInfoModal}
+              isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+            />
           )}
           {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList
@@ -76,7 +91,12 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-          <StoreInfo shopInfo={shopData} />
+            <StoreInfo
+              shopInfo={shopData}
+              openEditShopInfoModal={openEditShopInfoModal}
+              closeEditShopInfoModal={closeEditShopInfoModal}
+              isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+            />
           )}
           {menusData && menusData.menu_categories.map((category) => (
             <CatagoryMenuList

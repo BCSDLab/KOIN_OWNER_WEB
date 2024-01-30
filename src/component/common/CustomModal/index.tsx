@@ -44,7 +44,7 @@ export default function CustomModal({
           [styles[`container__${modalSize}--visible`]]: isOverflowVisible,
         })}
       >
-        <div className={styles.container__header}>
+        <div className={styles[`container__header--${modalSize}`]}>
           <span className={styles.container__title}>{title}</span>
           <XClose
             onClick={onCancel}

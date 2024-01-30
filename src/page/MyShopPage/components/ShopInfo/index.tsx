@@ -2,9 +2,20 @@ import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import CustomModal from 'component/common/CustomModal';
+import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
 import styles from './ShopInfo.module.scss';
 
-export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
+interface ShopInfoProps {
+  shopInfo: MyShopInfoRes;
+  openEditShopInfoModal: () => void;
+  closeEditShopInfoModal: () => void;
+  isEditShopInfoModalOpen: boolean;
+}
+
+export default function ShopInfo({
+  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, isEditShopInfoModalOpen,
+}: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
@@ -25,7 +36,7 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
     },
     {
       title: '휴무일',
-      data: `매주 ${holiday.join('요일, ')}요일`,
+      data: holiday.length > 0 ? `매주 ${holiday.join('요일, ')}요일` : '없음',
     },
     {
       title: '주소정보',
@@ -38,7 +49,6 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
       title: '기타 정보',
       data: shopInfo.description,
     },
-
   ];
   return (
     <div>
@@ -67,7 +77,13 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   </div>
                 </div>
               ))}
-              <button type="button" className={styles['mobilestore__update-btn']}>가게 정보 수정</button>
+              <button
+                type="button"
+                className={styles['mobilestore__update-btn']}
+                onClick={openEditShopInfoModal}
+              >
+                가게 정보 수정
+              </button>
             </div>
           </div>
         </div>
@@ -89,7 +105,25 @@ export default function ShopInfo({ shopInfo }: { shopInfo: MyShopInfoRes }) {
                   </div>
                 </div>
               ))}
-              <button type="button" className={styles['store__update-btn']}>가게 정보 수정</button>
+              <button
+                type="button"
+                className={styles['store__update-btn']}
+                onClick={openEditShopInfoModal}
+              >
+                가게 정보 수정
+              </button>
+              {isEditShopInfoModalOpen && (
+                <CustomModal
+                  title="가게 정보 수정"
+                  modalSize="extra-large"
+                  hasFooter={false}
+                  isOpen={isEditShopInfoModalOpen}
+                  onCancel={closeEditShopInfoModal}
+                  isOverflowVisible
+                >
+                  <EditShopInfoModal shopInfo={shopInfo} closeModal={closeEditShopInfoModal} />
+                </CustomModal>
+              )}
             </div>
           </div>
           <div className={styles.store__imgs}>

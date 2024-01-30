@@ -4,7 +4,7 @@ import useStepStore from 'store/useStepStore';
 import TimePicker from 'page/ShopRegistration/component/TimePicker';
 import { WEEK } from 'utils/constant/week';
 import { createPortal } from 'react-dom';
-import useModalStore from 'store/modalStore';
+import useModalStore, { OperatingTime } from 'store/modalStore';
 import cn from 'utils/ts/className';
 import styles from './OperateTimeMobile.module.scss';
 
@@ -17,14 +17,25 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
   const step = useStepStore((state) => state.step);
   const { shopClosedState } = useModalStore();
 
-  const handleShopClosedChange = (day: string) => {
-    useModalStore.setState((prev) => ({
-      ...prev,
-      shopClosedState: {
-        ...prev.shopClosedState,
-        [day]: !prev.shopClosedState[day],
-      },
-    }));
+  const handleShopClosedChange = (day: typeof WEEK[number]) => {
+    useModalStore.setState((prev) => {
+      const newState: {
+        openTimeState: OperatingTime;
+        closeTimeState: OperatingTime;
+        shopClosedState: { [key: string]: boolean }
+      } = {
+        ...prev,
+        shopClosedState: {
+          ...prev.shopClosedState,
+          [day]: !prev.shopClosedState[day],
+        },
+      };
+      if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
+        newState.openTimeState[day] = '00:00';
+        newState.closeTimeState[day] = '00:00';
+      }
+      return newState;
+    });
   };
 
   if (!isOpen) return null;
