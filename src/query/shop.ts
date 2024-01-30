@@ -45,11 +45,7 @@ const useMyShop = () => {
   });
 
   return {
-<<<<<<< HEAD
-    shopData, menusData, addMenuMutation, addMenuError,
-=======
-    shopData, menuData, addMenuMutation, addMenuError, refetchShopData, isLoading,
->>>>>>> origin/develop
+    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading,
   };
 };
 

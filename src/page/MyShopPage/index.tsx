@@ -11,11 +11,7 @@ import EditShopInfoModal from './components/EditShopInfoModal';
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const {
-<<<<<<< HEAD
-    shopData, menusData,
-=======
-    shopData, menuData, refetchShopData, isLoading,
->>>>>>> origin/develop
+    shopData, menusData, refetchShopData, isLoading,
   } = useMyShop();
   const navigate = useNavigate();
   const {
