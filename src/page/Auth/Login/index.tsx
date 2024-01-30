@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
 import { useState } from 'react';
 import sha256 from 'utils/ts/SHA-256';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 
@@ -22,6 +23,7 @@ export default function Login() {
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
+  const { loginError } = useErrorMessageStore();
 
   const isError = isServerError || isFormError;
 
@@ -77,7 +79,7 @@ export default function Login() {
           </div>
           <div className={styles['form__auto-login']}>
             {(isError || !!isFormError) && (
-            <div className={styles['form__error-message']}>아이디 또는 비밀번호를 잘못 입력했습니다</div>
+            <div className={styles['form__error-message']}>{loginError}</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
               <input
