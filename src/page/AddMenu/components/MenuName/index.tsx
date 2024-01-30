@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
-import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 import styles from './MenuName.module.scss';
 
 interface MenuNameProps {

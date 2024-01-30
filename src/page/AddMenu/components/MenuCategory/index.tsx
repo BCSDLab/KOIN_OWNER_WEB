@@ -4,7 +4,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 import styles from './MenuCategory.module.scss';
 
 interface MenuCategory {
