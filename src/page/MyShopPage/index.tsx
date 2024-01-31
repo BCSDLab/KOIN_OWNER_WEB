@@ -1,7 +1,7 @@
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useEffect } from 'react';
 import CatagoryMenuList from './components/CatagoryMenuList';
@@ -11,16 +11,13 @@ import EditShopInfoModal from './components/EditShopInfoModal';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
-  const location = useLocation();
   const {
     shopData, menusData, refetchShopData, isLoading,
   } = useMyShop();
   const { resetAddMenuStore } = useAddMenuStore();
   useEffect(() => {
-    if (location.pathname === '/') {
-      resetAddMenuStore();
-    }
-  }, [location, resetAddMenuStore]);
+    resetAddMenuStore();
+  }, [resetAddMenuStore]);
   const navigate = useNavigate();
   const {
     setTrue: openEditShopInfoModal,
