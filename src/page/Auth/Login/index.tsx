@@ -23,7 +23,7 @@ export default function Login() {
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
-  const { loginError } = useErrorMessageStore();
+  const { loginError, emailError, setEmailError } = useErrorMessageStore();
 
   const isError = isServerError || isFormError;
 
@@ -39,8 +39,11 @@ export default function Login() {
     login({ email: data.email, password: hashedPassword, isAutoLogin });
   };
 
-  const onError = () => {
+  const onError = (error: any) => {
     setIsFormError(true);
+    if (error.email) {
+      setEmailError(error.email.message);
+    }
   };
 
   return (
@@ -79,7 +82,7 @@ export default function Login() {
           </div>
           <div className={styles['form__auto-login']}>
             {(isError || !!isFormError) && (
-            <div className={styles['form__error-message']}>{loginError}</div>
+            <div className={styles['form__error-message']}>{loginError || emailError}</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
               <input
