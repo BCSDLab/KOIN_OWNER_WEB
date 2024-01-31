@@ -139,7 +139,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   <div key={input.id} className={styles['mobile__price-info-input-box']}>
                     <div className={styles['mobile__price-info-inputs']}>
                       <input
-                        className={styles['mobile__price-info-inputs__size-input--disabled']}
+                        className={styles['mobile__price-info-inputs__size-input']}
                         placeholder={isSingle ? '' : '예) 소 (1~2 인분)'}
                         value={input.option}
                         onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
