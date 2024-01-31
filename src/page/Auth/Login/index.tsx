@@ -7,7 +7,7 @@ import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
 import { useLogin } from 'query/auth';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
 import { useState } from 'react';
@@ -40,10 +40,10 @@ export default function Login() {
     login({ email: data.email, password: hashedPassword, isAutoLogin });
   };
 
-  const onError = (error: any) => {
+  const onError = (error: FieldErrors<LoginParams>) => {
     setIsFormError(true);
     if (error.email) {
-      setEmailError(error.email.message);
+      setEmailError(error.email.message ?? null);
     }
   };
 
