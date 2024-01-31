@@ -24,7 +24,7 @@ export default function Login() {
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
   const { loginError } = useErrorMessageStore();
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [emailError, setEmailError] = useState('');
 
   const isError = isServerError || isFormError;
 
@@ -43,7 +43,7 @@ export default function Login() {
   const onError = (error: FieldErrors<LoginParams>) => {
     setIsFormError(true);
     if (error.email) {
-      setEmailError(error.email.message ?? null);
+      setEmailError(error.email?.message || '');
     }
   };
 
