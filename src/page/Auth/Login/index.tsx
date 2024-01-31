@@ -23,7 +23,8 @@ export default function Login() {
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
-  const { loginError, emailError, setEmailError } = useErrorMessageStore();
+  const { loginError } = useErrorMessageStore();
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const isError = isServerError || isFormError;
 
