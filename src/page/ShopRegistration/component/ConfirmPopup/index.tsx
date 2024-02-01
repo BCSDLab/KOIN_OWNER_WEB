@@ -11,6 +11,7 @@ interface ConfirmPopupProps {
 
 export default function ConfirmPopup({ isOpen, onCancel, errors }: ConfirmPopupProps) {
   const [isConfirmClicked, setIsConfirmClicked] = useState(false);
+  const errorMessage = Object.keys(errors).map((key) => errors[key]?.message);
 
   const handleConfirmPopupClose = (event: React.MouseEvent) => {
     setIsConfirmClicked(false);
@@ -39,7 +40,7 @@ export default function ConfirmPopup({ isOpen, onCancel, errors }: ConfirmPopupP
             확인
           </button>
         </div>
-        {errors && isConfirmClicked && <ErrorMessage message="등록에 실패했습니다. 입력한 정보를 다시 확인해주세요." />}
+        {errorMessage.length > 0 && isConfirmClicked && <ErrorMessage message="등록에 실패했습니다. 입력한 정보를 다시 확인해주세요." />}
       </div>
     </div>
   );
