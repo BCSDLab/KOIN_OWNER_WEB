@@ -309,7 +309,7 @@ export default function ShopRegistrationPC() {
                   <input
                     type="number"
                     className={styles['form__input-large']}
-                    value={deliveryPrice === 0 ? '' : deliveryPrice}
+                    defaultValue=""
                     {...register('delivery_price', { valueAsNumber: true })}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
