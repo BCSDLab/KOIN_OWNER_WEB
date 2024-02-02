@@ -1,7 +1,7 @@
 const OPTION = [
   {
     name: '아이디 찾기',
-    path: '',
+    path: '/find-id',
   },
   {
     name: '비밀번호 찾기',
