@@ -172,11 +172,11 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             </label>
           </div>
           <div className={styles['mobile-container__main-content']}>
-            <label htmlFor="name" className={styles['mobile-main-info']}>
+            <label htmlFor="shopName" className={styles['mobile-main-info']}>
               <span className={styles['mobile-main-info--header']}>가게명</span>
               <input
                 type="text"
-                id="name"
+                id="shopName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={styles['mobile-main-info--input']}
@@ -238,11 +238,11 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
                 </button>
               </div>
             </div>
-            <label htmlFor="address" className={styles['mobile-main-info']}>
+            <label htmlFor="shopAddress" className={styles['mobile-main-info']}>
               <span className={styles['mobile-main-info--header']}>주소정보</span>
               <input
                 type="text"
-                id="address"
+                id="shopAddress"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles['mobile-main-info--input']}
@@ -341,21 +341,21 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
           </div>
           <hr className={styles['container__horizontal-line']} />
           <div className={styles.content}>
-            <label htmlFor="name" className={styles['main-info']}>
+            <label htmlFor="shopName" className={styles['main-info']}>
               <span className={styles['main-info__header']}>가게명</span>
               <input
                 type="text"
-                id="name"
+                id="shopName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="address" className={styles['main-info']}>
+            <label htmlFor="shopAddress" className={styles['main-info']}>
               <span className={styles['main-info__header']}>주소정보</span>
               <input
                 type="text"
-                id="address"
+                id="shopAddress"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles['main-info__input']}
