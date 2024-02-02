@@ -46,7 +46,7 @@
     box-sizing: border-box;
     margin-right: 10px;
     width: 368px;
-    height: 331px;
+    height: 370px;
     border: 1px solid #d2dae2;
   }
 
@@ -99,8 +99,10 @@
   }
 
   &__name {
-    display: block;
-    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
     font-size: 20px;
     font-weight: 500;
     line-height: 30px;
@@ -117,6 +119,7 @@
     align-items: center;
     gap: 16px;
     margin-top: 8px;
+    margin-bottom: 30px;
   }
 
   &__price-unit {
