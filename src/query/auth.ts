@@ -7,6 +7,7 @@ import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
 
 interface VerifyInput {
@@ -32,6 +33,7 @@ interface ErrorResponse {
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
+  const { setLoginError } = useErrorMessageStore();
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -52,9 +54,10 @@ export const useLogin = () => {
         navigate('/store-registration');
       }
     },
-    onError: () => {
+    onError: (err: AxiosError<ErrorResponse>) => {
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      setLoginError(err.response?.data.message || err.message);
     },
   });
 
