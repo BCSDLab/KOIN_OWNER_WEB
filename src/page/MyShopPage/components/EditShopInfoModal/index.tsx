@@ -103,7 +103,9 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     });
   }, []);
   const operateTimeState = useOperateTimeState();
-  const holiday = `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`;
+  const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
+    ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
+    : '휴무일 없음';
 
   useEffect(() => {
     if (imageFile && !isMobile) {
