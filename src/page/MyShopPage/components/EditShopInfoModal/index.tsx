@@ -253,8 +253,8 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               <input
                 type="text"
                 id="deliveryPrice"
-                value={deliveryPrice}
-                onChange={(e) => setDeliveryPrice(e.target.value)}
+                value={deliveryPrice === 0 ? '' : deliveryPrice}
+                onChange={(e) => setDeliveryPrice(Number(e.target.value))}
                 className={styles['mobile-main-info--input']}
               />
             </label>
@@ -376,8 +376,8 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
               <input
                 type="text"
                 id="deliveryPrice"
-                value={deliveryPrice}
-                onChange={(e) => setDeliveryPrice(e.target.value)}
+                value={deliveryPrice === 0 ? '' : deliveryPrice}
+                onChange={(e) => setDeliveryPrice(Number(e.target.value))}
                 className={styles['main-info__input']}
               />
             </label>

@@ -1,13 +1,23 @@
+import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import { FieldErrors } from 'react-hook-form';
+import { useState } from 'react';
 import styles from './ConfirmPopup.module.scss';
 
 interface ConfirmPopupProps {
   isOpen: boolean;
   onCancel: (event: React.MouseEvent) => void;
+  errors: FieldErrors;
 }
 
-export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
-  if (!isOpen) return null;
+export default function ConfirmPopup({ isOpen, onCancel, errors }: ConfirmPopupProps) {
+  const [isConfirmClicked, setIsConfirmClicked] = useState(false);
+  const errorMessage = Object.keys(errors).map((key) => errors[key]?.message);
 
+  const handleConfirmPopupClose = (event: React.MouseEvent) => {
+    setIsConfirmClicked(false);
+    onCancel(event);
+  };
+  if (!isOpen) return null;
   return (
     <div className={styles.popup}>
       <div className={styles.content}>
@@ -16,7 +26,7 @@ export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
         <div className={styles.content__buttons}>
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleConfirmPopupClose}
             id="confirmPopup"
             className={styles['content__cancel-button']}
           >
@@ -25,10 +35,12 @@ export default function ConfirmPopup({ isOpen, onCancel }: ConfirmPopupProps) {
           <button
             type="submit"
             className={styles['content__next-button']}
+            onClick={() => setIsConfirmClicked(true)}
           >
             확인
           </button>
         </div>
+        {errorMessage.length > 0 && isConfirmClicked && <ErrorMessage message="등록에 실패했습니다. 입력한 정보를 다시 확인해주세요." />}
       </div>
     </div>
   );
