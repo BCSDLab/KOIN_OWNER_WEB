@@ -11,13 +11,13 @@ export default function UserId() {
     emailHandleSubmit, errors: formErros, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    status, onSubmit, onMobileSubmit, email, errorMessage: requestError,
+    status, onSubmit, email, errorMessage,
   } = useCheckEmailDuplicate(isMobile);
 
   return (
     <form
       className={styles.form}
-      onChange={isMobile ? emailHandleSubmit(onMobileSubmit) : () => {}}
+      onChange={isMobile ? emailHandleSubmit(onSubmit) : () => {}}
       onSubmit={emailHandleSubmit(onSubmit)}
     >
       {!isMobile && <span className={styles.form__label}>아이디</span>}
@@ -31,11 +31,13 @@ export default function UserId() {
         />
         {!isMobile && <CustomButton content="중복확인" buttonSize="small" submit />}
       </div>
-      {formErros.email && <ErrorMessage message={[formErros.email.message]} />}
-      {!formErros.email && watch().email === email && requestError
-      && <ErrorMessage message={requestError} />}
-      {!formErros.email && watch().email === email && status === 'success'
-      && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
+      {formErros.email ? <ErrorMessage message={[formErros.email.message]} />
+        : (
+          <>
+            {(watch().email === email && status === 'error') && <ErrorMessage message={[errorMessage]} />}
+            {(watch().email === email && status === 'success') && <span className={styles.form__alert}>사용하실 수 있는 아이디 입니다.</span>}
+          </>
+        )}
     </form>
   );
 }
