@@ -19,7 +19,7 @@ const CATEGORY: Category[] = [
     submenu: [
       {
         title: '가게정보',
-        link: '/store-info',
+        link: '/',
         newFlag: true,
         planFlag: true,
         tag: null,
