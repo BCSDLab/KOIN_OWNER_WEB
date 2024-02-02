@@ -7,7 +7,7 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
@@ -26,7 +26,6 @@ export default function Sub() {
 
   const {
     phone,
-    deliveryPrice,
     description,
     delivery,
     payBank,
@@ -42,6 +41,7 @@ export default function Sub() {
   } = CheckSameTime();
   const { shopClosedState } = useModalStore();
   const [isError, setIsError] = useState(false);
+  const deliveryPriceRef = useRef<HTMLInputElement>(null);
 
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
@@ -52,7 +52,7 @@ export default function Sub() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (phone === '' || deliveryPrice === '' || !isValidPhoneNumber) {
+    if (phone === '' || deliveryPriceRef.current?.value === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
       setIsError(false);
@@ -92,20 +92,20 @@ export default function Sub() {
         htmlFor="deliveryPrice"
         className={cn({
           [styles.form__label]: true,
-          [styles['form__label--error']]: deliveryPrice === '' && isError,
+          [styles['form__label--error']]: deliveryPriceRef.current?.value === '' && isError,
         })}
       >
         배달금액
         <input
           type="text"
           id="deliveryPrice"
-          onChange={(e) => setDeliveryPrice(e.target.value)}
-          value={deliveryPrice}
+          onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+          defaultValue=""
           className={styles.form__input}
         />
       </label>
       <div className={styles['form__error-message']}>
-        {deliveryPrice === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
+        {deliveryPriceRef.current?.value === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
       </div>
       <div className={styles.form__label}>
         운영시간

@@ -1,4 +1,5 @@
 import useMyShop from 'query/shop';
+import useAddMenuStore from 'store/addMenu';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBooleanState';
@@ -13,6 +14,10 @@ export default function MyShopPage() {
   const {
     shopData, menusData, refetchShopData, isLoading,
   } = useMyShop();
+  const { resetAddMenuStore } = useAddMenuStore();
+  useEffect(() => {
+    resetAddMenuStore();
+  }, [resetAddMenuStore]);
   const navigate = useNavigate();
   const {
     setTrue: openEditShopInfoModal,

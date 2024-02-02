@@ -1,5 +1,5 @@
 import useAddMenuStore from 'store/addMenu';
-import { useErrorMessageStore } from 'store/addMenuErrorMessageStore';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 
 const useFormValidation = () => {
   const { setMenuError, setCategoryError } = useErrorMessageStore();

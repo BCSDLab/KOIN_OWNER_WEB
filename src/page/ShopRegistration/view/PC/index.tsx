@@ -2,12 +2,11 @@
 import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import Complete from 'component/common/Auth/Complete';
-import InputBox from 'page/ShopRegistration/component/InputBox';
 import Category from 'page/ShopRegistration/component/Modal/Category';
 import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
@@ -58,6 +57,7 @@ export default function ShopRegistrationPC() {
     imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const [isError, setIsError] = useState(false);
+  const deliveryPriceRef = useRef<HTMLInputElement>(null);
 
   const {
     openTimeState,
@@ -66,7 +66,16 @@ export default function ShopRegistrationPC() {
   } = useModalStore();
 
   const {
-    setImageUrl, setOwner, setName, setDelivery, setPayCard, setPayBank,
+    setImageUrl,
+    setOwner,
+    setName,
+    setDelivery,
+    setPayCard,
+    setPayBank,
+    setAddress,
+    setPhone,
+    setDeliveryPrice,
+    setDescription,
   } = useShopRegistrationStore();
 
   const {
@@ -78,9 +87,9 @@ export default function ShopRegistrationPC() {
     delivery,
     payCard,
     payBank,
-    deliveryPrice,
     address,
     phone,
+    description,
   } = useShopRegistrationStore();
 
   const operateTimeState = useOperateTimeState();
@@ -93,7 +102,7 @@ export default function ShopRegistrationPC() {
   } = CheckSameTime();
 
   const {
-    register, handleSubmit, setValue,
+    register, handleSubmit, setValue, formState: { errors },
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
@@ -103,17 +112,22 @@ export default function ShopRegistrationPC() {
     onSuccess: () => setStep(5),
   });
 
+  const formatPhoneNumber = (inputNumber: string) => {
+    const phoneNumber = inputNumber.replace(/\D/g, '');
+    const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    return formattedPhoneNumber;
+  };
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === '' || deliveryPrice === '' || address === '' || phone === '' || !isValidPhoneNumber) {
+    if (imageUrl === '' || name === '' || category === '' || deliveryPriceRef.current?.value === ''
+      || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
       setIsError(false);
       openConfirmPopup();
     }
   };
-
   const openTimeArray = Object.values(openTimeState);
   const closeTimeArray = Object.values(closeTimeState);
   const shopClosedArray = Object.values(shopClosedState);
@@ -127,11 +141,9 @@ export default function ShopRegistrationPC() {
       open_time: openTimeArray[index],
     }));
     setValue('open', openValue);
-    setValue('image_urls', [imageUrl]);
-    setValue('name', name);
     setValue('category_ids', [categoryId]);
-    setValue('delivery_price', Number(deliveryPrice));
-  }, [openTimeState, closeTimeState, imageFile]);
+  }, [openTimeState, closeTimeState, shopClosedState, imageFile]);
+
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
@@ -141,7 +153,7 @@ export default function ShopRegistrationPC() {
     if (!isMobile && step === 1) {
       toggleCategory();
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <>
@@ -181,6 +193,7 @@ export default function ShopRegistrationPC() {
                     accept="image/*"
                     id="mainMenuImage"
                     className={styles['form__upload-file']}
+                    {...register('image_urls', { value: [imageUrl] })}
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
@@ -241,6 +254,7 @@ export default function ShopRegistrationPC() {
                     type="text"
                     className={styles.form__input}
                     value={name}
+                    {...register('name')}
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
@@ -260,17 +274,52 @@ export default function ShopRegistrationPC() {
                 <SearchShop open={showSearchShop} onCancel={closeSearchShop} />
               </CustomModal>
               <div>
-                <InputBox content="주소정보" id="address" register={register} inputType="text" />
+                <span className={styles.form__title}>주소정보</span>
+                <div className={styles.form__section}>
+                  <input
+                    type="text"
+                    className={styles['form__input-large']}
+                    value={address}
+                    {...register('address')}
+                    onChange={(e) => {
+                      setAddress(e.target.value);
+                    }}
+                  />
+                </div>
                 {address === '' && isError && <ErrorMessage message={ERRORMESSAGE.address} />}
               </div>
               <div>
-                <InputBox content="전화번호" id="phone" register={register} inputType="tel" />
+                <span className={styles.form__title}>전화번호</span>
+                <div className={styles.form__section}>
+                  <input
+                    type="text"
+                    className={styles['form__input-large']}
+                    value={phone}
+                    {...register('phone')}
+                    onChange={(e) => {
+                      setPhone(formatPhoneNumber(e.target.value));
+                    }}
+                  />
+                </div>
                 {phone === '' && isError && <ErrorMessage message={ERRORMESSAGE.phone} />}
-                {(!isValidPhoneNumber && phone !== '' && isError) && <ErrorMessage message={ERRORMESSAGE.invalidPhone} />}
+                {phone !== '' && !isValidPhoneNumber && isError && <ErrorMessage message={ERRORMESSAGE.invalidPhone} />}
               </div>
               <div>
-                <InputBox content="배달금액" id="delivery_price" register={register} inputType="text" />
-                {deliveryPrice === '' && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
+                <span className={styles.form__title}>배달금액</span>
+                <div className={styles.form__section}>
+                  <input
+                    type="number"
+                    className={styles['form__input-large']}
+                    defaultValue=""
+                    {...register('delivery_price', { valueAsNumber: true })}
+                    ref={deliveryPriceRef}
+                    onChange={(e) => {
+                      setDeliveryPrice(Number(e.target.value));
+                    }}
+                  />
+                </div>
+                {deliveryPriceRef.current?.value === ''
+                  && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
               </div>
               <div>
                 <span className={styles.form__title}>운영시간</span>
@@ -325,7 +374,20 @@ export default function ShopRegistrationPC() {
               >
                 <OperateTimePC />
               </CustomModal>
-              <InputBox content="기타정보" id="description" register={register} inputType="text" />
+              <div>
+                <span className={styles.form__title}>기타사항</span>
+                <div className={styles.form__section}>
+                  <input
+                    type="text"
+                    className={styles['form__input-large']}
+                    value={description}
+                    {...register('description')}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
               <div className={styles.form__checkbox}>
                 <label htmlFor="delivery" className={styles['form__checkbox-label']}>
                   <input
@@ -371,6 +433,7 @@ export default function ShopRegistrationPC() {
               <ConfirmPopup
                 isOpen={showConfirmPopup}
                 onCancel={closeConfirmPopup}
+                errors={errors}
               />
             </form>
           </div>
