@@ -2,7 +2,7 @@
 import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -57,6 +57,7 @@ export default function ShopRegistrationPC() {
     imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const [isError, setIsError] = useState(false);
+  const deliveryPriceRef = useRef<HTMLInputElement>(null);
 
   const {
     openTimeState,
@@ -86,7 +87,6 @@ export default function ShopRegistrationPC() {
     delivery,
     payCard,
     payBank,
-    deliveryPrice,
     address,
     phone,
     description,
@@ -120,7 +120,8 @@ export default function ShopRegistrationPC() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === '' || deliveryPrice === 0 || address === '' || phone === '' || !isValidPhoneNumber) {
+    if (imageUrl === '' || name === '' || category === '' || deliveryPriceRef.current?.value === ''
+      || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
       setIsError(false);
@@ -311,12 +312,13 @@ export default function ShopRegistrationPC() {
                     className={styles['form__input-large']}
                     defaultValue=""
                     {...register('delivery_price', { valueAsNumber: true })}
+                    ref={deliveryPriceRef}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}
                   />
                 </div>
-                {deliveryPrice === 0
+                {deliveryPriceRef.current?.value === ''
                   && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
               </div>
               <div>
