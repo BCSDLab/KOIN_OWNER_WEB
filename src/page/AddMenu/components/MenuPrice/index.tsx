@@ -1,4 +1,5 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import { useEffect } from 'react';
 import useAddMenuStore from 'store/addMenu';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
@@ -23,9 +24,11 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
     setIsSingle,
     singlePrice,
     setSinglePrice,
-    name,
     resetOptionPrice,
   } = useAddMenuStore();
+  useEffect(() => {
+    console.log(singlePrice);
+  }, [singlePrice]);
 
   const updatePriceInput = (index: number, field: string, newValue: string | number) => {
     const updatedOptionPrices = (optionPrices || []).map(
@@ -60,12 +63,6 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               {isSingle ? (
                 <div className={styles['mobile__price-info-text-box']}>
                   <div className={styles['mobile__price-info-text']}>
-                    <div className={styles['mobile__price-info-text__size']}>
-                      {name}
-                    </div>
-                    <div>
-                      /
-                    </div>
                     <div className={styles['mobile__price-info-text__price']}>
                       {singlePrice}
                       원
@@ -120,9 +117,10 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       />
                       <div className={styles['mobile__price-info-inputs__price-input-box']}>
                         <input
+                          type="number"
                           className={styles['mobile__price-info-inputs__price-input']}
                           value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
-                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
+                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
                         />
                         <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>
                       </div>
@@ -147,6 +145,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       />
                       <div className={styles['mobile__price-info-inputs__price-input-box']}>
                         <input
+                          type="number"
                           className={styles['mobile__price-info-inputs__price-input']}
                           value={input.price === 0 ? '' : input.price}
                           onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
@@ -184,12 +183,6 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               {isSingle ? (
                 <div className={styles['price-info-text-box']}>
                   <div className={styles['price-info-text']}>
-                    <div className={styles['price-info-text__size']}>
-                      {name}
-                    </div>
-                    <div>
-                      /
-                    </div>
                     <div className={styles['price-info-text__price']}>
                       {singlePrice}
                       원
@@ -244,9 +237,10 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       />
                       <div className={styles['price-info-inputs__price-input-box']}>
                         <input
+                          type="number"
                           className={styles['price-info-inputs__price-input']}
                           value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
-                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : parseInt(e.target.value, 10))}
+                          onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
                         />
                         <p className={styles['price-info-inputs__price-input-won']}>원</p>
                       </div>
@@ -271,6 +265,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                       />
                       <div className={styles['price-info-inputs__price-input-box']}>
                         <input
+                          type="number"
                           className={styles['price-info-inputs__price-input']}
                           value={input.price === 0 ? '' : input.price}
                           onChange={(e) => updatePriceInput(input.id, 'price', e.target.value)}
