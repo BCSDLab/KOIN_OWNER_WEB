@@ -20,10 +20,6 @@ export default function OperateTimePC() {
           [day]: !prev.shopClosedState[day],
         },
       };
-      if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
-        newState.openTimeState[day] = '00:00';
-        newState.closeTimeState[day] = '00:00';
-      }
       return newState;
     });
   };
