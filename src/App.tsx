@@ -12,6 +12,7 @@ import AddMenu from 'page/AddMenu';
 import PageNotFound from 'page/Error/PageNotFound';
 import ModifyMenu from 'page/ModifyMenu';
 import { Suspense } from 'react';
+import Toast from 'component/common/Toast';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/complete-change-password" element={<CompleteChangePassword />} />
         </Route>
       </Routes>
+      <Toast />
     </Suspense>
   );
 }

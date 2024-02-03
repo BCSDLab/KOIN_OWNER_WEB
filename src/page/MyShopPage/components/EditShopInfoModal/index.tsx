@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import {
+  Dispatch, SetStateAction, useEffect, useState,
+} from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
@@ -24,9 +26,11 @@ import styles from './EditShopInfoModal.module.scss';
 interface EditShopInfoModalProps {
   shopInfo: MyShopInfoRes;
   closeModal: () => void;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfoModalProps) {
+export default function EditShopInfoModal({ shopInfo, closeModal, setIsSuccess }:
+EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
   const [imageUrlList, setImageUrlList] = useState<string[]>(shopInfo.image_urls);
   const {
@@ -68,7 +72,10 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
-    onSuccess: closeModal,
+    onSuccess: () => {
+      closeModal();
+      setIsSuccess(true);
+    },
   });
 
   const handleDeleteImage = (image: string) => {

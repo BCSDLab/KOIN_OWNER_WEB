@@ -4,17 +4,19 @@ import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
+import { Dispatch, SetStateAction } from 'react';
 import styles from './ShopInfo.module.scss';
 
 interface ShopInfoProps {
   shopInfo: MyShopInfoRes;
   openEditShopInfoModal: () => void;
   closeEditShopInfoModal: () => void;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
   isEditShopInfoModalOpen: boolean;
 }
 
 export default function ShopInfo({
-  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, isEditShopInfoModalOpen,
+  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, setIsSuccess, isEditShopInfoModalOpen,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
 
@@ -121,7 +123,11 @@ export default function ShopInfo({
                   onCancel={closeEditShopInfoModal}
                   isOverflowVisible
                 >
-                  <EditShopInfoModal shopInfo={shopInfo} closeModal={closeEditShopInfoModal} />
+                  <EditShopInfoModal
+                    shopInfo={shopInfo}
+                    closeModal={closeEditShopInfoModal}
+                    setIsSuccess={setIsSuccess}
+                  />
                 </CustomModal>
               )}
             </div>
