@@ -12,8 +12,6 @@ const useMenuInfo = (menuId:number) => {
       queryFn: () => getMenu(menuId),
     },
   );
-
-  console.log(menuData);
   const { mutate: modifyMenuMutation, isError: modifyMenuError } = useMutation({
     mutationFn: (param: NewMenu) => modifyMenu(menuId, param),
     onSuccess: () => {

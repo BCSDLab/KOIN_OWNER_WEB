@@ -1,5 +1,4 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { useEffect } from 'react';
 import useAddMenuStore from 'store/addMenu';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
@@ -26,9 +25,6 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
     setSinglePrice,
     resetOptionPrice,
   } = useAddMenuStore();
-  useEffect(() => {
-    console.log(singlePrice);
-  }, [singlePrice]);
 
   const updatePriceInput = (index: number, field: string, newValue: string | number) => {
     const updatedOptionPrices = (optionPrices || []).map(
@@ -106,7 +102,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   </button>
                 </div>
               </div>
-              {isSingle && singlePrice
+              {isSingle
                 ? (
                   <div className={styles['mobile__price-info-input-box']}>
                     <div className={styles['mobile__price-info-inputs']}>
@@ -226,7 +222,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   </button>
                 </div>
               </div>
-              {isSingle && singlePrice
+              {isSingle
                 ? (
                   <div className={styles['price-info-input-box']}>
                     <div className={styles['price-info-inputs']}>
