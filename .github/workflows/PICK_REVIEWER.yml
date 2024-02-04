@@ -52,7 +52,7 @@ jobs:
         uses: mshick/add-pr-comment@v1
         with:
           message: |
-            ${{ steps.pick_random_reviwer.outputs.comment }} // output 을 가져옵니다 ${{ steps.[step-id].outputs.[output-id] }}
+            ${{ steps.pick_random_reviwer.outputs.comment }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
       
