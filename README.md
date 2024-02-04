@@ -2,8 +2,6 @@
 
 Project - [KOIN_OWNER_WEB](https://github.com/BCSDLab/KOIN_OWNER_WEB)
 
-Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.com/)
-
 # Learn Our Stack
 
 - Main UI Library/Framework
