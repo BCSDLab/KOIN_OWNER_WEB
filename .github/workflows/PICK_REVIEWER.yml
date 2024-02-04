@@ -20,10 +20,33 @@ jobs:
           script: |
             const fs = require('fs');
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/reviewers.json`));
-            const randomReviewer = developers[Math.floor(Math.random() * developers.length)];
-            const comment = `🎉 @${randomReviewer} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
-            core.setOutput('comment', comment) // output 을 세팅합니다
-            core.setOutput('reviewer', randomReviewer) // core.setOutput(이름, 값)
+            
+            // 겹치지 않는 두명의 랜덤 리뷰어 선택
+            if(developers?.length == 0) {
+              core.setOutput('comment', '리뷰어가 없습니다. 리뷰어를 추가해주세요.')
+            }
+            
+            if(developers?.length == 1) {
+              const randomReviewer = developers[0];
+              const comment = `🎉 @${randomReviewer} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
+              core.setOutput('comment', comment) 
+              core.setOutput('reviewer', randomReviewer)
+            }
+            
+            if(developers?.length > 1) {
+              const randomReviewer = developers[Math.floor(Math.random() * developers.length)];
+              let randomReviewer2;
+              while(true) {
+                randomReviewer2 = developers[Math.floor(Math.random() * developers.length)];
+                if(randomReviewer != randomReviewer2) {
+                  break;
+                }
+              }
+              const comment = `🎉 @${randomReviewer}, @${randomReviewer2} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
+              core.setOutput('comment', comment)
+              core.setOutput('reviewer', randomReviewer)
+              core.setOutput('reviewer2', randomReviewer2)
+            }
       
       - name: comment PR
         uses: mshick/add-pr-comment@v1
@@ -36,5 +59,5 @@ jobs:
       - name: Add Pull Request Reviewer
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer }}
+          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer }}, ${{ steps.pick_random_reviwer.outputs.reviewer2 }}
           token: ${{ secrets.GITHUB_TOKEN }}
