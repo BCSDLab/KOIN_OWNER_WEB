@@ -137,14 +137,26 @@ export default function ShopInfo({
               <img src={shopInfo.image_urls[0]} alt="main" className={styles['store__imgs-main-pic']} />
             </div>
             <div className={styles.store__subimgs}>
-              <div className={styles['store__empty-img']}>
-                <CUTLERY className={styles['store__empty-img-icon']} />
-                <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
-              </div>
-              <div className={styles['store__empty-img']}>
-                <CUTLERY className={styles['store__empty-img-icon']} />
-                <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
-              </div>
+              {shopInfo.image_urls[1] ? (
+                <div className={styles.store__subimg}>
+                  <img src={shopInfo.image_urls[1]} alt="sub" className={styles['store__subimgs-pic']} />
+                </div>
+              ) : (
+                <div className={styles['store__empty-img']}>
+                  <CUTLERY className={styles['store__empty-img-icon']} />
+                  <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
+                </div>
+              )}
+              {shopInfo.image_urls[2] ? (
+                <div className={styles.store__subimg}>
+                  <img src={shopInfo.image_urls[2]} alt="sub" className={styles['store__subimgs-pic']} />
+                </div>
+              ) : (
+                <div className={styles['store__empty-img']}>
+                  <CUTLERY className={styles['store__empty-img-icon']} />
+                  <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

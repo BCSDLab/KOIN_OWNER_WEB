@@ -198,7 +198,6 @@
     object-fit: contain;
     width: 368px;
     height: 257px;
-    box-shadow: 0 0 1px 0 #00000080;
   }
 
   &__subimgs {
@@ -222,6 +221,7 @@
   &__subimgs-pic {
     width: 176px;
     height: 121px;
+    object-fit: contain;
   }
 
   &__empty-img {
