@@ -88,6 +88,11 @@ export default function ModifyMenu() {
 
   const handleDeleteMenu = () => {
     deleteMenuMutation(Number(menuId));
+    openGoMyShopModal();
+  };
+
+  const handleMobileDeleteMenu = () => {
+    deleteMenuMutation(Number(menuId));
     goMyShop();
   };
 
@@ -153,6 +158,16 @@ export default function ModifyMenu() {
                 </button>
               </>
             )}
+
+          </div>
+          <div className={styles['mobile-delete-menu-container']}>
+            <button
+              className={styles['delete-menu-button']}
+              type="button"
+              onClick={handleMobileDeleteMenu}
+            >
+              메뉴 삭제
+            </button>
           </div>
         </div>
       ) : (
