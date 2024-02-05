@@ -49,7 +49,7 @@ function Header() {
       });
   };
 
-  if (pathname === '/add-menu' && isMobile) {
+  if ((pathname === '/add-menu' || pathname.startsWith('/modify-menu/')) && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
         <button
@@ -59,7 +59,7 @@ function Header() {
         >
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
-        <div className={styles['add-menu-header__caption']}>메뉴추가</div>
+        <div className={styles['add-menu-header__caption']}>{pathname === '/add-menu' ? '메뉴추가' : '메뉴수정'}</div>
       </header>
     );
   }
