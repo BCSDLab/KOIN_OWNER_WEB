@@ -143,14 +143,14 @@
   }
 }
 
-.delete-menu-container{
+.delete-menu-container {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 32px;
 }
 
-.mobile-delete-menu-container{
+.mobile-delete-menu-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,7 +158,7 @@
   margin-bottom: 16px;
 }
 
-.delete-menu-button{
+.delete-menu-button {
   width: 120px;
   height: 48px;
   border: 0.5px solid #858585;
@@ -169,7 +169,7 @@
   justify-content: center;
   align-items: center;
   background: #f05d3d;
-  
+
   &:hover {
     cursor: pointer;
   }
