@@ -3,7 +3,7 @@ import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import assert from 'assert';
-import useMenuInfo from 'query/menu';
+import useMenuInfo, { useDeleteMenu } from 'query/menu';
 import useAddMenuStore from 'store/addMenu';
 import MenuImage from 'page/AddMenu/components/MenuImage';
 import MenuName from 'page/AddMenu/components/MenuName';
@@ -27,6 +27,7 @@ export default function ModifyMenu() {
   const toggleConfirmClick = () => {
     setIsComplete((prevState) => !prevState);
   };
+  const { deleteMenuMutation } = useDeleteMenu();
   const {
     value: isGoMyShopModal,
     setTrue: openGoMyShopModal,
@@ -84,6 +85,12 @@ export default function ModifyMenu() {
     modifyMenu();
     goMyShop();
   };
+
+  const handleDeleteMenu = () => {
+    deleteMenuMutation(Number(menuId));
+    goMyShop();
+  };
+
   return (
     <div>
       {isMobile ? (
@@ -200,7 +207,13 @@ export default function ModifyMenu() {
               <MenuCategory isComplete={isComplete} />
               <MenuDetail isComplete={isComplete} />
               <div className={styles['delete-menu-container']}>
-                <button className={styles['delete-menu-button']} type="button">메뉴삭제</button>
+                <button
+                  className={styles['delete-menu-button']}
+                  type="button"
+                  onClick={handleDeleteMenu}
+                >
+                  메뉴 삭제
+                </button>
               </div>
             </div>
           </div>
