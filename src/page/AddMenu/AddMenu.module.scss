@@ -142,3 +142,27 @@
     }
   }
 }
+
+.delete-menu-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.delete-menu-button{
+  width: 120px;
+  height: 48px;
+  border: 0.5px solid #858585;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f05d3d;
+  
+  &:hover {
+    cursor: pointer;
+  }
+}

@@ -199,6 +199,9 @@ export default function ModifyMenu() {
               <MenuPrice isComplete={isComplete} />
               <MenuCategory isComplete={isComplete} />
               <MenuDetail isComplete={isComplete} />
+              <div className={styles['delete-menu-container']}>
+                <button className={styles['delete-menu-button']} type="button">메뉴삭제</button>
+              </div>
             </div>
           </div>
           <GoMyShopModal
