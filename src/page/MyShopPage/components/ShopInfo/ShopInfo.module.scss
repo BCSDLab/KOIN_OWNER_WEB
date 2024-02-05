@@ -16,6 +16,7 @@
   }
 
   &__imgs-main-pic {
+    object-fit: contain;
     height: 257px;
   }
 
@@ -194,6 +195,7 @@
   }
 
   &__imgs-main-pic {
+    object-fit: contain;
     width: 368px;
     height: 257px;
   }
@@ -219,6 +221,7 @@
   &__subimgs-pic {
     width: 176px;
     height: 121px;
+    object-fit: contain;
   }
 
   &__empty-img {
@@ -227,6 +230,7 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    object-fit: contain;
     width: 120px;
     height: 120px;
     border: 3px solid #175c8e;

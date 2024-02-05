@@ -62,7 +62,7 @@ export default function Main() {
         {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
       </div>
       <label
-        htmlFor="name"
+        htmlFor="shopName"
         className={cn({
           [styles.form__label]: true,
           [styles['form__label--error']]: name === '' && isError,
@@ -71,7 +71,7 @@ export default function Main() {
         가게명
         <input
           type="text"
-          id="name"
+          id="shopName"
           onChange={(e) => setName(e.target.value)}
           value={name}
           className={styles.form__input}
@@ -81,7 +81,7 @@ export default function Main() {
         {name === '' && isError && <ErrorMessage message={ERRORMESSAGE.name} />}
       </div>
       <label
-        htmlFor="address"
+        htmlFor="shopAddress"
         className={cn({
           [styles.form__label]: true,
           [styles['form__label--error']]: address === '' && isError,
@@ -90,7 +90,7 @@ export default function Main() {
         주소정보
         <input
           type="text"
-          id="address"
+          id="shopAddress"
           onChange={(e) => setAddress(e.target.value)}
           value={address}
           className={styles.form__input}
