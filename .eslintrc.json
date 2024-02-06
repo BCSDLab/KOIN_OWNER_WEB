@@ -25,6 +25,7 @@
 		"@typescript-eslint"
 	],
 	"rules": {
+		"jsx-a11y/control-has-associated-label": "off",
 		"react/react-in-jsx-scope": "off",
 		"linebreak-style" : "off",
 		"react/jsx-props-no-spreading": "off",
@@ -41,6 +42,14 @@
 					}
 				]
 			}
+		],
+		"import/extensions": [
+			"error",
+			"never",
+				{
+					"json": "always",
+					"svg": "always"
+				}
 		]
 	},
 	"settings": {
