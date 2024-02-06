@@ -49,6 +49,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:6.8.0"],\
             ["eslint-plugin-react", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:7.33.2"],\
             ["eslint-plugin-react-hooks", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:4.6.0"],\
+            ["fsevents", "patch:fsevents@npm%3A2.3.3#~builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:18.2.0"],\
             ["react-hook-form", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:7.50.1"],\
@@ -12331,6 +12332,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-jsx-a11y", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:6.8.0"],\
             ["eslint-plugin-react", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:7.33.2"],\
             ["eslint-plugin-react-hooks", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:4.6.0"],\
+            ["fsevents", "patch:fsevents@npm%3A2.3.3#~builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:18.2.0"],\
             ["react-hook-form", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:7.50.1"],\

@@ -6853,7 +6853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@npm:*, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.3
   resolution: "fsevents@npm:2.3.3"
   dependencies:
@@ -6863,7 +6863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@*#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.3
   resolution: "fsevents@patch:fsevents@npm%3A2.3.3#~builtin<compat/fsevents>::version=2.3.3&hash=df0bf1"
   dependencies:
@@ -9003,6 +9003,7 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.6.0
     eslint-plugin-react: ^7.30.1
     eslint-plugin-react-hooks: ^4.6.0
+    fsevents: "*"
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hook-form: ^7.43.9
@@ -9017,6 +9018,9 @@ __metadata:
     web-vitals: ^2.1.0
     zod: ^3.21.4
     zustand: ^4.3.7
+  dependenciesMeta:
+    fsevents:
+      optional: true
   languageName: unknown
   linkType: soft
 
