@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
+import useScrollToTop from 'utils/hooks/useScrollToTop';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -16,6 +17,7 @@ import MobileDivide from './components/MobileDivide';
 import useFormValidation from './hook/useFormValidation';
 
 export default function AddMenu() {
+  useScrollToTop();
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const navigate = useNavigate();
