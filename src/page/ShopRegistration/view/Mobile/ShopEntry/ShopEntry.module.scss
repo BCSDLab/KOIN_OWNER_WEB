@@ -1,0 +1,43 @@
+.block {
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__icon {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 38px;
+  }
+
+  &__title {
+    display: block;
+    width: auto;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #175c8e;
+    margin-bottom: 18px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: #858585;
+  }
+
+  &__button {
+    width: 295px;
+    height: 48px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #175c8e;
+    margin-top: 55px;
+    cursor: pointer;
+  }
+}

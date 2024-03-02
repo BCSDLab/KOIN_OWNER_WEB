@@ -1,0 +1,35 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.buttons {
+  margin-top: 145px;
+
+  @include media.media-breakpoint-down(mobile) {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__mobile-button {
+    @include media.media-breakpoint-down(mobile) {
+      text-decoration: none;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f7941e;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 15px;
+    }
+  }
+}

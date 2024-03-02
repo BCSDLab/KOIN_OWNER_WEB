@@ -1,0 +1,137 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.category {
+  &__title {
+    margin-top: 24px;
+    margin-bottom: 10px;
+    height: 36px;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    display: flex;
+    align-items: center;
+    color: #175c8e;
+
+    @include media.media-breakpoint-down(mobile) {
+      padding-left: 10px;
+    }
+  }
+
+  &__event-mark {
+    margin-left: 8px;
+  }
+}
+
+.menu {
+  &__slide-wrapper {
+    display: flex;
+    overflow-x: scroll;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 10px;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+
+    @include media.media-breakpoint-down(mobile) {
+      padding-left: 10px;
+    }
+  }
+
+  &__item {
+    box-sizing: border-box;
+    margin-right: 10px;
+    width: 368px;
+    height: 370px;
+    border: 1px solid #d2dae2;
+  }
+
+  &__non-img-border {
+    margin: 0 auto;
+    margin-top: 16px;
+    width: 336px;
+    height: 223px;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 10.2%);
+  }
+
+  &__img-border {
+    margin: 0 auto;
+    margin-top: 16px;
+    width: 336px;
+    height: 223px;
+  }
+
+  &__menu-img {
+    width: 336px;
+    height: 223px;
+  }
+
+  &__empty-img {
+    position: relative;
+    margin: 0 auto;
+    width: 180px;
+    height: 180px;
+    top: 20px;
+    border: 3px solid #175c8e;
+    border-radius: 100px;
+  }
+
+  &__empty-img-icon {
+    position: absolute;
+    top: 46.15px;
+    left: 62.32px;
+  }
+
+  &__empty-img-caption {
+    position: absolute;
+    color: #175c8e;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    text-align: center;
+    top: 113px;
+    left: 28px;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+
+  &__name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: center;
+    color: #252525;
+    font-family: "Noto Sans CJK KR", sans-serif;
+    margin: 0 auto;
+    margin-top: 12px;
+  }
+
+  &__price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+    margin-bottom: 30px;
+  }
+
+  &__price-unit {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #f7941e;
+    font-family: "Noto Sans CJK KR", sans-serif;
+  }
+}
+
+button {
+  background-color: white;
+}

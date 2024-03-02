@@ -1,0 +1,13 @@
+.warn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 11px;
+  margin: 8px 0 0;
+
+  &--phrase {
+    display: block;
+    color: #f05d3d;
+    font-size: 11px;
+  }
+}

@@ -25,10 +25,32 @@
 		"@typescript-eslint"
 	],
 	"rules": {
+		"jsx-a11y/control-has-associated-label": "off",
 		"react/react-in-jsx-scope": "off",
 		"linebreak-style" : "off",
 		"react/jsx-props-no-spreading": "off",
-		"react/require-default-props": "off"
+		"react/require-default-props": "off",
+		"@typescript-eslint/no-redeclare" : "off",
+		"import/prefer-default-export": "off",
+		"no-restricted-imports": [
+			"error",
+			{
+				"patterns": [
+					{
+						"group": ["../*"],
+						"message": "Usage of relative parent imports is not allowed."
+					}
+				]
+			}
+		],
+		"import/extensions": [
+			"error",
+			"never",
+				{
+					"json": "always",
+					"svg": "always"
+				}
+		]
 	},
 	"settings": {
 		"import/resolver": {

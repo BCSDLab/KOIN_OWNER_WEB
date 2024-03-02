@@ -1,0 +1,14 @@
+.previous {
+  padding-left: 15px;
+  margin-top: 30px;
+  margin-bottom: 42px;
+
+  &__button {
+    background-color: transparent;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}

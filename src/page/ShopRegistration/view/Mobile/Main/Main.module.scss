@@ -1,0 +1,96 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  &__img {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #858585;
+    align-items: center;
+    padding: 57px 60px 54px;
+    margin-bottom: 32px;
+
+    div {
+      margin-top: 13px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #858585;
+    }
+  }
+
+  &__image-upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 295px;
+    height: 200px;
+    border: 1px solid #858585;
+    margin-bottom: 19px;
+
+    &--error {
+      margin-bottom: 0;
+    }
+  }
+
+  &__image-error-message {
+    margin-bottom: 11px;
+  }
+
+  &__error-message {
+    margin-bottom: 4px;
+  }
+
+  &__upload-file {
+    display: none;
+  }
+
+  &__main-menu {
+    max-width: 295px;
+    max-height: 200px;
+  }
+
+  &__text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #858585;
+  }
+
+  &__label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    color: #175c8e;
+
+    &--error {
+      margin-bottom: 2px;
+    }
+  }
+
+  &__input {
+    border: 0.5px solid #898a8d;
+    width: 205px;
+    height: 21px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      padding: 8px 40px;
+      background-color: #175c8e;
+      font-weight: 500;
+      font-size: 15px;
+      color: #ffffff;
+      cursor: pointer;
+    }
+  }
+}

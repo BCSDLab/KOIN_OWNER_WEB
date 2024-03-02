@@ -1,0 +1,151 @@
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background-color: #00000066;
+}
+
+@mixin common-header-styles {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 398px;
+  height: 30px;
+  background-color: #175c8e;
+  padding: 24px 16px;
+  z-index: 3;
+}
+
+.container {
+  &__small {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 430px;
+    height: 434px;
+    background-color: #ffffff;
+    overflow: auto;
+
+    &--visible {
+      overflow: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__medium {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 430px;
+    height: 536px;
+    background-color: #ffffff;
+    overflow: auto;
+
+    &--visible {
+      overflow: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__large {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 430px;
+    height: 75vh;
+    background-color: #ffffff;
+    overflow: auto;
+
+    &--visible {
+      overflow: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__extra-large {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 752px;
+    height: 80vh;
+    background-color: #ffffff;
+    overflow: auto;
+
+    &--visible {
+      overflow: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__header {
+    &--small {
+      @include common-header-styles;
+    }
+
+    &--medium {
+      @include common-header-styles;
+    }
+
+    &--large {
+      @include common-header-styles;
+    }
+
+    &--extra-large {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 720px;
+      height: 30px;
+      background-color: #175c8e;
+      padding: 24px 16px;
+      z-index: 3;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    color: #ffffff;
+  }
+
+  &__close-button {
+    width: 24px;
+    height: 24px;
+    border: 0;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 100%;
+    cursor: pointer;
+  }
+
+  &__footer {
+    width: 366px;
+    margin-bottom: 40px;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
