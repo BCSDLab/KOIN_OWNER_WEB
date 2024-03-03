@@ -63,7 +63,6 @@ export default function MyShopPage() {
         <>
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
-            <button type="button" className={styles['mobileheader__btn-update']}>메뉴수정</button>
             <Link to="/add-menu">
               <button
                 type="button"
@@ -93,7 +92,6 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
-            <button type="button" className={styles['header__btn-update']}>메뉴수정</button>
             <Link to="/add-menu">
               <button
                 type="button"
