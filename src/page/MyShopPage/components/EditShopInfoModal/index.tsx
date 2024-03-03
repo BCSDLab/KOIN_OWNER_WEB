@@ -132,9 +132,14 @@ EditShopInfoModalProps) {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
+    const categoryId = shopInfo.shop_categories[0].id;
+    if (categoryId === 1) {
+      setValue('category_ids', [categoryId]);
+    } else {
+      setValue('category_ids', [1, categoryId]);
+    }
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
-    setValue('category_ids', [1, shopInfo.shop_categories[0].id]);
     setValue('description', description);
     setValue('delivery', delivery);
     setValue('pay_bank', payBank);
