@@ -89,6 +89,7 @@ export default function ShopRegistrationPC() {
     payBank,
     address,
     phone,
+    deliveryPrice,
     description,
   } = useShopRegistrationStore();
 
@@ -120,7 +121,7 @@ export default function ShopRegistrationPC() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === '' || deliveryPriceRef.current?.value === ''
+    if (imageUrl === '' || name === '' || category === '' || Number.isNaN(deliveryPrice)
       || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
@@ -142,6 +143,7 @@ export default function ShopRegistrationPC() {
     }));
     setValue('open', openValue);
     setValue('category_ids', [categoryId]);
+    setValue('delivery_price', Number(deliveryPrice));
   }, [openTimeState, closeTimeState, shopClosedState, imageFile]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
@@ -154,7 +156,6 @@ export default function ShopRegistrationPC() {
       toggleCategory();
     }
   }, [isMobile]);
-
   return (
     <>
       {step === 0 && (
@@ -308,17 +309,16 @@ export default function ShopRegistrationPC() {
                 <span className={styles.form__title}>배달금액</span>
                 <div className={styles.form__section}>
                   <input
-                    type="number"
+                    type="string"
                     className={styles['form__input-large']}
                     defaultValue=""
-                    {...register('delivery_price', { valueAsNumber: true })}
                     ref={deliveryPriceRef}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}
                   />
                 </div>
-                {deliveryPriceRef.current?.value === ''
+                {(Number.isNaN(deliveryPrice) && deliveryPriceRef.current?.value === '')
                   && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
               </div>
               <div>
