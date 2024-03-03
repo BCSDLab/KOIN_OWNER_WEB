@@ -22,24 +22,6 @@
     font-family: "Noto Sans CJK KR", sans-serif;
   }
 
-  &__btn-update {
-    width: 75px;
-    height: 38px;
-    border: 1px solid #175c8e;
-    font-size: 14px;
-    font-weight: 400;
-    color: #175c8e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    font-family: "Noto Sans CJK KR", sans-serif;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   &__btn-add {
     width: 75px;
     height: 38px;
@@ -79,24 +61,6 @@
     display: flex;
     align-items: center;
     gap: 16px;
-  }
-
-  &__btn-update {
-    width: 112px;
-    height: 48px;
-    border: 1px solid #175c8e;
-    font-size: 18px;
-    font-weight: 400;
-    color: #175c8e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    font-family: "Noto Sans CJK KR", sans-serif;
-
-    &:hover {
-      cursor: pointer;
-    }
   }
 
   &__btn-add {
