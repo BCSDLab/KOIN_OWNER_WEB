@@ -110,6 +110,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
             <input
               type="file"
               accept="image/*"
+              capture="environment"
               style={{ display: 'none' }}
               onChange={handleImageChange}
               ref={imgRef}
