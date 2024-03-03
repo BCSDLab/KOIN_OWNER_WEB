@@ -66,6 +66,33 @@
       cursor: pointer;
     }
   }
+
+  &__delete-menu {
+    &--container {
+      padding-right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    &--button {
+      width: 70px;
+      height: 30px;
+      border: 0.5px solid #858585;
+      font-size: 15px;
+      font-weight: 400;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f05d3d;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .container {

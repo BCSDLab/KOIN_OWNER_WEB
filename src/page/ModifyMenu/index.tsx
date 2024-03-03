@@ -7,7 +7,7 @@ import useMenuInfo, { useDeleteMenu } from 'query/menu';
 import useAddMenuStore from 'store/addMenu';
 import MenuImage from 'page/AddMenu/components/MenuImage';
 import MenuName from 'page/AddMenu/components/MenuName';
-import styles from 'page/AddMenu/AddMenu.module.scss';
+import styles from 'page/ModifyMenu/ModifyMenu.module.scss';
 import MenuPrice from 'page/AddMenu/components/MenuPrice';
 import MenuCategory from 'page/AddMenu/components/MenuCategory';
 import MenuDetail from 'page/AddMenu/components/MenuDetail';
@@ -20,16 +20,26 @@ export default function ModifyMenu() {
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const { menuId } = useParams();
+
   assert(menuId != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
   const { menuData, modifyMenuMutation } = useMenuInfo(Number(menuId));
+
   const goMyShop = () => {
     navigate('/');
   };
+
   const toggleConfirmClick = () => {
     setIsComplete((prevState) => !prevState);
   };
+
   const { deleteMenuMutation } = useDeleteMenu();
+
+  const handleMobileDeleteMenu = () => {
+    deleteMenuMutation(Number(menuId));
+    goMyShop();
+  };
+
   const {
     value: isGoMyShopModal,
     setTrue: openGoMyShopModal,
@@ -98,6 +108,15 @@ export default function ModifyMenu() {
       {isMobile ? (
         <div className={styles.mobile__container}>
           <div className={styles['mobile__menu-info']}>
+            <div className={styles['mobile__delete-menu--container']}>
+              <button
+                className={styles['mobile__delete-menu--button']}
+                type="button"
+                onClick={handleMobileDeleteMenu}
+              >
+                메뉴 삭제
+              </button>
+            </div>
             <div className={styles.mobile__caption}>
               메뉴 정보
             </div>
