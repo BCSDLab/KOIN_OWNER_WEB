@@ -4,7 +4,7 @@ import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import styles from './ShopInfo.module.scss';
 
 interface ShopInfoProps {
@@ -19,13 +19,15 @@ export default function ShopInfo({
   shopInfo, openEditShopInfoModal, closeEditShopInfoModal, setIsSuccess, isEditShopInfoModalOpen,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
+  const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[0].open_time);
+  const [closeTime, setCloseTime] = useState<string | null>(shopInfo.open[0].close_time);
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
     .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
   const holiday = holidayIndex.map((day) => WEEK[day]);
 
-  const openDayIndex = shopInfo.open.filter((day) => !day.closed)
-    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
+  if (openTime === '24:00') setOpenTime('23:59');
+  if (closeTime === '24:00') setCloseTime('23:59');
 
   const content = [
     {
@@ -34,7 +36,7 @@ export default function ShopInfo({
     },
     {
       title: '운영시간',
-      data: `${shopInfo.open[openDayIndex[0]].open_time} ~ ${shopInfo.open[openDayIndex[0]].close_time}`,
+      data: `${openTime} ~ ${closeTime}`,
     },
     {
       title: '휴무일',
