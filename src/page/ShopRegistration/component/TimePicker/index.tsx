@@ -81,8 +81,8 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
     if (isOpenTimePicker) {
       const openTime = openTimeState[operatingDay];
       if (openTime?.slice(0, 2) === '24') {
-        time.hour = '23';
-        time.minute = '59';
+        time.hour = '00';
+        time.minute = '00';
       } else {
         time.hour = openTime ? openTime.slice(0, 2) : '00';
         time.minute = openTime ? openTime.slice(3, 5) : '00';
@@ -90,8 +90,8 @@ export default function TimePicker({ operatingDay, isOpenTimePicker } : TimerPic
     } else {
       const closeTime = closeTimeState[operatingDay];
       if (closeTime?.slice(0, 2) === '24') {
-        time.hour = '23';
-        time.minute = '59';
+        time.hour = '00';
+        time.minute = '00';
       } else {
         time.hour = closeTime ? closeTime.slice(0, 2) : '00';
         time.minute = closeTime ? closeTime.slice(3, 5) : '00';

@@ -19,15 +19,19 @@ export default function ShopInfo({
   shopInfo, openEditShopInfoModal, closeEditShopInfoModal, setIsSuccess, isEditShopInfoModalOpen,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
-  const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[0].open_time);
-  const [closeTime, setCloseTime] = useState<string | null>(shopInfo.open[0].close_time);
+  const openDayIndex = shopInfo.open.filter((day) => !day.closed)
+    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
+  const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[openDayIndex[0]].open_time);
+  const [closeTime, setCloseTime] = useState<string | null>(
+    shopInfo.open[openDayIndex[0]].close_time,
+  );
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
     .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
   const holiday = holidayIndex.map((day) => WEEK[day]);
 
-  if (openTime === '24:00') setOpenTime('23:59');
-  if (closeTime === '24:00') setCloseTime('23:59');
+  if (openTime === '24:00') setOpenTime('00:00');
+  if (closeTime === '24:00') setCloseTime('00:00');
 
   const content = [
     {

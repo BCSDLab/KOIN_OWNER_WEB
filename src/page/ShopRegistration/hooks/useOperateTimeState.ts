@@ -13,10 +13,10 @@ export default function useOperateTimeState() {
 
   WEEK.forEach((day) => {
     if (openTimeState[day] === '24:00') {
-      openTimeState[day] = '23:59';
+      openTimeState[day] = '00:00';
     }
     if (closeTimeState[day] === '24:00') {
-      closeTimeState[day] = '23:59';
+      closeTimeState[day] = '00:00';
     }
   });
 
