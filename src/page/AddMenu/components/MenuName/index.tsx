@@ -1,8 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
-import { useDeleteMenu } from 'query/menu';
-import { useNavigate, useParams } from 'react-router-dom';
 import styles from './MenuName.module.scss';
 
 interface MenuNameProps {
@@ -13,33 +11,15 @@ export default function MenuName({ isComplete }: MenuNameProps) {
   const { isMobile } = useMediaQuery();
   const { name, setName } = useAddMenuStore();
   const { menuError } = useErrorMessageStore();
-  const { menuId } = useParams();
-  const { deleteMenuMutation } = useDeleteMenu();
+
   const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-  };
-  const navigate = useNavigate();
-  const goMyShop = () => {
-    navigate('/');
-  };
-  const handleMobileDeleteMenu = () => {
-    deleteMenuMutation(Number(menuId));
-    goMyShop();
   };
 
   return (
     <div>
       {isMobile ? (
         <div className={styles.mobile__container}>
-          <div className={styles['mobile-delete-menu-container']}>
-            <button
-              className={styles['delete-menu-button']}
-              type="button"
-              onClick={handleMobileDeleteMenu}
-            >
-              메뉴 삭제
-            </button>
-          </div>
           <div className={styles.mobile__caption}>
             메뉴명
           </div>

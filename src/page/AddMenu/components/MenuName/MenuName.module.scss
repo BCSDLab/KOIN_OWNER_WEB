@@ -1,5 +1,6 @@
 .mobile {
   &__container {
+    margin-top: 5px;
     width: 100%;
   }
 
@@ -76,28 +77,4 @@
 .error-message {
   font-size: 14px;
   color: #f7941e;
-}
-
-.mobile-delete-menu-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 16px;
-}
-
-.delete-menu-button {
-  width: 80px;
-  height: 40px;
-  border: 0.5px solid #858585;
-  font-size: 15px;
-  font-weight: 400;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f05d3d;
-
-  &:hover {
-    cursor: pointer;
-  }
 }

@@ -23,6 +23,9 @@ export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalP
   const handleImageChange = async () => {
     await saveImgFile();
   };
+  const triggerCameraInput = () => {
+    imgRef.current?.click();
+  };
   useEffect(() => {
     if (imageFile && !uploadError) {
       setImageUrl(imageFile);
@@ -43,7 +46,7 @@ export default function AddMenuImgModal({ isOpen, closeModal }: AddMenuImgModalP
         <div className={styles['content__button-container']}>
           <input type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} ref={imgRef} />
           <button type="button" className={styles['content__album-button']} onClick={triggerFileInput}>사진 앨범</button>
-          <button type="button" className={styles['content__camera-button']} onClick={closeModal}>카메라 촬영</button>
+          <button type="button" className={styles['content__camera-button']} onClick={triggerCameraInput}>카메라 촬영</button>
         </div>
         <div className={styles['content__image-error-message']}>
           {uploadError && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
