@@ -37,6 +37,8 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
     const newId = (optionPrices || []).length;
     if (!isSingle) {
       setOptionPrices([...(optionPrices || []), { id: newId, option: '', price: 0 }]);
+    } else {
+      setIsSingle(false);
     }
   };
 
