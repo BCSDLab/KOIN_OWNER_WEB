@@ -119,6 +119,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
         </div>
         {(phoneNumberRegister.message) && <ErrorMessage message={[phoneNumberRegister.message]} />}
         <div>
+
           <span className={styles.form__label}>파일첨부</span>
           <label
             htmlFor="upload-button"
@@ -149,6 +150,16 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
                 </>
               )}
           </label>
+          {ownerData.registerFiles && (
+          <span className={styles['file-box__information']}>
+            사업자등록증, 영업신고증, 통장사본 이미지 필수10mb
+            이하의 PDF 혹은 이미지 형식의 파일(e.g. jpg, png, gif 등)로 5개까지
+            {' '}
+            <br />
+            업로드 가능합니다.
+          </span>
+          )}
+
           {!isMobile && (
           <div className={styles.button}>
             <label htmlFor="upload-button" className={styles['button--upload']}>

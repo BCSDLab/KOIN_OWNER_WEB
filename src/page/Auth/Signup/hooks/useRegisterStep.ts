@@ -8,12 +8,12 @@ export default function useRegisterStep() {
     step, setStep, increaseStep, decreaseStep,
   } = useStepStore();
   const { isMobile } = useMediaQuery();
-  const [registerStep, setRegisterStep] = useState(0);
+  const [registerStep, setRegisterStep] = useState(2);
   const { uploadToken } = useUploadToken();
 
   useEffect(() => {
     setStep(0);
-    setRegisterStep(0);
+    setRegisterStep(2);
   }, [isMobile, setStep]);
 
   const goNext = useCallback(() => {
