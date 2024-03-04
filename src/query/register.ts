@@ -6,6 +6,7 @@ import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import useUploadToken from 'store/uploadToken';
+import showToast from 'utils/ts/showToast';
 
 export const useCheckDuplicate = (email:string) => {
   const { status, refetch, error } = useQuery({
@@ -62,11 +63,6 @@ export const useRegisterUser = (goNext:()=>void) => {
       goNext();
       resetRegisterInfo();
     },
-    onError: () => {
-      alert('회원가입 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
-      resetRegisterInfo();
-      window.location.reload();
-    },
   });
   return { register };
 };
@@ -81,16 +77,19 @@ export const useGetFileUrls = (goNext:()=>void) => {
   });
   const fileMutation = useMutation({
     mutationKey: ['getFileUrls'],
-    mutationFn: () => getFileUrls(formData, uploadToken!),
-    onSuccess: (data) => {
-      register.mutate(data.file_urls);
-    },
-    onError: () => {
-      alert('파일 업로드 중 에러가 발생했습니다. 처음부터 다시 진행해주세요');
-      resetRegisterInfo();
-      window.location.reload();
-    },
-
+    mutationFn: async () => {
+      try {
+        const data = await getFileUrls(formData, uploadToken!);
+        try {
+          await register.mutateAsync(data.file_urls);
+        }
+        catch (e) {
+          showToast('error', "회원가입 중 에러가 발생했어요" + e);
+        }
+      } catch (e) {
+        showToast('error', "파일업로드 중 에러가 발생했어요" + e);
+      }
+    }
   });
 
   return fileMutation;
