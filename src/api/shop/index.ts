@@ -37,3 +37,5 @@ export const getMenu = async (menuId: number) => {
 export const modifyMenu = (menuId:number, param:NewMenu) => accessClient.put(`/owner/shops/menus/${menuId}`, param);
 
 export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner/shops/${id}`, data);
+
+export const deleteMenu = (menuId:number) => accessClient.delete(`/owner/shops/menus/${menuId}`);

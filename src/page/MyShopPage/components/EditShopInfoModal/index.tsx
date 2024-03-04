@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import {
+  Dispatch, SetStateAction, useEffect, useState,
+} from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
@@ -24,9 +26,11 @@ import styles from './EditShopInfoModal.module.scss';
 interface EditShopInfoModalProps {
   shopInfo: MyShopInfoRes;
   closeModal: () => void;
+  setIsSuccess: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfoModalProps) {
+export default function EditShopInfoModal({ shopInfo, closeModal, setIsSuccess }:
+EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
   const [imageUrlList, setImageUrlList] = useState<string[]>(shopInfo.image_urls);
   const {
@@ -68,7 +72,10 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
-    onSuccess: closeModal,
+    onSuccess: () => {
+      closeModal();
+      setIsSuccess(true);
+    },
   });
 
   const handleDeleteImage = (image: string) => {
@@ -103,7 +110,9 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
     });
   }, []);
   const operateTimeState = useOperateTimeState();
-  const holiday = `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`;
+  const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
+    ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
+    : '휴무일 없음';
 
   useEffect(() => {
     if (imageFile && !isMobile) {
@@ -123,9 +132,14 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
+    const categoryId = shopInfo.shop_categories[0].id;
+    if (categoryId === 1) {
+      setValue('category_ids', [categoryId]);
+    } else {
+      setValue('category_ids', [1, categoryId]);
+    }
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
-    setValue('category_ids', [1, shopInfo.shop_categories[0].id]);
     setValue('description', description);
     setValue('delivery', delivery);
     setValue('pay_bank', payBank);
@@ -172,11 +186,11 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
             </label>
           </div>
           <div className={styles['mobile-container__main-content']}>
-            <label htmlFor="name" className={styles['mobile-main-info']}>
+            <label htmlFor="shopName" className={styles['mobile-main-info']}>
               <span className={styles['mobile-main-info--header']}>가게명</span>
               <input
                 type="text"
-                id="name"
+                id="shopName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={styles['mobile-main-info--input']}
@@ -238,11 +252,11 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
                 </button>
               </div>
             </div>
-            <label htmlFor="address" className={styles['mobile-main-info']}>
+            <label htmlFor="shopAddress" className={styles['mobile-main-info']}>
               <span className={styles['mobile-main-info--header']}>주소정보</span>
               <input
                 type="text"
-                id="address"
+                id="shopAddress"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles['mobile-main-info--input']}
@@ -341,21 +355,21 @@ export default function EditShopInfoModal({ shopInfo, closeModal }: EditShopInfo
           </div>
           <hr className={styles['container__horizontal-line']} />
           <div className={styles.content}>
-            <label htmlFor="name" className={styles['main-info']}>
+            <label htmlFor="shopName" className={styles['main-info']}>
               <span className={styles['main-info__header']}>가게명</span>
               <input
                 type="text"
-                id="name"
+                id="shopName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="address" className={styles['main-info']}>
+            <label htmlFor="shopAddress" className={styles['main-info']}>
               <span className={styles['main-info__header']}>주소정보</span>
               <input
                 type="text"
-                id="address"
+                id="shopAddress"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles['main-info__input']}

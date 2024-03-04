@@ -3,7 +3,8 @@ import useAddMenuStore from 'store/addMenu';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import showToast from 'utils/ts/showToast';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import StoreInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -25,13 +26,19 @@ export default function MyShopPage() {
     value: isEditShopInfoModalOpen,
   } = useBooleanState(false);
 
+  const [isSuccess, setIsSuccess] = useState(false);
+  if (isSuccess) {
+    showToast('success', '가게정보가 수정되었습니다.');
+    setIsSuccess(false);
+  }
+
   useEffect(() => {
     refetchShopData();
   }, [refetchShopData, isEditShopInfoModalOpen]);
 
   useEffect(() => {
     if (!shopData && !isLoading) {
-      navigate('/shop-registration');
+      navigate('/store-registration');
     }
   }, [shopData, navigate, isLoading]);
 
@@ -41,7 +48,11 @@ export default function MyShopPage() {
         <div className={styles.mobileheader}>
           <h1 className={styles.mobileheader__title}>가게정보</h1>
         </div>
-        <EditShopInfoModal shopInfo={shopData} closeModal={closeEditShopInfoModal} />
+        <EditShopInfoModal
+          shopInfo={shopData}
+          closeModal={closeEditShopInfoModal}
+          setIsSuccess={setIsSuccess}
+        />
       </>
     );
   }
@@ -52,7 +63,6 @@ export default function MyShopPage() {
         <>
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
-            <button type="button" className={styles['mobileheader__btn-update']}>메뉴수정</button>
             <Link to="/add-menu">
               <button
                 type="button"
@@ -68,6 +78,7 @@ export default function MyShopPage() {
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+              setIsSuccess={setIsSuccess}
             />
           )}
           {menusData && menusData.menu_categories.map((category) => (
@@ -81,7 +92,6 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
-            <button type="button" className={styles['header__btn-update']}>메뉴수정</button>
             <Link to="/add-menu">
               <button
                 type="button"
@@ -97,6 +107,7 @@ export default function MyShopPage() {
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
+              setIsSuccess={setIsSuccess}
             />
           )}
           {menusData && menusData.menu_categories.map((category) => (

@@ -147,7 +147,6 @@
     padding: 13px 16px;
     margin-right: 16px;
     height: 22px;
-    margin-top: 24px;
 
     @include media.media-breakpoint-down(mobile) {
       width: 77%;
@@ -158,6 +157,7 @@
       padding: 0;
       font-size: 15px;
       padding-bottom: 8px;
+      margin-top: 24px;
 
       &::placeholder {
         color: #d2dae2;
@@ -184,6 +184,13 @@
     border: 1px dashed #252525;
   }
 
+  &__container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   &__input {
     display: none;
   }
@@ -195,7 +202,7 @@
 
   @include media.media-breakpoint-down(mobile) {
     width: calc(100% - 78px);
-    height: calc(125px - 68px);
+    min-height: 70%;
     padding: 26px 38px 32px;
     margin-top: 16px;
   }

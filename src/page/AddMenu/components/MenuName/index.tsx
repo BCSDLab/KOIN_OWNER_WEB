@@ -11,6 +11,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
   const { isMobile } = useMediaQuery();
   const { name, setName } = useAddMenuStore();
   const { menuError } = useErrorMessageStore();
+
   const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };

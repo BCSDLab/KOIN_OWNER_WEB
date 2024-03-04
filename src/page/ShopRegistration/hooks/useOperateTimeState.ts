@@ -11,6 +11,15 @@ export default function useOperateTimeState() {
     shopClosedState,
   } = useModalStore();
 
+  WEEK.forEach((day) => {
+    if (openTimeState[day] === '24:00') {
+      openTimeState[day] = '00:00';
+    }
+    if (closeTimeState[day] === '24:00') {
+      closeTimeState[day] = '00:00';
+    }
+  });
+
   const [operateTimeState, setOperateTimeState] = useState<OperateTimeProps>({});
 
   const openDay = WEEK.filter((day) => shopClosedState[day] === false)[0];

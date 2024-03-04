@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMenu, modifyMenu } from 'api/shop';
+import { getMenu, modifyMenu, deleteMenu } from 'api/shop';
 import { NewMenu } from 'model/shopInfo/newMenu';
 import useAddMenuStore from 'store/addMenu';
 
@@ -21,6 +21,19 @@ const useMenuInfo = (menuId:number) => {
   });
   return {
     menuData, modifyMenuMutation, modifyMenuError,
+  };
+};
+
+export const useDeleteMenu = () => {
+  const queryClient = useQueryClient();
+  const { mutate: deleteMenuMutation } = useMutation({
+    mutationFn: (menuId:number) => deleteMenu(menuId),
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+  return {
+    deleteMenuMutation,
   };
 };
 

@@ -28,6 +28,7 @@
     width: 100%;
     padding: 0 16px;
     margin-top: 16px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -140,5 +141,37 @@
       flex-direction: column;
       width: 725px;
     }
+  }
+}
+
+.delete-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.mobile-delete-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.delete-menu-button {
+  width: 120px;
+  height: 48px;
+  border: 0.5px solid #858585;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f05d3d;
+
+  &:hover {
+    cursor: pointer;
   }
 }

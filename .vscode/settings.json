@@ -4,5 +4,10 @@
     "**/README.md": true,
     "**/.eslintrc.json": true,
     "**/tsconfig.json": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true
   },
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
