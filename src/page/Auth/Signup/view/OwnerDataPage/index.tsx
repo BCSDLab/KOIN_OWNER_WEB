@@ -140,13 +140,13 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
               </div>
             )
               : (
-                <>
+                <div className={styles['file-box__container']}>
                   <div className={styles['file-box__plus-box-image']} />
                   <span className={styles['file-box__command']}>{!isMobile ? '파일을 마우스로 끌어 오세요.' : '파일을 첨부해주세요'}</span>
                   <span className={styles['file-box__information']}>
                     {!isMobile ? '사업자등록증, 영업신고증, 통장사본 이미지 필수10mb 이하의 PDF 혹은 이미지 형식의 파일(e.g. jpg, png, gif 등)로 5개까지 업로드 가능합니다.' : '사업자등록증, 영업신고증, 통장사본 이미지 첨부'}
                   </span>
-                </>
+                </div>
               )}
           </label>
           {!isMobile && (
