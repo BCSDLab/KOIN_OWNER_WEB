@@ -68,7 +68,7 @@ export const useRegisterUser = (goNext:()=>void) => {
 };
 
 export const useGetFileUrls = (goNext:()=>void) => {
-  const { ownerInfo, resetRegisterInfo } = useRegisterInfo();
+  const { ownerInfo } = useRegisterInfo();
   const { register } = useRegisterUser(goNext);
   const formData = new FormData();
   const { uploadToken } = useUploadToken();
@@ -82,14 +82,13 @@ export const useGetFileUrls = (goNext:()=>void) => {
         const data = await getFileUrls(formData, uploadToken!);
         try {
           await register.mutateAsync(data.file_urls);
-        }
-        catch (e) {
-          showToast('error', "회원가입 중 에러가 발생했어요" + e);
+        } catch (e) {
+          showToast('error', `회원가입 중 에러가 발생했어요${e}`);
         }
       } catch (e) {
-        showToast('error', "파일업로드 중 에러가 발생했어요" + e);
+        showToast('error', `파일업로드 중 에러가 발생했어요${e}`);
       }
-    }
+    },
   });
 
   return fileMutation;
