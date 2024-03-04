@@ -96,7 +96,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
               </div>
             </div>
           )
-            : <input className={styles.form__input} type="text" placeholder="사업자등록번호" maxLength={10} {...registrationNumberRegister.mobile} />}
+            : <input className={styles.form__input} type="text" placeholder="사업자등록번호" maxLength={12} {...registrationNumberRegister.mobile} />}
         </div>
         {(registrationNumberRegister.message)
         && <ErrorMessage message={[registrationNumberRegister.message]} />}
@@ -115,7 +115,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
               </div>
             </div>
           )
-            : <input className={styles.form__input} type="text" placeholder="개인 연락처" maxLength={11} {...phoneNumberRegister.mobile} />}
+            : <input className={styles.form__input} type="text" placeholder="개인 연락처" maxLength={13} {...phoneNumberRegister.mobile} />}
         </div>
         {(phoneNumberRegister.message) && <ErrorMessage message={[phoneNumberRegister.message]} />}
         <div>
