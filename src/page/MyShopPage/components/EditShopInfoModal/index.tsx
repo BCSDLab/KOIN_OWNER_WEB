@@ -136,7 +136,8 @@ EditShopInfoModalProps) {
     if (shopInfo.shop_categories.length === 1) {
       setValue('category_ids', [shopInfo.shop_categories[0].id]);
     } else {
-      setValue('category_ids', [1, shopInfo.shop_categories[1].id]);
+      const categoryIds = shopInfo.shop_categories.map((category) => category.id);
+      setValue('category_ids', categoryIds);
     }
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
