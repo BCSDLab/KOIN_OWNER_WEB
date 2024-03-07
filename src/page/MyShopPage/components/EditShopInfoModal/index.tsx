@@ -132,11 +132,12 @@ EditShopInfoModalProps) {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    const categoryId = shopInfo.shop_categories[0].id;
-    if (categoryId === 1) {
-      setValue('category_ids', [categoryId]);
+    // shop_categories[0]은 전체보기이므로 따로 처리
+    if (shopInfo.shop_categories.length === 1) {
+      setValue('category_ids', [shopInfo.shop_categories[0].id]);
     } else {
-      setValue('category_ids', [1, categoryId]);
+      const categoryIds = shopInfo.shop_categories.map((category) => category.id);
+      setValue('category_ids', categoryIds);
     }
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
