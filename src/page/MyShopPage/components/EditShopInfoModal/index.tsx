@@ -132,7 +132,7 @@ EditShopInfoModalProps) {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    // shop_categories[0]은 전체선택이므로 따로 처리
+    // shop_categories[0]은 전체보기이므로 따로 처리
     if (shopInfo.shop_categories.length === 1) {
       setValue('category_ids', [shopInfo.shop_categories[0].id]);
     } else {
