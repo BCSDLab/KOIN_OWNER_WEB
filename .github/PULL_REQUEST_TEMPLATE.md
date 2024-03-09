@@ -1,3 +1,5 @@
+- Close #ISSUE_NUMBER
+  
 ## What is this PR? 🔍
 
 <!-- 
@@ -32,6 +34,3 @@ ex)
 
 - [ ] It's submitted to `develop` branch, __not__ the `main` branch
 - [ ] Did you merge recent `develop` branch?
-
-
-Close #ISSUE_NUMBER
