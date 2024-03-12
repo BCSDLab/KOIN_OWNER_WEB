@@ -20,44 +20,41 @@ jobs:
           script: |
             const fs = require('fs');
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/reviewers.json`));
+
+            const prCreator = github.context.payload.pull_request.user.login;
+              const prUrl = github.context.repo.repo;
+              const prCreatorJson = developers.find((person) => person.githubName === prCreator);
             
-            // 겹치지 않는 두명의 랜덤 리뷰어 선택
-            if(developers?.length == 0) {
-              core.setOutput('comment', '리뷰어가 없습니다. 리뷰어를 추가해주세요.')
-            }
+            //리뷰어 한명 이하인 경우
+            if(developers?.length <= 1) {
+              core.setOutput('reviewers', developers);
+              core.setOutput('writer', prCreatorJson.name);
+              core.setOutput('pullRequestLink', prUrl);
+            } 
             
-            if(developers?.length == 1) {
-              const randomReviewer = developers[0];
-              const comment = `🎉 @${randomReviewer} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
-              core.setOutput('comment', comment) 
-              core.setOutput('reviewer', randomReviewer)
+            else {
+              const candidateInternalReviewers = developers.filter((person) => person.team === prCreatorJson.team);
+              const candidateExternalReviewers = developers.filter((person) => person.team !== prCreatorJson.team);
+
+              const randomReviewer = candidateInternalReviewers[Math.floor(Math.random() * candidateInternalReviewers.length)];
+              const randomReviewer2 = candidateExternalReviewers[Math.floor(Math.random() * candidateExternalReviewers.length)];
+              
+              core.setOutput('reviewers', [randomReviewer.name, randomReviewer2.name]);
+              core.setOutput('writer', prCreatorJson.name);
+              core.setOutput('pullRequestLink', prUrl);
             }
-            
-            if(developers?.length > 1) {
-              const randomReviewer = developers[Math.floor(Math.random() * developers.length)];
-              let randomReviewer2;
-              while(true) {
-                randomReviewer2 = developers[Math.floor(Math.random() * developers.length)];
-                if(randomReviewer != randomReviewer2) {
-                  break;
-                }
-              }
-              const comment = `🎉 @${randomReviewer}, @${randomReviewer2} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
-              core.setOutput('comment', comment)
-              core.setOutput('reviewer', randomReviewer)
-              core.setOutput('reviewer2', randomReviewer2)
-            }
-      
-      - name: comment PR
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: |
-            ${{ steps.pick_random_reviwer.outputs.comment }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]'
-      
+
       - name: Add Pull Request Reviewer
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer }}, ${{ steps.pick_random_reviwer.outputs.reviewer2 }}
+          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewers[0] }}, ${{ steps.pick_random_reviwer.outputs.reviewers[1] }}
           token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Send Slack Trigger
+        run: |
+          curl -X POST https://api-slack.internal.bcsdlab.com/api/review-request/front \
+          -H 'Content-Type: application/json' \
+          -d '{ "pullRequestLink": "${{steps.pick_random_reviwer.outputs.pullRequestLink}}", \
+          "writer": "${{steps.pick_random_reviwer.outputs.writer}}", \
+          "reviewers": "${{steps.pick_random_reviwer.outputs.reviewers}}" }'
+
