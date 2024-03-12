@@ -1,6 +1,6 @@
 # KOIN OWNER WEB
 
-Project - [KOIN_OWNER_WEB](https://github.com/BCSDLab/KOIN_OWNER_WEB)
+Project - [KOIN_OWNER_WEB](https://github.com/BCSDLab/KOIN_OWNER_WEB) 냥
 
 Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.com/)
 
