@@ -1,46 +1,44 @@
-name: "Pick Reviwer"
+name: "Pick Reviewer"
 
 on:
   pull_request:
-    types:
-      - opened
-    branches:
-      - develop
+    types: [opened]
+    branches: [develop]
 
 jobs:
-  pick-random-reviwer:
+  pick-random-reviewer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: pick_random_reviwer
-        id: pick_random_reviwer 
-        uses: actions/github-script@v3 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Pick random reviewer
+        id: pick_random_reviewer
+        uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const core = require('@actions/core')
-            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
+            const core = require('@actions/core');
+            const github = require('@actions/github');
 
-            const prCreator = github.context.repo.owner;
-            const prUrl = github.context.repo.repo;
-            const prCreatorJson = developers.find((person) => person.githubName === prCreator);
-            
-            //리뷰어 한명 이하인 경우
-            if(developers?.length <= 1) {
-              core.setOutput('reviewers', developers);
+            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
+            const prCreator = github.context.payload.pull_request.user.login;
+            const prUrl = github.context.payload.pull_request.html_url;
+            const prCreatorJson = developers.find(person => person.githubName === prCreator);
+
+            if (developers.length <= 1) {
+              core.setOutput('reviewers', [prCreatorJson.name]);
               core.setOutput('writer', prCreatorJson.name);
               core.setOutput('pullRequestLink', prUrl);
-            } 
-            
-            else {
-              const candidateInternalReviewers = developers.filter((person) => person.team === prCreatorJson.team);
-              const candidateExternalReviewers = developers.filter((person) => person.team !== prCreatorJson.team);
+            } else {
+              const candidateInternalReviewers = developers.filter(person => person.team === prCreatorJson.team);
+              const candidateExternalReviewers = developers.filter(person => person.team !== prCreatorJson.team);
 
-              const randomReviewer = candidateInternalReviewers[Math.floor(Math.random() * candidateInternalReviewers.length)];
-              const randomReviewer2 = candidateExternalReviewers[Math.floor(Math.random() * candidateExternalReviewers.length)];
-              
-              core.setOutput('reviewers', [randomReviewer.name, randomReviewer2.name]);
+              const randomReviewer = candidateInternalReviewers[Math.floor(Math.random() * candidateInternalReviewers.length)].name;
+              const randomReviewer2 = candidateExternalReviewers[Math.floor(Math.random() * candidateExternalReviewers.length)].name;
+
+              core.setOutput('reviewers', [randomReviewer, randomReviewer2]);
               core.setOutput('writer', prCreatorJson.name);
               core.setOutput('pullRequestLink', prUrl);
             }
@@ -50,12 +48,11 @@ jobs:
         with:
           reviewers: ${{ steps.pick_random_reviwer.outputs.reviewers[0] }}, ${{ steps.pick_random_reviwer.outputs.reviewers[1] }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Send Slack Trigger
         run: |
           curl -X POST https://api-slack.internal.bcsdlab.com/api/review-request/front \
           -H 'Content-Type: application/json' \
-          -d '{ "pullRequestLink": "${{steps.pick_random_reviwer.outputs.pullRequestLink}}", \
-          "writer": "${{steps.pick_random_reviwer.outputs.writer}}", \
+          -d '{ "pullRequestLink": "${{ steps.pick_random_reviewer.outputs.pullRequestLink }}", \
+          "writer": "${{ steps.pick_random_reviewer.outputs.writer }}", \
           "reviewers": "${{steps.pick_random_reviwer.outputs.reviewers}}" }'
-
