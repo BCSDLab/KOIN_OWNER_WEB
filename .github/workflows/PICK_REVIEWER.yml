@@ -19,7 +19,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs');
-            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/reviewers.json`));
+            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
 
             const prCreator = github.context.payload.pull_request.user.login;
               const prUrl = github.context.repo.repo;
