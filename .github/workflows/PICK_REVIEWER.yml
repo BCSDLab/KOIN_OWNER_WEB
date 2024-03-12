@@ -21,8 +21,8 @@ jobs:
             const fs = require('fs');
 
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
-            const prCreator = github.context.payload.pull_request.user.login;
-            const prUrl = github.context.payload.pull_request.html_url;
+            const prCreator = github.event.pull_request.user.login;
+            const prUrl = github.event.pull_request.html_url;
             const prCreatorJson = developers.find(person => person.githubName === prCreator);
 
             if (developers.length <= 1) {
