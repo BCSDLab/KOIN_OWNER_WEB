@@ -19,11 +19,12 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs');
+            const core = require('@actions/core')
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
 
-            const prCreator = github.context.payload.pull_request.user.login;
-              const prUrl = github.context.repo.repo;
-              const prCreatorJson = developers.find((person) => person.githubName === prCreator);
+            const prCreator = github.context.repo.owner;
+            const prUrl = github.context.repo.repo;
+            const prCreatorJson = developers.find((person) => person.githubName === prCreator);
             
             //리뷰어 한명 이하인 경우
             if(developers?.length <= 1) {
