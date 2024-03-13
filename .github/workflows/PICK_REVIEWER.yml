@@ -50,7 +50,7 @@ jobs:
 
       - name: Send Slack Trigger
         run: |
-          curl -X POST https://api-slack.internal.bcsdlab.com/api/review-request/front \
+          curl -X POST https://api-slack.internal.bcsdlab.com/api/review-request/frontend \
           -H 'Content-Type: application/json' \
           -d '{ "pullRequestLink": "https://github.com/BCSDLab/KOIN_OWNER_WEB/pull/180", \
           "writer": "hanagertrudeKim", \
