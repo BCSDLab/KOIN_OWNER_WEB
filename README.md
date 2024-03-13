@@ -20,7 +20,7 @@ Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.
 - Routing Library
   - [React Router v6](https://reactrouter.com/docs/en/v6/getting-started/tutorial)
 - Linting Library
-  - [ESLint](https://eslint.org/docs/latest/user-guide/getting-started)
+  - [ESLint](https://eslint.org/docs/latest/user-guide/getting-started)ㅇ
   - [StyleLint](https://stylelint.io/)
 - Styling Library
   - [Scss](https://sass-lang.com/guide)
