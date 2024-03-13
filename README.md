@@ -12,7 +12,7 @@ Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.
 - Language
   - [TypeScript](https://github.com/typescript-cheatsheets/react)
 - Server State Management Library
-  - [React-Query](https://react-query-v3.tanstack.com)
+  - [React-Query](https://react-query-v3.tanstack.com)ㅇ
 - Application State Management
   - [Zustand](https://github.com/pmndrs/zustand)
 - Schema Validation Layer Library
