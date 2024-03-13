@@ -54,6 +54,6 @@ jobs:
           -H 'Content-Type: application/json' \
           -d '{
                 "pullRequestLink": "https://github.com/BCSDLab/KOIN_OWNER_WEB/pull/180",
-                "writer": "hanagertrudeKim",
+                "writer": "김하나",
                 "reviewers": ["채승윤", "최정훈"]
               }'
