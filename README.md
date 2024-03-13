@@ -14,7 +14,7 @@ Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.
 - Server State Management Library
   - [React-Query](https://react-query-v3.tanstack.com)
 - Application State Management
-  - [Zustand](https://github.com/pmndrs/zustand)
+  - [Zustand](https://github.com/pmndrs/zustand)ㄴ
 - Schema Validation Layer Library
   - [Zod](https://zod.dev)
 - Routing Library
