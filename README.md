@@ -7,7 +7,7 @@ Backoffice for [KOIN_WEB](https://koreatech.in/) and [BCSD Lab](https://bcsdlab.
 # Learn Our Stack
 
 - Main UI Library/Framework
-  - [React](https://reactjs.org/docs/hello-world.html)
+  - [React](https://reactjs.org/docs/hello-world.html)ㅇ
   - [Create-React-App](https://create-react-app.dev/)
 - Language
   - [TypeScript](https://github.com/typescript-cheatsheets/react)
