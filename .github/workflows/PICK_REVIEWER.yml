@@ -1,9 +1,8 @@
 name: "Pick Reviewer"
 
 on:
-  pull_request_target:
+  pull_request:
     types: opened
-    branches: develop
 
 jobs:
   pick-random-reviewer:
@@ -21,31 +20,33 @@ jobs:
             const fs = require('fs');
 
             const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
-            const prCreator = github.event.pull_request.assignee.login;
-            const prUrl = github.event.pull_request.html_url;
-            const prCreatorJson = developers.find(person => person.githubName === prCreator);
+            const prCreator = context.payload.pull_request.user.login;
+            const prUrl = context.payload.pull_request.html_url;
+            const prCreatorJson = developers.reviewers.find(person => person.githubName === prCreator);
 
             if (developers.length <= 1) {
               core.setOutput('reviewers', [prCreatorJson.name]);
               core.setOutput('writer', prCreatorJson.name);
               core.setOutput('pullRequestLink', prUrl);
             } else {
-              const candidateInternalReviewers = developers.filter(person => person.team === prCreatorJson.team);
-              const candidateExternalReviewers = developers.filter(person => person.team !== prCreatorJson.team);
+              const candidateInternalReviewers = developers.reviewers.filter(person => person.team === prCreatorJson.team);
+              const candidateExternalReviewers = developers.reviewers.filter(person => person.team !== prCreatorJson.team);
 
               const randomReviewer = candidateInternalReviewers[Math.floor(Math.random() * candidateInternalReviewers.length)].name;
               const randomReviewer2 = candidateExternalReviewers[Math.floor(Math.random() * candidateExternalReviewers.length)].name;
 
-              core.setOutput('reviewers', [randomReviewer, randomReviewer2]);
+              core.setOutput('reviewer1', randomReviewer);
+              core.setOutput('reviewer2', randomReviewer2);
               core.setOutput('writer', prCreatorJson.name);
               core.setOutput('pullRequestLink', prUrl);
             }
 
-      - name: Add Pull Request Reviewer
+      - name: Add Reviewers
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewers[0] }}, ${{ steps.pick_random_reviwer.outputs.reviewers[1] }}
+          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer }}, ${{ steps.pick_random_reviwer.outputs.reviewer2 }}
           token: ${{ secrets.GITHUB_TOKEN }}
+      
 
       - name: Send Slack Trigger
         run: |
@@ -53,4 +54,4 @@ jobs:
           -H 'Content-Type: application/json' \
           -d '{ "pullRequestLink": "${{ steps.pick_random_reviewer.outputs.pullRequestLink }}", \
           "writer": "${{ steps.pick_random_reviewer.outputs.writer }}", \
-          "reviewers": "${{steps.pick_random_reviwer.outputs.reviewers}}" }'
+          "reviewers": "[${{steps.pick_random_reviwer.outputs.reviewers1}}, ${{steps.pick_random_reviwer.outputs.reviewers2}}]" }'
