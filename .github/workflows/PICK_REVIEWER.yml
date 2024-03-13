@@ -63,5 +63,5 @@ jobs:
           -d '{
                 "pullRequestLink": ${{ steps.pick_random_reviewer.outputs.pullRequestLink }},
                 "writer": ${{ steps.pick_random_reviewer.outputs.writer }},
-                "reviewers": ["최원빈", "김하나"]
+                "reviewers": [${{ steps.pick_random_reviewer.outputs.reviewer1Name }}, ${{ steps.pick_random_reviewer.outputs.reviewer2Name }}]
               }'
