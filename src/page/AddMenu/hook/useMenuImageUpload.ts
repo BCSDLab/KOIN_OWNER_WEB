@@ -16,7 +16,7 @@ export default function useMenuImageUpload(closeModal: () => void) {
       const data = await uploadFile(formData);
 
       if (data?.data?.file_url) {
-        setImageUrl(`https://${data.data.file_url}`);
+        setImageUrl(data.data.file_url);
         closeModal();
       }
     }
