@@ -31,7 +31,7 @@ export default function useImageUpload() {
         const data = await uploadFile(formData);
 
         if (data?.data?.file_url) {
-          setImageFile(`https://${data.data.file_url}`);
+          setImageFile(data.data.file_url);
         }
         setUploadError('');
       } catch (error) {
