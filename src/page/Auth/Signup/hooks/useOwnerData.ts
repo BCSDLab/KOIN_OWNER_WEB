@@ -171,7 +171,7 @@ export default function useCheckOwnerData(isMobile:boolean) {
       addFiles(watch('registerFiles'));
     },
     validate: () => {
-      if (ownerData.registerFiles && ownerData.registerFiles.length < 1) {
+      if (!ownerData.registerFiles) {
         return '파일을 1개 이상 첨부해주세요';
       }
       return true;
