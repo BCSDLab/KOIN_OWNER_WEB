@@ -1,63 +1,68 @@
-name: "Pick Reviwer"
+name: "Pick Reviewer"
 
 on:
   pull_request:
-    types:
-      - opened
-    branches:
-      - develop
+    types: opened
 
 jobs:
-  pick-random-reviwer:
+  pick-random-reviewer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: pick_random_reviwer
-        id: pick_random_reviwer 
-        uses: actions/github-script@v3 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Pick random reviewer
+        id: pick_random_reviewer
+        uses: actions/github-script@v7
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/reviewers.json`));
-            
-            // 겹치지 않는 두명의 랜덤 리뷰어 선택
-            if(developers?.length == 0) {
-              core.setOutput('comment', '리뷰어가 없습니다. 리뷰어를 추가해주세요.')
+
+            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
+            const prCreator = context.payload.pull_request.user.login;
+            const prUrl = context.payload.pull_request.html_url;
+            const prCreatorJson = developers.reviewers.find(person => person.githubName === prCreator);
+
+            //PrCreator가 reviewer에 등록되지 않은 사람인 경우
+            if (!prCreatorJson) {
+              const reviewerArr = developers.reviewers;
+              const randomReviewer1 = reviewerArr[Math.floor(Math.random() * reviewerArr.length)];
+              const randomReviewer2 = reviewerArr[Math.floor(Math.random() * reviewerArr.length)];  
+              core.setOutput('writer', JSON.stringify(prCreator));
+            } else {
+              const candidateInternalReviewers = developers.reviewers.filter(person => person.team === prCreatorJson.team && person.githubName !== prCreator);
+              const candidateExternalReviewers = developers.reviewers.filter(person => person.team !== prCreatorJson.team);
+              const randomReviewer1 = candidateInternalReviewers[Math.floor(Math.random() * candidateInternalReviewers.length)];
+              const randomReviewer2 = candidateExternalReviewers[Math.floor(Math.random() * candidateExternalReviewers.length)];
+              core.setOutput('writer', JSON.stringify(prCreatorJson.name));
             }
             
-            if(developers?.length == 1) {
-              const randomReviewer = developers[0];
-              const comment = `🎉 @${randomReviewer} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
-              core.setOutput('comment', comment) 
-              core.setOutput('reviewer', randomReviewer)
-            }
-            
-            if(developers?.length > 1) {
-              const randomReviewer = developers[Math.floor(Math.random() * developers.length)];
-              let randomReviewer2;
-              while(true) {
-                randomReviewer2 = developers[Math.floor(Math.random() * developers.length)];
-                if(randomReviewer != randomReviewer2) {
-                  break;
-                }
-              }
-              const comment = `🎉 @${randomReviewer}, @${randomReviewer2} 님 랜덤 리뷰어로 선정되셨습니다! 리뷰를 부탁드립니다. 🙏`
-              core.setOutput('comment', comment)
-              core.setOutput('reviewer', randomReviewer)
-              core.setOutput('reviewer2', randomReviewer2)
-            }
-      
-      - name: comment PR
-        uses: mshick/add-pr-comment@v1
-        with:
-          message: |
-            ${{ steps.pick_random_reviwer.outputs.comment }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]'
-      
-      - name: Add Pull Request Reviewer
+            core.setOutput('pullRequestLink', JSON.stringify(prUrl));
+            core.setOutput('reviewer1Name', JSON.stringify(randomReviewer1.name));
+            core.setOutput('reviewer2Name', JSON.stringify(randomReviewer2.name));
+            core.setOutput('reviewer1GithubName', randomReviewer1.githubName);
+            core.setOutput('reviewer2GithubName', randomReviewer2.githubName);
+
+      - name: test valiable
+        uses: actions/github-script@v7
+        with: 
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: console.log(${{ steps.pick_random_reviewer.outputs.reviewer1Name }})
+
+      - name: Add Reviewers
         uses: madrapps/add-reviewers@v1
         with:
-          reviewers: ${{ steps.pick_random_reviwer.outputs.reviewer }}, ${{ steps.pick_random_reviwer.outputs.reviewer2 }}
+          reviewers: ${{ steps.pick_random_reviewer.outputs.reviewer1GithubName }},${{ steps.pick_random_reviewer.outputs.reviewer2GithubName }}
           token: ${{ secrets.GITHUB_TOKEN }}
+      
+
+      - name: Send Slack Trigger
+        run: |
+          curl -X POST https://api-slack.internal.bcsdlab.com/api/review-request/frontend \
+          -H 'Content-Type: application/json' \
+          -d '{
+                "pullRequestLink": ${{ steps.pick_random_reviewer.outputs.pullRequestLink }},
+                "writer": ${{ steps.pick_random_reviewer.outputs.writer }},
+                "reviewers": [${{ steps.pick_random_reviewer.outputs.reviewer1Name }}, ${{ steps.pick_random_reviewer.outputs.reviewer2Name }}]
+              }'
