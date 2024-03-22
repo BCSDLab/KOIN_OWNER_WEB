@@ -155,7 +155,7 @@ function Header() {
                               key={subMenu.title}
                             >
                               <Link to={subMenu.link}>
-                                {subMenu.title}
+                                {subMenu.title === '가게정보' && subMenu.title}
                               </Link>
                             </li>
                           ))}
@@ -238,7 +238,7 @@ function Header() {
                   {panelMenuList?.map((menu) => (
                     <li className={styles.megamenu__menu} key={menu.title}>
                       <Link className={styles.megamenu__link} to={menu.link}>
-                        {menu.title}
+                        {menu.title === '가게정보' && menu.title}
                       </Link>
                     </li>
                   ))}

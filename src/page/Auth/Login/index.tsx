@@ -83,7 +83,7 @@ export default function Login() {
           </div>
           <div className={styles['form__auto-login']}>
             {(isError || !!isFormError) && (
-            <div className={styles['form__error-message']}>{loginError || emailError}</div>
+              <div className={styles['form__error-message']}>{loginError || emailError}</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
               <input
@@ -95,6 +95,11 @@ export default function Login() {
               />
               자동로그인
             </label>
+          </div>
+          <div className={styles.form__error}>
+            {isMobile && (isError || !!isFormError) && (
+              <div className={styles['form__error-message']}>{loginError || emailError}</div>
+            )}
           </div>
           <button
             className={cn({
