@@ -26,8 +26,9 @@ jobs:
 
             //PrCreator가 reviewer에 등록되지 않은 사람인 경우
             if (!prCreatorJson) {
-              const randomReviewer1 = developers[Math.floor(Math.random() * candidateInternalReviewers.length)];
-              const randomReviewer2 = developers[Math.floor(Math.random() * candidateExternalReviewers.length)];  
+              const reviewerArr = developers.reviewers;
+              const randomReviewer1 = reviewerArr[Math.floor(Math.random() * reviewerArr.length)];
+              const randomReviewer2 = reviewerArr[Math.floor(Math.random() * reviewerArr.length)];  
               core.setOutput('writer', JSON.stringify(prCreator));
             } else {
               const candidateInternalReviewers = developers.reviewers.filter(person => person.team === prCreatorJson.team && person.githubName !== prCreator);
