@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
@@ -77,7 +78,7 @@ function createKoinErrorFromAxiosError(error: AxiosError<KoinError>): KoinError 
 
 client.interceptors.response.use(
   (response) => response,
-  async (error) => createKoinErrorFromAxiosError(error),
+  async (error) => { throw createKoinErrorFromAxiosError(error); },
 );
 
 accessClient.interceptors.response.use(
@@ -91,7 +92,7 @@ accessClient.interceptors.response.use(
       return refresh(originalRequest);
     }
 
-    return createKoinErrorFromAxiosError(error);
+    throw createKoinErrorFromAxiosError(error);
   },
 );
 
@@ -104,7 +105,7 @@ multipartClient.interceptors.request.use(
 
 multipartClient.interceptors.response.use(
   (response) => response,
-  async (error) => createKoinErrorFromAxiosError(error),
+  async (error) => { throw createKoinErrorFromAxiosError(error); },
 );
 
 export { client, accessClient, multipartClient };

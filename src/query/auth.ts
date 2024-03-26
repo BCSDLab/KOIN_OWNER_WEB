@@ -54,10 +54,11 @@ export const useLogin = () => {
         navigate('/store-registration');
       }
     },
-    onError: (err: AxiosError<ErrorResponse>) => {
+    onError: (err) => {
+      console.log('loginerror', err);
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      setLoginError(err.response?.data.message || err.message);
+      setLoginError(err.message || '로그인에 실패했습니다.');
     },
   });
 
