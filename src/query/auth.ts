@@ -15,7 +15,7 @@ interface VerifyInput {
   verify: string;
 }
 
-interface ErrorResponse {
+export interface ErrorResponse {
   response: undefined | {
     message: string;
     data: {
@@ -33,7 +33,7 @@ interface ErrorResponse {
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
-  const { setLoginError } = useErrorMessageStore();
+  const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -58,6 +58,9 @@ export const useLogin = () => {
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setLoginError(err.response?.data.message || err.message);
+      if (err.response?.data && 'code' in err.response.data) {
+        setLoginErrorCode(err.response?.data?.code as number);
+      }
     },
   });
 
