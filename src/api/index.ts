@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
-import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import API_PATH from 'config/constants';
 import { RefreshParams, RefreshResponse } from 'model/auth';
+import { KoinError } from 'model/error';
 
 const client = axios.create({
   baseURL: `${API_PATH}`,
@@ -51,20 +52,38 @@ accessClient.interceptors.request.use(
   },
 );
 
+function isAxiosErrorWithResponseData(error: AxiosError<KoinError>) {
+  const { response } = error;
+  return response?.status !== undefined
+    && response.data.code !== undefined
+    && response.data.message !== undefined;
+}
+
 accessClient.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.message) return Promise.reject(error.message);
-
     const originalRequest = error.config;
 
-    // accessToken만료시 새로운 accessToken으로 재요청
+    // accessToken 만료시 새로운 accessToken으로 재요청
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
       return refresh(originalRequest);
     }
-    return Promise.reject(error);
+
+    // error 를 경우에 따라 KoinError와 AxiosError 로 반환합니다.
+    if (isAxiosErrorWithResponseData(error)) {
+      const koinError = error.response!;
+      return {
+        type: 'koin-error',
+        status: koinError.status,
+        code: koinError.data.code,
+        message: koinError.data.message,
+      };
+    }
+    return {
+      type: 'axios-error',
+      ...error,
+    };
   },
 );
 
