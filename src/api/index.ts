@@ -3,7 +3,7 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import API_PATH from 'config/constants';
 import { RefreshParams, RefreshResponse } from 'model/auth';
-import { KoinError } from 'model/error';
+import { CustomAxiosError, KoinError } from 'model/error';
 
 const client = axios.create({
   baseURL: `${API_PATH}`,
@@ -59,24 +59,26 @@ function isAxiosErrorWithResponseData(error: AxiosError<KoinError>) {
     && response.data.message !== undefined;
 }
 
+function createKoinErrorFromAxiosError(error: AxiosError<KoinError>): KoinError | CustomAxiosError {
+  if (isAxiosErrorWithResponseData(error)) {
+    const koinError = error.response!;
+    return {
+      type: 'koin-error',
+      status: koinError.status,
+      code: koinError.data.code,
+      message: koinError.data.message,
+    };
+  }
+  return {
+    type: 'axios-error',
+    ...error,
+  };
+}
+
 client.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    // error 를 경우에 따라 KoinError와 AxiosError 로 반환합니다.
-    if (isAxiosErrorWithResponseData(error)) {
-      const koinError = error.response!;
-      return {
-        type: 'koin-error',
-        status: koinError.status,
-        code: koinError.data.code,
-        message: koinError.data.message,
-      };
-    }
-    return {
-      type: 'axios-error',
-      ...error,
-    };
-  },
+  async (error) => createKoinErrorFromAxiosError(error)
+  ,
 );
 
 accessClient.interceptors.response.use(
@@ -90,20 +92,7 @@ accessClient.interceptors.response.use(
       return refresh(originalRequest);
     }
 
-    // error 를 경우에 따라 KoinError와 AxiosError 로 반환합니다.
-    if (isAxiosErrorWithResponseData(error)) {
-      const koinError = error.response!;
-      return {
-        type: 'koin-error',
-        status: koinError.status,
-        code: koinError.data.code,
-        message: koinError.data.message,
-      };
-    }
-    return {
-      type: 'axios-error',
-      ...error,
-    };
+    return createKoinErrorFromAxiosError(error);
   },
 );
 
@@ -116,22 +105,7 @@ multipartClient.interceptors.request.use(
 
 multipartClient.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    // error 를 경우에 따라 KoinError와 AxiosError 로 반환합니다.
-    if (isAxiosErrorWithResponseData(error)) {
-      const koinError = error.response!;
-      return {
-        type: 'koin-error',
-        status: koinError.status,
-        code: koinError.data.code,
-        message: koinError.data.message,
-      };
-    }
-    return {
-      type: 'axios-error',
-      ...error,
-    };
-  },
+  async (error) => createKoinErrorFromAxiosError(error),
 );
 
 export { client, accessClient, multipartClient };
