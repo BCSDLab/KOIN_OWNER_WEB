@@ -2,6 +2,7 @@
   &__container {
     margin-top: 5px;
     width: 100%;
+    margin-bottom: 24px;
   }
 
   &__caption {
@@ -18,7 +19,6 @@
     border: 0.5px solid #898a8d;
     padding: 8px;
     box-sizing: border-box;
-    margin-bottom: 24px;
 
     &::placeholder {
       color: #a1a1a1;
