@@ -77,8 +77,7 @@ function createKoinErrorFromAxiosError(error: AxiosError<KoinError>): KoinError 
 
 client.interceptors.response.use(
   (response) => response,
-  async (error) => createKoinErrorFromAxiosError(error)
-  ,
+  async (error) => createKoinErrorFromAxiosError(error),
 );
 
 accessClient.interceptors.response.use(
