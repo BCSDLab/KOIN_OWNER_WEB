@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/" element={<MyStorePage />} />
-          <Route path="/store-registration" element={<ShopRegistration />} />
+          <Route path="/shop-registration" element={<ShopRegistration />} />
           <Route path="/add-menu" element={<AddMenu />} />
           <Route path="/modify-menu/:menuId" element={<ModifyMenu />} />
           <Route path="/modify-info" element={<PageNotFound />} />

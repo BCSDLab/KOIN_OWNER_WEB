@@ -51,7 +51,7 @@ export const useLogin = () => {
         setPrevPath('/');
         navigate('/');
       } else {
-        navigate('/store-registration');
+        navigate('/shop-registration');
       }
     },
     onError: (err: AxiosError<ErrorResponse>) => {

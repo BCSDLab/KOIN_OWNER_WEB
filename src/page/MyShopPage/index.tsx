@@ -38,7 +38,7 @@ export default function MyShopPage() {
 
   useEffect(() => {
     if (!shopData && !isLoading) {
-      navigate('/store-registration');
+      navigate('/shop-registration');
     }
   }, [shopData, navigate, isLoading]);
 

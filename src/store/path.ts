@@ -6,7 +6,7 @@ interface PrevPathStore {
 }
 
 const usePrevPathStore = create<PrevPathStore>((set) => ({
-  prevPath: '/store-registration',
+  prevPath: '/shop-registration',
   setPrevPath: (prevPath) => { set(() => ({ prevPath })); },
 }));
 
