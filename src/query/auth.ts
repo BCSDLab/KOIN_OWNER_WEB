@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
+import { isKoinError } from 'utils/ts/isKoinError';
 
 interface VerifyInput {
   email: string;
@@ -54,10 +55,13 @@ export const useLogin = () => {
         navigate('/store-registration');
       }
     },
-    onError: (err) => {
-      sessionStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      setLoginError(err.message || '로그인에 실패했습니다.');
+    onError: (err: unknown) => {
+      if (isKoinError(err)) {
+        // TODO: 분기별 에러 처리
+        sessionStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        setLoginError(err.message || '로그인에 실패했습니다.');
+      }
     },
   });
 
