@@ -33,6 +33,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
               value={name}
             />
           )}
+          {menuError && <span className={styles['error-message']}>{menuError}</span>}
         </div>
       ) : (
         <div className={styles.container}>
