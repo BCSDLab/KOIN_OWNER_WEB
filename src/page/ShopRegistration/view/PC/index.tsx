@@ -2,7 +2,7 @@
 import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
 import CustomButton from 'page/Auth/Signup/component/CustomButton';
@@ -57,7 +57,6 @@ export default function ShopRegistrationPC() {
     imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const [isError, setIsError] = useState(false);
-  const deliveryPriceRef = useRef<HTMLInputElement>(null);
 
   const {
     openTimeState,
@@ -67,7 +66,6 @@ export default function ShopRegistrationPC() {
 
   const {
     setImageUrl,
-    setOwner,
     setName,
     setDelivery,
     setPayCard,
@@ -82,7 +80,6 @@ export default function ShopRegistrationPC() {
     imageUrl,
     categoryId,
     category,
-    owner,
     name,
     delivery,
     payCard,
@@ -121,7 +118,7 @@ export default function ShopRegistrationPC() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === '' || Number.isNaN(deliveryPrice)
+    if (imageUrl === '' || name === '' || category === ''
       || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
@@ -235,20 +232,6 @@ export default function ShopRegistrationPC() {
                 <Category />
               </CustomModal>
               <div>
-                <span className={styles.form__title}>대표자명</span>
-                <div className={styles.form__section}>
-                  <input
-                    type="text"
-                    className={styles['form__input-large']}
-                    value={owner}
-                    onChange={(e) => {
-                      setOwner(e.target.value);
-                    }}
-                  />
-                </div>
-                {owner === '' && isError && <ErrorMessage message={ERRORMESSAGE.owner} />}
-              </div>
-              <div>
                 <span className={styles.form__title}>가게명</span>
                 <div className={styles.form__section}>
                   <input
@@ -311,15 +294,12 @@ export default function ShopRegistrationPC() {
                   <input
                     type="string"
                     className={styles['form__input-large']}
-                    defaultValue=""
-                    ref={deliveryPriceRef}
+                    value={deliveryPrice}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}
                   />
                 </div>
-                {(Number.isNaN(deliveryPrice) && deliveryPriceRef.current?.value === '')
-                  && isError && <ErrorMessage message={ERRORMESSAGE.deliveryPrice} />}
               </div>
               <div>
                 <span className={styles.form__title}>운영시간</span>
