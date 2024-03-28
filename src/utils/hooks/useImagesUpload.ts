@@ -14,10 +14,11 @@ export default function useImagesUpload() {
   const saveImgFile = async () => {
     const files = imgRef.current?.files;
 
-    if (files && files.length > 3) {
+    if (files && (files.length > 3 || imageFile.length >= 3)) {
       showToast('error', '파일은 3개까지 등록할 수 있습니다.')
       return;
     }
+
     if (files && files.length) {
       const uploadedFiles: string[] = [];
       const maxSize = 1024 * 1024 * 10; // 10 MB limit for each file
