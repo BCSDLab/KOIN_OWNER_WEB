@@ -19,6 +19,7 @@ interface AddMenuStore {
   setCategoryIds: (categoryIds: number[]) => void;
   setDescription: (description: string) => void;
   setImageUrl: (newImageUrl: string) => void;
+  setImageUrls: (newImageUrls: string[]) => void,
   removeImageUrl: (imageUrlToRemove: string) => void;
   setIsSingle: (isSingle: boolean) => void;
   setName: (name: string) => void;
@@ -44,6 +45,9 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setDescription: (description) => set({ description }),
   setImageUrl: (newImageUrl) => set((state) => ({
     imageUrl: [...state.imageUrl, newImageUrl],
+  })),
+  setImageUrls: (newImageUrl) => set((state) => ({
+    imageUrl: [...state.imageUrl, ...newImageUrl],
   })),
   removeImageUrl: (imageUrlToRemove) => set((state) => ({
     imageUrl: state.imageUrl.filter((img) => img !== imageUrlToRemove),
