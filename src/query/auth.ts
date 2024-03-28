@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
 import { isKoinError } from 'utils/ts/isKoinError';
+import useStepStore from 'store/useStepStore';
 
 interface VerifyInput {
   email: string;
@@ -35,6 +36,7 @@ export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
   const { setLoginError } = useErrorMessageStore();
+  const setStep = useStepStore((state) => state.setStep);
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -52,6 +54,7 @@ export const useLogin = () => {
         setPrevPath('/');
         navigate('/');
       } else {
+        setStep(0);
         navigate('/store-registration');
       }
     },
