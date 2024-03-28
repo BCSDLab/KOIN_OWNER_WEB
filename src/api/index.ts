@@ -64,14 +64,14 @@ function createKoinErrorFromAxiosError(error: AxiosError<KoinError>): KoinError 
   if (isAxiosErrorWithResponseData(error)) {
     const koinError = error.response!;
     return {
-      type: 'koin-error',
+      type: 'KOIN_ERROR',
       status: koinError.status,
       code: koinError.data.code,
       message: koinError.data.message,
     };
   }
   return {
-    type: 'axios-error',
+    type: 'AXIOS_ERROR',
     ...error,
   };
 }
