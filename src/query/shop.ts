@@ -7,26 +7,27 @@ import {
 import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
   const myShopQueryKey = useUserStore.getState().user?.company_number;
   const queryClient = useQueryClient();
   const { resetAddMenuStore } = useAddMenuStore();
   const { data: myShop } = useSuspenseQuery({
-    queryKey: ['myShop', myShopQueryKey],
+    queryKey: shopKeys.myShopList(myShopQueryKey),
     queryFn: () => getMyShopList(),
   });
 
   const shopId = myShop.shops[0]?.id;
 
   const { data: shopData, refetch: refetchShopData, isLoading } = useQuery({
-    queryKey: ['myShopInfo', shopId],
+    queryKey: shopKeys.myShopInfo(shopId),
     queryFn: () => getShopInfo({ id: shopId }),
     enabled: !!shopId,
   });
 
   const { data: menusData } = useQuery({
-    queryKey: ['myMenuInfo', shopId],
+    queryKey: shopKeys.myMenuInfo(shopId),
     queryFn: () => getMenuInfoList({ id: shopId }),
     enabled: !!shopId,
   });
@@ -40,7 +41,7 @@ const useMyShop = () => {
     },
     onSuccess: () => {
       resetAddMenuStore();
-      queryClient.invalidateQueries({ queryKey: ['myMenuInfo', shopId] });
+      queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
     },
   });
 
