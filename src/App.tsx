@@ -1,4 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes, Route, Navigate, Outlet,
+} from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
@@ -13,22 +15,50 @@ import PageNotFound from 'page/Error/PageNotFound';
 import ModifyMenu from 'page/ModifyMenu';
 import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
+import { UserType } from 'model/auth';
+import useUserTypeStore from 'store/userType';
+import CoopLayout from 'layout/CoopLayout';
+import CoopPage from 'page/\bCoopPage';
+
+interface ProtectedRouteProps {
+  userTypeRequired: UserType;
+}
+
+function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
+  const { userType } = useUserTypeStore();
+
+  if (userType !== userTypeRequired) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+}
 
 function App() {
   return (
     <Suspense fallback={<div />}>
       <Routes>
-        <Route path="/" element={<DefaultLayout />}>
-          <Route path="/" element={<MyStorePage />} />
-          <Route path="/shop-registration" element={<ShopRegistration />} />
-          <Route path="/add-menu" element={<AddMenu />} />
-          <Route path="/modify-menu/:menuId" element={<ModifyMenu />} />
-          <Route path="/modify-info" element={<PageNotFound />} />
-          <Route path="/menu-management" element={<PageNotFound />} />
-          <Route path="/order-management" element={<PageNotFound />} />
-          <Route path="/sales-management" element={<PageNotFound />} />
-          <Route path="/shop-add" element={<PageNotFound />} />
+        <Route element={<ProtectedRoute userTypeRequired={UserType.OWNER} />}>
+          <Route path="/" element={<DefaultLayout />}>
+            <Route path="/" element={<MyStorePage />} />
+            <Route path="/shop-registration" element={<ShopRegistration />} />
+            <Route path="/add-menu" element={<AddMenu />} />
+            <Route path="/modify-menu/:menuId" element={<ModifyMenu />} />
+            <Route path="/modify-info" element={<PageNotFound />} />
+            <Route path="/menu-management" element={<PageNotFound />} />
+            <Route path="/order-management" element={<PageNotFound />} />
+            <Route path="/sales-management" element={<PageNotFound />} />
+            <Route path="/shop-add" element={<PageNotFound />} />
+          </Route>
         </Route>
+        <Route element={<ProtectedRoute userTypeRequired={UserType.COOP} />}>
+          <Route path="/coop" element={<CoopLayout />}>
+            <Route path="/coop/coop-page1" element={<CoopPage />} />
+            <Route path="/coop/coop-page2" element={<CoopPage />} />
+            {/* CoopPage1, CoopPage2는 예시 경로임 */}
+          </Route>
+        </Route>
+
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

@@ -7,7 +7,7 @@ interface UserTypeStore {
 }
 
 const useUserTypeStore = create<UserTypeStore>((set) => ({
-  userType: 'NOT_LOGGED_IN',
+  userType: UserType.NOT_LOGGED_IN,
   setUserType: (userType) => set({ userType }),
 }));
 

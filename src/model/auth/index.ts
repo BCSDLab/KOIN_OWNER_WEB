@@ -8,6 +8,7 @@ export const LoginParams = z.object({
 export type LoginParams = z.infer<typeof LoginParams>;
 
 export enum UserType {
+  NOT_LOGGED_IN = 'NOT_LOGGED_IN',
   STUDENT = 'STUDENT',
   COOP = 'COOP',
   OWNER = 'OWNER',
