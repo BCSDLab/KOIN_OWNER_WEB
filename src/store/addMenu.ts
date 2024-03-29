@@ -15,7 +15,7 @@ interface AddMenuStore {
   isSingle: boolean;
   name: string;
   optionPrices: OptionPrices[] | null;
-  singlePrice: number | null;
+  singlePrice: number;
   setCategoryIds: (categoryIds: number[]) => void;
   setDescription: (description: string) => void;
   setImageUrl: (newImageUrl: string) => void;
@@ -79,7 +79,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
         isSingle: menuData.is_single,
         name: menuData.name,
         optionPrices: newOptionPrices,
-        singlePrice: 'single_price' in menuData ? menuData.single_price : null,
+        singlePrice: menuData.single_price !== null ? menuData.single_price : undefined,
       });
     }
   },
