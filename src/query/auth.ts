@@ -50,13 +50,17 @@ export const useLogin = () => {
 
       setUserType(data.user_type);
 
-      const myShopData = await getMyShopList();
-      if (myShopData.count > 0) {
-        setPrevPath('/');
-        navigate('/');
-      } else {
-        navigate('/shop-registration');
-      }
+      if (data.user_type === 'OWNER') {
+        const myShopData = await getMyShopList();
+        if (myShopData.count > 0) {
+          setPrevPath('/');
+          navigate('/');
+        } else {
+          navigate('/shop-registration');
+        }
+      } else if (data.user_type === 'COOP') {
+        navigate('/coop');
+      } else;
     },
     onError: (err: AxiosError<ErrorResponse>) => {
       sessionStorage.removeItem('access_token');
