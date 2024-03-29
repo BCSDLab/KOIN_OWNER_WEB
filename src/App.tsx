@@ -38,7 +38,7 @@ function App() {
   return (
     <Suspense fallback={<div />}>
       <Routes>
-        <Route element={<ProtectedRoute userTypeRequired={UserType.OWNER} />}>
+        <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
           <Route path="/" element={<DefaultLayout />}>
             <Route path="/" element={<MyStorePage />} />
             <Route path="/shop-registration" element={<ShopRegistration />} />
@@ -51,7 +51,7 @@ function App() {
             <Route path="/shop-add" element={<PageNotFound />} />
           </Route>
         </Route>
-        <Route element={<ProtectedRoute userTypeRequired={UserType.COOP} />}>
+        <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
           <Route path="/coop" element={<CoopLayout />}>
             <Route path="/coop/coop-page1" element={<CoopPage />} />
             <Route path="/coop/coop-page2" element={<CoopPage />} />
