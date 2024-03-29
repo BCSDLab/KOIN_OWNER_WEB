@@ -5,6 +5,8 @@ import showToast from 'utils/ts/showToast';
 // 정의할 수 있는 에러 타입
 type UploadError = '413' | '415' | '404' | '422' | 'networkError' | '401' | '';
 
+const MAXSIZE = 1024 * 1024 * 10;
+
 /* eslint-disable */
 export default function useImagesUpload() {
   const [imageFile, setImageFile] = useState<string[]>([]);
@@ -21,13 +23,12 @@ export default function useImagesUpload() {
 
     if (files && files.length) {
       const uploadedFiles: string[] = [];
-      const maxSize = 1024 * 1024 * 10; // 10 MB limit for each file
       const correctForm = new RegExp('(.*?)\\.(jpg|jpeg|gif|bmp|png)$');
 
       for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
-        if (file.size > maxSize) {
+        if (file.size > MAXSIZE) {
           setUploadError('413'); // 파일 사이즈가 너무 큰 경우
           return;
         }
