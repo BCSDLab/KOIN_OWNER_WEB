@@ -5,9 +5,9 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import AddMenuImgModal from 'page/AddMenu/components/AddMenuImgModal';
 import useAddMenuStore from 'store/addMenu';
-import useImageUpload from 'utils/hooks/useImageUpload';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './MenuImage.module.scss';
 
 interface MenuImageProps {
@@ -16,15 +16,16 @@ interface MenuImageProps {
 
 export default function MenuImage({ isComplete }: MenuImageProps) {
   const { isMobile } = useMediaQuery();
-  const { imageUrl, setImageUrl, removeImageUrl } = useAddMenuStore();
+  const { imageUrl, setImageUrls, removeImageUrl } = useAddMenuStore();
   const {
     value: isAddMenuImgModal,
     setTrue: openAddMenuImgModal,
     setFalse: closeAddMenuImgModal,
   } = useBooleanState(false);
+
   const {
     imageFile, imgRef, saveImgFile, uploadError,
-  } = useImageUpload();
+  } = useImagesUpload();
   const handleAddImage = () => {
     imgRef.current?.click();
   };
@@ -36,9 +37,9 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
   };
   useEffect(() => {
     if (imageFile) {
-      setImageUrl(imageFile);
+      setImageUrls(imageFile);
     }
-  }, [imageFile, setImageUrl]);
+  }, [imageFile, setImageUrls]);
   return (
     <div>
       {isMobile ? (
@@ -60,14 +61,14 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               <div key={image} className={styles['mobile__new-image__item']}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />
                 {!isComplete && (
-                <button
-                  type="button"
-                  onClick={() => handleDeleteImage(image)}
-                  className={styles['mobile__delete-img-button']}
-                  aria-label="Delete image"
-                >
-                  <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(image)}
+                    className={styles['mobile__delete-img-button']}
+                    aria-label="Delete image"
+                  >
+                    <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                  </button>
                 )}
               </div>
             ))}
@@ -88,14 +89,14 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               <div key={image} className={styles['new-image__item']}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['new-image__selected']} />
                 {!isComplete && (
-                <button
-                  type="button"
-                  onClick={() => handleDeleteImage(image)}
-                  className={styles['new-image__delete-img-button']}
-                  aria-label="Delete image"
-                >
-                  <MobileDeleteImgIcon className={styles['new-image__delete-img-icon']} />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(image)}
+                    className={styles['new-image__delete-img-button']}
+                    aria-label="Delete image"
+                  >
+                    <MobileDeleteImgIcon className={styles['new-image__delete-img-icon']} />
+                  </button>
                 )}
               </div>
             ))}
@@ -114,6 +115,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               style={{ display: 'none' }}
               onChange={handleImageChange}
               ref={imgRef}
+              multiple
             />
           </div>
           <div className={styles['image-error-message']}>
