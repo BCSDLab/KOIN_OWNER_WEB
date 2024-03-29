@@ -25,6 +25,10 @@
       font-size: 13px;
       font-weight: 400;
     }
+
+    &--error {
+      border: 0.5px #f7941e solid;
+    }
   }
 
   &__name-text {
@@ -66,6 +70,10 @@
     color: #a1a1a1;
     font-size: 20px;
     font-weight: 400;
+  }
+
+  &--error {
+    border: 0.5px #f7941e solid;
   }
 }
 
