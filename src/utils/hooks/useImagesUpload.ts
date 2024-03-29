@@ -24,18 +24,16 @@ export default function useImagesUpload() {
       const maxSize = 1024 * 1024 * 10; // 10 MB limit for each file
       const correctForm = new RegExp('(.*?)\\.(jpg|jpeg|gif|bmp|png)$');
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file.size > maxSize) {
-          setUploadError('413'); // File size too large
-          setImageFile([]);
+          setUploadError('413'); // 파일 사이즈가 너무 큰 경우
           return;
         }
 
         if (!correctForm.test(file.name)) {
-          setUploadError('415'); // Unsupported file type
-          setImageFile([]);
+          setUploadError('415'); // 지원하지 않는 타입 에러
           return;
         }
 
