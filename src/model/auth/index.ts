@@ -7,10 +7,16 @@ export const LoginParams = z.object({
 
 export type LoginParams = z.infer<typeof LoginParams>;
 
+export enum UserType {
+  STUDENT = 'STUDENT',
+  COOP = 'COOP',
+  OWNER = 'OWNER',
+}
+
 export const LoginResponse = z.object({
   refresh_token: z.string(),
   token: z.string(),
-  user_type: z.string(),
+  user_type: z.nativeEnum(UserType),
 });
 
 export type LoginResponse = z.infer<typeof LoginResponse>;
