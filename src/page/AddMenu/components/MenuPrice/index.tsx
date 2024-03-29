@@ -45,8 +45,8 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                     <input
                       type="number"
                       className={styles['mobile__price-info-inputs__price-input']}
-                      value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
-                      onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
+                      value={singlePrice}
+                      onChange={(e) => setSinglePrice(Number(e.target.value))}
                     />
                     <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>
                   </div>
@@ -93,9 +93,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
             <>
               <div className={styles.header}>
                 <div className={styles.header__title}>가격</div>
-
               </div>
-
               <div className={styles['price-info-input-box']}>
                 <div className={styles['price-info-inputs']}>
                   <div className={styles['price-info-inputs__price-input-box']}>
