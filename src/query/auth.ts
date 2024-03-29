@@ -17,7 +17,7 @@ interface VerifyInput {
   verify: string;
 }
 
-interface ErrorResponse {
+export interface ErrorResponse {
   response: undefined | {
     message: string;
     data: {
@@ -35,7 +35,7 @@ interface ErrorResponse {
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
-  const { setLoginError } = useErrorMessageStore();
+  const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
   const setStep = useStepStore((state) => state.setStep);
 
   const { mutate, error, isError } = useMutation({
@@ -64,6 +64,7 @@ export const useLogin = () => {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         setLoginError(err.message || '로그인에 실패했습니다.');
+        setLoginErrorCode(err.code);
       }
     },
   });
