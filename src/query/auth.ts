@@ -64,9 +64,7 @@ export const useLogin = () => {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         setLoginError(err.message || '로그인에 실패했습니다.');
-        if (err.response?.data && 'code' in err.response.data) {
-          setLoginErrorCode(err.response?.data?.code as number);
-        }
+        setLoginErrorCode(err.code);
       }
     },
   });
