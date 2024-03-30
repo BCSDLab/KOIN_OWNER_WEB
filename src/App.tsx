@@ -18,7 +18,7 @@ import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import useUserTypeStore from 'store/userType';
 import CoopLayout from 'layout/CoopLayout';
-import CoopPage from 'page/\bCoopPage';
+import CoopPage from 'page/CoopPage';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
