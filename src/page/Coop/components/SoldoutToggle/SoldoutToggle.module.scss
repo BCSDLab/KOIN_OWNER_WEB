@@ -1,0 +1,15 @@
+.toggleButton {
+  width: 46px;
+  height: 23px;
+  cursor: pointer;
+
+  .background {
+    rx: 9.5;
+    stroke-width: 3;
+  }
+
+  .circle {
+    r: 8;
+    fill: white;
+  }
+}
