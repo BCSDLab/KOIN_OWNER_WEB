@@ -13,6 +13,7 @@ import PageNotFound from 'page/Error/PageNotFound';
 import ModifyMenu from 'page/ModifyMenu';
 import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
+import Coop from 'page/Coop';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/order-management" element={<PageNotFound />} />
           <Route path="/sales-management" element={<PageNotFound />} />
           <Route path="/shop-add" element={<PageNotFound />} />
+          <Route path="/coop" element={<Coop />} />
         </Route>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
