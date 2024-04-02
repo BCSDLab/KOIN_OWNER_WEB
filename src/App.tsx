@@ -28,7 +28,15 @@ function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
   const { userType } = useUserTypeStore();
 
   if (userType !== userTypeRequired) {
-    return <Navigate to="/login" replace />;
+    if (userType === 'NOT_LOGGED_IN') {
+      return <Navigate to="/login" replace />;
+    }
+    if (userType === 'OWNER') {
+      return <Navigate to="/" replace />;
+    }
+    if (userType === 'COOP') {
+      return <Navigate to="/coop" replace />;
+    }
   }
 
   return <Outlet />;
@@ -60,10 +68,12 @@ function App() {
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/find-id" element={<PageNotFound />} />
-          <Route path="/find-password" element={<FindPassword />} />
+          <Route element={<ProtectedRoute userTypeRequired="NOT_LOGGED_IN" />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/find-id" element={<PageNotFound />} />
+            <Route path="/find-password" element={<FindPassword />} />
+          </Route>
           <Route path="/new-password" element={<NewPassword />} />
           <Route path="/complete-change-password" element={<CompleteChangePassword />} />
         </Route>
