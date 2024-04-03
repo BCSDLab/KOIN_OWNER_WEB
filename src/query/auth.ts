@@ -56,11 +56,11 @@ export const useLogin = () => {
       if (data.user_type === 'OWNER') {
         const myShopData = await getMyShopList();
         if (myShopData.count > 0) {
-          setPrevPath('/');
-          navigate('/');
+          setPrevPath('/owner');
+          navigate('/owner');
         } else {
           setStep(0);
-          navigate('/shop-registration');
+          navigate('/owner/shop-registration');
         }
       } else if (data.user_type === 'COOP') {
         navigate('/coop');

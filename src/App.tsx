@@ -32,7 +32,7 @@ function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
       return <Navigate to="/login" replace />;
     }
     if (userType === 'OWNER') {
-      return <Navigate to="/" replace />;
+      return <Navigate to="/owner" replace />;
     }
     if (userType === 'COOP') {
       return <Navigate to="/coop" replace />;
@@ -46,17 +46,18 @@ function App() {
   return (
     <Suspense fallback={<div />}>
       <Routes>
+        <Route path="/" element={<Navigate to="/owner" />} />
         <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
-          <Route path="/" element={<DefaultLayout />}>
-            <Route path="/" element={<MyStorePage />} />
-            <Route path="/shop-registration" element={<ShopRegistration />} />
-            <Route path="/add-menu" element={<AddMenu />} />
-            <Route path="/modify-menu/:menuId" element={<ModifyMenu />} />
-            <Route path="/modify-info" element={<PageNotFound />} />
-            <Route path="/menu-management" element={<PageNotFound />} />
-            <Route path="/order-management" element={<PageNotFound />} />
-            <Route path="/sales-management" element={<PageNotFound />} />
-            <Route path="/shop-add" element={<PageNotFound />} />
+          <Route path="/owner" element={<DefaultLayout />}>
+            <Route path="/owner" element={<MyStorePage />} />
+            <Route path="/owner/shop-registration" element={<ShopRegistration />} />
+            <Route path="/owner/add-menu" element={<AddMenu />} />
+            <Route path="/owner/modify-menu/:menuId" element={<ModifyMenu />} />
+            <Route path="/owner/modify-info" element={<PageNotFound />} />
+            <Route path="/owner/menu-management" element={<PageNotFound />} />
+            <Route path="/owner/order-management" element={<PageNotFound />} />
+            <Route path="/owner/sales-management" element={<PageNotFound />} />
+            <Route path="/owner/shop-add" element={<PageNotFound />} />
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
@@ -68,8 +69,8 @@ function App() {
         </Route>
 
         <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute userTypeRequired="NOT_LOGGED_IN" />}>
-            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/find-id" element={<PageNotFound />} />
             <Route path="/find-password" element={<FindPassword />} />

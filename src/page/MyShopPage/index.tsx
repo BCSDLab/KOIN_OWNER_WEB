@@ -63,7 +63,7 @@ export default function MyShopPage() {
         <>
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
-            <Link to="/add-menu">
+            <Link to="/owner/add-menu">
               <button
                 type="button"
                 className={styles['mobileheader__btn-add']}
@@ -92,7 +92,7 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
-            <Link to="/add-menu">
+            <Link to="/owner/add-menu">
               <button
                 type="button"
                 className={styles['header__btn-add']}

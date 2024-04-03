@@ -46,7 +46,7 @@ function Header() {
       });
   };
 
-  if ((pathname === '/add-menu' || pathname.startsWith('/modify-menu/')) && isMobile) {
+  if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/')) && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
         <button
@@ -56,7 +56,7 @@ function Header() {
         >
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
-        <div className={styles['add-menu-header__caption']}>{pathname === '/add-menu' ? '메뉴추가' : '메뉴수정'}</div>
+        <div className={styles['add-menu-header__caption']}>{pathname === '/owner/add-menu' ? '메뉴추가' : '메뉴수정'}</div>
       </header>
     );
   }
@@ -86,7 +86,7 @@ function Header() {
                 </button>
               )}
               <span className={styles.mobileheader__title}>
-                {pathname === '/' ? (
+                {pathname === '/owner' ? (
                   <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)
@@ -128,7 +128,7 @@ function Header() {
                     </div>
                     <ul className={styles['mobileheader__auth-menu']}>
                       <li className={styles['mobileheader__my-info']}>
-                        <Link to="/modify-info">
+                        <Link to="/owner/modify-info">
                           내 정보
                         </Link>
                       </li>
@@ -245,7 +245,7 @@ function Header() {
             <ul className={styles['header__auth-menu']}>
               {/* Auth 완료시 수정 필요 */}
               <li className={styles['header__auth-link']}>
-                <Link to="/modify-info">
+                <Link to="/owner/modify-info">
                   정보수정
                 </Link>
               </li>

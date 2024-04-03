@@ -18,7 +18,7 @@ export default function DefaultLayout() {
       setUser()
         .catch(handleErrorBoundary)
         .catch(() => {
-          setPrevPath('/shop-registration');
+          setPrevPath('/owner/shop-registration');
           navigate('/login', { replace: true });
         });
     }
@@ -28,7 +28,7 @@ export default function DefaultLayout() {
     <div>
       {user && (
       <>
-        {location.pathname !== '/shop-registration' && <Header />}
+        {location.pathname !== '/owner/shop-registration' && <Header />}
         <ErrorBoundary message="에러가 발생했습니다.">
           <Outlet />
         </ErrorBoundary>

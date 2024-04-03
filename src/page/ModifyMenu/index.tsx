@@ -26,7 +26,7 @@ export default function ModifyMenu() {
   const { menuData, modifyMenuMutation } = useMenuInfo(Number(menuId));
 
   const goMyShop = () => {
-    navigate('/');
+    navigate('/owner');
   };
 
   const toggleConfirmClick = () => {

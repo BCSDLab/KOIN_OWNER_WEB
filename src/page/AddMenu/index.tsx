@@ -24,7 +24,7 @@ export default function AddMenu() {
   const { resetMenuName, resetCategoryIds } = useAddMenuStore();
   const { setMenuError, setCategoryError } = useErrorMessageStore();
   const goMyShop = () => {
-    navigate('/');
+    navigate('/owner');
   };
   const {
     value: isGoMyShopModal,

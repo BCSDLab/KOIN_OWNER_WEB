@@ -13,7 +13,7 @@ export default function AuthLayout() {
     // @ChoiWonBeen 토큰없음 에러제거. TODO: setUser가 에러를 다루는 문제 제거
     setUser().catch(() => {});
     if (user) {
-      navigate('/', { replace: true });
+      navigate('/owner', { replace: true });
     }
   }, [setUser, user, navigate]);
 
