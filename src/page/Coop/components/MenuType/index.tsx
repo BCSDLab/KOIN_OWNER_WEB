@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import cn from 'utils/ts/className';
 import { Menus } from 'model/Coop';
 import styles from './MenuType.module.scss';
