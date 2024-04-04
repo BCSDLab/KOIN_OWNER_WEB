@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './SoldoutToggle.module.scss';
 
 export default function SoldoutToggle() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const toggleButton = () => {
     setIsActive(!isActive);
