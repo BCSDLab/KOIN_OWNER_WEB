@@ -12,6 +12,8 @@ export const Dinings = z.object({
   price_cash: z.number(),
   type: z.string(),
   updated_at: z.string(),
+  sold_out: z.boolean(),
+  is_changed: z.boolean(),
 });
 
 export type Dinings = z.infer<typeof Dinings>;
