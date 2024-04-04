@@ -17,3 +17,17 @@ export const Dinings = z.object({
 });
 
 export type Dinings = z.infer<typeof Dinings>;
+
+export const DiningImages = z.object({
+  menuId: z.number(),
+  imageUrl: z.string(),
+});
+
+export type DiningImages = z.infer<typeof DiningImages>;
+
+export const SoldOut = z.object({
+  menuId: z.number(),
+  soldOut: z.boolean(),
+});
+
+export type SoldOut = z.infer<typeof SoldOut>;
