@@ -1,5 +1,5 @@
 import {
-  Routes, Route, Navigate, Outlet,
+  Routes, Route, Navigate, Outlet, useNavigate,
 } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
@@ -25,17 +25,19 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType } = useUserTypeStore();
+  const { userType, isAuth } = useUserTypeStore();
+  const navigate = useNavigate();
+
+  if (!isAuth) {
+    navigate('/login', { replace: true });
+  }
 
   if (userType !== userTypeRequired) {
-    if (userType === 'NOT_LOGGED_IN') {
-      return <Navigate to="/login" replace />;
+    if (userTypeRequired === 'OWNER') {
+      navigate('/owner', { replace: true });
     }
-    if (userType === 'OWNER') {
-      return <Navigate to="/owner" replace />;
-    }
-    if (userType === 'COOP') {
-      return <Navigate to="/coop" replace />;
+    if (userTypeRequired === 'COOP') {
+      navigate('/coop', { replace: true });
     }
   }
 
@@ -69,8 +71,8 @@ function App() {
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute userTypeRequired="NOT_LOGGED_IN" />}>
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/find-id" element={<PageNotFound />} />
             <Route path="/find-password" element={<FindPassword />} />
