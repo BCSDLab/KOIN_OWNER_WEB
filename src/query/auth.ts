@@ -1,17 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  postLogin, findPasswordVerify, findPassword, newPassword,
+  postLogin, postLogout, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
-import { getMyShopList } from 'api/shop';
 import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
-import usePrevPathStore from 'store/path';
 import useUserTypeStore from 'store/userType';
 import { isKoinError } from 'utils/ts/isKoinError';
-import useStepStore from 'store/useStepStore';
+import useUserStore from 'store/user';
 
 interface VerifyInput {
   email: string;
@@ -34,11 +32,8 @@ export interface ErrorResponse {
 }
 
 export const useLogin = () => {
-  const navigate = useNavigate();
-  const { setPrevPath } = usePrevPathStore((state) => state);
-  const { setUserType } = useUserTypeStore();
+  const { setUserType, setIsAuth } = useUserTypeStore();
   const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
-  const setStep = useStepStore((state) => state.setStep);
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -78,6 +73,26 @@ export const useLogin = () => {
   });
 
   return { login: mutate, error, isError };
+};
+
+export const useLogout = () => {
+  const { setUserType, setIsAuth } = useUserTypeStore();
+  const { removeUser } = useUserStore();
+
+  const { mutate, error, isError } = useMutation({
+    mutationFn: async () => {
+      await postLogout()
+        .then(() => {
+          sessionStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          removeUser();
+          setUserType('NOT_LOGGED_IN');
+          setIsAuth(false);
+        });
+    },
+  });
+
+  return { logout: mutate, error, isError };
 };
 
 export const useVerifyEmail = () => {

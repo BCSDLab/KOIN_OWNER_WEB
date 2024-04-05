@@ -2,13 +2,14 @@ import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
 import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-logo.svg';
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CATEGORY from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
-import { postLogout } from 'api/auth';
 import useUserStore from 'store/user';
+import { useLogout } from 'query/auth';
+import usePrevPathStore from 'store/path';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -35,15 +36,15 @@ function Header() {
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
   const isMain = true;
-  const { user, removeUser } = useUserStore();
+  const { user } = useUserStore();
+  const { logout } = useLogout();
+  const navigate = useNavigate();
+  const { setPrevPath } = usePrevPathStore((state) => state);
 
-  const logout = () => {
-    postLogout()
-      .then(() => {
-        sessionStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        removeUser();
-      });
+  const handleLogout = () => {
+    logout();
+    setPrevPath('/login');
+    navigate('/login');
   };
 
   if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/')) && isMobile) {
@@ -133,7 +134,7 @@ function Header() {
                         </Link>
                       </li>
                       <li className={styles.mobileheader__link}>
-                        <button type="button" onClick={logout}>
+                        <button type="button" onClick={handleLogout}>
                           로그아웃
                         </button>
                       </li>
@@ -250,7 +251,7 @@ function Header() {
                 </Link>
               </li>
               <li className={styles['header__auth-link']}>
-                <button type="button" onClick={logout}>
+                <button type="button" onClick={handleLogout}>
                   로그아웃
                 </button>
               </li>
