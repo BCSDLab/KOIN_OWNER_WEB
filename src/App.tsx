@@ -79,8 +79,10 @@ function App() {
             <Route path="/find-id" element={<PageNotFound />} />
             <Route path="/find-password" element={<FindPassword />} />
           </Route>
-          <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/complete-change-password" element={<CompleteChangePassword />} />
+          <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
+            <Route path="/new-password" element={<NewPassword />} />
+            <Route path="/complete-change-password" element={<CompleteChangePassword />} />
+          </Route>
         </Route>
       </Routes>
       <Toast />
