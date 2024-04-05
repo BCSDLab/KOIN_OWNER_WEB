@@ -7,19 +7,7 @@
     margin-left: 24px;
   }
 
-  &__button--selected {
-    width: 60px;
-    height: 33px;
-    background-color: #175c8e;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    cursor: pointer;
-  }
-
-  &__button--unselected {
+  &__button {
     width: 60px;
     height: 33px;
     background-color: #fff;
@@ -28,6 +16,18 @@
     align-items: center;
     justify-content: center;
     border: solid 1px #175c8e;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  &__button--selected {
+    width: 60px;
+    height: 33px;
+    background-color: #175c8e;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 999px;
     cursor: pointer;
   }
