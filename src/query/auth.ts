@@ -35,7 +35,9 @@ export const useLogin = () => {
   const { setUserType, setIsAuth } = useUserTypeStore();
   const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
 
-  const { mutate, error, isError } = useMutation({
+  const {
+    mutate, error, isError, isSuccess,
+  } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
       email: variables.email, password: variables.password,
     }),
@@ -47,19 +49,7 @@ export const useLogin = () => {
       }
 
       setUserType(data.user_type);
-
-      if (data.user_type === 'OWNER') {
-        const myShopData = await getMyShopList();
-        if (myShopData.count > 0) {
-          setPrevPath('/owner');
-          navigate('/owner');
-        } else {
-          setStep(0);
-          navigate('/owner/shop-registration');
-        }
-      } else if (data.user_type === 'COOP') {
-        navigate('/coop');
-      } else;
+      setIsAuth(true);
     },
     onError: (err: unknown) => {
       if (isKoinError(err)) {
@@ -72,7 +62,9 @@ export const useLogin = () => {
     },
   });
 
-  return { login: mutate, error, isError };
+  return {
+    login: mutate, error, isError, isSuccess,
+  };
 };
 
 export const useLogout = () => {

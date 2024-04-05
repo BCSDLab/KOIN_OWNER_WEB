@@ -10,9 +10,13 @@ import { useLogin } from 'query/auth';
 import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import sha256 from 'utils/ts/SHA-256';
 import { useErrorMessageStore } from 'store/errorMessageStore';
+import usePrevPathStore from 'store/path';
+import useStepStore from 'store/useStepStore';
+import { getMyShopList } from 'api/shop';
+import useUserTypeStore from 'store/userType';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 import ApprovalModal from './ApprovalModal';
@@ -21,14 +25,16 @@ export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
   const { value: isAutoLogin, changeValue: changeIsAutoLogin } = useBooleanState(true);
   const { isMobile } = useMediaQuery();
-  const { login, isError: isServerError } = useLogin();
+  const { login, isError: isServerError, isSuccess } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
   const { loginError, loginErrorCode } = useErrorMessageStore();
   const [emailError, setEmailError] = useState('');
   const { value: isModalOpen, changeValue: toggle } = useBooleanState(false);
-
+  const { setPrevPath } = usePrevPathStore((state) => state);
+  const setStep = useStepStore((state) => state.setStep);
   const isError = isServerError || isFormError;
+  const { userType } = useUserTypeStore();
 
   const {
     register,
@@ -36,6 +42,28 @@ export default function Login() {
   } = useForm<LoginParams>({
     resolver: zodResolver(LoginParams),
   });
+
+  useEffect(() => {
+    const fetchShopList = async () => {
+      if (userType === 'OWNER') {
+        const myShopData = await getMyShopList();
+        if (myShopData.count > 0) {
+          setPrevPath('/owner');
+          navigate('/owner');
+        } else {
+          setStep(0);
+          navigate('/owner/shop-registration');
+        }
+      }
+      if (userType === 'COOP') {
+        navigate('/coop');
+      }
+    };
+
+    if (isSuccess) {
+      fetchShopList();
+    }
+  }, [isSuccess, userType, navigate, setPrevPath, setStep]);
 
   const onSubmit: SubmitHandler<LoginParams> = async (data) => {
     const hashedPassword = await sha256(data.password);
