@@ -13,7 +13,7 @@ export default function MenuType({ selectedMenuType, setSelectedMenuType }: Menu
       <button
         className={cn({
           [styles['place__button--selected']]: selectedMenuType === '아침',
-          [styles['place__button--unselected']]: selectedMenuType !== '아침',
+          [styles.place__button]: selectedMenuType !== '아침',
         })}
         onClick={() => setSelectedMenuType('아침')}
         onKeyDown={(e) => e.key === 'Enter' && setSelectedMenuType('아침')}
@@ -25,7 +25,7 @@ export default function MenuType({ selectedMenuType, setSelectedMenuType }: Menu
       <button
         className={cn({
           [styles['place__button--selected']]: selectedMenuType === '점심',
-          [styles['place__button--unselected']]: selectedMenuType !== '점심',
+          [styles.place__button]: selectedMenuType !== '점심',
         })}
         onClick={() => setSelectedMenuType('점심')}
         onKeyDown={(e) => e.key === 'Enter' && setSelectedMenuType('점심')}
@@ -37,7 +37,7 @@ export default function MenuType({ selectedMenuType, setSelectedMenuType }: Menu
       <button
         className={cn({
           [styles['place__button--selected']]: selectedMenuType === '저녁',
-          [styles['place__button--unselected']]: selectedMenuType !== '저녁',
+          [styles.place__button]: selectedMenuType !== '저녁',
         })}
         onClick={() => setSelectedMenuType('저녁')}
         onKeyDown={(e) => e.key === 'Enter' && setSelectedMenuType('저녁')}
