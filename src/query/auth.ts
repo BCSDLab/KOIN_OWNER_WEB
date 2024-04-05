@@ -68,19 +68,29 @@ export const useLogin = () => {
 };
 
 export const useLogout = () => {
-  const { setUserType, setIsAuth } = useUserTypeStore();
+  const { setUserType } = useUserTypeStore();
   const { removeUser } = useUserStore();
+  const { setLogoutError, setLogoutErrorCode } = useErrorMessageStore();
 
   const { mutate, error, isError } = useMutation({
     mutationFn: async () => {
-      await postLogout()
-        .then(() => {
-          sessionStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          removeUser();
-          setUserType('NOT_LOGGED_IN');
-          setIsAuth(false);
-        });
+      const response = await postLogout();
+      if (response) {
+        return true;
+      }
+      throw new Error('로그아웃 실패');
+    },
+    onSuccess: () => {
+      sessionStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      removeUser();
+      setUserType('NOT_LOGGED_IN');
+    },
+    onError: (err: unknown) => {
+      if (isKoinError(err)) {
+        setLogoutError(err.message || '로그아웃을 실패했습니다.');
+        setLogoutErrorCode(err.code);
+      }
     },
   });
 

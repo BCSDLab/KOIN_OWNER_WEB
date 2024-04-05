@@ -9,6 +9,10 @@ interface ErrorMessageStore {
   setLoginError: (error: string) => void;
   loginErrorCode: number;
   setLoginErrorCode: (error: number) => void;
+  logoutError: string;
+  setLogoutError: (error: string) => void;
+  logoutErrorCode: number;
+  setLogoutErrorCode: (error: number) => void;
 }
 
 export const useErrorMessageStore = create<ErrorMessageStore>((set) => ({
@@ -20,4 +24,8 @@ export const useErrorMessageStore = create<ErrorMessageStore>((set) => ({
   setLoginError: (error) => set({ loginError: error }),
   loginErrorCode: 0,
   setLoginErrorCode: (error) => set({ loginErrorCode: error }),
+  logoutError: '',
+  setLogoutError: (error) => set({ loginError: error }),
+  logoutErrorCode: 0,
+  setLogoutErrorCode: (error) => set({ loginErrorCode: error }),
 }));

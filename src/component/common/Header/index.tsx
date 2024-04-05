@@ -42,9 +42,13 @@ function Header() {
   const { setPrevPath } = usePrevPathStore((state) => state);
 
   const handleLogout = () => {
-    logout();
-    setPrevPath('/login');
-    navigate('/login');
+    console.log('logout시도');
+    logout(undefined, {
+      onSettled: () => {
+        setPrevPath('/login');
+        navigate('/login');
+      },
+    });
   };
 
   if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/')) && isMobile) {
