@@ -1,5 +1,5 @@
 import {
-  Routes, Route, Navigate, Outlet, useNavigate,
+  Routes, Route, Navigate, Outlet, useNavigate, useLocation,
 } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
@@ -13,7 +13,7 @@ import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
 import PageNotFound from 'page/Error/PageNotFound';
 import ModifyMenu from 'page/ModifyMenu';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import useUserTypeStore from 'store/userType';
@@ -25,21 +25,23 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType, isAuth } = useUserTypeStore();
+  const { userType } = useUserTypeStore();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  if (!isAuth) {
-    navigate('/login', { replace: true });
-  }
-
-  if (userType !== userTypeRequired) {
-    if (userTypeRequired === 'OWNER') {
-      navigate('/owner', { replace: true });
+  useEffect(() => {
+    if (userType !== userTypeRequired) {
+      if (userType === 'OWNER') {
+        navigate('/owner', { replace: true });
+      }
+      if (userType === 'COOP') {
+        navigate('/coop', { replace: true });
+      }
+      if (userType === 'NOT_LOGGED_IN') {
+        navigate('/login', { replace: true });
+      }
     }
-    if (userTypeRequired === 'COOP') {
-      navigate('/coop', { replace: true });
-    }
-  }
+  }, [location, userType, userTypeRequired, navigate]);
 
   return <Outlet />;
 }

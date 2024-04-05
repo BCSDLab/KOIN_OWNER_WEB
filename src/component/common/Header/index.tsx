@@ -42,7 +42,6 @@ function Header() {
   const { setPrevPath } = usePrevPathStore((state) => state);
 
   const handleLogout = () => {
-    console.log('logout시도');
     logout(undefined, {
       onSettled: () => {
         setPrevPath('/login');

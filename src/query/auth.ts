@@ -32,7 +32,7 @@ export interface ErrorResponse {
 }
 
 export const useLogin = () => {
-  const { setUserType, setIsAuth } = useUserTypeStore();
+  const { setUserType } = useUserTypeStore();
   const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
 
   const {
@@ -49,7 +49,6 @@ export const useLogin = () => {
       }
 
       setUserType(data.user_type);
-      setIsAuth(true);
     },
     onError: (err: unknown) => {
       if (isKoinError(err)) {
