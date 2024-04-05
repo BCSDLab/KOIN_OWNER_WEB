@@ -1,5 +1,5 @@
 import { useGetDining } from 'query/coop';
-import { Dinings, Menus } from 'model/Coop';
+import { Dinings, Menus, DINING_TYPES } from 'model/Coop';
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
 import { useRef, useState } from 'react';
@@ -31,18 +31,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     fileInputRefs.current[menuId]?.click();
   };
 
-  const getDiningType = (menuType: Menus) => {
-    switch (menuType) {
-      case '아침':
-        return 'BREAKFAST';
-      case '점심':
-        return 'LUNCH';
-      case '저녁':
-        return 'DINNER';
-      default:
-        return '';
-    }
-  };
+  const getDiningType = (menuType: Menus) => DINING_TYPES[menuType];
 
   const filteredData = data?.filter((menu:Dinings) => {
     const diningType = getDiningType(selectedMenuType);

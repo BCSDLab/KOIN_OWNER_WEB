@@ -2,6 +2,14 @@ import z from 'zod';
 
 export type Menus = '아침' | '점심' | '저녁';
 
+export type DiningTypes = 'BREAKFAST' | 'LUNCH' | 'DINNER';
+
+export const DINING_TYPES: Record<Menus, DiningTypes> = {
+  아침: 'BREAKFAST',
+  점심: 'LUNCH',
+  저녁: 'DINNER',
+};
+
 export const Dinings = z.object({
   date: z.string(),
   id: z.number(),
