@@ -151,6 +151,12 @@
     padding: 8px 0 8px 12px;
   }
 
+  &__select {
+    width: 345px;
+    height: 40px;
+    padding-left: 12px;
+  }
+
   &__operate-time {
     display: flex;
 
@@ -171,6 +177,7 @@
   &__checkboxes {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
 
   &__checkbox {
@@ -293,6 +300,12 @@
     height: 21px;
     padding: 8px 0 8px 8px;
     border: 1px solid #898a8d;
+  }
+
+  &--select {
+    width: 262px;
+    height: 37px;
+    padding: 0 8px;
   }
 
   &__checkboxes {
