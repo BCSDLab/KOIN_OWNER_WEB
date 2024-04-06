@@ -12,6 +12,8 @@ export interface Category {
   submenu: SubMenu[]
 }
 
+export const TOTAL_CATEGORY = 1;
+
 const CATEGORY: Category[] = [
   {
     title: '매장관리',

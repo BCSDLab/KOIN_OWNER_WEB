@@ -22,6 +22,7 @@ import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useModalStore from 'store/modalStore';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
+import { TOTAL_CATEGORY } from 'utils/constant/category';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -98,7 +99,7 @@ EditShopInfoModalProps) {
     setDelivery(shopInfo.delivery);
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
-    setCategoryId(shopInfo.shop_categories[1].id);
+    setCategoryId(shopInfo.shop_categories[1] ? shopInfo.shop_categories[1].id : TOTAL_CATEGORY);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -141,8 +142,8 @@ EditShopInfoModalProps) {
       open_time: openTimeArray[index],
     }));
     // shop_categories[0]은 전체보기이므로 따로 처리
-    const totalCategory = 1;
-    const categoryIds = categoryId === 0 ? [totalCategory] : [totalCategory, categoryId];
+    const categoryIds = categoryId === TOTAL_CATEGORY
+      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, categoryId];
     setValue('category_ids', categoryIds);
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
