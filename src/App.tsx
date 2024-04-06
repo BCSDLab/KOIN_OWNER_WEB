@@ -1,5 +1,5 @@
 import {
-  Routes, Route, Navigate, Outlet, useNavigate, useLocation,
+  Routes, Route, Navigate, Outlet, useNavigate,
 } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
@@ -26,7 +26,6 @@ interface ProtectedRouteProps {
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
   const { userType } = useUserTypeStore();
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +40,7 @@ function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
         navigate('/login', { replace: true });
       }
     }
-  }, [location, userType, userTypeRequired, navigate]);
+  }, [userType, userTypeRequired, navigate]);
 
   return <Outlet />;
 }
