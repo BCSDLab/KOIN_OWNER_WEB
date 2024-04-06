@@ -7,15 +7,13 @@ export const LoginParams = z.object({
 
 export type LoginParams = z.infer<typeof LoginParams>;
 
-export type UserType = 'NOT_LOGGED_IN' | 'COOP' | 'OWNER';
-
 export const LoginResponse = z.object({
   refresh_token: z.string(),
   token: z.string(),
   user_type: z.union([
     z.literal('NOT_LOGGED_IN'),
-    z.literal('COOP'),
     z.literal('OWNER'),
+    z.literal('COOP'),
   ]),
 });
 
@@ -62,6 +60,17 @@ export type UserResponse = z.infer<typeof UserResponse>;
 // 해당 주석 위 부분은 api> ayuto> model.ts 에서 가져 온 부분입니다.
 
 export const User = z.nullable(UserResponse);
+
+export const UserTypeResponse = z.object({
+  user_type: z.union([
+    z.literal('OWNER'),
+    z.literal('COOP'),
+  ]),
+});
+
+export type UserTypeResponse = z.infer<typeof UserTypeResponse>;
+
+export type UserType = 'NOT_LOGGED_IN' | 'OWNER' | 'COOP';
 
 export type User = z.infer<typeof User>;
 
