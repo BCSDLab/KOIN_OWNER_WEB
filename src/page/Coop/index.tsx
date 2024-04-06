@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Menus } from 'model/Coop';
-import getCurrentMenuType from 'utils/hooks/useGetCurrentMenyType';
+import getCurrentMenuType from 'page/Coop/hook/useGetCurrentMenuType';
 import MenuCard from './components/MenuCard';
 import MenuType from './components/MenuType';
 import styles from './Coop.module.scss';
