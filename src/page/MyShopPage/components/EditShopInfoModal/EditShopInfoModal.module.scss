@@ -126,17 +126,17 @@
   }
 }
 
-.content {
+.main-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 22px;
-}
 
-.main-info {
-  display: flex;
-  flex-direction: column;
-  margin-right: 24px;
-  margin-bottom: 24px;
+  &__label {
+    display: flex;
+    flex-direction: column;
+    margin-right: 24px;
+    margin-bottom: 24px;
+  }
 
   &__header {
     font-size: 18px;
@@ -255,13 +255,6 @@
     display: none;
   }
 
-  &__main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 22px;
-  }
-
   &__confirm-button-wrapper {
     display: flex;
     justify-content: end;
@@ -284,9 +277,16 @@
 
 .mobile-main-info {
   display: flex;
-  margin-bottom: 16px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 22px;
 
-  &--header {
+  &__label {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  &__header {
     display: flex;
     align-items: center;
     width: 68px;
@@ -295,14 +295,14 @@
     color: #17518e;
   }
 
-  &--input {
+  &__input {
     width: 252px;
     height: 21px;
     padding: 8px 0 8px 8px;
     border: 1px solid #898a8d;
   }
 
-  &--select {
+  &__select {
     width: 262px;
     height: 37px;
     padding: 0 8px;
@@ -355,16 +355,16 @@
 .mobile-operate-time {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 252px;
   height: auto;
-  margin-left: 8px;
 
-  &--content {
+  &__content {
     color: #858585;
     font-size: 14px;
   }
 
-  &--button {
+  &__button {
     width: 58px;
     height: 29px;
     background-color: #17518e;
