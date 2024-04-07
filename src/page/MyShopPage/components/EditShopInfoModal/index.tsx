@@ -13,7 +13,7 @@ import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { putShop } from 'api/shop';
-import useShopCategory from 'query/shopCategory';
+import useShopCategory from 'query/shop';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
