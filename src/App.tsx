@@ -16,16 +16,16 @@ import ModifyMenu from 'page/ModifyMenu';
 import { Suspense, useEffect } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
-import { useUserType } from 'query/auth';
 import CoopLayout from 'layout/CoopLayout';
 import CoopPage from 'page/CoopPage';
+import useUserTypeStore from 'store/userType';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType } = useUserType();
+  const { userType } = useUserTypeStore();
   const navigate = useNavigate();
 
   useEffect(() => {

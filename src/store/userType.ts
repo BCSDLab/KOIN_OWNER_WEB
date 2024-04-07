@@ -1,3 +1,4 @@
+import { getUserType } from 'api/auth';
 import { UserType } from 'model/auth';
 import { create } from 'zustand';
 
@@ -8,8 +9,10 @@ interface UserTypeStore {
 
 const useUserTypeStore = create<UserTypeStore>((set) => ({
   userType: 'NOT_LOGGED_IN',
-  isAuth: false,
-  setUserType: (userType) => set({ userType }),
+  setUserType: async () => {
+    const response = await getUserType();
+    set({ userType: response ? response.user_type : 'NOT_LOGGED_IN' });
+  },
 }));
 
 export default useUserTypeStore;
