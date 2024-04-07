@@ -10,7 +10,7 @@ interface SoldoutToggleProps {
 
 export default function SoldoutToggle({ menuId, onClick, menu }: SoldoutToggleProps) {
   const { isSoldOut, toggleSoldOut } = useToggleStore();
-  const isActive = isSoldOut[menuId] ?? menu.sold_out;
+  const isActive = isSoldOut[menuId] ?? menu.soldout_at;
 
   const handleToggle = () => {
     onClick();

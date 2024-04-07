@@ -24,8 +24,8 @@ export const Dinings = z.object({
   image_url: z.string(),
   created_at: z.string(),
   updated_at: z.string(),
-  sold_out: z.boolean(),
-  is_changed: z.boolean(),
+  soldout_at: z.string(),
+  changed_at: z.string(),
 });
 
 export type Dinings = z.infer<typeof Dinings>;
