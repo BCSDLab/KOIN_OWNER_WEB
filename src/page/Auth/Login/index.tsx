@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
 import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
 import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
-import { useLogin } from 'query/auth';
+import { useLogin, useUserType } from 'query/auth';
 import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginParams } from 'model/auth';
@@ -16,7 +16,6 @@ import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
 import useStepStore from 'store/useStepStore';
 import { getMyShopList } from 'api/shop';
-import useUserTypeStore from 'store/userType';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 import ApprovalModal from './ApprovalModal';
@@ -34,7 +33,7 @@ export default function Login() {
   const { setPrevPath } = usePrevPathStore((state) => state);
   const setStep = useStepStore((state) => state.setStep);
   const isError = isServerError || isFormError;
-  const { userType } = useUserTypeStore();
+  const { userType } = useUserType();
 
   const {
     register,

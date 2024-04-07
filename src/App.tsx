@@ -16,7 +16,7 @@ import ModifyMenu from 'page/ModifyMenu';
 import { Suspense, useEffect } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
-import useUserTypeStore from 'store/userType';
+import { useUserType } from 'query/auth';
 import CoopLayout from 'layout/CoopLayout';
 import CoopPage from 'page/CoopPage';
 
@@ -25,7 +25,7 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType } = useUserTypeStore();
+  const { userType } = useUserType();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  postLogin, postLogout, findPasswordVerify, findPassword, newPassword,
+  postLogin, postLogout, findPasswordVerify, findPassword, newPassword, getUserType,
 } from 'api/auth';
 import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
@@ -30,6 +30,24 @@ export interface ErrorResponse {
   }
   message: string;
 }
+
+export const useUserType = () => {
+  const { userType, setUserType } = useUserTypeStore();
+
+  const { mutate, error, isError } = useMutation({
+    mutationFn: async () => {
+      const response = await getUserType();
+      return response.user_type;
+    },
+    onSuccess: (result) => {
+      setUserType(result || 'NOT_LOGGED_IN');
+    },
+  });
+
+  return {
+    checkUserType: mutate, userType, error, isError,
+  };
+};
 
 export const useLogin = () => {
   const { setUserType } = useUserTypeStore();
