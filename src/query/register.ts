@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
+import axios from 'axios';
 import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
@@ -84,7 +85,9 @@ export const useGetFileUrls = (goNext:()=>void) => {
         try {
           await register.mutateAsync(data.file_urls);
         } catch (e) {
-          showToast('error', `회원가입 중 에러가 발생했어요${e}`);
+          if (axios.isAxiosError(e)) {
+            showToast('error', `${e.response?.data.message || e.message}`);
+          }
         }
       } catch (e) {
         showToast('error', `파일업로드 중 에러가 발생했어요${e}`);

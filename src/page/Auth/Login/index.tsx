@@ -15,6 +15,7 @@ import sha256 from 'utils/ts/SHA-256';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
+import ApprovalModal from './ApprovalModal';
 
 export default function Login() {
   const { value: isBlind, changeValue: changeIsBlind } = useBooleanState();
@@ -23,8 +24,9 @@ export default function Login() {
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
-  const { loginError } = useErrorMessageStore();
+  const { loginError, loginErrorCode } = useErrorMessageStore();
   const [emailError, setEmailError] = useState('');
+  const { value: isModalOpen, changeValue: toggle } = useBooleanState(false);
 
   const isError = isServerError || isFormError;
 
@@ -83,7 +85,7 @@ export default function Login() {
           </div>
           <div className={styles['form__auto-login']}>
             {(isError || !!isFormError) && (
-            <div className={styles['form__error-message']}>{loginError || emailError}</div>
+              <div className={styles['form__error-message']}>{loginError || emailError}</div>
             )}
             <label className={styles['form__auto-login__label']} htmlFor="auto-login">
               <input
@@ -96,12 +98,18 @@ export default function Login() {
               자동로그인
             </label>
           </div>
+          <div className={styles.form__error}>
+            {isMobile && (isError || !!isFormError) && (
+              <div className={styles['form__error-message']}>{loginError || emailError}</div>
+            )}
+          </div>
           <button
             className={cn({
               [styles.form__button]: true,
               [styles['form__button--login']]: true,
             })}
             type="submit"
+            onClick={toggle}
           >
             로그인
           </button>
@@ -127,6 +135,7 @@ export default function Login() {
           </div>
         </form>
       </div>
+      {loginErrorCode === 100005 && isModalOpen && <ApprovalModal toggle={toggle} />}
     </div>
   );
 }

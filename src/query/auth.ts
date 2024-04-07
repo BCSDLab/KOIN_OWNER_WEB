@@ -9,13 +9,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
+import { isKoinError } from 'utils/ts/isKoinError';
+import useStepStore from 'store/useStepStore';
 
 interface VerifyInput {
   email: string;
   verify: string;
 }
 
-interface ErrorResponse {
+export interface ErrorResponse {
   response: undefined | {
     message: string;
     data: {
@@ -33,7 +35,8 @@ interface ErrorResponse {
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
-  const { setLoginError } = useErrorMessageStore();
+  const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
+  const setStep = useStepStore((state) => state.setStep);
 
   const { mutate, error, isError } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
@@ -51,13 +54,18 @@ export const useLogin = () => {
         setPrevPath('/');
         navigate('/');
       } else {
+        setStep(0);
         navigate('/store-registration');
       }
     },
-    onError: (err: AxiosError<ErrorResponse>) => {
-      sessionStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      setLoginError(err.response?.data.message || err.message);
+    onError: (err: unknown) => {
+      if (isKoinError(err)) {
+        // TODO: 분기별 에러 처리
+        sessionStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        setLoginError(err.message || '로그인에 실패했습니다.');
+        setLoginErrorCode(err.code);
+      }
     },
   });
 

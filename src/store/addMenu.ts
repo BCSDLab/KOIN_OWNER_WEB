@@ -15,10 +15,11 @@ interface AddMenuStore {
   isSingle: boolean;
   name: string;
   optionPrices: OptionPrices[] | null;
-  singlePrice: number | null;
+  singlePrice: number;
   setCategoryIds: (categoryIds: number[]) => void;
   setDescription: (description: string) => void;
   setImageUrl: (newImageUrl: string) => void;
+  setImageUrls: (newImageUrls: string[]) => void,
   removeImageUrl: (imageUrlToRemove: string) => void;
   setIsSingle: (isSingle: boolean) => void;
   setName: (name: string) => void;
@@ -36,7 +37,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   categoryIds: [],
   description: '',
   imageUrl: [],
-  isSingle: false,
+  isSingle: true,
   name: '',
   optionPrices: [{ id: 0, option: '', price: 0 }],
   singlePrice: 0,
@@ -44,6 +45,9 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setDescription: (description) => set({ description }),
   setImageUrl: (newImageUrl) => set((state) => ({
     imageUrl: [...state.imageUrl, newImageUrl],
+  })),
+  setImageUrls: (newImageUrl) => set((state) => ({
+    imageUrl: [...state.imageUrl, ...newImageUrl],
   })),
   removeImageUrl: (imageUrlToRemove) => set((state) => ({
     imageUrl: state.imageUrl.filter((img) => img !== imageUrlToRemove),
@@ -57,7 +61,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
     categoryIds: [],
     description: '',
     imageUrl: [],
-    isSingle: false,
+    isSingle: true,
     name: '',
     optionPrices: [{ id: 0, option: '', price: 0 }],
     singlePrice: 0,
@@ -79,7 +83,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
         isSingle: menuData.is_single,
         name: menuData.name,
         optionPrices: newOptionPrices,
-        singlePrice: 'single_price' in menuData ? menuData.single_price : null,
+        singlePrice: menuData.single_price !== null ? menuData.single_price : undefined,
       });
     }
   },

@@ -9,7 +9,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
 import { postLogout } from 'api/auth';
 import useUserStore from 'store/user';
-import useStepStore from 'store/useStepStore';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -37,7 +36,6 @@ function Header() {
   } = useMobileSidebar(pathname, isMobile);
   const isMain = true;
   const { user, removeUser } = useUserStore();
-  const setStep = useStepStore((state) => state.setStep);
 
   const logout = () => {
     postLogout()
@@ -45,7 +43,6 @@ function Header() {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         removeUser();
-        setStep(0);
       });
   };
 
@@ -89,7 +86,7 @@ function Header() {
                 </button>
               )}
               <span className={styles.mobileheader__title}>
-                {pathname === '/' ? (
+                {pathname === '/' || pathname === '/coop' ? (
                   <MobileLogoIcon title="코인 로고" />
                 ) : (CATEGORY
                   .flatMap((categoryValue) => categoryValue.submenu)
@@ -155,7 +152,7 @@ function Header() {
                               key={subMenu.title}
                             >
                               <Link to={subMenu.link}>
-                                {subMenu.title}
+                                {subMenu.title === '가게정보' && subMenu.title}
                               </Link>
                             </li>
                           ))}
@@ -238,7 +235,7 @@ function Header() {
                   {panelMenuList?.map((menu) => (
                     <li className={styles.megamenu__menu} key={menu.title}>
                       <Link className={styles.megamenu__link} to={menu.link}>
-                        {menu.title}
+                        {menu.title === '가게정보' && menu.title}
                       </Link>
                     </li>
                   ))}

@@ -1,5 +1,6 @@
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
+import showToast from 'utils/ts/showToast';
 
 const useFormValidation = () => {
   const { setMenuError, setCategoryError } = useErrorMessageStore();
@@ -10,6 +11,7 @@ const useFormValidation = () => {
 
     if (name.length === 0) {
       setMenuError('메뉴명을 입력해주세요.');
+      showToast('error', '메뉴명을 입력해주세요.');
       isValid = false;
     } else {
       setMenuError('');
@@ -17,6 +19,7 @@ const useFormValidation = () => {
 
     if (categoryIds.length === 0) {
       setCategoryError('카테고리를 1개 이상 선택해주세요.');
+      showToast('error', '카테고리를 1개 이상 선택해주세요.');
       isValid = false;
     } else {
       setCategoryError('');
