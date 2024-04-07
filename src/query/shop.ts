@@ -7,6 +7,7 @@ import {
 import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import getShopCategory from 'api/category';
 import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
@@ -32,6 +33,11 @@ const useMyShop = () => {
     enabled: !!shopId,
   });
 
+  const { data: categoryList } = useQuery({
+    queryKey: shopKeys.shopCategoryInfo,
+    queryFn: () => getShopCategory(),
+  });
+
   const { mutate: addMenuMutation, isError: addMenuError } = useMutation({
     mutationFn: (param: NewMenu) => {
       if (typeof shopId === 'number') {
@@ -46,7 +52,7 @@ const useMyShop = () => {
   });
 
   return {
-    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading,
+    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading, categoryList,
   };
 };
 
