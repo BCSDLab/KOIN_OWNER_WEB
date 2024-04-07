@@ -48,7 +48,7 @@ export const useLogin = () => {
         localStorage.setItem('refresh_token', data.refresh_token);
       }
 
-      setUserType(data.user_type);
+      setUserType();
     },
     onError: (err: unknown) => {
       if (isKoinError(err)) {
@@ -83,7 +83,7 @@ export const useLogout = () => {
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       removeUser();
-      setUserType('NOT_LOGGED_IN');
+      setUserType();
     },
     onError: (err: unknown) => {
       if (isKoinError(err)) {

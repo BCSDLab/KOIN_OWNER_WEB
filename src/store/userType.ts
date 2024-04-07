@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 interface UserTypeStore {
   userType: UserType;
-  setUserType: (type: UserType) => void;
+  setUserType: () => void;
 }
 
 const useUserTypeStore = create<UserTypeStore>((set) => ({

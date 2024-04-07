@@ -19,7 +19,6 @@ export default function DefaultLayout() {
         .catch(handleErrorBoundary)
         .catch(() => {
           setPrevPath('/owner/shop-registration');
-          navigate('/login', { replace: true });
         });
     }
   }, [handleErrorBoundary, setUser, setPrevPath, navigate, user]);

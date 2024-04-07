@@ -25,9 +25,10 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType } = useUserTypeStore();
+  const { userType, setUserType } = useUserTypeStore();
   const navigate = useNavigate();
 
+  setUserType();
   useEffect(() => {
     if (userType !== userTypeRequired) {
       if (userType === 'OWNER') {
