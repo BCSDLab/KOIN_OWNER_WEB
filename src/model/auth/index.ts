@@ -11,9 +11,9 @@ export const LoginResponse = z.object({
   refresh_token: z.string(),
   token: z.string(),
   user_type: z.union([
-    z.literal('NOT_LOGGED_IN'),
     z.literal('OWNER'),
     z.literal('COOP'),
+    z.null(),
   ]),
 });
 
@@ -70,7 +70,7 @@ export const UserTypeResponse = z.object({
 
 export type UserTypeResponse = z.infer<typeof UserTypeResponse>;
 
-export type UserType = 'NOT_LOGGED_IN' | 'OWNER' | 'COOP';
+export type UserType = 'OWNER' | 'COOP' | null;
 
 export type User = z.infer<typeof User>;
 

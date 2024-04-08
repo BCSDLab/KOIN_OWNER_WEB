@@ -8,10 +8,20 @@ interface UserTypeStore {
 }
 
 const useUserTypeStore = create<UserTypeStore>((set) => ({
-  userType: 'NOT_LOGGED_IN',
+  userType: null,
   setUserType: async () => {
-    const response = await getUserType();
-    set({ userType: response ? response.user_type : 'NOT_LOGGED_IN' });
+    try {
+      const response = await getUserType();
+      const newUserType = response.user_type;
+      set((state) => {
+        if (newUserType !== state.userType) {
+          return { userType: newUserType };
+        }
+        return state;
+      });
+    } catch {
+      set((state) => (state.userType !== null ? { userType: null } : state));
+    }
   },
 }));
 

@@ -1,5 +1,5 @@
 import {
-  Routes, Route, Navigate, Outlet, useNavigate,
+  Routes, Route, Navigate, Outlet,
 } from 'react-router-dom';
 import DefaultLayout from 'layout/DefaultLayout';
 import Login from 'page/Auth/Login';
@@ -13,7 +13,7 @@ import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
 import PageNotFound from 'page/Error/PageNotFound';
 import ModifyMenu from 'page/ModifyMenu';
-import { Suspense, useEffect } from 'react';
+import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import CoopLayout from 'layout/CoopLayout';
@@ -26,22 +26,19 @@ interface ProtectedRouteProps {
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
   const { userType, setUserType } = useUserTypeStore();
-  const navigate = useNavigate();
-
   setUserType();
-  useEffect(() => {
-    if (userType !== userTypeRequired) {
-      if (userType === 'OWNER') {
-        navigate('/owner', { replace: true });
-      }
-      if (userType === 'COOP') {
-        navigate('/coop', { replace: true });
-      }
-      if (userType === 'NOT_LOGGED_IN') {
-        navigate('/login', { replace: true });
-      }
+
+  if (userType !== userTypeRequired) {
+    if (userType === 'OWNER') {
+      return <Navigate to="/owner" replace />;
     }
-  }, [userType, userTypeRequired, navigate]);
+    if (userType === 'COOP') {
+      return <Navigate to="/coop" replace />;
+    }
+    if (userType === null) {
+      return <Navigate to="/login" replace />;
+    }
+  }
 
   return <Outlet />;
 }
@@ -73,7 +70,7 @@ function App() {
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route element={<ProtectedRoute userTypeRequired="NOT_LOGGED_IN" />}>
+          <Route element={<ProtectedRoute userTypeRequired={null} />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/find-id" element={<PageNotFound />} />
