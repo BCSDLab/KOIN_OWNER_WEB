@@ -13,6 +13,7 @@ import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { putShop } from 'api/shop';
+import useShopCategory from 'query/shop';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
@@ -21,6 +22,7 @@ import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useModalStore from 'store/modalStore';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
+import { TOTAL_CATEGORY } from 'utils/constant/category';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -41,11 +43,13 @@ EditShopInfoModalProps) {
   const { imageFile, saveImgFile, imgRef } = useImageUpload();
   const {
     setName, setAddress, setPhone, setDeliveryPrice, setDescription, setDelivery, setPayBank,
-    setPayCard,
+    setPayCard, setCategoryId,
   } = useShopRegistrationStore();
   const {
-    name, address, phone, deliveryPrice, description, delivery, payBank, payCard,
+    name, address, phone, deliveryPrice, description, delivery, payBank, payCard, categoryId,
   } = useShopRegistrationStore();
+
+  const { categoryList } = useShopCategory();
 
   const {
     openTimeState,
@@ -63,6 +67,10 @@ EditShopInfoModalProps) {
     isSpecificDayClosedAndAllSameTime,
     isAllClosed,
   } = CheckSameTime();
+
+  const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryId(Number(e.target.value));
+  };
 
   const {
     handleSubmit, setValue,
@@ -91,6 +99,7 @@ EditShopInfoModalProps) {
     setDelivery(shopInfo.delivery);
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
+    setCategoryId(shopInfo.shop_categories[1] ? shopInfo.shop_categories[1].id : TOTAL_CATEGORY);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -133,12 +142,9 @@ EditShopInfoModalProps) {
       open_time: openTimeArray[index],
     }));
     // shop_categories[0]은 전체보기이므로 따로 처리
-    if (shopInfo.shop_categories.length === 1) {
-      setValue('category_ids', [shopInfo.shop_categories[0].id]);
-    } else {
-      const categoryIds = shopInfo.shop_categories.map((category) => category.id);
-      setValue('category_ids', categoryIds);
-    }
+    const categoryIds = categoryId === TOTAL_CATEGORY
+      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, categoryId];
+    setValue('category_ids', categoryIds);
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
     setValue('description', description);
@@ -149,7 +155,7 @@ EditShopInfoModalProps) {
     setValue('phone', phone);
     setValue('address', address);
   }, [imageUrlList, openTimeState, closeTimeState, shopClosedState, deliveryPrice,
-    description, delivery, payBank, payCard, name, phone, address]);
+    description, delivery, payBank, payCard, name, phone, address, categoryId]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
@@ -186,31 +192,41 @@ EditShopInfoModalProps) {
               <span className={styles['mobile-container__modify-image-caption']}>사진변경</span>
             </label>
           </div>
-          <div className={styles['mobile-container__main-content']}>
-            <label htmlFor="shopName" className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>가게명</span>
+          <div className={styles['mobile-main-info']}>
+            <label htmlFor="shopName" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>가게명</span>
               <input
                 type="text"
                 id="shopName"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={styles['mobile-main-info--input']}
+                className={styles['mobile-main-info__input']}
               />
             </label>
-            <label htmlFor="phone" className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>전화번호</span>
+            <label htmlFor="category" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>카테고리</span>
+              <select value={categoryId} name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
+                {categoryList?.shop_categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="phone" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>전화번호</span>
               <input
                 type="text"
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className={styles['mobile-main-info--input']}
+                className={styles['mobile-main-info__input']}
               />
             </label>
-            <div className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>운영시간</span>
+            <div className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>운영시간</span>
               <div className={styles['mobile-operate-time']}>
-                <div className={styles['mobile-operate-time--content']}>
+                <div className={styles['mobile-operate-time__content']}>
                   {
                     isAllSameTime && !hasClosedDay ? (
                       <div>
@@ -247,40 +263,40 @@ EditShopInfoModalProps) {
                 <button
                   type="button"
                   onClick={openOperateTimeModal}
-                  className={styles['mobile-operate-time--button']}
+                  className={styles['mobile-operate-time__button']}
                 >
                   수정
                 </button>
               </div>
             </div>
-            <label htmlFor="shopAddress" className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>주소정보</span>
+            <label htmlFor="shopAddress" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>주소정보</span>
               <input
                 type="text"
                 id="shopAddress"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className={styles['mobile-main-info--input']}
+                className={styles['mobile-main-info__input']}
               />
             </label>
-            <label htmlFor="deliveryPrice" className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>배달금액</span>
+            <label htmlFor="deliveryPrice" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>배달금액</span>
               <input
                 type="text"
                 id="deliveryPrice"
                 value={deliveryPrice === 0 ? '' : deliveryPrice}
                 onChange={(e) => setDeliveryPrice(Number(e.target.value))}
-                className={styles['mobile-main-info--input']}
+                className={styles['mobile-main-info__input']}
               />
             </label>
-            <label htmlFor="description" className={styles['mobile-main-info']}>
-              <span className={styles['mobile-main-info--header']}>기타정보</span>
+            <label htmlFor="description" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>기타정보</span>
               <input
                 type="text"
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className={styles['mobile-main-info--input']}
+                className={styles['mobile-main-info__input']}
               />
             </label>
             <div className={styles['mobile-main-info__checkboxes']}>
@@ -355,8 +371,8 @@ EditShopInfoModalProps) {
             )}
           </div>
           <hr className={styles['container__horizontal-line']} />
-          <div className={styles.content}>
-            <label htmlFor="shopName" className={styles['main-info']}>
+          <div className={styles['main-info']}>
+            <label htmlFor="shopName" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>가게명</span>
               <input
                 type="text"
@@ -366,7 +382,22 @@ EditShopInfoModalProps) {
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="shopAddress" className={styles['main-info']}>
+            <label htmlFor="category" className={styles['main-info__label']}>
+              <span className={styles['main-info__header']}>카테고리</span>
+              <select
+                value={categoryId}
+                name="category"
+                className={styles['main-info__select']}
+                onChange={handleCategoryIdChange}
+              >
+                {categoryList?.shop_categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label htmlFor="shopAddress" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>주소정보</span>
               <input
                 type="text"
@@ -376,7 +407,7 @@ EditShopInfoModalProps) {
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="phone" className={styles['main-info']}>
+            <label htmlFor="phone" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>전화번호</span>
               <input
                 type="text"
@@ -386,7 +417,7 @@ EditShopInfoModalProps) {
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="deliveryPrice" className={styles['main-info']}>
+            <label htmlFor="deliveryPrice" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>배달금액</span>
               <input
                 type="text"
@@ -396,7 +427,7 @@ EditShopInfoModalProps) {
                 className={styles['main-info__input']}
               />
             </label>
-            <div className={styles['main-info']}>
+            <div className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>운영시간</span>
               <div className={styles['main-info__operate-time']}>
                 <div className={styles['main-info__operate-time--content']}>
@@ -455,7 +486,7 @@ EditShopInfoModalProps) {
                 )}
               </div>
             </div>
-            <label htmlFor="description" className={styles['main-info']}>
+            <label htmlFor="description" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>기타정보</span>
               <input
                 type="text"
@@ -465,7 +496,7 @@ EditShopInfoModalProps) {
                 className={styles['main-info__input']}
               />
             </label>
-            <label htmlFor="closedDay" className={styles['main-info']}>
+            <label htmlFor="closedDay" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>휴무일</span>
               <input
                 type="text"

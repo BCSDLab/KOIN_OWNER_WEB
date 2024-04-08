@@ -16,8 +16,7 @@ import ModifyMenu from 'page/ModifyMenu';
 import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
-import CoopLayout from 'layout/CoopLayout';
-import CoopPage from 'page/CoopPage';
+import Coop from 'page/Coop';
 import useUserTypeStore from 'store/userType';
 
 interface ProtectedRouteProps {
@@ -62,11 +61,7 @@ function App() {
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
-          <Route path="/coop" element={<CoopLayout />}>
-            <Route path="/coop/coop-page1" element={<CoopPage />} />
-            <Route path="/coop/coop-page2" element={<CoopPage />} />
-            {/* CoopPage1, CoopPage2는 예시 경로임 */}
-          </Route>
+          <Route path="/coop" element={<Coop />} />
         </Route>
 
         <Route element={<AuthLayout />}>
