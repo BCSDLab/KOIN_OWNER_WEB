@@ -1,11 +1,11 @@
-import useShopCategory from 'query/shopCategory';
+import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/storeCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './Category.module.scss';
 
 export default function Category() {
-  const { categoryList } = useShopCategory();
+  const { categoryList } = useMyShop();
   const { category, setCategory, setCategoryId } = useShopRegistrationStore();
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {

@@ -91,7 +91,7 @@ export default function ShopConfirmation() {
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>배달금액</span>
-          <span className={styles.form__value}>{deliveryPrice}</span>
+          <span className={styles.form__value}>{deliveryPrice === 0 ? '무료' : `${deliveryPrice}원`}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>운영시간</span>

@@ -2,15 +2,17 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
+import axios from 'axios';
 import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import useUploadToken from 'store/uploadToken';
 import showToast from 'utils/ts/showToast';
+import { registerKeys } from './KeyFactory/registerKeys';
 
 export const useCheckDuplicate = (email:string) => {
   const { status, refetch, error } = useQuery({
-    queryKey: ['emailDuplicateCheck', email],
+    queryKey: registerKeys.emailCheck(email),
     queryFn: () => getEmailDuplicate(email),
     enabled: false,
   });
@@ -21,7 +23,7 @@ export const useGenerateAuthCode = (email:string) => {
   const {
     status, refetch, isError, error,
   } = useQuery({
-    queryKey: ['generateEmailAuthCode', email],
+    queryKey: registerKeys.authCode(email),
     queryFn: () => getEmailAuthCode({ address: email }),
     enabled: false,
   });
@@ -35,7 +37,7 @@ export const useVerificationAuthCode = (code:string, email:string) => {
   const {
     status, refetch, isError, error, data,
   } = useQuery({
-    queryKey: ['verificationCode', code],
+    queryKey: registerKeys.verificationCode(code, email),
     queryFn: () => verificationAuthCode({ certification_code: code, address: email }),
     enabled: false,
   });
@@ -49,7 +51,7 @@ export const useRegisterUser = (goNext:()=>void) => {
   const { userInfo, ownerInfo, resetRegisterInfo } = useRegisterInfo();
   const { shopId, name } = useShopRegistrationStore();
   const register = useMutation({
-    mutationKey: ['registerUser'],
+    mutationKey: registerKeys.registerUser,
     mutationFn: async (fileUrls:string[]) => (
       registerUser(await parseRegisterData(
         userInfo,
@@ -76,14 +78,16 @@ export const useGetFileUrls = (goNext:()=>void) => {
     formData.append('files', file);
   });
   const fileMutation = useMutation({
-    mutationKey: ['getFileUrls'],
+    mutationKey: registerKeys.fileUrlList,
     mutationFn: async () => {
       try {
         const data = await getFileUrls(formData, uploadToken!);
         try {
           await register.mutateAsync(data.file_urls);
         } catch (e) {
-          showToast('error', `회원가입 중 에러가 발생했어요${e}`);
+          if (axios.isAxiosError(e)) {
+            showToast('error', `${e.response?.data.message || e.message}`);
+          }
         }
       } catch (e) {
         showToast('error', `파일업로드 중 에러가 발생했어요${e}`);

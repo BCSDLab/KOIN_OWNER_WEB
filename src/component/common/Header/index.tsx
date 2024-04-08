@@ -9,7 +9,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
 import { postLogout } from 'api/auth';
 import useUserStore from 'store/user';
-import useStepStore from 'store/useStepStore';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -37,7 +36,6 @@ function Header() {
   } = useMobileSidebar(pathname, isMobile);
   const isMain = true;
   const { user, removeUser } = useUserStore();
-  const setStep = useStepStore((state) => state.setStep);
 
   const logout = () => {
     postLogout()
@@ -45,7 +43,6 @@ function Header() {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         removeUser();
-        setStep(0);
       });
   };
 
