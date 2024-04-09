@@ -6,7 +6,7 @@ import {
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
 import { useEffect, useRef, useState } from 'react';
-import { getCoopUrl } from 'api/uploadFile/Uploadfile';
+import { getCoopUrl } from 'api/uploadFile/index';
 import CustomModal from 'component/common/CustomModal';
 import styles from './MenuCard.module.scss';
 
