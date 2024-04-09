@@ -27,7 +27,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
   const [isSoldoutModalOpen, setIsSoldoutModalOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<Dinings | null>(null);
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
-  const [selectedImages, setSelectedImages] = useState<{ [key: number]: string }>({});
 
   const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
     await axios.put(presignedUrl, file, {
@@ -53,10 +52,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
           menu_id: menuId,
           image_url: presigned.data.file_url,
         });
-        setSelectedImages((prev) => ({
-          ...prev,
-          [menuId]: presigned.data.file_url,
-        }));
       }
     }
   };
@@ -99,15 +94,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     }
   };
 
-  const getImageUrl = (menu: Dinings) => {
-    if (selectedImages[menu.id]) {
-      return selectedImages[menu.id];
-    } if (menu.image_url) {
-      return menu.image_url;
-    }
-    return undefined;
-  };
-
   return (
     <>
       <div className={styles.container}>
@@ -140,8 +126,8 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                         if (event.key === 'Enter') handleImageClick(menu.id)();
                       }}
                     >
-                      {getImageUrl(menu) ? (
-                        <img src={getImageUrl(menu)} alt="" className={styles.card__image} />
+                      {menu.image_url ? (
+                        <img src={menu.image_url} alt="" className={styles.card__image} />
                       ) : (
                         <Photo />
                       )}
