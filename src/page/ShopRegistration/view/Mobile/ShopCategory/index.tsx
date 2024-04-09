@@ -1,5 +1,5 @@
 import useStepStore from 'store/useStepStore';
-import useShopCategory from 'query/shopCategory';
+import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/storeCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
@@ -10,7 +10,7 @@ import styles from './ShopCategory.module.scss';
 
 export default function ShopCategory() {
   const [isError, setIsError] = useState(false);
-  const { categoryList } = useShopCategory();
+  const { categoryList } = useMyShop();
   const { increaseStep } = useStepStore();
   const {
     category, setCategory, setCategoryId,
