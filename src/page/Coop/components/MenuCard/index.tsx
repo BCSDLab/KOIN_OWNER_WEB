@@ -1,17 +1,22 @@
-/* eslint-disable max-len */
 import { useGetDining, useUploadDiningImage, useUpdateSoldOut } from 'query/coop';
 import {
   Dinings, Menus, DINING_TYPES, Corner,
 } from 'model/Coop';
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { getCoopUrl } from 'api/uploadFile/index';
 import CustomModal from 'component/common/CustomModal';
+import axios from 'axios';
 import styles from './MenuCard.module.scss';
 
 interface MenuCardProps {
   selectedMenuType: Menus;
+}
+
+interface FileInfo {
+  file: File;
+  presignedUrl: string;
 }
 
 export default function MenuCard({ selectedMenuType }: MenuCardProps) {
@@ -24,24 +29,35 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
   const [selectedImages, setSelectedImages] = useState<{ [key: number]: string }>({});
 
+  const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
+    await axios.put(presignedUrl, file, {
+      headers: {
+        'Content-Type': 'image/jpeg, image/png, image/svg+xml, image/webp',
+      },
+    });
+  };
+
   const handleImageChange = (menuId: number) => async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      const presignedUrl = await getCoopUrl({
+      const presigned = await getCoopUrl({
         content_length: file.size,
         content_type: file.type,
         file_name: file.name,
       });
-      await uploadDiningImageMutation({
-        menu_id: menuId,
-        image_url: presignedUrl.data.file_url,
-      });
-      setSelectedImages((prev) => ({
-        ...prev,
-        [menuId]: presignedUrl.data.file_url,
-      }));
+      if (presigned.data.pre_signed_url) {
+        uploadImage({ presignedUrl: presigned.data.pre_signed_url, file });
+        uploadDiningImageMutation({
+          menu_id: menuId,
+          image_url: presigned.data.file_url,
+        });
+        setSelectedImages((prev) => ({
+          ...prev,
+          [menuId]: presigned.data.file_url,
+        }));
+      }
     }
   };
 
@@ -92,19 +108,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     return undefined;
   };
 
-  useEffect(() => {
-    if (data) {
-      data.forEach((menu: Dinings) => {
-        if (menu.image_url) {
-          setSelectedImages((prev) => ({
-            ...prev,
-            [menu.id]: menu.image_url,
-          }));
-        }
-      });
-    }
-  }, [data]);
-
   return (
     <>
       <div className={styles.container}>
@@ -116,7 +119,13 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                 <span className={styles.card__title}>{corner}</span>
                 <div className={styles['card__soldout-wrapper']}>
                   {menu && <span className={styles.card__soldout}>품절</span>}
-                  {menu && <SoldoutToggle menuId={menu.id} onClick={() => handleToggleSoldoutModal(menu, corner)} menu={menu} />}
+                  {menu && (
+                  <SoldoutToggle
+                    menuId={menu.id}
+                    onClick={() => handleToggleSoldoutModal(menu, corner)}
+                    menu={menu}
+                  />
+                  )}
                 </div>
               </div>
               <div className={styles.card__wrapper}>
