@@ -1,0 +1,25 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.event {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+
+  &__paragraph {
+    font-weight: bold;
+  }
+
+  &__input {
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+  }
+}

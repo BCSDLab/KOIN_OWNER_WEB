@@ -46,7 +46,7 @@ function Header() {
       });
   };
 
-  if ((pathname === '/add-menu' || pathname.startsWith('/modify-menu/')) && isMobile) {
+  if ((pathname === '/add-menu' || pathname.startsWith('/modify-menu/') || pathname === '/event-add') && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
         <button
@@ -56,7 +56,11 @@ function Header() {
         >
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
-        <div className={styles['add-menu-header__caption']}>{pathname === '/add-menu' ? '메뉴추가' : '메뉴수정'}</div>
+        <div className={styles['add-menu-header__caption']}>
+          {pathname === '/add-menu' && '메뉴추가'}
+          {pathname === '/event-add' && '이벤트/공지 추가하기'}
+          {pathname !== '/add-menu' && pathname !== '/event-add' && '메뉴수정'}
+        </div>
       </header>
     );
   }
