@@ -5,8 +5,8 @@ import {
 } from 'model/Coop';
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
-import { useRef, useState } from 'react';
-import { FileResponse, getCoopUrl } from 'api/uploadFile/Uploadfile';
+import { useEffect, useRef, useState } from 'react';
+import { getCoopUrl } from 'api/uploadFile/Uploadfile';
 import CustomModal from 'component/common/CustomModal';
 import styles from './MenuCard.module.scss';
 
@@ -14,20 +14,15 @@ interface MenuCardProps {
   selectedMenuType: Menus;
 }
 
-interface FileInfo {
-  file: File;
-  presignedUrl: FileResponse;
-}
-
 export default function MenuCard({ selectedMenuType }: MenuCardProps) {
   const { data } = useGetDining();
   const { uploadDiningImageMutation } = useUploadDiningImage();
   const { updateSoldOutMutation } = useUpdateSoldOut();
-  const [selectedImages, setSelectedImages] = useState<{ [key: number]: string }>({});
   const fileInputRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
   const [isSoldoutModalOpen, setIsSoldoutModalOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<Dinings | null>(null);
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
+  const [selectedImages, setSelectedImages] = useState<{ [key: number]: string }>({});
 
   const handleImageChange = (menuId: number) => async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -39,6 +34,14 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
         content_type: file.type,
         file_name: file.name,
       });
+      await uploadDiningImageMutation({
+        menu_id: menuId,
+        image_url: presignedUrl.data.file_url,
+      });
+      setSelectedImages((prev) => ({
+        ...prev,
+        [menuId]: presignedUrl.data.file_url,
+      }));
     }
   };
 
@@ -80,6 +83,28 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     }
   };
 
+  const getImageUrl = (menu: Dinings) => {
+    if (selectedImages[menu.id]) {
+      return selectedImages[menu.id];
+    } if (menu.image_url) {
+      return menu.image_url;
+    }
+    return undefined;
+  };
+
+  useEffect(() => {
+    if (data) {
+      data.forEach((menu: Dinings) => {
+        if (menu.image_url) {
+          setSelectedImages((prev) => ({
+            ...prev,
+            [menu.id]: menu.image_url,
+          }));
+        }
+      });
+    }
+  }, [data]);
+
   return (
     <>
       <div className={styles.container}>
@@ -106,8 +131,8 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                         if (event.key === 'Enter') handleImageClick(menu.id)();
                       }}
                     >
-                      {menu.image_url ? (
-                        <img src={menu.image_url} alt="" className={styles.card__image} />
+                      {getImageUrl(menu) ? (
+                        <img src={getImageUrl(menu)} alt="" className={styles.card__image} />
                       ) : (
                         <Photo />
                       )}
