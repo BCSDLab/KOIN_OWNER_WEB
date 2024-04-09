@@ -62,7 +62,7 @@ function App() {
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
-          <Route path="/owner" element={<CoopLayout />}>
+          <Route path="/coop" element={<CoopLayout />}>
             <Route path="/coop" element={<Coop />} />
           </Route>
         </Route>
