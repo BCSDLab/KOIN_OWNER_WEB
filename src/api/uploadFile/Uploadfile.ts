@@ -8,7 +8,7 @@ interface File {
 
 export interface FileResponse {
   pre_signed_url: string;
-  file_name: string;
+  file_url: string;
   expiration_date: string;
 }
 
