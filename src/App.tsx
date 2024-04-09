@@ -1,7 +1,8 @@
 import {
   Routes, Route, Navigate, Outlet,
 } from 'react-router-dom';
-import DefaultLayout from 'layout/DefaultLayout';
+import OwnerLayout from 'layout/OwnerLayout';
+import CoopLayout from 'layout/CoopLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
 import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
@@ -48,7 +49,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/owner" />} />
         <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
-          <Route path="/owner" element={<DefaultLayout />}>
+          <Route path="/owner" element={<OwnerLayout />}>
             <Route path="/owner" element={<MyStorePage />} />
             <Route path="/owner/shop-registration" element={<ShopRegistration />} />
             <Route path="/owner/add-menu" element={<AddMenu />} />
@@ -61,7 +62,9 @@ function App() {
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
-          <Route path="/coop" element={<Coop />} />
+          <Route path="/owner" element={<CoopLayout />}>
+            <Route path="/coop" element={<Coop />} />
+          </Route>
         </Route>
 
         <Route element={<AuthLayout />}>

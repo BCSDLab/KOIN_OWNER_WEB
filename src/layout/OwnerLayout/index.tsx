@@ -6,7 +6,7 @@ import usePrevPathStore from 'store/path';
 import useUserStore from 'store/user';
 import useErrorBoundary from 'utils/hooks/useErrorBoundary';
 
-export default function DefaultLayout() {
+export default function OwnerLayout() {
   const navigate = useNavigate();
   const { user, setUser } = useUserStore((state) => state);
   const setPrevPath = usePrevPathStore((state) => state.setPrevPath);
