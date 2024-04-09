@@ -24,7 +24,7 @@ export default function AddMenu() {
   const { resetMenuName, resetCategoryIds } = useAddMenuStore();
   const { setMenuError, setCategoryError } = useErrorMessageStore();
   const goMyShop = () => {
-    navigate('/');
+    navigate('/owner');
   };
   const {
     value: isGoMyShopModal,
@@ -57,7 +57,7 @@ export default function AddMenu() {
       option_prices: optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
-      })) || [],
+      })) || null,
       single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
     };
     addMenuMutation(newMenuData);

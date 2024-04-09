@@ -27,7 +27,6 @@ export default function Login() {
   const { loginError, loginErrorCode } = useErrorMessageStore();
   const [emailError, setEmailError] = useState('');
   const { value: isModalOpen, changeValue: toggle } = useBooleanState(false);
-
   const isError = isServerError || isFormError;
 
   const {

@@ -1,16 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  postLogin, findPasswordVerify, findPassword, newPassword,
+  postLogin, postLogout, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
-import { getMyShopList } from 'api/shop';
 import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
-import usePrevPathStore from 'store/path';
+import useUserTypeStore from 'store/userType';
 import { isKoinError } from 'utils/ts/isKoinError';
-import useStepStore from 'store/useStepStore';
+import useUserStore from 'store/user';
 
 interface VerifyInput {
   email: string;
@@ -33,12 +32,12 @@ export interface ErrorResponse {
 }
 
 export const useLogin = () => {
-  const navigate = useNavigate();
-  const { setPrevPath } = usePrevPathStore((state) => state);
+  const { setUserType } = useUserTypeStore();
   const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
-  const setStep = useStepStore((state) => state.setStep);
 
-  const { mutate, error, isError } = useMutation({
+  const {
+    mutate, error, isError, isSuccess,
+  } = useMutation({
     mutationFn: (variables: LoginForm) => postLogin({
       email: variables.email, password: variables.password,
     }),
@@ -49,14 +48,7 @@ export const useLogin = () => {
         localStorage.setItem('refresh_token', data.refresh_token);
       }
 
-      const myShopData = await getMyShopList();
-      if (myShopData.count > 0) {
-        setPrevPath('/');
-        navigate('/');
-      } else {
-        setStep(0);
-        navigate('/store-registration');
-      }
+      setUserType();
     },
     onError: (err: unknown) => {
       if (isKoinError(err)) {
@@ -69,7 +61,39 @@ export const useLogin = () => {
     },
   });
 
-  return { login: mutate, error, isError };
+  return {
+    login: mutate, error, isError, isSuccess,
+  };
+};
+
+export const useLogout = () => {
+  const { setUserType } = useUserTypeStore();
+  const { removeUser } = useUserStore();
+  const { setLogoutError, setLogoutErrorCode } = useErrorMessageStore();
+
+  const { mutate, error, isError } = useMutation({
+    mutationFn: async () => {
+      const response = await postLogout();
+      if (response) {
+        return true;
+      }
+      throw new Error('로그아웃 실패');
+    },
+    onSuccess: () => {
+      sessionStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      removeUser();
+      setUserType();
+    },
+    onError: (err: unknown) => {
+      if (isKoinError(err)) {
+        setLogoutError(err.message || '로그아웃을 실패했습니다.');
+        setLogoutErrorCode(err.code);
+      }
+    },
+  });
+
+  return { logout: mutate, error, isError };
 };
 
 export const useVerifyEmail = () => {
