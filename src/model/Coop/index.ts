@@ -4,6 +4,8 @@ export type Menus = '아침' | '점심' | '저녁';
 
 export type DiningTypes = 'BREAKFAST' | 'LUNCH' | 'DINNER';
 
+export type Corner = 'A코너' | 'B코너' | 'C코너';
+
 export const DINING_TYPES: Record<Menus, DiningTypes> = {
   아침: 'BREAKFAST',
   점심: 'LUNCH',
@@ -19,23 +21,25 @@ export const Dinings = z.object({
   price_card: z.number(),
   price_cash: z.number(),
   type: z.string(),
+  image_url: z.string(),
+  created_at: z.string(),
   updated_at: z.string(),
-  sold_out: z.boolean(),
-  is_changed: z.boolean(),
+  soldout_at: z.string(),
+  changed_at: z.string(),
 });
 
 export type Dinings = z.infer<typeof Dinings>;
 
 export const DiningImages = z.object({
-  menuId: z.number(),
-  imageUrl: z.string(),
+  menu_id: z.number(),
+  image_url: z.string(),
 });
 
 export type DiningImages = z.infer<typeof DiningImages>;
 
 export const SoldOut = z.object({
-  menuId: z.number(),
-  soldOut: z.boolean(),
+  menu_id: z.number(),
+  sold_out: z.boolean(),
 });
 
 export type SoldOut = z.infer<typeof SoldOut>;
