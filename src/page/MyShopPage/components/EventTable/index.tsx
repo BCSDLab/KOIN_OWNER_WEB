@@ -51,7 +51,7 @@ export default function EventTable() {
           <div className={styles['manage-event-button-container']}>
             <button
               type="button"
-              className={styles['edit-event-button']}
+              className={styles['manage-event-button']}
               onClick={() => setEditMenu(true)}
             >
               편집하기
@@ -59,7 +59,7 @@ export default function EventTable() {
             </button>
             <button
               type="button"
-              className={styles['add-event-button']}
+              className={styles['manage-event-button']}
               onClick={() => setEditMenu(true)}
             >
               추가하기
