@@ -35,7 +35,7 @@ export interface ErrorResponse {
 export const useLogin = () => {
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
-  const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
+  const { setLoginError, setLoginErrorStatus } = useErrorMessageStore();
   const setStep = useStepStore((state) => state.setStep);
 
   const { mutate, error, isError } = useMutation({
@@ -64,7 +64,7 @@ export const useLogin = () => {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         setLoginError(err.message || '로그인에 실패했습니다.');
-        setLoginErrorCode(err.code);
+        setLoginErrorStatus(err.status);
       }
     },
   });
