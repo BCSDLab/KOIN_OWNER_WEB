@@ -4,6 +4,7 @@ import { ShopListRes } from 'model/shopInfo/allShopInfo';
 import { accessClient, client } from 'api';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import { EventInfo } from 'model/shopInfo/event';
 
 export const getMyShopList = async () => {
   const { data } = await accessClient.get<MyShopListRes>('/owner/shops');
@@ -39,3 +40,5 @@ export const modifyMenu = (menuId:number, param:NewMenu) => accessClient.put(`/o
 export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner/shops/${id}`, data);
 
 export const deleteMenu = (menuId:number) => accessClient.delete(`/owner/shops/menus/${menuId}`);
+
+export const addEvent = (id: number, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
