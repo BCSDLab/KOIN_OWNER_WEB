@@ -60,7 +60,7 @@ function App() {
             <Route path="/owner/order-management" element={<PageNotFound />} />
             <Route path="/owner/sales-management" element={<PageNotFound />} />
             <Route path="/owner/shop-add" element={<PageNotFound />} />
-            <Route path="/owner/event-add" element={<AddingEvent />} />
+            <Route path="/owner/event-add/:id" element={<AddingEvent />} />
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
