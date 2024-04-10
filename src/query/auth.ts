@@ -9,8 +9,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import usePrevPathStore from 'store/path';
-import { isKoinError } from 'utils/ts/isKoinError';
 import useStepStore from 'store/useStepStore';
+import { isKoinError } from '@bcsdlab/koin';
 
 interface VerifyInput {
   email: string;
