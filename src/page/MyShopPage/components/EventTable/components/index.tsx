@@ -7,6 +7,7 @@ import styles from './EventCard.module.scss';
 
 export default function EventCard({ event }: { event: StoreEvent }) {
   const [hiddenInfo, setHiddenInfo] = useState<boolean>(true);
+
   const toggleHiddenInfo = (state:boolean) => {
     if (state) {
       setHiddenInfo(false);

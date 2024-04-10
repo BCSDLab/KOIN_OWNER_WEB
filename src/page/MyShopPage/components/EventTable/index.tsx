@@ -1,5 +1,8 @@
 // import { useParams } from 'react-router-dom';
 import { StoreEvent } from 'model/shopInfo/myShopInfo';
+import { useState } from 'react';
+import { ReactComponent as EditEventIcon } from 'assets/svg/mystore/edit-event-icon.svg';
+import { ReactComponent as AddEventIcon } from 'assets/svg/mystore/add-event-icon.svg';
 import EventCard from './components';
 // import useStoreMenus from './hooks/useStoreEventList';
 import styles from './EventTable.module.scss';
@@ -7,6 +10,7 @@ import styles from './EventTable.module.scss';
 export default function EventTable() {
   // const params = useParams();
   // const { storeEventList } = useStoreMenus(params.id!);
+  const [editMenu, setEditMenu] = useState(false);
 
   const testList = {
     events: [
@@ -36,6 +40,34 @@ export default function EventTable() {
 
   return (
     <div className={styles.eventContainer}>
+      <div className={styles['manage-event-container']}>
+        {editMenu ? (
+          <div className={styles['edit-menubar']}>
+            <div className={styles['select-option']}>
+              전체
+            </div>
+          </div>
+        ) : (
+          <div className={styles['manage-event-button-container']}>
+            <button
+              type="button"
+              className={styles['edit-event-button']}
+              onClick={() => setEditMenu(true)}
+            >
+              편집하기
+              <EditEventIcon />
+            </button>
+            <button
+              type="button"
+              className={styles['add-event-button']}
+              onClick={() => setEditMenu(true)}
+            >
+              추가하기
+              <AddEventIcon />
+            </button>
+          </div>
+        )}
+      </div>
       {testList && testList.events.map((event: StoreEvent) => (
         <EventCard key={event.title} event={event} />
       ))}

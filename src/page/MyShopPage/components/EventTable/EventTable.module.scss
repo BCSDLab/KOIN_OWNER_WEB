@@ -1,3 +1,30 @@
 .eventContainer {
   padding: 5px 24px;
 }
+
+.manage-event-button-container {
+  padding: 16px 0 18px 0;
+  display: flex;
+  gap: 9px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  color: #4B4B4B;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #CACACA;
+  }
+}
+
+.edit-menubar{
+  background-color: #FAFAFA;
+}
