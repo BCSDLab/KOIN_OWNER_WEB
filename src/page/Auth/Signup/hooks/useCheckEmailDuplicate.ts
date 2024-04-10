@@ -5,13 +5,14 @@ import {
 import { SubmitHandler } from 'react-hook-form';
 import { User } from 'page/Auth/Signup/types/User';
 import useRegisterInfo from 'store/registerStore';
+import { isKoinError } from '@bcsdlab/koin';
 
 export default function useCheckEmailDuplicate(isMobile: boolean) {
   const [email, setEmail] = useState<string>('');
   const { status, refetch, error } = useCheckDuplicate(email);
   const { userInfo: userData, setUserInfo: setId } = useRegisterInfo();
   const debounceSearch = useRef<NodeJS.Timeout>();
-  const errorMessage:string | undefined = status === 'error' ? Object(error).response.data.message : null;
+  const errorMessage = isKoinError(error) && error.status === 409 ? '이미 사용중인 아이디입니다.' : null;
   const onSubmit:SubmitHandler<User> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
   };

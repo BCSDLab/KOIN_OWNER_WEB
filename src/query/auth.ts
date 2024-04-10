@@ -8,8 +8,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useUserTypeStore from 'store/userType';
-import { isKoinError } from 'utils/ts/isKoinError';
 import useUserStore from 'store/user';
+import { isKoinError } from '@bcsdlab/koin';
 
 interface VerifyInput {
   email: string;
