@@ -33,7 +33,7 @@ export interface ErrorResponse {
 
 export const useLogin = () => {
   const { setUserType } = useUserTypeStore();
-  const { setLoginError, setLoginErrorCode } = useErrorMessageStore();
+  const { setLoginError } = useErrorMessageStore();
 
   const {
     mutate, error, isError, isSuccess,
@@ -67,7 +67,6 @@ export const useLogin = () => {
         }
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        setLoginErrorCode(err.code);
       }
     },
   });

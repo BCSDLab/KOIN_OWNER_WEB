@@ -94,7 +94,7 @@ export default function Sub() {
       >
         배달금액
         <input
-          type="text"
+          type="number"
           id="deliveryPrice"
           onChange={(e) => setDeliveryPrice(Number(e.target.value))}
           value={deliveryPrice}

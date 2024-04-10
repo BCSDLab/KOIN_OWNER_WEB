@@ -420,7 +420,7 @@ EditShopInfoModalProps) {
             <label htmlFor="deliveryPrice" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>배달금액</span>
               <input
-                type="text"
+                type="number"
                 id="deliveryPrice"
                 value={deliveryPrice === 0 ? '' : deliveryPrice}
                 onChange={(e) => setDeliveryPrice(Number(e.target.value))}
