@@ -41,4 +41,4 @@ export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner
 
 export const deleteMenu = (menuId:number) => accessClient.delete(`/owner/shops/menus/${menuId}`);
 
-export const addEvent = (id: number, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
+export const addEvent = (id: string, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
