@@ -24,6 +24,25 @@
 }
 
 .container {
+  &__mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 160px;
+    background-color: #ffffff;
+    overflow: auto;
+    border-radius: 4px;
+
+    &--visible {
+      overflow: visible;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &__small {
     display: flex;
     flex-direction: column;

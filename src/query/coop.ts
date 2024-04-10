@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { getDining, updateSoldOut, uploadDiningImage } from 'api/coop';
 import { DiningImages, SoldOut } from 'model/Coop';
+import { coopKeys } from './KeyFactory/coopKeys';
 
 export const useGetDining = () => {
   const { data } = useSuspenseQuery(
     {
-      queryKey: ['dining'],
+      queryKey: coopKeys.dining,
       queryFn: getDining,
     },
   );
@@ -32,7 +33,7 @@ export const useUploadDiningImage = () => {
   const { mutate: uploadDiningImageMutation } = useMutation({
     mutationFn: (data: DiningImages) => uploadDiningImage(data),
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: coopKeys.dining });
     },
   });
   return {
