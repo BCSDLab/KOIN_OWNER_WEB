@@ -39,3 +39,5 @@ export const modifyMenu = (menuId:number, param:NewMenu) => accessClient.put(`/o
 export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner/shops/${id}`, data);
 
 export const deleteMenu = (menuId:number) => accessClient.delete(`/owner/shops/menus/${menuId}`);
+
+export const getStoreEventList = (id : string) => accessClient.get(`금방 만들어준데요./${id}`);

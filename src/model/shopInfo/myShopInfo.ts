@@ -58,3 +58,17 @@ export type MyShopInfoRes = z.infer<typeof MyShopInfoRes>;
 export interface MyShopParam {
   id: number;
 }
+
+export const StoreEvent = z.object({
+  title: z.string(),
+  content: z.string(),
+  thumbnail_image: z.string(),
+  start_date: z.string(),
+  end_date: z.string(),
+});
+export type StoreEvent = z.infer<typeof StoreEvent>;
+export const StoreEventResponse = z.object({
+  events: z.array(StoreEvent),
+});
+
+export type StoreEventResponse = z.infer<typeof StoreEventResponse>;
