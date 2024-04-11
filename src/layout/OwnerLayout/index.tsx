@@ -27,12 +27,12 @@ export default function OwnerLayout() {
   return (
     <div>
       {user && (
-      <>
-        {location.pathname !== '/owner/shop-registration' && <Header />}
-        <ErrorBoundary message="에러가 발생했습니다.">
-          <Outlet />
-        </ErrorBoundary>
-      </>
+        <>
+          {location.pathname !== '/owner/shop-registration' && <Header />}
+          <ErrorBoundary message="에러가 발생했습니다.">
+            <Outlet />
+          </ErrorBoundary>
+        </>
       )}
     </div>
   );
