@@ -84,22 +84,40 @@ export default function AddingEvent() {
     if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
   };
   const changeStartYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, year: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 4) {
+      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, year: value } });
+    }
   };
   const changeStartMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, month: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 2) {
+      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, month: value } });
+    }
   };
   const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, date: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 2) {
+      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, date: value } });
+    }
   };
   const changeEndYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, year: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 4) {
+      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, year: value } });
+    }
   };
   const changeEndMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, month: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 2) {
+      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, month: value } });
+    }
   };
   const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, date: e.target.value } });
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (value.length <= 2) {
+      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, date: value } });
+    }
   };
 
   const handleImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,12 +160,10 @@ export default function AddingEvent() {
       content: editor,
       start_date: startDate,
       end_date: endDate,
-      thumbnail_image: imageList.presigned.map((img) => img.file_url),
+      thumbnail_images: imageList.presigned.map((img) => img.file_url),
     };
 
     addEvent(requestData);
-
-    return requestData;
   };
 
   return (
@@ -225,7 +241,7 @@ export default function AddingEvent() {
           </div>
           <div>
             <ReactQuill
-              style={{ border: '5px' }}
+              style={{ border: '1px solid black' }}
               theme="snow"
               value={editor}
               onChange={setEditor}
