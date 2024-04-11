@@ -47,7 +47,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
         file_name: file.name,
       });
       if (presigned.data.pre_signed_url) {
-        uploadImage({ presignedUrl: presigned.data.pre_signed_url, file });
+        await uploadImage({ presignedUrl: presigned.data.pre_signed_url, file });
         uploadDiningImageMutation({
           menu_id: menuId,
           image_url: presigned.data.file_url,
