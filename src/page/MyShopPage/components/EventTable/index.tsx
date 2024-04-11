@@ -8,6 +8,7 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/mystore/non-check-c
 import { ReactComponent as DeleteIcon } from 'assets/svg/mystore/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/mystore/complete-icon.svg';
+import { useDeleteEvent } from 'query/event';
 import showToast from 'utils/ts/showToast';
 import EventCard from './components';
 import styles from './EventTable.module.scss';
@@ -17,6 +18,7 @@ export default function EventTable() {
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
+  const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
     setSelectedEventIds((prev : number[]) => (
@@ -31,6 +33,7 @@ export default function EventTable() {
       setSelectedEventIds([]);
     }
   }, [selectAll, eventList]);
+
   return (
     <>
       <div className={styles['manage-event-container']}>
@@ -62,7 +65,10 @@ export default function EventTable() {
               <button
                 type="button"
                 className={styles['delete-button']}
-                onClick={() => showToast('success', '이벤트 삭제에 성공했습니다.')}
+                onClick={() => {
+                  deleteEvent();
+                  showToast('success', '이벤트 삭제에 성공했습니다.');
+                }}
               >
                 삭제
                 <DeleteIcon />

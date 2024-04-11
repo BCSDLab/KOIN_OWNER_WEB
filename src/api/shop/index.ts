@@ -48,3 +48,5 @@ export const getStoreEventList = async (param : EventListParam) => {
   return StoreEventResponse.parse(data);
 };
 export const addEvent = (id: string, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
+
+export const deleteEvent = (shopId: number, eventId:number) => accessClient.delete(`owner/shops/${shopId}/events/${eventId}`);
