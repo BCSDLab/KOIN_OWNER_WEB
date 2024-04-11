@@ -3,7 +3,7 @@
 }
 
 .manage-event-button-container {
-  padding: 16px 0 18px 0;
+  padding: 16px 0 18px;
   display: flex;
   gap: 9px;
 }
@@ -16,21 +16,21 @@
   height: 32px;
   width: 100%;
   border-radius: 5px;
-  background-color: #F5F5F5;
-  color: #4B4B4B;
+  background-color: #f5f5f5;
+  color: #4b4b4b;
   font-size: 14px;
 
   &:hover {
-    background-color: #CACACA;
+    background-color: #cacaca;
   }
 }
 
-.edit-menubar{
+.edit-menubar {
   display: flex;
   justify-content: space-between;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   padding: 11px 15px;
-  border-bottom: 1px solid  #EEE;
+  border-bottom: 1px solid  #eee;
 }
 
 .select-all-button {
@@ -38,8 +38,8 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  background-color: #FAFAFA;
-  color: #8E8E8E;
+  background-color: #fafafa;
+  color: #8e8e8e;
   font-size: 12px;
 }
 
@@ -55,11 +55,11 @@
   gap: 5px;
   padding: 6px 8px;
   border-radius: 5px;
-  background: #FAFAFA;
-  color:  #8E8E8E;
+  background: #fafafa;
+  color: #8e8e8e;
   font-size: 14px;
 
   &:hover {
-    background: #EEE;
+    background: #eee;
   }
 }
