@@ -1,5 +1,6 @@
 import { StoreEvent } from 'model/shopInfo/myShopInfo';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import { ReactComponent as EditEventIcon } from 'assets/svg/mystore/edit-event-icon.svg';
 import { ReactComponent as AddEventIcon } from 'assets/svg/mystore/add-event-icon.svg';
@@ -11,10 +12,10 @@ import EventCard from './components';
 import styles from './EventTable.module.scss';
 
 export default function EventTable() {
-  const { evnetList } = useMyShop();
+  const { shopData, evnetList } = useMyShop();
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <>
       <div className={styles['manage-event-container']}>
@@ -67,7 +68,7 @@ export default function EventTable() {
             <button
               type="button"
               className={styles['manage-event-button']}
-              onClick={() => setEditMenu(true)}
+              onClick={() => navigate(`/owner/event-add/${shopData?.id}`)}
             >
               추가하기
               <AddEventIcon />
