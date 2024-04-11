@@ -28,6 +28,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@bcsdlab/koin", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:0.0.15"],\
             ["@hookform/resolvers", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:3.3.4"],\
             ["@tanstack/react-query", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:5.18.1"],\
             ["@testing-library/jest-dom", "npm:5.17.0"],\
@@ -3149,6 +3150,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@bcoe-v8-coverage-npm-0.2.3-9e27b3c57e-850f930553.zip/node_modules/@bcoe/v8-coverage/",\
           "packageDependencies": [\
             ["@bcoe/v8-coverage", "npm:0.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@bcsdlab/koin", [\
+        ["npm:0.0.15", {\
+          "packageLocation": "./.yarn/cache/@bcsdlab-koin-npm-0.0.15-ad194f9536-30b1904180.zip/node_modules/@bcsdlab/koin/",\
+          "packageDependencies": [\
+            ["@bcsdlab/koin", "npm:0.0.15"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:0.0.15", {\
+          "packageLocation": "./.yarn/__virtual__/@bcsdlab-koin-virtual-da544e0f84/0/cache/@bcsdlab-koin-npm-0.0.15-ad194f9536-30b1904180.zip/node_modules/@bcsdlab/koin/",\
+          "packageDependencies": [\
+            ["@bcsdlab/koin", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:0.0.15"],\
+            ["@types/axios", null],\
+            ["axios", "npm:1.6.7"]\
+          ],\
+          "packagePeers": [\
+            "@types/axios",\
+            "axios"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -12369,6 +12392,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["koin_owner_web", "workspace:."],\
+            ["@bcsdlab/koin", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:0.0.15"],\
             ["@hookform/resolvers", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:3.3.4"],\
             ["@tanstack/react-query", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:5.18.1"],\
             ["@testing-library/jest-dom", "npm:5.17.0"],\

@@ -1,6 +1,8 @@
+import { isKoinError } from '@bcsdlab/koin';
 import { getUserType } from 'api/auth';
 import { UserType } from 'model/auth';
 import { create } from 'zustand';
+import { useErrorMessageStore } from './errorMessageStore';
 
 interface UserTypeStore {
   userType: UserType;
@@ -19,8 +21,11 @@ const useUserTypeStore = create<UserTypeStore>((set) => ({
         }
         return state;
       });
-    } catch {
+    } catch (err) {
       set((state) => (state.userType !== null ? { userType: null } : state));
+      if (isKoinError(err)) {
+        useErrorMessageStore.getState().setLoginErrorStatus(err.status);
+      }
     }
   },
 }));

@@ -24,7 +24,7 @@ export default function Login() {
   const { login, isError: isServerError } = useLogin();
   const [isFormError, setIsFormError] = useState(false);
   const navigate = useNavigate();
-  const { loginError, loginErrorCode } = useErrorMessageStore();
+  const { loginError, loginErrorStatus } = useErrorMessageStore();
   const [emailError, setEmailError] = useState('');
   const { value: isModalOpen, changeValue: toggle } = useBooleanState(false);
   const isError = isServerError || isFormError;
@@ -134,7 +134,7 @@ export default function Login() {
           </div>
         </form>
       </div>
-      {loginErrorCode === 100005 && isModalOpen && <ApprovalModal toggle={toggle} />}
+      {loginErrorStatus === 403 && isModalOpen && <ApprovalModal toggle={toggle} />}
     </div>
   );
 }
