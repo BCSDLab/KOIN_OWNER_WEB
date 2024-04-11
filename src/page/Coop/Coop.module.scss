@@ -6,6 +6,10 @@
   min-height: 100vh;
   height: 100%;
   font-family: Pretendard, sans-serif;
+
+  @media screen and (max-width: 375px) {
+    width: 100%;
+  }
 }
 
 .container-wrapper {
