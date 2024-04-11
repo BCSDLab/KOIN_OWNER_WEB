@@ -4,7 +4,7 @@ import cn from 'utils/ts/className';
 import { useEffect } from 'react';
 import styles from './SoldoutModal.module.scss';
 
-interface CustomModalProps {
+interface SoldoutModalProps {
   buttonText?: string;
   modalSize: string;
   hasFooter: boolean;
@@ -14,9 +14,9 @@ interface CustomModalProps {
   children: React.ReactNode
 }
 
-export default function CustomModal({
+export default function SoldOutModal({
   buttonText = '', modalSize, hasFooter, isOpen, isOverflowVisible, onCancel, children,
-}: CustomModalProps) {
+}: SoldoutModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `
