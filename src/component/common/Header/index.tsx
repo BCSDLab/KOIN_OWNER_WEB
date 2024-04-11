@@ -62,7 +62,7 @@ function Header() {
         </button>
         <div className={styles['add-menu-header__caption']}>
           {pathname === '/owner/add-menu' && '메뉴추가'}
-          {pathname === '/owner/event-add' && '이벤트/공지 작성하기'}
+          {pathname.startsWith('/owner/event-add') && '이벤트/공지 작성하기'}
           {pathname.startsWith('/owner/modify-menu/') && '메뉴추가'}
         </div>
       </header>
