@@ -7,6 +7,7 @@ import { FileResponse, getCoopUrl } from 'api/uploadFile';
 import axios from 'axios';
 import showToast from 'utils/ts/showToast';
 import { ReactComponent as Delete } from 'assets/svg/mystore/delete.svg';
+import cn from 'utils/ts/className';
 import styles from './AddingEvent.module.scss';
 
 /* eslint-disable no-await-in-loop */
@@ -69,8 +70,15 @@ interface ImageList {
   file: FileList | null;
 }
 
+const initialError = {
+  title: false,
+  content: false,
+  date: false,
+};
+
 export default function AddingEvent() {
   const [eventInfo, setEventInfo] = useState<EventInfo>(initialState);
+  const [error, setError] = useState(initialError);
   const [editor, setEditor] = useState('');
   const param = useParams();
   const [preImages, setPreImages] = useState<(string | ArrayBuffer | null)[]>([]);
@@ -82,42 +90,72 @@ export default function AddingEvent() {
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
+    setError({ ...error, title: false });
   };
   const changeStartYear = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 4) {
       setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, year: value } });
     }
+    setError({ ...error, date: false });
   };
   const changeStartMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 2) {
       setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, month: value } });
     }
+    setError({ ...error, date: false });
   };
   const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 2) {
       setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, date: value } });
     }
+    setError({ ...error, date: false });
   };
   const changeEndYear = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 4) {
       setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, year: value } });
     }
+    setError({ ...error, date: false });
   };
   const changeEndMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 2) {
       setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, month: value } });
     }
+    setError({ ...error, date: false });
   };
   const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (value.length <= 2) {
       setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, date: value } });
     }
+    setError({ ...error, date: false });
+  };
+
+  const validation = () => {
+    let flag = false;
+    if (eventInfo.title.length === 0) {
+      setError((prevError) => ({ ...prevError, title: true }));
+      flag = true;
+    }
+    if (editor.length === 0) {
+      setError((prevError) => ({ ...prevError, content: true }));
+      flag = true;
+    }
+    if (eventInfo.start_date.year.length === 0
+      || eventInfo.start_date.month.length === 0
+      || eventInfo.start_date.date.length === 0
+      || eventInfo.end_date.year.length === 0
+      || eventInfo.end_date.month.length === 0
+      || eventInfo.end_date.date.length === 0
+    ) {
+      setError((prevError) => ({ ...prevError, date: true }));
+      flag = true;
+    }
+    return flag;
   };
 
   const handleImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,6 +183,8 @@ export default function AddingEvent() {
   };
 
   const postEvent = () => {
+    if (validation()) return;
+
     const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month}-${eventInfo.start_date.date}`;
     const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month}-${eventInfo.end_date.date}`;
 
@@ -227,10 +267,14 @@ export default function AddingEvent() {
           <input
             type="text"
             placeholder="이벤트/공지 제목을 입력해주세요."
-            className={styles.event__input}
+            className={cn({
+              [styles['error-border']]: error.title,
+              [styles.event__input]: true,
+            })}
             value={eventInfo.title}
             onChange={changeTitle}
           />
+          {error.title && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div>
           <div className={styles.event__divide}>
@@ -241,11 +285,18 @@ export default function AddingEvent() {
             <ReactQuill
               theme="snow"
               value={editor}
-              onChange={setEditor}
+              onChange={(e) => {
+                setError({ ...error, content: false });
+                return setEditor(e);
+              }}
               modules={modules}
               placeholder="이벤트/공지 내용을 입력해 주세요."
+              className={cn({
+                [styles['error-border']]: error.content,
+              })}
             />
           </div>
+          {error.content && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div>
           <p className={styles.event__paragraph}>이벤트/공지 등록 기간</p>
@@ -254,21 +305,30 @@ export default function AddingEvent() {
             <input
               placeholder="연"
               value={eventInfo.start_date.year}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeStartYear}
             />
             /
             <input
               placeholder="월"
               value={eventInfo.start_date.month}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeStartMonth}
             />
             /
             <input
               placeholder="일"
               value={eventInfo.start_date.date}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeStartDate}
             />
           </div>
@@ -277,24 +337,34 @@ export default function AddingEvent() {
             <input
               placeholder="연"
               value={eventInfo.end_date.year}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeEndYear}
             />
             /
             <input
               placeholder="월"
               value={eventInfo.end_date.month}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeEndMonth}
             />
             /
             <input
               placeholder="일"
               value={eventInfo.end_date.date}
-              className={styles['event-day__input']}
+              className={cn({
+                [styles['error-border']]: error.date,
+                [styles['event-day__input']]: true,
+              })}
               onChange={changeEndDate}
             />
           </div>
+          {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div className={styles.buttons}>
           <button type="button" className={styles.cancel}>취소하기</button>
