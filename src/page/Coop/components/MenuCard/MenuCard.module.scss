@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  font-family: Pretendard, sans-serif;
 }
 
 .card {
@@ -43,8 +44,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    object-fit: scale-down;
+    object-fit: cover;
     cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--soldout {
+      width: 150px;
+      height: 100px;
+      background: linear-gradient(0deg, rgb(0 0 0 / 50%) 0%, rgb(0 0 0 / 50%) 100%);
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #fff;
+      font-family: Pretendard, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      gap: 4px;
+    }
+
+    &--add {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 400;
+      gap: 4px;
+      color: #8e8e8e;
+    }
   }
 
   &__soldout-wrapper {
@@ -60,18 +94,23 @@
     justify-content: center;
     padding: 12px;
     gap: 40px;
+    min-height: 120px;
   }
 
   &__soldout {
     color: #8e8e8e;
     font-size: 13px;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 .modal {
   display: flex;
   flex-direction: column;
+  padding-top: 24px;
 
   &__header {
     text-align: center;

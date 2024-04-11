@@ -4,9 +4,10 @@ import {
 } from 'model/Coop';
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
+import { ReactComponent as SoldOut } from 'assets/svg/coop/soldout.svg';
 import { useRef, useState } from 'react';
 import { getCoopUrl } from 'api/uploadFile/index';
-import CustomModal from 'component/common/CustomModal';
+import SoldoutModal from 'page/Coop/components/SoldoutModal';
 import axios from 'axios';
 import styles from './MenuCard.module.scss';
 
@@ -77,6 +78,11 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     setSelectedCorner(corner || null);
     if (menu?.soldout_at === null) {
       setIsSoldoutModalOpen((prev) => !prev);
+    } else if (selectedMenu) {
+      updateSoldOutMutation({
+        menu_id: selectedMenu.id,
+        sold_out: false,
+      });
     }
   };
 
@@ -117,20 +123,33 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
               <div className={styles.card__wrapper}>
                 {menu ? (
                   <>
-                    <div
-                      className={styles.card__image}
-                      onClick={handleImageClick(menu.id)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(event) => {
-                        if (event.key === 'Enter') handleImageClick(menu.id)();
-                      }}
-                    >
-                      {menu.image_url ? (
-                        <img src={menu.image_url} alt="" className={styles.card__image} />
-                      ) : (
-                        <Photo />
-                      )}
+                    <div className={styles.image__wrapper}>
+                      <div
+                        className={styles.card__image}
+                        onClick={handleImageClick(menu.id)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter') handleImageClick(menu.id)();
+                        }}
+                      >
+                        {menu.image_url ? (
+                          <img src={menu.image_url} alt="" className={styles.card__image} />
+                        ) : (
+
+                          <div className={styles['card__image--add']}>
+                            <Photo />
+                            <span>사진 추가하기</span>
+                          </div>
+                        )}
+
+                        {menu.soldout_at && (
+                        <div className={styles['card__image--soldout']}>
+                          <SoldOut />
+                          <span>품절표시됨</span>
+                        </div>
+                        )}
+                      </div>
                     </div>
                     <div className={styles.card__content}>
                       {menu.menu.map((item) => (
@@ -160,8 +179,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
           );
         })}
       </div>
-      <CustomModal
-        title="품절 설정"
+      <SoldoutModal
         modalSize="mobile"
         hasFooter={false}
         isOpen={isSoldoutModalOpen}
@@ -190,7 +208,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
           </div>
         )}
 
-      </CustomModal>
+      </SoldoutModal>
     </>
   );
 }
