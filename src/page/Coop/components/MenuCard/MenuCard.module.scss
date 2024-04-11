@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  font-family: Pretendard, sans-serif;
 }
 
 .card {
@@ -81,6 +82,7 @@
     justify-content: center;
     padding: 12px;
     gap: 40px;
+    min-height: 120px;
   }
 
   &__soldout {
