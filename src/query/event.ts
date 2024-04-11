@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { addEvent } from 'api/shop';
 import { EventInfo } from 'model/shopInfo/event';
-import { isKoinError } from 'utils/ts/isKoinError';
+import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 
 export const useAddEvent = (id: string) => {
