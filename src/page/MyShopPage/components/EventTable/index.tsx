@@ -3,6 +3,10 @@ import { StoreEvent } from 'model/shopInfo/myShopInfo';
 import { useState } from 'react';
 import { ReactComponent as EditEventIcon } from 'assets/svg/mystore/edit-event-icon.svg';
 import { ReactComponent as AddEventIcon } from 'assets/svg/mystore/add-event-icon.svg';
+import { ReactComponent as NonCheckCircle } from 'assets/svg/mystore/non-check-circle.svg';
+import { ReactComponent as DeleteIcon } from 'assets/svg/mystore/delete-icon.svg';
+import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
+import { ReactComponent as CompleteIcon } from 'assets/svg/mystore/complete-icon.svg';
 import EventCard from './components';
 // import useStoreMenus from './hooks/useStoreEventList';
 import styles from './EventTable.module.scss';
@@ -11,6 +15,7 @@ export default function EventTable() {
   // const params = useParams();
   // const { storeEventList } = useStoreMenus(params.id!);
   const [editMenu, setEditMenu] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
 
   const testList = {
     events: [
@@ -39,12 +44,42 @@ export default function EventTable() {
   };
 
   return (
-    <div className={styles.eventContainer}>
+    <>
       <div className={styles['manage-event-container']}>
         {editMenu ? (
           <div className={styles['edit-menubar']}>
-            <div className={styles['select-option']}>
-              전체
+            <div className={styles['select-all']}>
+              <button
+                type="button"
+                className={styles['select-all-button']}
+                onClick={() => setSelectAll(!selectAll)}
+              >
+                {selectAll ? <Check /> : <NonCheckCircle />}
+                전체
+              </button>
+            </div>
+            <div className={styles['edit-menubar--button']}>
+              <button
+                type="button"
+                className={styles['edit-button']}
+              >
+                수정
+                <EditEventIcon />
+              </button>
+              <button
+                type="button"
+                className={styles['delete-button']}
+              >
+                삭제
+                <DeleteIcon />
+              </button>
+              <button
+                type="button"
+                className={styles['complete-button']}
+              >
+                완료
+                <CompleteIcon />
+              </button>
             </div>
           </div>
         ) : (
@@ -68,9 +103,11 @@ export default function EventTable() {
           </div>
         )}
       </div>
-      {testList && testList.events.map((event: StoreEvent) => (
-        <EventCard key={event.title} event={event} />
-      ))}
-    </div>
+      <div className={styles.eventContainer}>
+        {testList && testList.events.map((event: StoreEvent) => (
+          <EventCard key={event.title} event={event} />
+        ))}
+      </div>
+    </>
   );
 }

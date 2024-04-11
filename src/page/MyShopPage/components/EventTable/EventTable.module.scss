@@ -26,5 +26,40 @@
 }
 
 .edit-menubar{
+  display: flex;
+  justify-content: space-between;
   background-color: #FAFAFA;
+  padding: 11px 15px;
+  border-bottom: 1px solid  #EEE;
+}
+
+.select-all-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  background-color: #FAFAFA;
+  color: #8E8E8E;
+  font-size: 12px;
+}
+
+.edit-menubar--button {
+  display: flex;
+  gap: 16px;
+}
+
+.edit-menubar--button button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 5px;
+  background: #FAFAFA;
+  color:  #8E8E8E;
+  font-size: 14px;
+
+  &:hover {
+    background: #EEE;
+  }
 }
