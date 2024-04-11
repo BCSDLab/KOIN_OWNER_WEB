@@ -174,8 +174,7 @@ export default function AddingEvent() {
           <div className={styles.event__divide}>
             <small className={styles.event__count}>이벤트/공지와 관련된 사진을 올려보세요.</small>
             <small className={styles.event__count}>
-              {preImages.length}
-              /3
+              {`${preImages.length} / 3`}
             </small>
           </div>
           {preImages.length > 0 && (
@@ -222,8 +221,7 @@ export default function AddingEvent() {
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>제목</p>
             <small className={styles.event__count}>
-              {eventInfo.title.length}
-              /25
+              {`${eventInfo.title.length} / 25`}
             </small>
           </div>
           <input
