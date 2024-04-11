@@ -49,8 +49,7 @@ function Header() {
       },
     });
   };
-
-  if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/') || pathname === '/owner/event-add') && isMobile) {
+  if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/') || pathname.startsWith('/owner/event-add/')) && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
         <button
@@ -62,8 +61,8 @@ function Header() {
         </button>
         <div className={styles['add-menu-header__caption']}>
           {pathname === '/owner/add-menu' && '메뉴추가'}
-          {pathname.startsWith('/owner/event-add') && '이벤트/공지 작성하기'}
-          {pathname.startsWith('/owner/modify-menu/') && '메뉴추가'}
+          {pathname.startsWith('/owner/event-add/') && '이벤트/공지 작성하기'}
+          {pathname.startsWith('/owner/modify-menu/') && '메뉴수정'}
         </div>
       </header>
     );
