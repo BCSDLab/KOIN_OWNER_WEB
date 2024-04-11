@@ -63,7 +63,6 @@ export default function MyShopPage() {
         <>
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
-            {shopData && <Link to={`/owner/event-add/${shopData.id}`}>이벤트 추가</Link>}
             <Link to="/owner/add-menu">
               <button
                 type="button"
