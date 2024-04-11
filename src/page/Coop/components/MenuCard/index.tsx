@@ -142,7 +142,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                         {menu.soldout_at && (
                         <div className={styles['card__image--soldout']}>
                           <SoldOut />
-                          <span>품절 표시됨</span>
+                          <span>품절표시됨</span>
                         </div>
                         )}
                       </div>
