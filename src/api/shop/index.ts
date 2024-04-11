@@ -1,4 +1,6 @@
-import { MyShopListRes, MyShopInfoRes, MyShopParam } from 'model/shopInfo/myShopInfo';
+import {
+  MyShopListRes, MyShopInfoRes, MyShopParam, EventListParam, StoreEventResponse,
+} from 'model/shopInfo/myShopInfo';
 import { MonoMenu, MenuInfoRes } from 'model/shopInfo/menuCategory';
 import { ShopListRes } from 'model/shopInfo/allShopInfo';
 import { accessClient, client } from 'api';
@@ -40,4 +42,7 @@ export const putShop = (id: number, data: OwnerShop) => accessClient.put(`/owner
 
 export const deleteMenu = (menuId:number) => accessClient.delete(`/owner/shops/menus/${menuId}`);
 
-export const getStoreEventList = (id : string) => accessClient.get(`금방 만들어준데요./${id}`);
+export const getStoreEventList = async (param : EventListParam) => {
+  const { data } = await accessClient.get<StoreEventResponse>(`/owner/shops/${param.id}/event`);
+  return StoreEventResponse.parse(data);
+};

@@ -2,7 +2,7 @@ import {
   useMutation, useQuery, useQueryClient, useSuspenseQuery,
 } from '@tanstack/react-query';
 import {
-  getMyShopList, getShopInfo, getMenuInfoList, addMenu,
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getStoreEventList,
 } from 'api/shop';
 import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
@@ -51,8 +51,19 @@ const useMyShop = () => {
     },
   });
 
+  const { data: evnetList } = useQuery({
+    queryKey: shopKeys.eventList(shopId),
+    queryFn: () => getStoreEventList({ id: shopId }),
+  });
   return {
-    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading, categoryList,
+    shopData,
+    menusData,
+    addMenuMutation,
+    addMenuError,
+    refetchShopData,
+    isLoading,
+    categoryList,
+    evnetList,
   };
 };
 

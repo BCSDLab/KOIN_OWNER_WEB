@@ -4,4 +4,5 @@ export const shopKeys = {
   myShopList: (myShopQueryKey: string | undefined) => [...shopKeys.all, 'myShop', myShopQueryKey] as const,
   myShopInfo: (shopId: number) => [...shopKeys.all, 'myShopInfo', shopId] as const,
   myMenuInfo: (shopId: number) => [...shopKeys.all, 'myMenuInfo', shopId] as const,
+  eventList: (shopId: number) => [...shopKeys.all, 'eventList', shopId] as const,
 };

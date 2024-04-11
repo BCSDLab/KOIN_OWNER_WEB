@@ -59,10 +59,14 @@ export interface MyShopParam {
   id: number;
 }
 
+export interface EventListParam {
+  id : number;
+}
+
 export const StoreEvent = z.object({
   title: z.string(),
   content: z.string(),
-  thumbnail_image: z.string(),
+  thumbnail_images: z.array(z.string()),
   start_date: z.string(),
   end_date: z.string(),
 });
