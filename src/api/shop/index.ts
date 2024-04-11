@@ -6,6 +6,7 @@ import { ShopListRes } from 'model/shopInfo/allShopInfo';
 import { accessClient, client } from 'api';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import { EventInfo } from 'model/shopInfo/event';
 
 export const getMyShopList = async () => {
   const { data } = await accessClient.get<MyShopListRes>('/owner/shops');
@@ -46,3 +47,4 @@ export const getStoreEventList = async (param : EventListParam) => {
   const { data } = await accessClient.get<StoreEventResponse>(`/owner/shops/${param.id}/event`);
   return StoreEventResponse.parse(data);
 };
+export const addEvent = (id: string, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
