@@ -78,7 +78,7 @@ export default function AddingEvent() {
     presigned: [],
     file: null,
   });
-  const { mutate: addEvent } = useAddEvent(param.id!);
+  const { mutate: addEvent, isPending } = useAddEvent(param.id!);
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
@@ -239,7 +239,6 @@ export default function AddingEvent() {
           </div>
           <div>
             <ReactQuill
-              style={{ border: '1px solid black' }}
               theme="snow"
               value={editor}
               onChange={setEditor}
@@ -299,7 +298,7 @@ export default function AddingEvent() {
         </div>
         <div className={styles.buttons}>
           <button type="button" className={styles.cancel}>취소하기</button>
-          <button type="button" className={styles.add} onClick={postEvent}>등록하기</button>
+          <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>등록하기</button>
         </div>
       </div>
     </div>

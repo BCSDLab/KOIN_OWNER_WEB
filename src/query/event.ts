@@ -5,7 +5,7 @@ import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 
 export const useAddEvent = (id: string) => {
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: EventInfo) => addEvent(id, data),
     onSuccess: () => showToast('success', '이벤트 추가에 성공했습니다.'),
     onError: (e) => {
@@ -13,5 +13,5 @@ export const useAddEvent = (id: string) => {
     },
   });
 
-  return { mutate };
+  return { mutate, isPending };
 };
