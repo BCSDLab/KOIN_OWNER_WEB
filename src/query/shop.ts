@@ -51,7 +51,7 @@ const useMyShop = () => {
     },
   });
 
-  const { data: evnetList } = useQuery({
+  const { data: eventList } = useQuery({
     queryKey: shopKeys.eventList(shopId),
     queryFn: () => getStoreEventList({ id: shopId }),
   });
@@ -63,7 +63,7 @@ const useMyShop = () => {
     refetchShopData,
     isLoading,
     categoryList,
-    evnetList,
+    eventList,
   };
 };
 

@@ -1,5 +1,5 @@
 import { StoreEvent } from 'model/shopInfo/myShopInfo';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import { ReactComponent as EditEventIcon } from 'assets/svg/mystore/edit-event-icon.svg';
@@ -8,14 +8,29 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/mystore/non-check-c
 import { ReactComponent as DeleteIcon } from 'assets/svg/mystore/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/mystore/complete-icon.svg';
+import showToast from 'utils/ts/showToast';
 import EventCard from './components';
 import styles from './EventTable.module.scss';
 
 export default function EventTable() {
-  const { shopData, evnetList } = useMyShop();
+  const { shopData, eventList } = useMyShop();
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
+  const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
+
+  const toggleSelectEvent = (id: number): void => {
+    setSelectedEventIds((prev : number[]) => (
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    ));
+  };
   const navigate = useNavigate();
+  useEffect(() => {
+    if (selectAll && eventList) {
+      setSelectedEventIds(eventList.events.map((event : StoreEvent) => event.event_id));
+    } else {
+      setSelectedEventIds([]);
+    }
+  }, [selectAll, eventList]);
   return (
     <>
       <div className={styles['manage-event-container']}>
@@ -35,6 +50,11 @@ export default function EventTable() {
               <button
                 type="button"
                 className={styles['edit-button']}
+                onClick={() => {
+                  if (selectedEventIds.length > 1) {
+                    showToast('error', '수정은 하나만 가능합니다.');
+                  } else showToast('success', '이벤트 수정에 성공했습니다.');
+                }}
               >
                 수정
                 <EditEventIcon />
@@ -42,6 +62,7 @@ export default function EventTable() {
               <button
                 type="button"
                 className={styles['delete-button']}
+                onClick={() => showToast('success', '이벤트 삭제에 성공했습니다.')}
               >
                 삭제
                 <DeleteIcon />
@@ -49,6 +70,7 @@ export default function EventTable() {
               <button
                 type="button"
                 className={styles['complete-button']}
+                onClick={() => setEditMenu(false)}
               >
                 완료
                 <CompleteIcon />
@@ -77,8 +99,14 @@ export default function EventTable() {
         )}
       </div>
       <div className={styles.eventContainer}>
-        {evnetList && evnetList.events.map((event: StoreEvent) => (
-          <EventCard key={event.title} event={event} />
+        {eventList && eventList.events.map((event: StoreEvent) => (
+          <EventCard
+            key={event.title}
+            event={event}
+            editState={editMenu}
+            selectedEventIds={selectedEventIds}
+            toggleSelect={() => toggleSelectEvent(event.event_id)}
+          />
         ))}
       </div>
     </>

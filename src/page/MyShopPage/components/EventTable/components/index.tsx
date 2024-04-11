@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import { ReactComponent as SeeInfoArrow } from 'assets/svg/mystore/see-info-arrow.svg';
 import { ReactComponent as HiddenInfoArrow } from 'assets/svg/mystore/hidden-info-arrow.svg';
+import { ReactComponent as NonCheck } from 'assets/svg/mystore/non-check.svg';
+import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
 import cn from 'utils/ts/className';
 import { StoreEvent } from 'model/shopInfo/myShopInfo';
 import styles from './EventCard.module.scss';
 
-export default function EventCard({ event }: { event: StoreEvent }) {
+interface EventCardprops {
+  event : StoreEvent,
+  editState : boolean,
+  selectedEventIds : number[],
+  toggleSelect : (id: number) => void,
+}
+export default function EventCard({
+  event, editState, selectedEventIds, toggleSelect,
+}: EventCardprops) {
   const [hiddenInfo, setHiddenInfo] = useState<boolean>(true);
 
   const toggleHiddenInfo = (state:boolean) => {
@@ -20,6 +30,18 @@ export default function EventCard({ event }: { event: StoreEvent }) {
         [styles['eventCard--nonHidden']]: hiddenInfo === false,
       })}
     >
+      {editState
+      && (
+      <button
+        type="button"
+        className={styles['select-button']}
+        onClick={() => {
+          toggleSelect(event.event_id);
+        }}
+      >
+        {selectedEventIds.includes(event.event_id) ? (<Check />) : <NonCheck />}
+      </button>
+      )}
       {event.thumbnail_images ? (
         <img
           src={event.thumbnail_images[0]}

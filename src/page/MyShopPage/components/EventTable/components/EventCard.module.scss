@@ -1,7 +1,9 @@
 .eventCard {
+  position: relative;
   padding: 10px 0;
   display: flex;
   gap: 16px;
+  width: 100%;
 
   &--nonHidden {
     padding: 10px 0;
@@ -23,10 +25,13 @@
 }
 
 .event-info {
+  width: 100%;
+  
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
     gap: 5px;
   }
 }
@@ -77,4 +82,11 @@
   font-size: 12px;
   font-style: normal;
   line-height: 15.3px;
+}
+
+.select-button {
+  position: absolute;
+  top: 2px;
+  left: -7px;
+  background-color:transparent;
 }

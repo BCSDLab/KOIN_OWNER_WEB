@@ -64,6 +64,9 @@ export interface EventListParam {
 }
 
 export const StoreEvent = z.object({
+  shop_id: z.number(),
+  shop_name: z.string(),
+  event_id: z.number(),
   title: z.string(),
   content: z.string(),
   thumbnail_images: z.array(z.string()),
