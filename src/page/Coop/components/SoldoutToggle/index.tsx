@@ -22,6 +22,5 @@ export default function SoldoutToggle({ menuId, onClick, menu }: SoldoutTogglePr
       <rect className={styles.background} x="1.5" y="2" width="43" height="19" fill={isActive ? '#175C8E' : '#E1E1E1'} stroke="#F5F5F5" />
       <circle className={styles.circle} cx={isActive ? 35 : 11} cy="11.5" />
     </svg>
-
   );
 }
