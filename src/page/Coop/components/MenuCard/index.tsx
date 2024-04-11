@@ -77,6 +77,11 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     setSelectedCorner(corner || null);
     if (menu?.soldout_at === null) {
       setIsSoldoutModalOpen((prev) => !prev);
+    } else if (selectedMenu) {
+      updateSoldOutMutation({
+        menu_id: selectedMenu.id,
+        sold_out: false,
+      });
     }
   };
 
