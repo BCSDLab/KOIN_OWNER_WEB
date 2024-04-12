@@ -15,7 +15,7 @@ export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
   const [listOpen, setListOpen] = useState<boolean>(false);
   const {
-    shopData, menusData, refetchShopData, isLoading,
+    shopData, menusData, refetchShopData, isLoading, myShop,
   } = useMyShop();
   const { resetAddMenuStore } = useAddMenuStore();
   useEffect(() => {
@@ -66,8 +66,13 @@ export default function MyShopPage() {
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
             <Link to="store-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
-            <button type="button" className={styles['mobileheader__btn-add']} onClick={() => setListOpen(true)}>상점 선택</button>
-            {listOpen && <MyShopList setListOpen={setListOpen} />}
+            {myShop.shops.length >= 2
+              && (
+                <>
+                  <button type="button" className={styles['mobileheader__btn-add']} onClick={() => setListOpen(true)}>상점 선택</button>
+                  {listOpen && <MyShopList setListOpen={setListOpen} />}
+                </>
+              )}
             <Link to="/add-menu">
               <button
                 type="button"

@@ -43,10 +43,7 @@ export default function MyShopList({ setListOpen }: Props) {
                 selectShop(shop.id);
               }}
             >
-              {idx + 1}
-              .
-              {' '}
-              {shop.name}
+              {`${idx + 1}. ${shop.name}`}
             </button>
           ))}
         </Suspense>
