@@ -19,7 +19,12 @@ const useMyShop = () => {
     queryFn: () => getMyShopList(),
   });
 
-  const shopId = myShop.shops[0]?.id;
+  const prevShopId = Number(localStorage.getItem('myShopId'));
+  const prevShop = prevShopId ? myShop.shops.find((shop) => shop.id === prevShopId) : null;
+
+  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0].id;
+
+  const shopId = currentMyShopId;
 
   const { data: shopData, refetch: refetchShopData, isLoading } = useQuery({
     queryKey: shopKeys.myShopInfo(shopId),
@@ -55,6 +60,7 @@ const useMyShop = () => {
     queryKey: shopKeys.eventList(shopId),
     queryFn: () => getStoreEventList({ id: shopId }),
   });
+
   return {
     shopData,
     menusData,
@@ -64,6 +70,7 @@ const useMyShop = () => {
     isLoading,
     categoryList,
     eventList,
+    myShop,
   };
 };
 

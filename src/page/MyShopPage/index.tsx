@@ -15,11 +15,13 @@ import styles from './MyShopPage.module.scss';
 import EditShopInfoModal from './components/EditShopInfoModal';
 import MenuTable from './components/MenuTable';
 import EventTable from './components/EventTable';
+import MyShopList from './components/MyShopList/MyShopList';
 
 export default function MyShopPage() {
   const { isMobile } = useMediaQuery();
+  const [listOpen, setListOpen] = useState<boolean>(false);
   const {
-    shopData, menusData, refetchShopData, isLoading,
+    shopData, menusData, refetchShopData, isLoading, myShop,
   } = useMyShop();
   const { resetAddMenuStore } = useAddMenuStore();
   useEffect(() => {
@@ -78,7 +80,16 @@ export default function MyShopPage() {
         <>
           <div className={styles.mobileheader}>
             <h1 className={styles.mobileheader__title}>가게정보</h1>
+
             {shopData && <Link to={`/owner/event-add/${shopData.id}`}>이벤트 추가</Link>}
+            <Link to="store-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
+            {myShop.shops.length >= 2
+              && (
+                <>
+                  <button type="button" className={styles['mobileheader__btn-add']} onClick={() => setListOpen(true)}>상점 선택</button>
+                  {listOpen && <MyShopList setListOpen={setListOpen} />}
+                </>
+              )}
             <Link to="/owner/add-menu">
               <button
                 type="button"
@@ -121,10 +132,10 @@ export default function MyShopPage() {
           </div>
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
-            <MenuTable
-              storeMenuCategories={menusData.menu_categories}
-              onClickImage={onClickImage}
-            />
+              <MenuTable
+                storeMenuCategories={menusData.menu_categories}
+                onClickImage={onClickImage}
+              />
             )
           )
             : (
