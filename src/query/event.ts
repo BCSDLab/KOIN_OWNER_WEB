@@ -13,8 +13,8 @@ export const useAddEvent = (id: string) => {
     mutationFn: (data: EventInfo) => addEvent(id, data),
     onSuccess: () => {
       showToast('success', '이벤트 추가에 성공했습니다.');
-      queryClient.invalidateQueries({ queryKey: shopKeys.eventList(Number(id)) });
       navigate('/owner');
+      queryClient.refetchQueries({ queryKey: shopKeys.eventList(Number(id)) });
     },
     onError: (e) => {
       if (isKoinError(e)) showToast('error', e.message);
