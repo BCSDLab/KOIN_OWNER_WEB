@@ -32,6 +32,14 @@
     font-weight: 400;
     line-height: 15px;
     width: 150px;
+
+    &--none {
+      font-size: 16px;
+
+      @media screen and (max-width: 350px) {
+        font-size: 14px;
+      }
+    }
   }
 
   &__image {
@@ -95,6 +103,10 @@
     padding: 12px;
     gap: 40px;
     min-height: 120px;
+
+    @media screen and (max-width: 350px) {
+      gap: 10px;
+    }
   }
 
   &__soldout {
