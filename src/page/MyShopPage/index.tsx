@@ -61,16 +61,11 @@ export default function MyShopPage() {
 
   if (isMobile && shopData && isEditShopInfoModalOpen) {
     return (
-      <>
-        <div className={styles.mobileheader}>
-          <h1 className={styles.mobileheader__title}>가게정보</h1>
-        </div>
-        <EditShopInfoModal
-          shopInfo={shopData}
-          closeModal={closeEditShopInfoModal}
-          setIsSuccess={setIsSuccess}
-        />
-      </>
+      <EditShopInfoModal
+        shopInfo={shopData}
+        closeModal={closeEditShopInfoModal}
+        setIsSuccess={setIsSuccess}
+      />
     );
   }
 
@@ -79,10 +74,8 @@ export default function MyShopPage() {
       {isMobile ? (
         <>
           <div className={styles.mobileheader}>
-            <h1 className={styles.mobileheader__title}>가게정보</h1>
-
             {shopData && <Link to={`/owner/event-add/${shopData.id}`}>이벤트 추가</Link>}
-            <Link to="store-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
+            <Link to="shop-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
             {myShop.shops.length >= 2
               && (
                 <>
@@ -106,6 +99,7 @@ export default function MyShopPage() {
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
               setIsSuccess={setIsSuccess}
+              onClickImage={onClickImage}
             />
           )}
           <div className={styles.tap}>
@@ -162,6 +156,7 @@ export default function MyShopPage() {
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
               setIsSuccess={setIsSuccess}
+              onClickImage={onClickImage}
             />
           )}
           {menusData && menusData.menu_categories.map((category) => (
