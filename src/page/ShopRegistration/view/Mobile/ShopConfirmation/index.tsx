@@ -18,7 +18,7 @@ export default function ShopConfirmation() {
   const {
     category,
     categoryId,
-    imageUrl,
+    imageUrls,
     name,
     address,
     phone,
@@ -58,7 +58,7 @@ export default function ShopConfirmation() {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    setValue('image_urls', [imageUrl]);
+    setValue('image_urls', imageUrls);
     setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);

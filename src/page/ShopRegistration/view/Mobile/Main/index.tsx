@@ -16,11 +16,11 @@ export default function Main() {
     imageFile, imgRef, saveImgFile, uploadError,
   } = useImageUpload();
   const {
-    name, setName, address, setAddress, imageUrl, setImageUrl,
+    name, setName, address, setAddress, imageUrls, setImageUrls,
   } = useShopRegistrationStore();
 
   const handleNextClick = () => {
-    if (name === '' || address === '' || imageUrl === '' || uploadError !== '') {
+    if (name === '' || address === '' || imageUrls.length === 0 || uploadError !== '') {
       setIsError(true);
     } else {
       setIsError(false);
@@ -29,14 +29,15 @@ export default function Main() {
   };
 
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
+    if (imageFile !== '' || uploadError !== '') setImageUrls([imageFile]);
   }, [imageFile]);
+
   return (
     <div className={styles.form}>
       <label
         className={cn({
           [styles['form__image-upload']]: true,
-          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrl === '' && isError),
+          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrls.length === 0 && isError),
         })}
         htmlFor="mainMenuImage"
       >
@@ -48,8 +49,8 @@ export default function Main() {
           onChange={saveImgFile}
           ref={imgRef}
         />
-        {imageUrl
-          ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
+        {imageUrls
+          ? <img src={imageUrls[0]} className={styles['form__main-menu']} alt="메인 메뉴" />
           : (
             <>
               <EmptyImgIcon />
@@ -58,7 +59,7 @@ export default function Main() {
           )}
       </label>
       <div className={styles['form__image-error-message']}>
-        {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+        {uploadError === '' && imageUrls.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
         {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
       </div>
       <label

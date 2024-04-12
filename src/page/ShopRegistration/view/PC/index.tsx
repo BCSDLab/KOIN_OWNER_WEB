@@ -65,7 +65,7 @@ export default function ShopRegistrationPC() {
   } = useModalStore();
 
   const {
-    setImageUrl,
+    setImageUrls,
     setName,
     setDelivery,
     setPayCard,
@@ -77,7 +77,7 @@ export default function ShopRegistrationPC() {
   } = useShopRegistrationStore();
 
   const {
-    imageUrl,
+    imageUrls,
     categoryId,
     category,
     name,
@@ -118,7 +118,7 @@ export default function ShopRegistrationPC() {
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === ''
+    if (imageUrls.length === 0 || name === '' || category === ''
       || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
@@ -131,7 +131,7 @@ export default function ShopRegistrationPC() {
   const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
+    if (imageFile !== '' || uploadError !== '') setImageUrls([imageFile]);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
@@ -191,12 +191,12 @@ export default function ShopRegistrationPC() {
                     accept="image/*"
                     id="mainMenuImage"
                     className={styles['form__upload-file']}
-                    {...register('image_urls', { value: [imageUrl] })}
+                    {...register('image_urls', { value: imageUrls })}
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  {imageUrl
-                    ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
+                  {imageUrls
+                    ? <img src={imageUrls[0]} className={styles['form__main-menu']} alt="메인 메뉴" />
                     : (
                       <>
                         <Cutlery className={styles['form__cutlery-cross']} />
@@ -204,7 +204,8 @@ export default function ShopRegistrationPC() {
                       </>
                     )}
                 </label>
-                {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+                {uploadError === '' && imageUrls.length === 0 && isError
+                && <ErrorMessage message={ERRORMESSAGE.image} />}
                 {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
               </div>
               <div>
@@ -294,7 +295,7 @@ export default function ShopRegistrationPC() {
                   <input
                     type="string"
                     className={styles['form__input-large']}
-                    value={deliveryPrice}
+                    value={deliveryPrice === 0 ? undefined : deliveryPrice}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}

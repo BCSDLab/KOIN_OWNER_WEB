@@ -7,6 +7,7 @@ interface ShopRegistrationStore {
   deliveryPrice: number;
   description: string;
   imageUrl: string;
+  imageUrls: string[];
   owner: string;
   name: string;
   phone: string;
@@ -20,6 +21,7 @@ interface ShopRegistrationStore {
   setDeliveryPrice: (deliveryPrice: number) => void;
   setDescription: (description: string) => void;
   setImageUrl: (imageUrl: string) => void;
+  setImageUrls: (imageUrls: string[]) => void;
   setOwner: (owner: string) => void;
   setName: (name: string) => void;
   setPhone: (phone: string) => void;
@@ -36,6 +38,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   deliveryPrice: 0,
   description: '',
   imageUrl: '',
+  imageUrls: [],
   owner: '',
   name: '',
   phone: '',
@@ -49,6 +52,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   setDeliveryPrice: (deliveryPrice: number) => set({ deliveryPrice }),
   setDescription: (description: string) => set({ description }),
   setImageUrl: (imageUrl: string) => set({ imageUrl }),
+  setImageUrls: (imageUrls:string[]) => set({ imageUrls }),
   setOwner: (owner: string) => set({ owner }),
   setName: (name: string) => set({ name }),
   setPhone: (phone: string) => set({ phone }),
