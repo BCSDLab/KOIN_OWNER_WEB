@@ -17,7 +17,10 @@ const useMyShop = () => {
     queryFn: () => getMyShopList(),
   });
 
-  const currentMyShopId = Number(localStorage.getItem('myShopId')) ?? myShop.shops[0].id;
+  const prevShopId = Number(localStorage.getItem('myShopId'));
+  const prevShop = prevShopId ? myShop.shops.find((shop) => shop.id === prevShopId) : null;
+
+  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0].id;
 
   const shopId = currentMyShopId;
 
