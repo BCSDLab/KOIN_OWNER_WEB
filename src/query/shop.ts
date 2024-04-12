@@ -17,7 +17,7 @@ const useMyShop = () => {
     queryFn: () => getMyShopList(),
   });
 
-  const currentMyShopId = Number(localStorage.getItem('myShopId')) ?? 0;
+  const currentMyShopId = Number(localStorage.getItem('myShopId')) ?? myShop.shops[0].id;
 
   const shopId = currentMyShopId;
 
