@@ -158,7 +158,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                     </div>
                   </>
                 ) : (
-                  <div>
+                  <div className={styles['card__content--none']}>
                     {corner}
                     에서 제공하는 식단 정보가 없습니다.
                   </div>
