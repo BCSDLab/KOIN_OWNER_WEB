@@ -17,7 +17,9 @@ const useMyShop = () => {
     queryFn: () => getMyShopList(),
   });
 
-  const shopId = myShop.shops[0]?.id;
+  const currentMyShopId = Number(localStorage.getItem('myShopId')) ?? 0;
+
+  const shopId = currentMyShopId;
 
   const { data: shopData, refetch: refetchShopData, isLoading } = useQuery({
     queryKey: ['myShopInfo', shopId],
@@ -45,7 +47,7 @@ const useMyShop = () => {
   });
 
   return {
-    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading,
+    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading, myShop,
   };
 };
 
