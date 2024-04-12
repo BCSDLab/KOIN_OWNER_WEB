@@ -8,13 +8,14 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/mystore/non-check-c
 import { ReactComponent as DeleteIcon } from 'assets/svg/mystore/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/mystore/complete-icon.svg';
-import { useDeleteEvent } from 'query/event';
+import { useDeleteEvent, useGetEventList } from 'query/event';
 import showToast from 'utils/ts/showToast';
 import EventCard from './components';
 import styles from './EventTable.module.scss';
 
 export default function EventTable() {
-  const { shopData, eventList } = useMyShop();
+  const { shopData } = useMyShop();
+  const { eventList } = useGetEventList(shopData!.id);
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
