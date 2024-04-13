@@ -13,10 +13,12 @@ interface ShopInfoProps {
   closeEditShopInfoModal: () => void;
   setIsSuccess: Dispatch<SetStateAction<boolean>>;
   isEditShopInfoModalOpen: boolean;
+  onClickImage: (img: string[], index: number) => void;
 }
 
 export default function ShopInfo({
-  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, setIsSuccess, isEditShopInfoModalOpen,
+  shopInfo, openEditShopInfoModal, closeEditShopInfoModal, setIsSuccess,
+  isEditShopInfoModalOpen, onClickImage,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
   const openDayIndex = shopInfo.open.filter((day) => !day.closed)
@@ -51,22 +53,43 @@ export default function ShopInfo({
       data: shopInfo.address,
     }, {
       title: '배달금액',
-      data: `${shopInfo.delivery_price}원`,
+      data: shopInfo.delivery_price === 0 ? '무료' : `${shopInfo.delivery_price}원`,
     },
     {
       title: '기타 정보',
       data: shopInfo.description,
     },
   ];
+
   return (
     <div>
       {isMobile ? (
         <div className={styles.mobilestore}>
           <div className={styles.mobilestore__imgs}>
-            <div className={styles['mobilestore__imgs-main']}>
-              <img src={shopInfo.image_urls[0]} alt="main" className={styles['mobilestore__imgs-main-pic']} />
-            </div>
+            {shopInfo.image_urls.length > 0
+              && shopInfo.image_urls.map((src, index) => (
+                <div key={src} className={styles['mobilestore__imgs-main']}>
+                  <button
+                    className={styles['mobilestore__imgs-button']}
+                    type="button"
+                    onClick={() => {
+                      if (shopInfo.image_urls.length > 1) {
+                        onClickImage(shopInfo.image_urls, index);
+                      }
+                    }}
+                  >
+                    <img src={`${src}`} alt={`${shopInfo.name}-${index}번 이미지`} />
+                  </button>
+                </div>
+              ))}
           </div>
+          <button
+            type="button"
+            className={styles['mobilestore__update-btn']}
+            onClick={openEditShopInfoModal}
+          >
+            가게 정보 수정
+          </button>
           <div className={styles.mobilestore__info}>
             <div className={styles.mobilestore__title}>
               <h1 className={styles.mobilestore__name}>{shopInfo.name}</h1>
@@ -85,13 +108,6 @@ export default function ShopInfo({
                   </div>
                 </div>
               ))}
-              <button
-                type="button"
-                className={styles['mobilestore__update-btn']}
-                onClick={openEditShopInfoModal}
-              >
-                가게 정보 수정
-              </button>
             </div>
           </div>
         </div>

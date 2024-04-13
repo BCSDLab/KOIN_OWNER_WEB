@@ -39,7 +39,6 @@
   &__title {
     display: flex;
     align-items: center;
-    margin-top: 24px;
     margin-bottom: 10px;
   }
 
@@ -78,9 +77,9 @@
   }
 
   &__update-btn {
+    margin: 10px;
     display: flex;
     justify-content: center;
-    position: absolute;
     width: 110px;
     height: 40px;
     bottom: 20px;
