@@ -69,7 +69,9 @@ export default function ShopConfirmation() {
     setValue('pay_bank', payBank);
     setValue('pay_card', payCard);
     setValue('open', openValue);
-  }, []);
+  }, [openTimeArray, closeTimeArray, shopClosedArray, categoryId, name,
+    address, phone, deliveryPrice, description, delivery, payBank, payCard, imageUrls]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>

@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
 import useStepStore from 'store/useStepStore';
-import useImageUpload from 'utils/hooks/useImageUpload';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useEffect, useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './Main.module.scss';
 
 export default function Main() {
@@ -14,7 +14,7 @@ export default function Main() {
   const { increaseStep } = useStepStore();
   const {
     imageFile, imgRef, saveImgFile, uploadError,
-  } = useImageUpload();
+  } = useImagesUpload();
   const {
     name, setName, address, setAddress, imageUrls, setImageUrls,
   } = useShopRegistrationStore();
@@ -29,7 +29,7 @@ export default function Main() {
   };
 
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrls([imageFile]);
+    if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
   }, [imageFile]);
 
   return (

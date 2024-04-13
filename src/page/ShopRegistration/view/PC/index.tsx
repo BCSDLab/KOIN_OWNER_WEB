@@ -21,7 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { useMutation } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
-import useImageUpload from 'utils/hooks/useImageUpload';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
@@ -55,7 +55,7 @@ export default function ShopRegistrationPC() {
   } = useBooleanState(false);
   const {
     imageFile, imgRef, saveImgFile, uploadError,
-  } = useImageUpload();
+  } = useImagesUpload();
   const [isError, setIsError] = useState(false);
 
   const {
@@ -131,7 +131,7 @@ export default function ShopRegistrationPC() {
   const shopClosedArray = Object.values(shopClosedState);
 
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrls([imageFile]);
+    if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
