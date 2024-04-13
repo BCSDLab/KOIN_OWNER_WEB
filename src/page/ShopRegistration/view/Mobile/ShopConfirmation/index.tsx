@@ -18,7 +18,7 @@ export default function ShopConfirmation() {
   const {
     category,
     categoryId,
-    imageUrl,
+    imageUrls,
     name,
     address,
     phone,
@@ -58,7 +58,7 @@ export default function ShopConfirmation() {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    setValue('image_urls', [imageUrl]);
+    setValue('image_urls', imageUrls);
     setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);
@@ -69,7 +69,9 @@ export default function ShopConfirmation() {
     setValue('pay_bank', payBank);
     setValue('pay_card', payCard);
     setValue('open', openValue);
-  }, []);
+  }, [openTimeArray, closeTimeArray, shopClosedArray, categoryId, name,
+    address, phone, deliveryPrice, description, delivery, payBank, payCard, imageUrls]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>

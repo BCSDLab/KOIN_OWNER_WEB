@@ -3,6 +3,7 @@ import { MenuCategory } from 'model/shopInfo/menuCategory';
 import cn from 'utils/ts/className';
 import useMoveScroll from 'utils/hooks/useMoveScroll';
 import MENU_CATEGORY from 'utils/constant/menu';
+import { Link } from 'react-router-dom';
 import styles from './MenuTable.module.scss';
 
 interface MenuTableProps {
@@ -72,15 +73,17 @@ function MenuTable({ storeMenuCategories, onClickImage }: MenuTableProps) {
                         />
                       </div>
                   )}
-                  <div className={styles['menu-info__card']}>
-                    <span title={menu.name}>{menu.name}</span>
-                    <span>
-                      {!!menu.single_price && (
-                        menu.single_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      )}
-                      원
-                    </span>
-                  </div>
+                  <Link to={`/owner/modify-menu/${menu.id}`} className={styles['menu-info__modify']}>
+                    <div className={styles['menu-info__card']}>
+                      <span title={menu.name}>{menu.name}</span>
+                      <span>
+                        {!!menu.single_price && (
+                          menu.single_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        )}
+                        원
+                      </span>
+                    </div>
+                  </Link>
                 </div>
               ) : (
                 menu.option_prices.map((item) => (
@@ -104,13 +107,15 @@ function MenuTable({ storeMenuCategories, onClickImage }: MenuTableProps) {
                           />
                         </div>
                     )}
-                    <div className={styles['menu-info__card']}>
-                      <span>{`${menu.name} - ${item.option}`}</span>
-                      <span>
-                        {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        원
-                      </span>
-                    </div>
+                    <Link to={`/owner/modify-menu/${menu.id}`} className={styles['menu-info__modify']}>
+                      <div className={styles['menu-info__card']}>
+                        <span>{`${menu.name} - ${item.option}`}</span>
+                        <span>
+                          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          원
+                        </span>
+                      </div>
+                    </Link>
                   </div>
                 ))
               )
