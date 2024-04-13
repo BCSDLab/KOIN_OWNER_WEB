@@ -50,6 +50,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 20px;
+  gap: 20px;
   border-bottom: 1px solid #eee;
 
   &:last-child {
@@ -73,6 +74,8 @@
       font-size: 16px;
       font-weight: 600;
       padding-bottom: 20px;
+      text-decoration: none;
+      color: #000000;
 
       @include media.media-breakpoint-down(mobile) {
         padding-bottom: 12px;
