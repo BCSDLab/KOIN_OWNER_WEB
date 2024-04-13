@@ -1,6 +1,7 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
+import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
@@ -83,21 +84,19 @@ export default function ShopInfo({
                 </div>
               ))}
           </div>
-          <button
-            type="button"
-            className={styles['mobilestore__update-btn']}
-            onClick={openEditShopInfoModal}
-          >
-            가게 정보 수정
-          </button>
+          <div className={styles.mobilestore__btn}>
+            <button
+              type="button"
+              className={styles['mobilestore__update-btn']}
+              onClick={openEditShopInfoModal}
+            >
+              가게 관리하기
+              <GearIcon />
+            </button>
+          </div>
           <div className={styles.mobilestore__info}>
             <div className={styles.mobilestore__title}>
               <h1 className={styles.mobilestore__name}>{shopInfo.name}</h1>
-            </div>
-            <div className={styles['mobilestore__keyword-part']}>
-              {shopInfo.delivery && (<div className={styles.mobilestore__keywords}>#배달 가능</div>)}
-              {shopInfo.pay_card && (<div className={styles.mobilestore__keywords}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles.mobilestore__keywords}>#계좌이체 가능</div>)}
             </div>
             <div className={styles.store__content}>
               {content.map((item) => (
@@ -108,6 +107,11 @@ export default function ShopInfo({
                   </div>
                 </div>
               ))}
+            </div>
+            <div className={styles['mobilestore__keyword-part']}>
+              {shopInfo.delivery && (<div className={styles.mobilestore__keywords}>#배달 가능</div>)}
+              {shopInfo.pay_card && (<div className={styles.mobilestore__keywords}>#카드 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles.mobilestore__keywords}>#계좌이체 가능</div>)}
             </div>
           </div>
         </div>
