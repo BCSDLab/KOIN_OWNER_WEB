@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
+import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
 import { ReactComponent as MobileDeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';

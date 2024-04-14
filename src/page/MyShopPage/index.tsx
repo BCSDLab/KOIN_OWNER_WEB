@@ -127,7 +127,7 @@ export default function MyShopPage() {
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
               <MenuTable
-                storeMenuCategories={menusData.menu_categories}
+                shopMenuCategories={menusData.menu_categories}
                 onClickImage={onClickImage}
               />
             )

@@ -1,19 +1,19 @@
 import { useRef, useState } from 'react';
 
-export default function useSearchStoreName(stores :Array<{
+export default function useSearchShopName(shops :Array<{
   name:string, tel: string, card:boolean, deliver:boolean, account:boolean
 }>) {
-  const [fillteredStores, setStores] = useState(stores);
+  const [fillteredShops, setShops] = useState(shops);
   const searchInput = useRef<HTMLInputElement>(null);
 
   const onClickSearchButton = (event:React.FormEvent) => {
     event.preventDefault();
     if (searchInput.current!.value !== '') {
-      setStores(stores.filter((
-        store,
-      ) => store.name.includes(searchInput.current!.value)));
+      setShops(shops.filter((
+        shop,
+      ) => shop.name.includes(searchInput.current!.value)));
     } else {
-      setStores(stores);
+      setShops(shops);
     }
   };
 
@@ -24,6 +24,6 @@ export default function useSearchStoreName(stores :Array<{
   };
 
   return {
-    searchInput, onClickSearchButton, fillteredStores, onKeyPress,
+    searchInput, onClickSearchButton, fillteredShops, onKeyPress,
   };
 }

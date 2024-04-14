@@ -2,7 +2,7 @@ import {
   useMutation, useQuery, useQueryClient, useSuspenseQuery,
 } from '@tanstack/react-query';
 import {
-  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getStoreEventList,
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getShopEventList,
 } from 'api/shop';
 import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
@@ -58,7 +58,7 @@ const useMyShop = () => {
 
   const { data: eventList } = useQuery({
     queryKey: shopKeys.eventList(shopId),
-    queryFn: () => getStoreEventList({ id: shopId }),
+    queryFn: () => getShopEventList({ id: shopId }),
   });
 
   return {

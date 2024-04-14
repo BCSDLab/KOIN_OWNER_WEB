@@ -1,7 +1,7 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
-import { ReactComponent as GearIcon } from 'assets/svg/mystore/gear.svg';
+import { ReactComponent as CUTLERY } from 'assets/svg/myshop/cutlery.svg';
+import { ReactComponent as GearIcon } from 'assets/svg/myshop/gear.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
@@ -65,13 +65,13 @@ export default function ShopInfo({
   return (
     <div>
       {isMobile ? (
-        <div className={styles.mobilestore}>
-          <div className={styles.mobilestore__imgs}>
+        <div className={styles.mobileshop}>
+          <div className={styles.mobileshop__imgs}>
             {shopInfo.image_urls.length > 0
               && shopInfo.image_urls.map((src, index) => (
-                <div key={src} className={styles['mobilestore__imgs-main']}>
+                <div key={src} className={styles['mobileshop__imgs-main']}>
                   <button
-                    className={styles['mobilestore__imgs-button']}
+                    className={styles['mobileshop__imgs-button']}
                     type="button"
                     onClick={() => {
                       if (shopInfo.image_urls.length > 1) {
@@ -84,21 +84,21 @@ export default function ShopInfo({
                 </div>
               ))}
           </div>
-          <div className={styles.mobilestore__btn}>
+          <div className={styles.mobileshop__btn}>
             <button
               type="button"
-              className={styles['mobilestore__update-btn']}
+              className={styles['mobileshop__update-btn']}
               onClick={openEditShopInfoModal}
             >
               가게 관리하기
               <GearIcon />
             </button>
           </div>
-          <div className={styles.mobilestore__info}>
-            <div className={styles.mobilestore__title}>
-              <h1 className={styles.mobilestore__name}>{shopInfo.name}</h1>
+          <div className={styles.mobileshop__info}>
+            <div className={styles.mobileshop__title}>
+              <h1 className={styles.mobileshop__name}>{shopInfo.name}</h1>
             </div>
-            <div className={styles.store__content}>
+            <div className={styles.shop__content}>
               {content.map((item) => (
                 <div className={styles.detail} key={item.title}>
                   <div className={styles.detail__title}>{item.title}</div>
@@ -108,23 +108,23 @@ export default function ShopInfo({
                 </div>
               ))}
             </div>
-            <div className={styles['mobilestore__keyword-part']}>
-              {shopInfo.delivery && (<div className={styles.mobilestore__keywords}>#배달 가능</div>)}
-              {shopInfo.pay_card && (<div className={styles.mobilestore__keywords}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles.mobilestore__keywords}>#계좌이체 가능</div>)}
+            <div className={styles['mobileshop__keyword-part']}>
+              {shopInfo.delivery && (<div className={styles.mobileshop__keywords}>#배달 가능</div>)}
+              {shopInfo.pay_card && (<div className={styles.mobileshop__keywords}>#카드 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles.mobileshop__keywords}>#계좌이체 가능</div>)}
             </div>
           </div>
         </div>
       ) : (
-        <div className={styles.store}>
-          <div className={styles.store__info}>
-            <div className={styles.store__title}>
-              <h1 className={styles.store__name}>{shopInfo.name}</h1>
-              {shopInfo.delivery && (<div className={styles.store__keywords}>#배달 가능</div>)}
-              {shopInfo.pay_card && (<div className={styles.store__keywords}>#카드 가능</div>)}
-              {shopInfo.pay_bank && (<div className={styles['store__keywords--long']}>#계좌이체 가능</div>)}
+        <div className={styles.shop}>
+          <div className={styles.shop__info}>
+            <div className={styles.shop__title}>
+              <h1 className={styles.shop__name}>{shopInfo.name}</h1>
+              {shopInfo.delivery && (<div className={styles.shop__keywords}>#배달 가능</div>)}
+              {shopInfo.pay_card && (<div className={styles.shop__keywords}>#카드 가능</div>)}
+              {shopInfo.pay_bank && (<div className={styles['shop__keywords--long']}>#계좌이체 가능</div>)}
             </div>
-            <div className={styles.store__content}>
+            <div className={styles.shop__content}>
               {content.map((item) => (
                 <div className={styles.detail} key={item.title}>
                   <div className={styles.detail__title}>{item.title}</div>
@@ -135,7 +135,7 @@ export default function ShopInfo({
               ))}
               <button
                 type="button"
-                className={styles['store__update-btn']}
+                className={styles['shop__update-btn']}
                 onClick={openEditShopInfoModal}
               >
                 가게 정보 수정
@@ -158,29 +158,29 @@ export default function ShopInfo({
               )}
             </div>
           </div>
-          <div className={styles.store__imgs}>
-            <div className={styles['store__imgs-main']}>
-              <img src={shopInfo.image_urls[0]} alt="main" className={styles['store__imgs-main-pic']} />
+          <div className={styles.shop__imgs}>
+            <div className={styles['shop__imgs-main']}>
+              <img src={shopInfo.image_urls[0]} alt="main" className={styles['shop__imgs-main-pic']} />
             </div>
-            <div className={styles.store__subimgs}>
+            <div className={styles.shop__subimgs}>
               {shopInfo.image_urls[1] ? (
-                <div className={styles.store__subimg}>
-                  <img src={shopInfo.image_urls[1]} alt="sub" className={styles['store__subimgs-pic']} />
+                <div className={styles.shop__subimg}>
+                  <img src={shopInfo.image_urls[1]} alt="sub" className={styles['shop__subimgs-pic']} />
                 </div>
               ) : (
-                <div className={styles['store__empty-img']}>
-                  <CUTLERY className={styles['store__empty-img-icon']} />
-                  <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
+                <div className={styles['shop__empty-img']}>
+                  <CUTLERY className={styles['shop__empty-img-icon']} />
+                  <span className={styles['shop__empty-img-caption']}>이미지 준비 중</span>
                 </div>
               )}
               {shopInfo.image_urls[2] ? (
-                <div className={styles.store__subimg}>
-                  <img src={shopInfo.image_urls[2]} alt="sub" className={styles['store__subimgs-pic']} />
+                <div className={styles.shop__subimg}>
+                  <img src={shopInfo.image_urls[2]} alt="sub" className={styles['shop__subimgs-pic']} />
                 </div>
               ) : (
-                <div className={styles['store__empty-img']}>
-                  <CUTLERY className={styles['store__empty-img-icon']} />
-                  <span className={styles['store__empty-img-caption']}>이미지 준비 중</span>
+                <div className={styles['shop__empty-img']}>
+                  <CUTLERY className={styles['shop__empty-img-icon']} />
+                  <span className={styles['shop__empty-img-caption']}>이미지 준비 중</span>
                 </div>
               )}
             </div>

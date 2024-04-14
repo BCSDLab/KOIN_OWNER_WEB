@@ -4,7 +4,7 @@ import {
 } from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
+import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { SubmitHandler, useForm } from 'react-hook-form';

@@ -7,18 +7,18 @@ import { Link } from 'react-router-dom';
 import styles from './MenuTable.module.scss';
 
 interface MenuTableProps {
-  storeMenuCategories: MenuCategory[];
+  shopMenuCategories: MenuCategory[];
   onClickImage: (img: string[], index: number) => void;
 }
 
-function MenuTable({ storeMenuCategories, onClickImage }: MenuTableProps) {
-  const [categoryType, setCateogoryType] = useState<string>(storeMenuCategories[0].name);
+function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
+  const [categoryType, setCateogoryType] = useState<string>(shopMenuCategories[0].name);
   const { elementsRef, onMoveToElement } = useMoveScroll();
 
   return (
     <>
       <ul className={styles.categories}>
-        {storeMenuCategories.map((menuCategories, index) => (
+        {shopMenuCategories.map((menuCategories, index) => (
           <li key={menuCategories.id}>
             <button
               className={cn({
@@ -37,7 +37,7 @@ function MenuTable({ storeMenuCategories, onClickImage }: MenuTableProps) {
         ))}
       </ul>
       <div className={styles.table}>
-        {storeMenuCategories.map((menuCategories, index) => (
+        {shopMenuCategories.map((menuCategories, index) => (
           <div
             className={styles.menu}
             key={menuCategories.id}

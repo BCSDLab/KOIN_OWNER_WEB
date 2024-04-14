@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { FileResponse, getCoopUrl } from 'api/uploadFile';
 import axios from 'axios';
 import showToast from 'utils/ts/showToast';
-import { ReactComponent as Delete } from 'assets/svg/mystore/delete.svg';
+import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
 import styles from './AddingEvent.module.scss';
 
