@@ -14,8 +14,8 @@ const TotalCount = z.object({
 
 export type TotalCount = z.infer<typeof TotalCount>;
 
-export const StoreCategory = TotalCount.extend({
+export const ShopCategory = TotalCount.extend({
   shop_categories: z.array(Category),
 });
 
-export type StoreCategory = z.infer<typeof StoreCategory>;
+export type ShopCategory = z.infer<typeof ShopCategory>;

@@ -1,7 +1,7 @@
 import useStepStore from 'store/useStepStore';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-import { Category as CategoryProps } from 'model/category/storeCategory';
+import { Category as CategoryProps } from 'model/category/shopCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';

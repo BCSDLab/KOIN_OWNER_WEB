@@ -1,9 +1,9 @@
 import { accessClient } from 'api';
-import { StoreCategory } from 'model/category/storeCategory';
+import { ShopCategory } from 'model/category/shopCategory';
 
 const getShopCategory = async () => {
-  const { data } = await accessClient.get<StoreCategory>('/shops/categories');
-  return StoreCategory.parse(data);
+  const { data } = await accessClient.get<ShopCategory>('/shops/categories');
+  return ShopCategory.parse(data);
 };
 
 export default getShopCategory;

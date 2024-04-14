@@ -12,26 +12,26 @@ interface SearchShopProps {
 }
 
 export default function SearchShop({ open, onCancel }: SearchShopProps) {
-  const [selectedStore, setSelectedStore] = useState({
+  const [selectedShop, setSelectedShop] = useState({
     name: '',
     phone: '',
     id: '',
   });
-  const { value: showConfirmStore, setValue: setConfirmStore } = useBooleanState(false);
+  const { value: showConfirmShop, setValue: setConfirmShop } = useBooleanState(false);
   const [searchText, setSearchText] = useState('');
 
   const { shopList, isError } = useShopList();
 
-  function handleClickStore(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleClickShop(e: React.MouseEvent<HTMLButtonElement>) {
     const { name, phone, id } = JSON.parse(e.currentTarget.value);
-    if (!showConfirmStore) {
-      setSelectedStore({
+    if (!showConfirmShop) {
+      setSelectedShop({
         name,
         phone,
         id,
       });
     } else {
-      setSelectedStore({
+      setSelectedShop({
         name: '',
         phone: '',
         id: '',
@@ -57,8 +57,8 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
     }
   }
 
-  function toggleConfirmStore() {
-    setConfirmStore((prev) => !prev);
+  function toggleConfirmShop() {
+    setConfirmShop((prev) => !prev);
   }
 
   useEffect(() => {
@@ -85,14 +85,14 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
           onClick={() => handleSearch()}
         />
       </div>
-      <div className={styles['store-list']}>
+      <div className={styles['shop-list']}>
         {isError && <div>에러가 발생했습니다.</div>}
         {filteredShopList?.map((shop) => (
           <button
             key={shop.id}
             className={cn({
-              [styles.store]: true,
-              [styles['store--selected']]: selectedStore.name === shop.name,
+              [styles.shop]: true,
+              [styles['shop--selected']]: selectedShop.name === shop.name,
             })}
             value={JSON.stringify({
               name: shop.name,
@@ -101,29 +101,29 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
             })}
             type="button"
             onClick={(e) => {
-              handleClickStore(e);
-              toggleConfirmStore();
+              handleClickShop(e);
+              toggleConfirmShop();
             }}
           >
-            <span className={styles.store__title}>{shop.name}</span>
-            <div className={styles.store__info}>
+            <span className={styles.shop__title}>{shop.name}</span>
+            <div className={styles.shop__info}>
               <span className={cn({
-                [styles.store__delivery]: true,
-                [styles['store__delivery--selected']]: shop.delivery,
+                [styles.shop__delivery]: true,
+                [styles['shop__delivery--selected']]: shop.delivery,
               })}
               >
                 배달
               </span>
               <span className={cn({
-                [styles['store__pay-card']]: true,
-                [styles['store__pay-card--selected']]: shop.pay_card,
+                [styles['shop__pay-card']]: true,
+                [styles['shop__pay-card--selected']]: shop.pay_card,
               })}
               >
                 카드결제
               </span>
               <span className={cn({
-                [styles['store__pay-bank']]: true,
-                [styles['store__pay-bank--selected']]: shop.pay_bank,
+                [styles['shop__pay-bank']]: true,
+                [styles['shop__pay-bank--selected']]: shop.pay_bank,
               })}
               >
                 계좌이체
@@ -132,7 +132,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
           </button>
         ))}
       </div>
-      <ConfirmShop open={showConfirmStore} onCancel={onCancel} selectedShop={selectedStore} />
+      <ConfirmShop open={showConfirmShop} onCancel={onCancel} selectedShop={selectedShop} />
     </div>
   );
 }

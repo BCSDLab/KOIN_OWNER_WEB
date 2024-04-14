@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
 import useStepStore from 'store/useStepStore';
-import useImageUpload from 'utils/hooks/useImageUpload';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useEffect, useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './Main.module.scss';
 
 export default function Main() {
@@ -14,13 +14,13 @@ export default function Main() {
   const { increaseStep } = useStepStore();
   const {
     imageFile, imgRef, saveImgFile, uploadError,
-  } = useImageUpload();
+  } = useImagesUpload();
   const {
-    name, setName, address, setAddress, imageUrl, setImageUrl,
+    name, setName, address, setAddress, imageUrls, setImageUrls,
   } = useShopRegistrationStore();
 
   const handleNextClick = () => {
-    if (name === '' || address === '' || imageUrl === '' || uploadError !== '') {
+    if (name === '' || address === '' || imageUrls.length === 0 || uploadError !== '') {
       setIsError(true);
     } else {
       setIsError(false);
@@ -29,14 +29,15 @@ export default function Main() {
   };
 
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
+    if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
   }, [imageFile]);
+
   return (
     <div className={styles.form}>
       <label
         className={cn({
           [styles['form__image-upload']]: true,
-          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrl === '' && isError),
+          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrls.length === 0 && isError),
         })}
         htmlFor="mainMenuImage"
       >
@@ -48,8 +49,8 @@ export default function Main() {
           onChange={saveImgFile}
           ref={imgRef}
         />
-        {imageUrl
-          ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
+        {imageUrls
+          ? <img src={imageUrls[0]} className={styles['form__main-menu']} alt="메인 메뉴" />
           : (
             <>
               <EmptyImgIcon />
@@ -58,7 +59,7 @@ export default function Main() {
           )}
       </label>
       <div className={styles['form__image-error-message']}>
-        {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+        {uploadError === '' && imageUrls.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
         {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
       </div>
       <label

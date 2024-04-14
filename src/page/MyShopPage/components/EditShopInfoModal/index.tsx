@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Dispatch, SetStateAction, useEffect, useState,
+  Dispatch, SetStateAction, useEffect,
 } from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
-import useImageUpload from 'utils/hooks/useImageUpload';
+import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -23,6 +22,7 @@ import useModalStore from 'store/modalStore';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import { TOTAL_CATEGORY } from 'utils/constant/category';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -34,19 +34,22 @@ interface EditShopInfoModalProps {
 export default function EditShopInfoModal({ shopInfo, closeModal, setIsSuccess }:
 EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
-  const [imageUrlList, setImageUrlList] = useState<string[]>(shopInfo.image_urls);
   const {
     setTrue: openOperateTimeModal,
     setFalse: closeOperateTimeModal,
     value: isOperateTimeModalOpen,
   } = useBooleanState(false);
-  const { imageFile, saveImgFile, imgRef } = useImageUpload();
   const {
-    setName, setAddress, setPhone, setDeliveryPrice, setDescription, setDelivery, setPayBank,
-    setPayCard, setCategoryId,
+    imageFile, imgRef, saveImgFile, uploadError,
+  } = useImagesUpload();
+
+  const {
+    setName, setAddress, setPhone, setDeliveryPrice, setDescription,
+    setImageUrls, setDelivery, setPayBank, setPayCard, setCategoryId,
   } = useShopRegistrationStore();
   const {
-    name, address, phone, deliveryPrice, description, delivery, payBank, payCard, categoryId,
+    name, address, phone, deliveryPrice, description, imageUrls,
+    delivery, payBank, payCard, categoryId, removeImageUrl,
   } = useShopRegistrationStore();
 
   const { categoryList } = useShopCategory();
@@ -86,11 +89,8 @@ EditShopInfoModalProps) {
     },
   });
 
-  const handleDeleteImage = (image: string) => {
-    setImageUrlList((prev) => prev.filter((imageUrls) => imageUrls !== image));
-  };
-
   useEffect(() => {
+    setImageUrls(shopInfo.image_urls);
     setName(shopInfo.name);
     setAddress(shopInfo.address);
     setPhone(shopInfo.phone);
@@ -124,16 +124,14 @@ EditShopInfoModalProps) {
     : '휴무일 없음';
 
   useEffect(() => {
-    if (imageFile && !isMobile) {
-      setImageUrlList((prev) => [...prev, imageFile]);
-    } else if (imageFile && isMobile) {
-      setImageUrlList([imageFile]);
+    if (imageFile && !uploadError) {
+      setImageUrls(imageFile);
     }
-  }, [imageFile]);
+  }, [imageFile, setImageUrls]);
 
   useEffect(() => {
-    if (imageUrlList.length > 0) {
-      setValue('image_urls', imageUrlList);
+    if (imageUrls.length > 0) {
+      setValue('image_urls', imageUrls);
     }
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
@@ -154,7 +152,7 @@ EditShopInfoModalProps) {
     setValue('name', name);
     setValue('phone', phone);
     setValue('address', address);
-  }, [imageUrlList, openTimeState, closeTimeState, shopClosedState, deliveryPrice,
+  }, [imageUrls, openTimeState, closeTimeState, shopClosedState, deliveryPrice,
     description, delivery, payBank, payCard, name, phone, address, categoryId]);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
@@ -175,16 +173,27 @@ EditShopInfoModalProps) {
       {isMobile ? (
         <form className={styles['mobile-container']} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles['mobile-container__image-content']}>
-            <img
-              src={imageUrlList[0]}
-              alt="메인 사진"
-              className={styles['mobile-container__main-image']}
-            />
-            <label htmlFor="mainMenuImage" className={styles['mobile-container__add-button']}>
+            {imageUrls.map((image, index) => (
+              <div className={styles['mobile-container__image']}>
+                <img key={image} src={image} alt={`Selected ${index + 1}`} />
+                <button
+                  type="button"
+                  onClick={() => removeImageUrl(image)}
+                  className={styles['mobile-container__delete-button']}
+                  aria-label="Delete image"
+                >
+                  <DeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className={styles['mobile-container__add-button']}>
+            <label htmlFor="mainMenuImage">
               <input
                 type="file"
                 accept="image/*"
                 id="mainMenuImage"
+                multiple
                 className={styles['mobile-container__add-file']}
                 onChange={saveImgFile}
                 ref={imgRef}
@@ -282,9 +291,10 @@ EditShopInfoModalProps) {
             <label htmlFor="deliveryPrice" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>배달금액</span>
               <input
-                type="text"
+                type="number"
+                inputMode="decimal"
                 id="deliveryPrice"
-                value={deliveryPrice === 0 ? '' : deliveryPrice}
+                value={deliveryPrice === 0 ? undefined : deliveryPrice}
                 onChange={(e) => setDeliveryPrice(Number(e.target.value))}
                 className={styles['mobile-main-info__input']}
               />
@@ -343,19 +353,19 @@ EditShopInfoModalProps) {
             <span className={styles['container__header--warning']}>(최대 이미지 3장)</span>
           </div>
           <div className={styles['container__modify-main-image']}>
-            {imageUrlList.map((image, index) => (
+            {imageUrls.map((image, index) => (
               <div className={styles['main-image']} key={image}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['main-image__image']} />
                 <button
                   type="button"
-                  onClick={() => handleDeleteImage(image)}
+                  onClick={() => removeImageUrl(image)}
                   className={styles['main-image__delete-button']}
                 >
                   <DeleteImgIcon />
                 </button>
               </div>
             ))}
-            {imageUrlList.length < 3 && (
+            {imageUrls.length < 3 && (
               <label className={styles['main-image__add-button']} htmlFor="mainMenuImage">
                 <input
                   type="file"
@@ -422,7 +432,7 @@ EditShopInfoModalProps) {
               <input
                 type="number"
                 id="deliveryPrice"
-                value={deliveryPrice === 0 ? '' : deliveryPrice}
+                value={deliveryPrice === 0 ? undefined : deliveryPrice}
                 onChange={(e) => setDeliveryPrice(Number(e.target.value))}
                 className={styles['main-info__input']}
               />

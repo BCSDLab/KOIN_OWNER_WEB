@@ -7,18 +7,17 @@
 
 .mobileheader {
   display: flex;
-  padding: 20px;
+  padding: 10px;
   align-items: center;
   justify-content: center;
-  height: 57px;
+  height: 50px;
   border-bottom: 2px solid #175c8e;
 
   &__title {
     display: flex;
     align-items: center;
     margin-right: auto;
-    height: 47px;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 500;
     color: #175c8e;
     font-family: "Noto Sans CJK KR", sans-serif;
