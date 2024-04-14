@@ -10,7 +10,7 @@ import useModalPortal from 'utils/hooks/useModalPortal';
 import showToast from 'utils/ts/showToast';
 import ImageModal from 'component/common/Modal/ImageModal';
 import CatagoryMenuList from './components/CatagoryMenuList';
-import StoreInfo from './components/ShopInfo';
+import ShopInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
 import EditShopInfoModal from './components/EditShopInfoModal';
 import MenuTable from './components/MenuTable';
@@ -93,7 +93,7 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-            <StoreInfo
+            <ShopInfo
               shopInfo={shopData}
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}
@@ -127,7 +127,7 @@ export default function MyShopPage() {
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
               <MenuTable
-                storeMenuCategories={menusData.menu_categories}
+                shopMenuCategories={menusData.menu_categories}
                 onClickImage={onClickImage}
               />
             )
@@ -150,7 +150,7 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-            <StoreInfo
+            <ShopInfo
               shopInfo={shopData}
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}

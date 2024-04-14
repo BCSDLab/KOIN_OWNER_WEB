@@ -9,7 +9,7 @@ import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
 import NewPassword from 'page/Auth/FindPassword/NewPassword';
 import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePassword';
 import AuthLayout from 'layout/AuthLayout';
-import MyStorePage from 'page/MyShopPage';
+import MyShopPage from 'page/MyShopPage';
 import ShopRegistration from 'page/ShopRegistration';
 import AddMenu from 'page/AddMenu';
 import PageNotFound from 'page/Error/PageNotFound';
@@ -51,7 +51,7 @@ function App() {
         <Route path="/" element={<Navigate to="/owner" />} />
         <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
           <Route path="/owner" element={<OwnerLayout />}>
-            <Route path="/owner" element={<MyStorePage />} />
+            <Route path="/owner" element={<MyShopPage />} />
             <Route path="/owner/shop-registration" element={<ShopRegistration />} />
             <Route path="/owner/add-menu" element={<AddMenu />} />
             <Route path="/owner/modify-menu/:menuId" element={<ModifyMenu />} />

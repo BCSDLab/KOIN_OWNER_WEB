@@ -63,7 +63,7 @@ export interface EventListParam {
   id : number;
 }
 
-export const StoreEvent = z.object({
+export const ShopEvent = z.object({
   shop_id: z.number(),
   shop_name: z.string(),
   event_id: z.number(),
@@ -73,9 +73,9 @@ export const StoreEvent = z.object({
   start_date: z.string(),
   end_date: z.string(),
 });
-export type StoreEvent = z.infer<typeof StoreEvent>;
-export const StoreEventResponse = z.object({
-  events: z.array(StoreEvent),
+export type ShopEvent = z.infer<typeof ShopEvent>;
+export const ShopEventResponse = z.object({
+  events: z.array(ShopEvent),
 });
 
-export type StoreEventResponse = z.infer<typeof StoreEventResponse>;
+export type ShopEventResponse = z.infer<typeof ShopEventResponse>;
