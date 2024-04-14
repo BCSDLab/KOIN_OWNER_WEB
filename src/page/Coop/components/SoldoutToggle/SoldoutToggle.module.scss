@@ -2,9 +2,12 @@
   width: 46px;
   height: 23px;
   cursor: pointer;
+  transition: fill 0.3s ease-in-out;
 
-  .background {
+  .background,
+  .circle {
     rx: 9.5;
     stroke-width: 3;
+    transition: fill 0.3s ease-in-out;
   }
 }

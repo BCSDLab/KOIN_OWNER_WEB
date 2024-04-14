@@ -27,14 +27,15 @@ export default function SoldoutToggle({ menuId, onClick, menu }: SoldoutTogglePr
         height="19"
         rx="9.5"
         fill={isActive ? '#175C8E' : '#E1E1E1'}
-        stroke="#F5F5F5"
+        stroke={isActive ? '#175C8E' : '#E1E1E1'}
         strokeWidth="3"
       />
       <circle
+        className={styles.circle}
         cx={isActive ? 35 : 11}
         cy="11.5"
         r="8"
-        fill="white"
+        fill={isActive ? 'white' : '#8E8E8E'}
       />
     </svg>
   );
