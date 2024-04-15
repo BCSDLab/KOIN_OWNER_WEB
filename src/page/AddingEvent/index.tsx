@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAddEvent } from 'query/event';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileResponse, getCoopUrl } from 'api/uploadFile';
 import axios from 'axios';
 import showToast from 'utils/ts/showToast';
-import { ReactComponent as Delete } from 'assets/svg/mystore/delete.svg';
+import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
 import styles from './AddingEvent.module.scss';
 
@@ -87,6 +87,7 @@ export default function AddingEvent() {
     file: null,
   });
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
+  const navigate = useNavigate();
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
@@ -166,27 +167,45 @@ export default function AddingEvent() {
         showToast('error', '이미지는 3개까지 등록할 수 있습니다');
         return;
       }
+
+      // presigned URL 목록을 임시 배열에 저장
+      const newPresignedUrls: FileResponse[] = [];
+      const loadPromises = [];
+
       for (let i = 0; i < file.length; i += 1) {
-        const presignedUrl = await getCoopUrl({
+        const getPresigned = getCoopUrl({
           content_length: file[i].size,
           content_type: file[i].type,
           file_name: file[i].name,
-        }).then((res) => res.data);
-        setImageList({ file, presigned: [...imageList.presigned, presignedUrl] });
-        const reader = new FileReader();
-        reader.readAsDataURL(file[i]);
-        reader.onload = () => {
-          setPreImages((prev) => [...prev, reader.result]); // 이미지 미리보기 구현
-        };
+        }).then((res) => {
+          newPresignedUrls.push(res.data);
+          const reader = new FileReader();
+          reader.readAsDataURL(file[i]);
+
+          // Promise를 사용하여 모든 이미지 로드 완료를 기다림
+          return new Promise<void>((resolve) => {
+            reader.onload = () => {
+              setPreImages((prev) => [...prev, reader.result]); // 이미지 미리보기 구현
+              resolve();
+            };
+          });
+        });
+
+        loadPromises.push(getPresigned);
       }
+
+      // 모든 프로미스가 완료되면 state를 업데이트
+      Promise.all(loadPromises).then(() => {
+        setImageList({ file, presigned: [...imageList.presigned, ...newPresignedUrls] });
+      });
     }
   };
 
   const postEvent = () => {
     if (validation()) return;
 
-    const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month}-${eventInfo.start_date.date}`;
-    const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month}-${eventInfo.end_date.date}`;
+    const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month.padStart(2, '0')}-${eventInfo.start_date.date.padStart(2, '0')}`;
+    const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month.padStart(2, '0')}-${eventInfo.end_date.date.padStart(2, '0')}`;
 
     if (imageList.file) {
       for (let i = 0; i < imageList.file.length; i += 1) {
@@ -229,8 +248,14 @@ export default function AddingEvent() {
                           type="button"
                           className={styles['event__each-image--delete']}
                           onClick={() => {
-                            const deleted = preImages.filter((item, idx) => idx !== id);
-                            setPreImages([...deleted]);
+                            // 이미지 미리보기 삭제
+                            const deletedPreview = preImages.filter((item, idx) => idx !== id);
+                            // 실제 이미지 삭제
+                            const deletedImages = imageList.presigned.filter(
+                              (item, idx) => idx !== id,
+                            );
+                            setPreImages([...deletedPreview]);
+                            setImageList({ ...imageList, presigned: [...deletedImages] });
                           }}
                         >
                           <Delete />
@@ -279,7 +304,7 @@ export default function AddingEvent() {
         <div>
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>이벤트/공지 내용</p>
-            <small className={styles.event__count}>0</small>
+            <small className={styles.event__count} />
           </div>
           <div>
             <ReactQuill
@@ -303,7 +328,7 @@ export default function AddingEvent() {
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>시작일</div>
             <input
-              placeholder="연"
+              placeholder="2999"
               value={eventInfo.start_date.year}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -313,7 +338,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="월"
+              placeholder="01"
               value={eventInfo.start_date.month}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -323,7 +348,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="일"
+              placeholder="01"
               value={eventInfo.start_date.date}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -335,7 +360,7 @@ export default function AddingEvent() {
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>종료일</div>
             <input
-              placeholder="연"
+              placeholder="2999"
               value={eventInfo.end_date.year}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -345,7 +370,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="월"
+              placeholder="01"
               value={eventInfo.end_date.month}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -355,7 +380,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="일"
+              placeholder="01"
               value={eventInfo.end_date.date}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -367,7 +392,7 @@ export default function AddingEvent() {
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div className={styles.buttons}>
-          <button type="button" className={styles.cancel}>취소하기</button>
+          <button type="button" className={styles.cancel} onClick={() => navigate(-1)}>취소하기</button>
           <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>등록하기</button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/mystore/imgplus.svg';
+import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
 import { ReactComponent as MobileDeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
@@ -49,6 +49,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
             <div className={styles.mobile__header__condition}>(최대 이미지 3장)</div>
           </div>
           <div className={styles['mobile__new-image__container']}>
+            {!isComplete && (
             <button
               type="button"
               className={styles['mobile__new-image__add-btn']}
@@ -57,6 +58,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
               <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
             </button>
+            )}
             {imageUrl.map((image, index) => (
               <div key={image} className={styles['mobile__new-image__item']}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />

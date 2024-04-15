@@ -14,7 +14,7 @@ const getCurrentMenuType = (): Menus => {
   if (time <= 900) {
     return '점심';
   }
-  // 15:01~23:59
+  // 15:01~24:00
   return '저녁';
 };
 

@@ -1,4 +1,4 @@
-import { StoreEvent } from 'model/shopInfo/myShopInfo';
+import { ShopEvent } from 'model/shopInfo/myShopInfo';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
@@ -29,7 +29,7 @@ export default function EventTable() {
   const navigate = useNavigate();
   useEffect(() => {
     if (selectAll && eventList) {
-      setSelectedEventIds(eventList.events.map((event : StoreEvent) => event.event_id));
+      setSelectedEventIds(eventList.events.map((event : ShopEvent) => event.event_id));
     } else {
       setSelectedEventIds([]);
     }
@@ -106,7 +106,7 @@ export default function EventTable() {
         )}
       </div>
       <div className={styles.eventContainer}>
-        {eventList && eventList.events.map((event: StoreEvent) => (
+        {eventList && eventList.events.map((event: ShopEvent) => (
           <EventCard
             key={event.title}
             event={event}

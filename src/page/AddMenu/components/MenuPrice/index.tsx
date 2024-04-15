@@ -43,6 +43,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                   <div className={styles['mobile__price-info-inputs__price-input-box']}>
                     <input
                       type="number"
+                      inputMode="decimal"
                       className={styles['mobile__price-info-inputs__price-input']}
                       value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
                       onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
@@ -105,7 +106,6 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                     <p className={styles['price-info-inputs__price-input-won']}>원</p>
                   </div>
                 </div>
-
               </div>
             </>
           )}

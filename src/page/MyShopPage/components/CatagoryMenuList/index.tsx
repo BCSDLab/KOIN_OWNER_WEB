@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as EventMarkIcon } from 'assets/svg/mystore/event-menu-mark.svg';
+import { ReactComponent as EventMarkIcon } from 'assets/svg/myshop/event-menu-mark.svg';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
-import { ReactComponent as CUTLERY } from 'assets/svg/mystore/cutlery.svg';
+import { ReactComponent as CUTLERY } from 'assets/svg/myshop/cutlery.svg';
 import styles from './CatagoryMenuList.module.scss';
 
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
