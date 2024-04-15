@@ -53,7 +53,7 @@
   }
 }
 
-.megamenu {
+.mega-menu {
   &__panel {
     display: block;
     top: 80px;
@@ -71,7 +71,7 @@
 
   &:hover,
   &:focus-within {
-    & .megamenu__panel {
+    & .mega-menu__panel {
       height: 75px;
       box-sizing: border-box;
     }

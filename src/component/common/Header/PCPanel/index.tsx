@@ -8,9 +8,9 @@ import useMegaMenu from 'component/common/Header/hooks/useMegaMenu';
 import styles from './PCPanel.module.scss';
 
 const ID: { [key: string]: string; } = {
-  PANEL: 'megamenu-panel',
-  LABEL1: 'megamenu-label-1',
-  LABEL2: 'megamenu-label-2',
+  PANEL: 'mega-menu-panel',
+  LABEL1: 'mega-menu-label-1',
+  LABEL2: 'mega-menu-label-2',
 };
 
 export default function PCPanel() {
@@ -47,19 +47,19 @@ export default function PCPanel() {
       </Link>
       <div
         className={cn({
-          [styles.megamenu]: true,
+          [styles['mega-menu']]: true,
           [styles['header__mega-menu']]: true,
         })}
         onBlur={hideMegaMenu}
         onMouseOut={hideMegaMenu}
       >
-        <ul className={styles['megamenu__trigger-list']}>
+        <ul className={styles['mega-menu__trigger-list']}>
           {CATEGORY.map((category) => (
             <li
               key={category.title}
             >
               <button
-                className={styles.megamenu__trigger}
+                className={styles['mega-menu__trigger']}
                 tabIndex={0}
                 type="button"
                 onClick={createOnChangeMenu(category.title)}
@@ -78,16 +78,16 @@ export default function PCPanel() {
         </ul>
         <div
           id={ID.PANEL}
-          className={styles.megamenu__panel}
+          className={styles['mega-menu__panel']}
           onFocus={onFocusPanel}
           onMouseOver={onFocusPanel}
           aria-hidden={!isMegaMenuExpanded}
           aria-labelledby={Array.from({ length: 2 }, (_, index) => ID[`LABEL${index + 1}`]).join(' ')}
         >
-          <ul className={styles.megamenu__content}>
+          <ul className={styles['mega-menu__content']}>
             {panelMenuList?.map((menu) => (
-              <li className={styles.megamenu__menu} key={menu.title}>
-                <Link className={styles.megamenu__link} to={menu.link}>
+              <li className={styles['mega-menu__menu']} key={menu.title}>
+                <Link className={styles['mega-menu__link']} to={menu.link}>
                   {menu.title === '가게정보' && menu.title}
                 </Link>
               </li>
