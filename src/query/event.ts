@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { addEvent, deleteEvent, getStoreEventList } from 'api/shop';
+import { addEvent, deleteEvent, getShopEventList } from 'api/shop';
 import { EventInfo } from 'model/shopInfo/event';
 import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
@@ -46,7 +46,7 @@ export const useDeleteEvent = (shopId: number, eventIds: number[]) => {
 export const useGetEventList = (shopId: number) => {
   const { data: eventList } = useQuery({
     queryKey: shopKeys.eventList(shopId),
-    queryFn: () => getStoreEventList({ id: shopId }),
+    queryFn: () => getShopEventList({ id: shopId }),
   });
 
   return { eventList };
