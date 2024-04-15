@@ -203,8 +203,8 @@ export default function AddingEvent() {
   const postEvent = () => {
     if (validation()) return;
 
-    const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month}-${eventInfo.start_date.date}`;
-    const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month}-${eventInfo.end_date.date}`;
+    const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month.padStart(2, '0')}-${eventInfo.start_date.date.padStart(2, '0')}`;
+    const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month.padStart(2, '0')}-${eventInfo.end_date.date.padStart(2, '0')}`;
 
     if (imageList.file) {
       for (let i = 0; i < imageList.file.length; i += 1) {
