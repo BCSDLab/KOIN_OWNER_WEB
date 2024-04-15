@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAddEvent } from 'query/event';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FileResponse, getCoopUrl } from 'api/uploadFile';
 import axios from 'axios';
 import showToast from 'utils/ts/showToast';
@@ -87,6 +87,7 @@ export default function AddingEvent() {
     file: null,
   });
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
+  const navigate = useNavigate();
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
@@ -391,7 +392,7 @@ export default function AddingEvent() {
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div className={styles.buttons}>
-          <button type="button" className={styles.cancel}>취소하기</button>
+          <button type="button" className={styles.cancel} onClick={() => navigate(-1)}>취소하기</button>
           <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>등록하기</button>
         </div>
       </div>
