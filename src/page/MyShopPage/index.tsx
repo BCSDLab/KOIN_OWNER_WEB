@@ -74,7 +74,6 @@ export default function MyShopPage() {
       {isMobile ? (
         <>
           <div className={styles.mobileheader}>
-            {shopData && <Link to={`/owner/event-add/${shopData.id}`}>이벤트 추가</Link>}
             <Link to="shop-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
             {myShop.shops.length >= 2
               && (
