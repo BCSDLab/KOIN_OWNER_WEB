@@ -1,6 +1,6 @@
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-import { Category as CategoryProps } from 'model/category/storeCategory';
+import { Category as CategoryProps } from 'model/category/shopCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './Category.module.scss';
 

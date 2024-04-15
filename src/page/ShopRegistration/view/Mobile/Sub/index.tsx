@@ -97,7 +97,7 @@ export default function Sub() {
           type="number"
           id="deliveryPrice"
           onChange={(e) => setDeliveryPrice(Number(e.target.value))}
-          value={deliveryPrice}
+          value={deliveryPrice === 0 ? undefined : deliveryPrice}
           className={styles.form__input}
         />
       </label>

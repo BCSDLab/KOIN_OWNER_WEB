@@ -2,7 +2,7 @@ import {
   useMutation, useQuery, useQueryClient, useSuspenseQuery,
 } from '@tanstack/react-query';
 import {
-  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getStoreEventList,
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getShopEventList,
 } from 'api/shop';
 import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
@@ -22,7 +22,7 @@ const useMyShop = () => {
   const prevShopId = Number(localStorage.getItem('myShopId'));
   const prevShop = prevShopId ? myShop.shops.find((shop) => shop.id === prevShopId) : null;
 
-  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0].id;
+  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0]?.id;
 
   const shopId = currentMyShopId;
 
@@ -58,7 +58,7 @@ const useMyShop = () => {
 
   const { data: eventList } = useQuery({
     queryKey: shopKeys.eventList(shopId),
-    queryFn: () => getStoreEventList({ id: shopId }),
+    queryFn: () => getShopEventList({ id: shopId }),
   });
 
   return {

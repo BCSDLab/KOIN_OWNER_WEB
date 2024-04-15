@@ -10,7 +10,7 @@ import useModalPortal from 'utils/hooks/useModalPortal';
 import showToast from 'utils/ts/showToast';
 import ImageModal from 'component/common/Modal/ImageModal';
 import CatagoryMenuList from './components/CatagoryMenuList';
-import StoreInfo from './components/ShopInfo';
+import ShopInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
 import EditShopInfoModal from './components/EditShopInfoModal';
 import MenuTable from './components/MenuTable';
@@ -61,16 +61,11 @@ export default function MyShopPage() {
 
   if (isMobile && shopData && isEditShopInfoModalOpen) {
     return (
-      <>
-        <div className={styles.mobileheader}>
-          <h1 className={styles.mobileheader__title}>가게정보</h1>
-        </div>
-        <EditShopInfoModal
-          shopInfo={shopData}
-          closeModal={closeEditShopInfoModal}
-          setIsSuccess={setIsSuccess}
-        />
-      </>
+      <EditShopInfoModal
+        shopInfo={shopData}
+        closeModal={closeEditShopInfoModal}
+        setIsSuccess={setIsSuccess}
+      />
     );
   }
 
@@ -79,10 +74,7 @@ export default function MyShopPage() {
       {isMobile ? (
         <>
           <div className={styles.mobileheader}>
-            <h1 className={styles.mobileheader__title}>가게정보</h1>
-
-            {shopData && <Link to={`/owner/event-add/${shopData.id}`}>이벤트 추가</Link>}
-            <Link to="store-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
+            <Link to="shop-registration" className={styles['mobileheader__btn-add']}>가게 추가</Link>
             {myShop.shops.length >= 2
               && (
                 <>
@@ -100,12 +92,13 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-            <StoreInfo
+            <ShopInfo
               shopInfo={shopData}
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
               setIsSuccess={setIsSuccess}
+              onClickImage={onClickImage}
             />
           )}
           <div className={styles.tap}>
@@ -133,7 +126,7 @@ export default function MyShopPage() {
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
               <MenuTable
-                storeMenuCategories={menusData.menu_categories}
+                shopMenuCategories={menusData.menu_categories}
                 onClickImage={onClickImage}
               />
             )
@@ -156,12 +149,13 @@ export default function MyShopPage() {
             </Link>
           </div>
           {shopData && (
-            <StoreInfo
+            <ShopInfo
               shopInfo={shopData}
               openEditShopInfoModal={openEditShopInfoModal}
               closeEditShopInfoModal={closeEditShopInfoModal}
               isEditShopInfoModalOpen={isEditShopInfoModalOpen}
               setIsSuccess={setIsSuccess}
+              onClickImage={onClickImage}
             />
           )}
           {menusData && menusData.menu_categories.map((category) => (

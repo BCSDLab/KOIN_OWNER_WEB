@@ -31,7 +31,7 @@
   }
 }
 
-.store-list {
+.shop-list {
   display: flex;
   flex-direction: column;
   width: calc(100% - 34px);
@@ -39,7 +39,7 @@
   min-height: 530px;
 }
 
-.store {
+.shop {
   display: flex;
   align-items: center;
   justify-content: space-between;

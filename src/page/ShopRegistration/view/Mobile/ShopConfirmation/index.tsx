@@ -5,7 +5,7 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
 import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
@@ -13,12 +13,24 @@ import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import styles from './ShopConfirmation.module.scss';
 
+const usePostData = (setStep: (step: number) => void) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (form: OwnerShop) => postShop(form),
+    onSuccess: () => {
+      setStep(5);
+      queryClient.refetchQueries();
+    },
+  });
+  return mutation;
+};
+
 export default function ShopConfirmation() {
   const { setStep } = useStepStore();
   const {
     category,
     categoryId,
-    imageUrl,
+    imageUrls,
     name,
     address,
     phone,
@@ -35,10 +47,7 @@ export default function ShopConfirmation() {
     resolver: zodResolver(OwnerShop),
   });
 
-  const mutation = useMutation({
-    mutationFn: (form: OwnerShop) => postShop(form),
-    onSuccess: () => setStep(5),
-  });
+  const mutation = usePostData(setStep);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
@@ -58,7 +67,7 @@ export default function ShopConfirmation() {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    setValue('image_urls', [imageUrl]);
+    setValue('image_urls', imageUrls);
     setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);
@@ -69,7 +78,9 @@ export default function ShopConfirmation() {
     setValue('pay_bank', payBank);
     setValue('pay_card', payCard);
     setValue('open', openValue);
-  }, []);
+  }, [openTimeArray, closeTimeArray, shopClosedArray, categoryId, name,
+    address, phone, deliveryPrice, description, delivery, payBank, payCard, imageUrls]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>

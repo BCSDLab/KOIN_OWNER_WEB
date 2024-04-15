@@ -1,13 +1,13 @@
-import { StoreEvent } from 'model/shopInfo/myShopInfo';
+import { ShopEvent } from 'model/shopInfo/myShopInfo';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
-import { ReactComponent as EditEventIcon } from 'assets/svg/mystore/edit-event-icon.svg';
-import { ReactComponent as AddEventIcon } from 'assets/svg/mystore/add-event-icon.svg';
-import { ReactComponent as NonCheckCircle } from 'assets/svg/mystore/non-check-circle.svg';
-import { ReactComponent as DeleteIcon } from 'assets/svg/mystore/delete-icon.svg';
-import { ReactComponent as Check } from 'assets/svg/mystore/check.svg';
-import { ReactComponent as CompleteIcon } from 'assets/svg/mystore/complete-icon.svg';
+import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
+import { ReactComponent as AddEventIcon } from 'assets/svg/myshop/add-event-icon.svg';
+import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-circle.svg';
+import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
+import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
+import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
 import { useDeleteEvent } from 'query/event';
 import showToast from 'utils/ts/showToast';
 import EventCard from './components';
@@ -28,7 +28,7 @@ export default function EventTable() {
   const navigate = useNavigate();
   useEffect(() => {
     if (selectAll && eventList) {
-      setSelectedEventIds(eventList.events.map((event : StoreEvent) => event.event_id));
+      setSelectedEventIds(eventList.events.map((event : ShopEvent) => event.event_id));
     } else {
       setSelectedEventIds([]);
     }
@@ -105,7 +105,7 @@ export default function EventTable() {
         )}
       </div>
       <div className={styles.eventContainer}>
-        {eventList && eventList.events.map((event: StoreEvent) => (
+        {eventList && eventList.events.map((event: ShopEvent) => (
           <EventCard
             key={event.title}
             event={event}
