@@ -166,19 +166,37 @@ export default function AddingEvent() {
         showToast('error', '이미지는 3개까지 등록할 수 있습니다');
         return;
       }
+
+      // presigned URL 목록을 임시 배열에 저장
+      const newPresignedUrls: FileResponse[] = [];
+      const loadPromises = [];
+
       for (let i = 0; i < file.length; i += 1) {
-        const presignedUrl = await getCoopUrl({
+        const getPresigned = getCoopUrl({
           content_length: file[i].size,
           content_type: file[i].type,
           file_name: file[i].name,
-        }).then((res) => res.data);
-        setImageList({ file, presigned: [...imageList.presigned, presignedUrl] });
-        const reader = new FileReader();
-        reader.readAsDataURL(file[i]);
-        reader.onload = () => {
-          setPreImages((prev) => [...prev, reader.result]); // 이미지 미리보기 구현
-        };
+        }).then((res) => {
+          newPresignedUrls.push(res.data);
+          const reader = new FileReader();
+          reader.readAsDataURL(file[i]);
+
+          // Promise를 사용하여 모든 이미지 로드 완료를 기다림
+          return new Promise<void>((resolve) => {
+            reader.onload = () => {
+              setPreImages((prev) => [...prev, reader.result]); // 이미지 미리보기 구현
+              resolve();
+            };
+          });
+        });
+
+        loadPromises.push(getPresigned);
       }
+
+      // 모든 프로미스가 완료되면 state를 업데이트
+      Promise.all(loadPromises).then(() => {
+        setImageList({ file, presigned: [...imageList.presigned, ...newPresignedUrls] });
+      });
     }
   };
 
@@ -229,8 +247,14 @@ export default function AddingEvent() {
                           type="button"
                           className={styles['event__each-image--delete']}
                           onClick={() => {
-                            const deleted = preImages.filter((item, idx) => idx !== id);
-                            setPreImages([...deleted]);
+                            // 이미지 미리보기 삭제
+                            const deletedPreview = preImages.filter((item, idx) => idx !== id);
+                            // 실제 이미지 삭제
+                            const deletedImages = imageList.presigned.filter(
+                              (item, idx) => idx !== id,
+                            );
+                            setPreImages([...deletedPreview]);
+                            setImageList({ ...imageList, presigned: [...deletedImages] });
                           }}
                         >
                           <Delete />
@@ -303,7 +327,7 @@ export default function AddingEvent() {
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>시작일</div>
             <input
-              placeholder="연"
+              placeholder="2999"
               value={eventInfo.start_date.year}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -313,7 +337,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="월"
+              placeholder="01"
               value={eventInfo.start_date.month}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -323,7 +347,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="일"
+              placeholder="01"
               value={eventInfo.start_date.date}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -335,7 +359,7 @@ export default function AddingEvent() {
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>종료일</div>
             <input
-              placeholder="연"
+              placeholder="2999"
               value={eventInfo.end_date.year}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -345,7 +369,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="월"
+              placeholder="01"
               value={eventInfo.end_date.month}
               className={cn({
                 [styles['error-border']]: error.date,
@@ -355,7 +379,7 @@ export default function AddingEvent() {
             />
             /
             <input
-              placeholder="일"
+              placeholder="01"
               value={eventInfo.end_date.date}
               className={cn({
                 [styles['error-border']]: error.date,
