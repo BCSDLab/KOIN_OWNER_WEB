@@ -3,13 +3,9 @@
   height: 23px;
   cursor: pointer;
 
-  .background {
+  .background,
+  .circle {
     rx: 9.5;
     stroke-width: 3;
-  }
-
-  .circle {
-    r: 8;
-    fill: white;
   }
 }
