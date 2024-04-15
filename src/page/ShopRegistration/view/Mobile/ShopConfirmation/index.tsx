@@ -5,13 +5,25 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
 import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import styles from './ShopConfirmation.module.scss';
+
+const usePostData = (setStep: (step: number) => void) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (form: OwnerShop) => postShop(form),
+    onSuccess: () => {
+      setStep(5);
+      queryClient.refetchQueries();
+    },
+  });
+  return mutation;
+};
 
 export default function ShopConfirmation() {
   const { setStep } = useStepStore();
@@ -35,10 +47,7 @@ export default function ShopConfirmation() {
     resolver: zodResolver(OwnerShop),
   });
 
-  const mutation = useMutation({
-    mutationFn: (form: OwnerShop) => postShop(form),
-    onSuccess: () => setStep(5),
-  });
+  const mutation = usePostData(setStep);
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
