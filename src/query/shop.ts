@@ -20,7 +20,7 @@ const useMyShop = () => {
   const prevShopId = Number(localStorage.getItem('myShopId'));
   const prevShop = prevShopId ? myShop.shops.find((shop) => shop.id === prevShopId) : null;
 
-  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0].id;
+  const currentMyShopId = prevShop ? prevShop.id : myShop.shops[0]?.id;
 
   const shopId = currentMyShopId;
 
