@@ -304,7 +304,7 @@ export default function AddingEvent() {
         <div>
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>이벤트/공지 내용</p>
-            <small className={styles.event__count}>0</small>
+            <small className={styles.event__count} />
           </div>
           <div>
             <ReactQuill
