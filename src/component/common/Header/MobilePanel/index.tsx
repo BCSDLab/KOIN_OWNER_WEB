@@ -39,9 +39,9 @@ export default function MobilePanel() {
   return (
     <>
       <div
-        className={styles.mobileheader}
+        className={styles['mobile-header']}
       >
-        <span className={styles.mobileheader__title}>
+        <span className={styles['mobile-header__title']}>
           {pathname === '/owner' || pathname === '/coop' ? (
             <MobileLogoIcon title="코인 로고" />
           ) : (CATEGORY
@@ -53,8 +53,8 @@ export default function MobilePanel() {
         <button
           title="메뉴 버튼"
           className={cn({
-            [styles['mobileheader__icon--right']]: true,
-            [styles.mobileheader__icon]: true,
+            [styles['mobile-header__icon--right']]: true,
+            [styles['mobile-header__icon']]: true,
           })}
           type="button"
           onClick={expandSidebar}
@@ -66,31 +66,31 @@ export default function MobilePanel() {
       {createPortal(
         (
           <nav className={cn({
-            [styles.mobileheader__panel]: true,
-            [styles['mobileheader__panel--logged-in']]: true,
-            [styles['mobileheader__panel--show']]: isMobileSidebarExpanded,
+            [styles['mobile-header__panel']]: true,
+            [styles['mobile-header__panel--logged-in']]: true,
+            [styles['mobile-header__panel--show']]: isMobileSidebarExpanded,
           })}
           >
-            <div className={styles.mobileheader__user}>
+            <div className={styles['mobile-header__user']}>
               <button
                 title="뒤로 가기 버튼"
-                className={styles.mobileheader__backspace}
+                className={styles['mobile-header__backspace']}
                 type="button"
                 onClick={hideSidebar}
               >
                 <BackArrowIcon title="뒤로 가기 버튼" />
               </button>
-              <div className={styles.mobileheader__greet}>
+              <div className={styles['mobile-header__greet']}>
                 {user?.name}
                 <span>님, 안녕하세요!</span>
               </div>
-              <ul className={styles['mobileheader__auth-menu']}>
-                <li className={styles['mobileheader__my-info']}>
+              <ul className={styles['mobile-header__auth-menu']}>
+                <li className={styles['mobile-header__my-info']}>
                   <Link to="/owner/modify-info">
                     내 정보
                   </Link>
                 </li>
-                <li className={styles.mobileheader__link}>
+                <li className={styles['mobile-header__link']}>
                   <button type="button" onClick={handleLogout}>
                     로그아웃
                   </button>
@@ -101,13 +101,13 @@ export default function MobilePanel() {
             {CATEGORY.map((categoryInfo) => (
               <div key={categoryInfo.title}>
                 <div>
-                  <div className={styles['mobileheader__category-title']}>
+                  <div className={styles['mobile-header__category-title']}>
                     {categoryInfo.title}
                   </div>
-                  <ul className={styles['mobileheader__sub-menus']}>
+                  <ul className={styles['mobile-header__sub-menus']}>
                     {categoryInfo.submenu.map((subMenu) => (
                       <li
-                        className={styles['mobileheader__sub-menu']}
+                        className={styles['mobile-header__sub-menu']}
                         key={subMenu.title}
                       >
                         <Link to={subMenu.link}>
@@ -122,8 +122,8 @@ export default function MobilePanel() {
 
             <img
               className={cn({
-                [styles.mobileheader__logo]: true,
-                [styles['mobileheader__logo--bcsd']]: true,
+                [styles['mobile-header__logo']]: true,
+                [styles['mobile-header__logo--bcsd']]: true,
               })}
               src="http://static.koreatech.in/assets/img/ic-bcsd_gray.png"
               alt="bcsd lab logo"
@@ -131,8 +131,8 @@ export default function MobilePanel() {
             />
             <img
               className={cn({
-                [styles.mobileheader__logo]: true,
-                [styles['mobileheader__logo--koin']]: true,
+                [styles['mobile-header__logo']]: true,
+                [styles['mobile-header__logo--koin']]: true,
               })}
               src="http://static.koreatech.in/assets/img/rectangle_icon.png"
               alt="KOIN service logo"
