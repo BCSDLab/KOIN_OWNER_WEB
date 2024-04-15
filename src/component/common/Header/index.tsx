@@ -21,7 +21,14 @@ const ID: { [key: string]: string; } = {
 };
 
 function Header() {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { isMobile } = useMediaQuery();
+
+  const { user } = useUserStore();
+  const { setPrevPath } = usePrevPathStore((state) => state);
+  const { logout } = useLogout();
+
   const {
     panelMenuList,
     isExpanded: isMegaMenuExpanded,
@@ -29,17 +36,12 @@ function Header() {
     onFocusPanel,
     hideMegaMenu,
   } = useMegaMenu(CATEGORY);
-  const { isMobile } = useMediaQuery();
+
   const {
     isExpanded: isMobileSidebarExpanded,
     expandSidebar,
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
-  const isMain = true;
-  const { user } = useUserStore();
-  const { logout } = useLogout();
-  const navigate = useNavigate();
-  const { setPrevPath } = usePrevPathStore((state) => state);
 
   const handleLogout = () => {
     logout(undefined, {
@@ -49,10 +51,12 @@ function Header() {
       },
     });
   };
+
   if ((pathname === '/owner/add-menu' || pathname.startsWith('/owner/modify-menu/') || pathname.startsWith('/owner/event-add/')) && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
         <button
+          title="뒤로 가기 버튼"
           className={styles['add-menu-header__goBackButton']}
           type="button"
           onClick={() => window.history.back()}
@@ -72,7 +76,7 @@ function Header() {
     <header
       className={cn({
         [styles.header]: true,
-        [styles['header--main']]: isMain,
+        [styles['header--main']]: true,
       })}
     >
       <nav className={styles.header__content}>
@@ -81,17 +85,6 @@ function Header() {
             <div
               className={styles.mobileheader}
             >
-              {!isMain && (
-                <button
-                  className={cn({
-                    [styles['mobileheader__icon--left']]: true,
-                    [styles.mobileheader__icon]: true,
-                  })}
-                  type="button"
-                >
-                  <img src="https://static.koreatech.in/assets/img/back-menu.png" alt="go back logo" title="go back logo" />
-                </button>
-              )}
               <span className={styles.mobileheader__title}>
                 {pathname === '/owner' || pathname === '/coop' ? (
                   <MobileLogoIcon title="코인 로고" />
@@ -102,6 +95,7 @@ function Header() {
                 )}
               </span>
               <button
+                title="메뉴 버튼"
                 className={cn({
                   [styles['mobileheader__icon--right']]: true,
                   [styles.mobileheader__icon]: true,
@@ -123,6 +117,7 @@ function Header() {
                 >
                   <div className={styles.mobileheader__user}>
                     <button
+                      title="뒤로 가기 버튼"
                       className={styles.mobileheader__backspace}
                       type="button"
                       onClick={hideSidebar}
