@@ -144,7 +144,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 onClick={addPriceInput}
               >
                 <MobilePlusIcon className={styles['mobile__add-price-button__icon']} />
-                <span className={styles['mobile__add-price-button__text']}>옵션 추가</span>
+                <span className={styles['mobile__add-price-button__text']}>사이즈 추가</span>
               </button>
             </>
           )}
@@ -239,7 +239,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                 onClick={addPriceInput}
               >
                 <PlusIcon className={styles['add-price-button__icon']} />
-                <div className={styles['add-price-button__text']}>옵션 추가</div>
+                <div className={styles['add-price-button__text']}>사이즈 추가</div>
               </button>
             </>
           )}
