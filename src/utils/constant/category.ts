@@ -60,19 +60,12 @@ export const CATEGORY_OWNER: HeaderCategory[] = [
 
 export const CATEGORY_COOP: HeaderCategory[] = [
   {
-    title: '매장관리',
+    title: '식단관리',
     planFlag: true,
     submenu: [
       {
-        title: '가게정보',
-        link: '/owner',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
-        title: '가게추가',
-        link: '/owner/shop-registration',
+        title: '식단정보',
+        link: '/coop',
         newFlag: true,
         planFlag: true,
         tag: null,
