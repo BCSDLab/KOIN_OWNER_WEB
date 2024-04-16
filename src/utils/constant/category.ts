@@ -14,7 +14,7 @@ export interface Category {
 
 export const TOTAL_CATEGORY = 1;
 
-const CATEGORY: Category[] = [
+const CATEGORY_OWNER: Category[] = [
   {
     title: '매장관리',
     planFlag: true,
@@ -27,35 +27,35 @@ const CATEGORY: Category[] = [
         tag: null,
       },
       {
-        title: '메뉴관리',
-        link: '/owner/menu-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
-        title: '주문관리',
-        link: '/owner/order-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
-        title: '매출관리',
-        link: '/owner/sales-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
         title: '가게추가',
-        link: '/owner/shop-add',
+        link: '/owner/shop-registration',
         newFlag: true,
         planFlag: true,
         tag: null,
       },
+      // {
+      //   title: '메뉴관리',
+      //   link: '/owner/menu-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
+      // {
+      //   title: '주문관리',
+      //   link: '/owner/order-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
+      // {
+      //   title: '매출관리',
+      //   link: '/owner/sales-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
     ],
   },
 ];
 
-export default CATEGORY;
+export default CATEGORY_OWNER;

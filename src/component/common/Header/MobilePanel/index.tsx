@@ -2,7 +2,7 @@ import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CATEGORY from 'utils/constant/category';
+import CATEGORY_OWNER from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
@@ -44,7 +44,7 @@ export default function MobilePanel() {
         <span className={styles['mobile-header__title']}>
           {pathname === '/owner' || pathname === '/coop' ? (
             <MobileLogoIcon title="코인 로고" />
-          ) : (CATEGORY
+          ) : (CATEGORY_OWNER
             .flatMap((categoryValue) => categoryValue.submenu)
             .find((subMenuValue) => subMenuValue.link === pathname)
             ?.title ?? ''
@@ -53,8 +53,8 @@ export default function MobilePanel() {
         <button
           title="메뉴 버튼"
           className={cn({
-            [styles['mobile-header__icon--right']]: true,
             [styles['mobile-header__icon']]: true,
+            [styles['mobile-header__icon--right']]: true,
           })}
           type="button"
           onClick={expandSidebar}
@@ -98,7 +98,7 @@ export default function MobilePanel() {
               </ul>
             </div>
 
-            {CATEGORY.map((categoryInfo) => (
+            {CATEGORY_OWNER.map((categoryInfo) => (
               <div key={categoryInfo.title}>
                 <div>
                   <div className={styles['mobile-header__category-title']}>
@@ -111,7 +111,7 @@ export default function MobilePanel() {
                         key={subMenu.title}
                       >
                         <Link to={subMenu.link}>
-                          {subMenu.title === '가게정보' && subMenu.title}
+                          {subMenu.title}
                         </Link>
                       </li>
                     ))}
