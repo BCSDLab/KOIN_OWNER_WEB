@@ -3,18 +3,17 @@ import useToggleStore from 'store/soldoutToggleStore';
 import styles from './SoldoutToggle.module.scss';
 
 interface SoldoutToggleProps {
-  menuId: number;
   onClick: () => void;
   menu: Dinings;
 }
 
-export default function SoldoutToggle({ menuId, onClick, menu }: SoldoutToggleProps) {
+export default function SoldoutToggle({ onClick, menu }: SoldoutToggleProps) {
   const { isSoldOut, toggleSoldOut } = useToggleStore();
-  const isActive = isSoldOut[menuId] ?? menu.soldout_at;
+  const isActive = isSoldOut[menu.id] ?? menu.soldout_at;
 
   const handleToggle = () => {
     onClick();
-    toggleSoldOut(menuId);
+    toggleSoldOut(menu.id);
   };
 
   return (
