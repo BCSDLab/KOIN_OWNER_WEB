@@ -7,9 +7,14 @@ import useUserTypeStore from 'store/userType';
 
 type UserResponse = OwnerResponse | CoopResponse;
 
+const userQuries = {
+  OWNER: getOwnerInfo,
+  COOP: getCoopInfo,
+};
+
 export default function useSuspenseUser() {
   const { userType } = useUserTypeStore();
-  const queryFn = userType === 'OWNER' ? getOwnerInfo : getCoopInfo;
+  const queryFn = userType ? userQuries[userType] : undefined;
 
   const { data } = useSuspenseQuery<UserResponse>({
     queryKey: ['user', userType],
