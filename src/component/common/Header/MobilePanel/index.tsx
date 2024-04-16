@@ -13,12 +13,12 @@ import useUserTypeStore from 'store/userType';
 import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import styles from './MobilePanel.module.scss';
 
-interface Props {
+interface Prop {
   hideSidebar: () => void;
   category: HeaderCategory;
 }
 
-function HeaderContent({ hideSidebar, category }: Props) {
+function PanelContent({ hideSidebar, category }: Prop) {
   const { title, submenu } = category;
 
   return (
@@ -132,7 +132,7 @@ export default function MobilePanel() {
             </div>
 
             {targetCategory.map((category: HeaderCategory) => (
-              <HeaderContent hideSidebar={hideSidebar} category={category} />
+              <PanelContent hideSidebar={hideSidebar} category={category} />
             ))}
 
             <img
