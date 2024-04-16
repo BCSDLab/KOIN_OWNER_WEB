@@ -1,10 +1,6 @@
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import { useLocation } from 'react-router-dom';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { createPortal } from 'react-dom';
-import { useLogout } from 'query/auth';
-import usePrevPathStore from 'store/path';
-import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import styles from './Header.module.scss';
 import MobilePanel from './MobilePanel';
 import PCPanel from './PCPanel';
