@@ -7,9 +7,9 @@ import CATEGORY from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
-import useUserStore from 'store/user';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
+import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import styles from './Header.module.scss';
 import useMobileSidebar from './hooks/useMobileSidebar';
 import useMegaMenu from './hooks/useMegaMenu';
@@ -35,8 +35,9 @@ function Header() {
     expandSidebar,
     hideSidebar,
   } = useMobileSidebar(pathname, isMobile);
+  const { data: user } = useSuspenseUser();
+  console.log(user);
   const isMain = true;
-  const { user } = useUserStore();
   const { logout } = useLogout();
   const navigate = useNavigate();
   const { setPrevPath } = usePrevPathStore((state) => state);
