@@ -77,7 +77,7 @@ export default function MobilePanel() {
         <span className={styles['mobile-header__title']}>
           {pathname === '/owner' || pathname === '/coop' ? (
             <MobileLogoIcon title="코인 로고" />
-          ) : (targetCategory!
+          ) : (targetCategory
             .flatMap((categoryValue) => categoryValue.submenu)
             .find((subMenuValue) => subMenuValue.link === pathname)
             ?.title ?? ''
