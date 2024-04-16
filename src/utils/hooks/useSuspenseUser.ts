@@ -5,13 +5,13 @@ import { OwnerResponse } from 'model/auth';
 import { CoopResponse } from 'model/Coop';
 import useUserTypeStore from 'store/userType';
 
-type User = OwnerResponse | CoopResponse;
+type UserResponse = OwnerResponse | CoopResponse;
 
 export default function useSuspenseUser() {
   const { userType } = useUserTypeStore();
   const queryFn = userType === 'OWNER' ? getOwnerInfo : getCoopInfo;
 
-  const { data } = useSuspenseQuery<User>({
+  const { data } = useSuspenseQuery<UserResponse>({
     queryKey: ['user', userType],
     queryFn,
   });
