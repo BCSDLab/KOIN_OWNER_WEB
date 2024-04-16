@@ -4,14 +4,18 @@ import {
 import {
   getMyShopList, getShopInfo, getMenuInfoList, addMenu, getShopEventList,
 } from 'api/shop';
-import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
 import getShopCategory from 'api/category';
+import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
-  const myShopQueryKey = useUserStore.getState().user?.company_number;
+  let myShopQueryKey = '';
+  const { data: user } = useSuspenseUser();
+  if ('company_number' in user) {
+    myShopQueryKey = user.company_number;
+  }
   const queryClient = useQueryClient();
   const { resetAddMenuStore } = useAddMenuStore();
   const { data: myShop } = useSuspenseQuery({
