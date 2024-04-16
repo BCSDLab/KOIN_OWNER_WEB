@@ -1,6 +1,6 @@
 import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
-import CATEGORY_OWNER from 'utils/constant/category';
+import { CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
@@ -54,7 +54,7 @@ export default function PCPanel() {
         onMouseOut={hideMegaMenu}
       >
         <ul className={styles['mega-menu__trigger-list']}>
-          {CATEGORY_OWNER.map((category) => (
+          {CATEGORY_OWNER.map((category: HeaderCategory) => (
             <li
               key={category.title}
             >

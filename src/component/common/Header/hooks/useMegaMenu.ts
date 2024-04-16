@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Category, SubMenu } from 'utils/constant/category';
+import { HeaderCategory, SubMenu } from 'utils/constant/category';
 
-const useMegaMenu = (category: Category[]) => {
+const useMegaMenu = (category: HeaderCategory[]) => {
   const [panelMenuList, setPanelMenuList] = useState<SubMenu[] | null>();
   const [isExpanded, setIsExpanded] = useState(false);
 

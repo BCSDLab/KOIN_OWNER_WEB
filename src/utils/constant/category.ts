@@ -6,7 +6,7 @@ export interface SubMenu {
   tag: number | null;
 }
 
-export interface Category {
+export interface HeaderCategory {
   title: string;
   planFlag: boolean;
   submenu: SubMenu[]
@@ -14,7 +14,7 @@ export interface Category {
 
 export const TOTAL_CATEGORY = 1;
 
-const CATEGORY_OWNER: Category[] = [
+export const CATEGORY_OWNER: HeaderCategory[] = [
   {
     title: '매장관리',
     planFlag: true,
@@ -58,4 +58,25 @@ const CATEGORY_OWNER: Category[] = [
   },
 ];
 
-export default CATEGORY_OWNER;
+export const CATEGORY_COOP: HeaderCategory[] = [
+  {
+    title: '매장관리',
+    planFlag: true,
+    submenu: [
+      {
+        title: '가게정보',
+        link: '/owner',
+        newFlag: true,
+        planFlag: true,
+        tag: null,
+      },
+      {
+        title: '가게추가',
+        link: '/owner/shop-registration',
+        newFlag: true,
+        planFlag: true,
+        tag: null,
+      },
+    ],
+  },
+];

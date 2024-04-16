@@ -2,7 +2,6 @@ import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-
 import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import CATEGORY_OWNER from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
@@ -10,7 +9,38 @@ import useUserStore from 'store/user';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMobileSidebar from 'component/common/Header/hooks/useMobileSidebar';
+import useUserTypeStore from 'store/userType';
+import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import styles from './MobilePanel.module.scss';
+
+interface Props {
+  hideSidebar: () => void;
+  category: HeaderCategory;
+}
+
+function HeaderContent({ hideSidebar, category }: Props) {
+  const { title, submenu } = category;
+
+  return (
+    <div>
+      <div className={styles.category__title}>
+        {title}
+      </div>
+      <ul className={styles.category__submenus}>
+        {submenu.map((subMenu) => (
+          <li
+            className={styles.category__submenu}
+            key={subMenu.title}
+          >
+            <Link to={subMenu.link} onClick={hideSidebar}>
+              {subMenu.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function MobilePanel() {
   const navigate = useNavigate();
@@ -20,6 +50,9 @@ export default function MobilePanel() {
   const { user } = useUserStore();
   const { setPrevPath } = usePrevPathStore((state) => state);
   const { logout } = useLogout();
+  const { userType } = useUserTypeStore();
+
+  const targetCategory = userType === 'OWNER' ? CATEGORY_OWNER : CATEGORY_COOP;
 
   const {
     isExpanded: isMobileSidebarExpanded,
@@ -44,7 +77,7 @@ export default function MobilePanel() {
         <span className={styles['mobile-header__title']}>
           {pathname === '/owner' || pathname === '/coop' ? (
             <MobileLogoIcon title="코인 로고" />
-          ) : (CATEGORY_OWNER
+          ) : (targetCategory!
             .flatMap((categoryValue) => categoryValue.submenu)
             .find((subMenuValue) => subMenuValue.link === pathname)
             ?.title ?? ''
@@ -98,26 +131,8 @@ export default function MobilePanel() {
               </ul>
             </div>
 
-            {CATEGORY_OWNER.map((categoryInfo) => (
-              <div key={categoryInfo.title}>
-                <div>
-                  <div className={styles['mobile-header__category-title']}>
-                    {categoryInfo.title}
-                  </div>
-                  <ul className={styles['mobile-header__sub-menus']}>
-                    {categoryInfo.submenu.map((subMenu) => (
-                      <li
-                        className={styles['mobile-header__sub-menu']}
-                        key={subMenu.title}
-                      >
-                        <Link to={subMenu.link}>
-                          {subMenu.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            {targetCategory.map((category: HeaderCategory) => (
+              <HeaderContent hideSidebar={hideSidebar} category={category} />
             ))}
 
             <img
