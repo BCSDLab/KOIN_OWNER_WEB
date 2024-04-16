@@ -2,19 +2,20 @@ import { ShopEvent } from 'model/shopInfo/myShopInfo';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
+import { useDeleteEvent, useGetEventList } from 'query/event';
 import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
 import { ReactComponent as AddEventIcon } from 'assets/svg/myshop/add-event-icon.svg';
 import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-circle.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
-import { useDeleteEvent } from 'query/event';
 import showToast from 'utils/ts/showToast';
 import EventCard from './components';
 import styles from './EventTable.module.scss';
 
 export default function EventTable() {
-  const { shopData, eventList } = useMyShop();
+  const { shopData } = useMyShop();
+  const { eventList } = useGetEventList(shopData!.id);
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
