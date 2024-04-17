@@ -50,7 +50,7 @@ export const useLogin = () => {
 
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLoginError(err.message || '로그인을 실패했습니다.');
         if (err.status === 401) {
@@ -95,7 +95,7 @@ export const useLogout = () => {
       removeUser();
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLogoutError(err.message || '로그아웃을 실패했습니다.');
         setLogoutErrorCode(err.code);
