@@ -12,7 +12,7 @@ export const NewMenu = z.object({
   image_urls: z.array(z.string()),
   is_single: z.boolean(),
   name: z.string(),
-  option_prices: z.array(OptionPrice.nullable()),
+  option_prices: z.array(OptionPrice).nullable(),
   single_price: z.number(),
 });
 

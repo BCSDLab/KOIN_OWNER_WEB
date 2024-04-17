@@ -20,7 +20,6 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
     singlePrice,
     setSinglePrice,
   } = useAddMenuStore();
-
   const updatePriceInput = (inputId: number, field: string, newValue: string | number) => {
     const updatedOptionPrices = (optionPrices || []).map((price) => {
       if (price.id === inputId) {
@@ -49,9 +48,10 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
 
     if (updatedOptionPrices.length === 0) {
       setIsSingle(true);
-      setOptionPrices([{ id: 0, option: '', price: 0 }]);
+      setOptionPrices([]);
     }
   };
+
   return (
     <div>
       {isMobile ? (
