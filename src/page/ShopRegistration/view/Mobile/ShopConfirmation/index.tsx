@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
+import { isKoinError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './ShopConfirmation.module.scss';
 
 const usePostData = (setStep: (step: number) => void) => {
@@ -20,6 +22,11 @@ const usePostData = (setStep: (step: number) => void) => {
     onSuccess: () => {
       setStep(5);
       queryClient.refetchQueries();
+    },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
     },
   });
   return mutation;

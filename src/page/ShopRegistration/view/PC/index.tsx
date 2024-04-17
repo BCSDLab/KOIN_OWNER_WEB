@@ -27,6 +27,8 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import useShopRegistrationStore from 'store/shopRegistration';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import { isKoinError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -108,6 +110,11 @@ export default function ShopRegistrationPC() {
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => setStep(5),
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
+    },
   });
 
   const formatPhoneNumber = (inputNumber: string) => {
@@ -205,7 +212,7 @@ export default function ShopRegistrationPC() {
                     )}
                 </label>
                 {uploadError === '' && imageUrls.length === 0 && isError
-                && <ErrorMessage message={ERRORMESSAGE.image} />}
+                  && <ErrorMessage message={ERRORMESSAGE.image} />}
                 {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
               </div>
               <div>
