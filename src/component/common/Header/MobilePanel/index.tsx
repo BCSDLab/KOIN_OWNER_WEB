@@ -9,7 +9,7 @@ import useUserStore from 'store/user';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMobileSidebar from 'component/common/Header/hooks/useMobileSidebar';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import styles from './MobilePanel.module.scss';
 

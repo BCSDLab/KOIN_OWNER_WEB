@@ -5,7 +5,7 @@ import cn from 'utils/ts/className';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMegaMenu from 'component/common/Header/hooks/useMegaMenu';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import styles from './PCPanel.module.scss';
 
 const ID: { [key: string]: string; } = {

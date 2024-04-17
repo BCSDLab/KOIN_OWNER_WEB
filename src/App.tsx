@@ -18,7 +18,7 @@ import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import Coop from 'page/Coop';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import AddingEvent from 'page/AddingEvent';
 
 interface ProtectedRouteProps {
