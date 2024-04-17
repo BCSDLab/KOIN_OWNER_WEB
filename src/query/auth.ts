@@ -64,6 +64,8 @@ export const useLogin = () => {
         }
         if (err.status === 500) {
           setLoginError('서버 오류가 발생했습니다.');
+        } else {
+          sendClientError(err);
         }
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
