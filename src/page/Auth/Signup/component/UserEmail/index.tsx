@@ -44,17 +44,17 @@ export default function UserEmail() {
           <span className={styles['email-check__label']}>이메일 인증</span>
           <div className={styles['email-check__input']}>
             <input className={styles.input} type="text" placeholder="이메일 입력@example.com" {...emailDuplicateRegister} disabled={isOpen} />
-            { (errors.email || (errorMessage && watch().email === email)) && (
-            <ErrorMessage message={
-              [errors.email?.message, errorMessage].filter((msg) => typeof msg === 'string')
-            }
-            />
+            {(errors.email || (errorMessage && watch().email === email)) && (
+              <ErrorMessage message={
+                [errors.email?.message, errorMessage].filter((msg) => typeof msg === 'string')
+              }
+              />
             )}
             {isOpen && <input className={styles['input--code']} type="text" pattern="\d*" maxLength={6} placeholder="인증번호" ref={codeInput} disabled={userData.isAuthentication} />}
           </div>
           {isOpen ? (
             <>
-              { verificateError ? <ErrorMessage message={[verificateError]} />
+              {verificateError ? <ErrorMessage message={[verificateError]} />
                 : <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>}
               <div className={styles.button}>
                 <CustomButton
@@ -81,7 +81,7 @@ export default function UserEmail() {
           <div className={styles['email-check']}>
             <span className={styles['email-check__phrase']}>
               <span className={styles['email-check__phrase--user-email']}>{userData.email}</span>
-            &nbsp;으로
+              &nbsp;으로
               <br />
               발송된 인증번호 6자리를 입력해 주세요
             </span>
@@ -93,7 +93,7 @@ export default function UserEmail() {
           </div>
           <div className={styles.buttons}>
             <CustomButton buttonSize="mobile" content="재발송" onClick={reSubmit} />
-            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} disable={(!codeInput.current || codeInput.current.value.length < 6)} />
+            <CustomButton buttonSize="mobile" content="다음" onClick={verificationCode} disable={(!codeInput.current || codeInput.current.value.length < 6 || getTime() === '0 : 00')} />
           </div>
         </>
       )
