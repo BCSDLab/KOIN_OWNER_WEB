@@ -101,6 +101,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                         <input
                           type="number"
                           className={styles['mobile__price-info-inputs__price-input']}
+                          inputMode="decimal"
                           value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
                           onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
                         />
@@ -123,6 +124,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                         <input
                           type="number"
                           className={styles['mobile__price-info-inputs__price-input']}
+                          inputMode="decimal"
                           value={input.price === 0 ? '' : input.price}
                           onChange={(e) => updatePriceInput(input.id, 'price', Number(e.target.value))}
                         />
