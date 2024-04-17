@@ -88,7 +88,7 @@ export default function UserEmail() {
             <div className={styles['email-check__input']}>
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
-            {verificateError && <ErrorMessage message={[verificateError]} />}
+            {errorMessage && <ErrorMessage message={errorMessage} />}
             <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>
           </div>
           <div className={styles.buttons}>
