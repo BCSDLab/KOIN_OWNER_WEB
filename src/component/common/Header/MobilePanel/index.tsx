@@ -29,8 +29,8 @@ function PanelContent({ hideSidebar, category }: Prop) {
       <ul className={styles.category__submenus}>
         {submenu.map((subMenu) => (
           <li
-            className={styles.category__submenu}
             key={subMenu.title}
+            className={styles.category__submenu}
           >
             <Link to={subMenu.link} onClick={hideSidebar}>
               {subMenu.title}
@@ -132,7 +132,11 @@ export default function MobilePanel() {
             </div>
 
             {targetCategory.map((category: HeaderCategory) => (
-              <PanelContent hideSidebar={hideSidebar} category={category} />
+              <PanelContent
+                key={category.title}
+                hideSidebar={hideSidebar}
+                category={category}
+              />
             ))}
 
             <img
