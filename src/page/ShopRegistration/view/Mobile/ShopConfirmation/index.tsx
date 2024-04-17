@@ -15,7 +15,7 @@ import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './ShopConfirmation.module.scss';
 
-const usePostData = (setStep: (step: number) => void) => {
+export const usePostData = (setStep: (step: number) => void) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
