@@ -196,7 +196,27 @@
     }
   }
 
-  &__category-title {
+  &__logo {
+    position: absolute;
+
+    &--koin {
+      right: 16px;
+      top: 16px;
+      width: 40px;
+      height: 40px;
+    }
+
+    &--bcsd {
+      right: 16px;
+      bottom: 20px;
+      width: 33px;
+      height: 33px;
+    }
+  }
+}
+
+.category {
+  &__title {
     width: 100%;
     box-sizing: border-box;
     padding: 5px 16px;
@@ -210,14 +230,14 @@
     text-align: left;
   }
 
-  &__sub-menus {
+  &__submenus {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     list-style: none;
   }
 
-  &__sub-menu {
+  &__submenu {
     display: block;
     padding: 8px 20px;
     width: 50%;
@@ -241,24 +261,6 @@
         font-weight: 700;
         outline: none;
       }
-    }
-  }
-
-  &__logo {
-    position: absolute;
-
-    &--koin {
-      right: 16px;
-      top: 16px;
-      width: 40px;
-      height: 40px;
-    }
-
-    &--bcsd {
-      right: 16px;
-      bottom: 20px;
-      width: 33px;
-      height: 33px;
     }
   }
 }
