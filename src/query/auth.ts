@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useUserTypeStore from 'store/useUserTypeStore';
 import useUserStore from 'store/user';
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 
 interface VerifyInput {
   email: string;
@@ -99,6 +99,8 @@ export const useLogout = () => {
       if (isKoinError(err)) {
         setLogoutError(err.message || '로그아웃을 실패했습니다.');
         setLogoutErrorCode(err.code);
+      } else {
+        sendClientError(error);
       }
     },
   });
