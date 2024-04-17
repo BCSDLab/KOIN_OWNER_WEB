@@ -23,7 +23,10 @@ export default function ModifyMenu() {
 
   assert(menuId != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
-  const { menuData, modifyMenuMutation } = useMenuInfo(Number(menuId));
+  const { menuData, modifyMenuMutation, refetch } = useMenuInfo(Number(menuId));
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   const goMyShop = () => {
     navigate('/');
@@ -54,13 +57,17 @@ export default function ModifyMenu() {
     optionPrices,
     singlePrice,
     setMenuInfo,
+    setOptionPrices,
   } = useAddMenuStore();
   // 처음 메뉴 데이터 초기화
   useEffect(() => {
     if (menuData) {
       setMenuInfo(menuData);
     }
-  }, [menuData, setMenuInfo]);
+    if (menuData?.option_prices === null) {
+      setOptionPrices([{ id: 0, option: '', price: 0 }]);
+    }
+  }, [menuData, setMenuInfo, setOptionPrices]);
   const createMenuData = () => {
     if (isSingle) {
       return {
