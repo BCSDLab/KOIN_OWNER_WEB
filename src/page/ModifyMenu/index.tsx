@@ -23,10 +23,7 @@ export default function ModifyMenu() {
 
   assert(menuId != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
-  const { menuData, modifyMenuMutation, refetch } = useMenuInfo(Number(menuId));
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
+  const { menuData, modifyMenuMutation } = useMenuInfo(Number(menuId));
 
   const goMyShop = () => {
     navigate('/');
