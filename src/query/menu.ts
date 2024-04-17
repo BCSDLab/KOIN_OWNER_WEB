@@ -6,10 +6,11 @@ import useAddMenuStore from 'store/addMenu';
 const useMenuInfo = (menuId:number) => {
   const { resetAddMenuStore } = useAddMenuStore();
   const queryClient = useQueryClient();
-  const { data: menuData, refetch } = useQuery(
+  const { data: menuData } = useQuery(
     {
       queryKey: ['menuInfo', menuId],
       queryFn: () => getMenu(menuId),
+      refetchOnWindowFocus: true,
     },
   );
 
@@ -21,7 +22,7 @@ const useMenuInfo = (menuId:number) => {
     },
   });
   return {
-    menuData, refetch, modifyMenuMutation, modifyMenuError,
+    menuData, modifyMenuMutation, modifyMenuError,
   };
 };
 
