@@ -11,8 +11,10 @@ const useMenuInfo = (menuId:number) => {
     {
       queryKey: shopKeys.myMenuInfo(menuId),
       queryFn: () => getMenu(menuId),
+      refetchOnWindowFocus: true,
     },
   );
+
   const { mutate: modifyMenuMutation, isError: modifyMenuError } = useMutation({
     mutationFn: (param: NewMenu) => modifyMenu(menuId, param),
     onSuccess: () => {
