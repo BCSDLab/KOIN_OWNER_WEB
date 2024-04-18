@@ -37,11 +37,7 @@ function Header() {
       className={styles.header}
     >
       <nav className={styles.header__content}>
-        {isMobile ? (
-          <MobilePanel />
-        ) : (
-          <PCPanel />
-        )}
+        {isMobile ? <MobilePanel /> : <PCPanel />}
       </nav>
     </header>
   );

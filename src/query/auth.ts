@@ -7,9 +7,9 @@ import { LoginForm } from 'model/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import useUserStore from 'store/user';
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 
 interface VerifyInput {
   email: string;
@@ -50,7 +50,7 @@ export const useLogin = () => {
 
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLoginError(err.message || '로그인을 실패했습니다.');
         if (err.status === 401) {
@@ -95,10 +95,12 @@ export const useLogout = () => {
       removeUser();
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLogoutError(err.message || '로그아웃을 실패했습니다.');
         setLogoutErrorCode(err.code);
+      } else {
+        sendClientError(error);
       }
     },
   });
