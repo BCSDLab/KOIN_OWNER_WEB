@@ -54,13 +54,17 @@ export default function ModifyMenu() {
     optionPrices,
     singlePrice,
     setMenuInfo,
+    setOptionPrices,
   } = useAddMenuStore();
   // 처음 메뉴 데이터 초기화
   useEffect(() => {
     if (menuData) {
       setMenuInfo(menuData);
     }
-  }, [menuData, setMenuInfo]);
+    if (menuData?.option_prices === null) {
+      setOptionPrices([{ id: 0, option: '', price: 0 }]);
+    }
+  }, [menuData, setMenuInfo, setOptionPrices]);
   const createMenuData = () => {
     if (isSingle) {
       return {

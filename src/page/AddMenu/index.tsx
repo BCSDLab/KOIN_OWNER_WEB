@@ -54,7 +54,7 @@ export default function AddMenu() {
       image_urls: imageUrl,
       is_single: isSingle,
       name,
-      option_prices: optionPrices?.map(({ option, price }) => ({
+      option_prices: isSingle ? null : optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
       })) || null,
