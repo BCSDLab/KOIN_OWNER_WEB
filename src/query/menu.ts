@@ -6,7 +6,7 @@ import useAddMenuStore from 'store/addMenu';
 const useMenuInfo = (menuId:number) => {
   const { resetAddMenuStore } = useAddMenuStore();
   const queryClient = useQueryClient();
-  const { data: menuData } = useQuery(
+  const { data: menuData, refetch } = useQuery(
     {
       queryKey: ['menuInfo', menuId],
       queryFn: () => getMenu(menuId),
@@ -22,7 +22,7 @@ const useMenuInfo = (menuId:number) => {
     },
   });
   return {
-    menuData, modifyMenuMutation, modifyMenuError,
+    menuData, refetch, modifyMenuMutation, modifyMenuError,
   };
 };
 
