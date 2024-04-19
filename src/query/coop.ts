@@ -43,7 +43,7 @@ export const useUploadDiningImage = () => {
   };
 };
 
-export const useSuspenseCoopInfo = () => {
+export const useSuspenseCoopUser = () => {
   const { data } = useSuspenseQuery({
     queryKey: coopKeys.coopInfo,
     queryFn: getCoopInfo,
