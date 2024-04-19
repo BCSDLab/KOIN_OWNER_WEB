@@ -166,7 +166,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
               <input
                 type="file"
                 accept="image/*"
-                capture
                 style={{ display: 'none' }}
                 onChange={menu ? handleImageChange(menu.id) : undefined}
                 ref={(el) => {
