@@ -1,92 +1,61 @@
-import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  initialError, ImageList, EventInfo, modules, uploadImage,
+} from 'page/ManageEvent/AddingEvent/index';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { useAddEvent } from 'query/event';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FileResponse, getCoopUrl } from 'api/uploadFile';
-import axios from 'axios';
 import showToast from 'utils/ts/showToast';
+import { FileResponse, getCoopUrl } from 'api/uploadFile';
 import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
-import styles from './AddingEvent.module.scss';
+import styles from 'page/ManageEvent/index.module.scss';
+import { useModifyEvent } from 'query/event';
 
-/* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-export const modules = {
-  toolbar: [
-    ['bold'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-  ],
-};
-
-const initialState = {
-  title: '',
-  content: '',
-  thumbnail_image: [],
-  start_date: {
-    year: '',
-    month: '',
-    date: '',
-  },
-  end_date: {
-    year: '',
-    month: '',
-    date: '',
-  },
-};
-
-export interface EventInfo {
-  title: string,
+interface Props {
   content: string,
-  thumbnail_image: string[],
-  start_date: {
-    year: string,
-    month: string,
-    date: string,
-  },
-  end_date: {
-    year: string,
-    month: string,
-    date: string,
-  },
+  event_id: number,
+  shop_id: number,
+  title: string,
+  thumbnail_images: string[],
+  start_date: string,
+  end_date: string,
 }
 
-interface FileInfo {
-  file: File;
-  presignedUrl: string;
-}
+export default function ModifyEvent() {
+  const location = useLocation();
+  const event: Props = location.state;
 
-export const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
-  await axios.put(presignedUrl, file, {
-    headers: {
-      'Content-Type': 'image/jpeg, image/png, image/svg+xml, image/webp',
+  const initialState = {
+    title: event.title,
+    content: event.content,
+    thumbnail_image: event.thumbnail_images,
+    start_date: {
+      year: event.start_date.slice(0, 4),
+      month: event.start_date.slice(5, 7),
+      date: event.start_date.slice(8, 10),
     },
-  });
-};
+    end_date: {
+      year: event.end_date.slice(0, 4),
+      month: event.end_date.slice(5, 7),
+      date: event.end_date.slice(8, 10),
+    },
+  };
 
-export interface ImageList {
-  presigned: FileResponse[];
-  file: FileList | null;
-}
-
-export const initialError = {
-  title: false,
-  content: false,
-  date: false,
-};
-
-export default function AddingEvent() {
   const [eventInfo, setEventInfo] = useState<EventInfo>(initialState);
   const [error, setError] = useState(initialError);
-  const [editor, setEditor] = useState('');
-  const param = useParams();
-  const [preImages, setPreImages] = useState<(string | ArrayBuffer | null)[]>([]);
+  const [editor, setEditor] = useState(event.content);
+
+  const [preImages,
+    setPreImages] = useState<(string | ArrayBuffer | null)[]>(event.thumbnail_images);
+
   const [imageList, setImageList] = useState<ImageList>({
     presigned: [],
     file: null,
   });
-  const { mutate: addEvent, isPending } = useAddEvent(param.id!);
+
+  const { mutate: modifyEvent, isPending } = useModifyEvent(event.shop_id, event.event_id);
   const navigate = useNavigate();
 
   const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -207,6 +176,20 @@ export default function AddingEvent() {
     const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month.padStart(2, '0')}-${eventInfo.start_date.date.padStart(2, '0')}`;
     const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month.padStart(2, '0')}-${eventInfo.end_date.date.padStart(2, '0')}`;
 
+    if (event.thumbnail_images.length > 0 && imageList.presigned.length === 0) {
+      const requestData = {
+        title: eventInfo.title,
+        content: editor,
+        start_date: startDate,
+        end_date: endDate,
+        thumbnail_images: event.thumbnail_images,
+      };
+
+      modifyEvent(requestData);
+
+      return;
+    }
+
     if (imageList.file) {
       for (let i = 0; i < imageList.file.length; i += 1) {
         const url = imageList.presigned[i].pre_signed_url;
@@ -222,7 +205,7 @@ export default function AddingEvent() {
       thumbnail_images: imageList.presigned.map((img) => img.file_url),
     };
 
-    addEvent(requestData);
+    modifyEvent(requestData);
   };
 
   return (
@@ -397,5 +380,6 @@ export default function AddingEvent() {
         </div>
       </div>
     </div>
+
   );
 }

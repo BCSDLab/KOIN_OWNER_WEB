@@ -22,14 +22,15 @@ export default function EventTable() {
   const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
-    setSelectedEventIds((prev : number[]) => (
+    setSelectedEventIds((prev: number[]) => (
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     ));
   };
+
   const navigate = useNavigate();
   useEffect(() => {
     if (selectAll && eventList) {
-      setSelectedEventIds(eventList.events.map((event : ShopEvent) => event.event_id));
+      setSelectedEventIds(eventList.events.map((event: ShopEvent) => event.event_id));
     } else {
       setSelectedEventIds([]);
     }
@@ -57,7 +58,22 @@ export default function EventTable() {
                 onClick={() => {
                   if (selectedEventIds.length > 1) {
                     showToast('error', '수정은 하나만 가능합니다.');
-                  } else showToast('success', '이벤트 수정에 성공했습니다.');
+                  } else {
+                    const selected = eventList?.events.filter(
+                      (event) => event.event_id === selectedEventIds[0],
+                    )[0];
+                    navigate(`/owner/event-modify/${selectedEventIds[0]}`, {
+                      state: {
+                        content: selected?.content,
+                        event_id: selected?.event_id,
+                        shop_id: selected?.shop_id,
+                        title: selected?.title,
+                        thumbnail_images: selected?.thumbnail_images,
+                        start_date: selected?.start_date,
+                        end_date: selected?.end_date,
+                      },
+                    });
+                  }
                 }}
               >
                 수정

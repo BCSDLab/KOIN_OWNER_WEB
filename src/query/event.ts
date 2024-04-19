@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { addEvent, deleteEvent, getShopEventList } from 'api/shop';
+import {
+  addEvent, deleteEvent, getShopEventList, modifyEvent,
+} from 'api/shop';
 import { EventInfo } from 'model/shopInfo/event';
 import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
@@ -50,4 +52,24 @@ export const useGetEventList = (shopId: number) => {
   });
 
   return { eventList };
+};
+
+export const useModifyEvent = (shopId: number, eventId: number) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: EventInfo) => modifyEvent(shopId, eventId, data),
+    onSuccess: () => {
+      showToast('success', '이벤트 수정에 성공했습니다.');
+      navigate('/');
+      queryClient.invalidateQueries();
+    },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
+    },
+  });
+
+  return { mutate, isPending };
 };

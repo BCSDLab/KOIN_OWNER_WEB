@@ -50,3 +50,12 @@ export const getShopEventList = async (param : EventListParam) => {
 export const addEvent = (id: string, eventInfo: EventInfo) => accessClient.post(`owner/shops/${id}/event`, eventInfo);
 
 export const deleteEvent = (shopId: number, eventId:number) => accessClient.delete(`owner/shops/${shopId}/events/${eventId}`);
+
+export const modifyEvent = (
+  shopId: number,
+  eventId: number,
+  eventInfo: EventInfo,
+) => accessClient.put(
+  `/owner/shops/${shopId}/events/${eventId}`,
+  eventInfo,
+);
