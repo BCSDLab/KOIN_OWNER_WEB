@@ -3,6 +3,7 @@ import { getOwnerInfo } from 'api/auth';
 import { getCoopInfo } from 'api/coop';
 import { OwnerResponse } from 'model/auth';
 import { CoopResponse } from 'model/Coop';
+import { userKeys } from 'query/KeyFactory/userKeys';
 import useUserTypeStore from 'store/userType';
 
 type UserResponse = OwnerResponse | CoopResponse;
@@ -17,7 +18,7 @@ export default function useSuspenseUser() {
   const queryFn = userType ? userQuries[userType] : undefined;
 
   const { data } = useSuspenseQuery<UserResponse>({
-    queryKey: ['user', userType],
+    queryKey: userKeys.userInfo,
     queryFn,
   });
   return { data };
