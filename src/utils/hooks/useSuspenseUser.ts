@@ -6,7 +6,7 @@ import { CoopResponse } from 'model/Coop';
 import { userKeys } from 'query/KeyFactory/userKeys';
 import useUserTypeStore from 'store/userType';
 
-type UserResponse = OwnerResponse | CoopResponse;
+type UserResponse = OwnerResponse | CoopResponse | null;
 
 const userQuries = {
   OWNER: getOwnerInfo,
@@ -15,7 +15,7 @@ const userQuries = {
 
 export default function useSuspenseUser() {
   const { userType } = useUserTypeStore();
-  const queryFn = userType ? userQuries[userType] : undefined;
+  const queryFn = userType ? userQuries[userType] : () => Promise.resolve(null);
 
   const { data } = useSuspenseQuery<UserResponse>({
     queryKey: userKeys.userInfo,

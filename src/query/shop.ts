@@ -13,7 +13,7 @@ import { shopKeys } from './KeyFactory/shopKeys';
 const useMyShop = () => {
   let myShopQueryKey = '';
   const { data: user } = useSuspenseUser();
-  if ('company_number' in user) {
+  if (user && 'company_number' in user) {
     myShopQueryKey = user.company_number;
   }
   const queryClient = useQueryClient();
