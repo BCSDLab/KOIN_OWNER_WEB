@@ -78,9 +78,9 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     setSelectedCorner(corner || null);
     if (menu?.soldout_at === null) {
       setIsSoldoutModalOpen((prev) => !prev);
-    } else if (selectedMenu) {
+    } else if (menu) {
       updateSoldOutMutation({
-        menu_id: selectedMenu.id,
+        menu_id: menu.id,
         sold_out: false,
       });
     }
@@ -113,7 +113,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
                   {menu && <span className={styles.card__soldout}>품절</span>}
                   {menu && (
                   <SoldoutToggle
-                    menuId={menu.id}
                     onClick={() => handleToggleSoldoutModal(menu, corner)}
                     menu={menu}
                   />
@@ -167,7 +166,6 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
               <input
                 type="file"
                 accept="image/*"
-                capture
                 style={{ display: 'none' }}
                 onChange={menu ? handleImageChange(menu.id) : undefined}
                 ref={(el) => {

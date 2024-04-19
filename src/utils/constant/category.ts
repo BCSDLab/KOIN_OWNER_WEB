@@ -6,7 +6,7 @@ export interface SubMenu {
   tag: number | null;
 }
 
-export interface Category {
+export interface HeaderCategory {
   title: string;
   planFlag: boolean;
   submenu: SubMenu[]
@@ -14,7 +14,7 @@ export interface Category {
 
 export const TOTAL_CATEGORY = 1;
 
-const CATEGORY: Category[] = [
+export const CATEGORY_OWNER: HeaderCategory[] = [
   {
     title: '매장관리',
     planFlag: true,
@@ -27,29 +27,45 @@ const CATEGORY: Category[] = [
         tag: null,
       },
       {
-        title: '메뉴관리',
-        link: '/owner/menu-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
-        title: '주문관리',
-        link: '/owner/order-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
-        title: '매출관리',
-        link: '/owner/sales-management',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-      {
         title: '가게추가',
-        link: '/owner/shop-add',
+        link: '/owner/shop-registration',
+        newFlag: true,
+        planFlag: true,
+        tag: null,
+      },
+      // {
+      //   title: '메뉴관리',
+      //   link: '/owner/menu-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
+      // {
+      //   title: '주문관리',
+      //   link: '/owner/order-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
+      // {
+      //   title: '매출관리',
+      //   link: '/owner/sales-management',
+      //   newFlag: true,
+      //   planFlag: true,
+      //   tag: null,
+      // },
+    ],
+  },
+];
+
+export const CATEGORY_COOP: HeaderCategory[] = [
+  {
+    title: '식단관리',
+    planFlag: true,
+    submenu: [
+      {
+        title: '식단정보',
+        link: '/coop',
         newFlag: true,
         planFlag: true,
         tag: null,
@@ -57,5 +73,3 @@ const CATEGORY: Category[] = [
     ],
   },
 ];
-
-export default CATEGORY;

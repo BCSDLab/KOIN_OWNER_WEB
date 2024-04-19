@@ -4,7 +4,7 @@ import { getCoopInfo } from 'api/coop';
 import { OwnerResponse } from 'model/auth';
 import { CoopResponse } from 'model/Coop';
 import { userKeys } from 'query/KeyFactory/userKeys';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 
 type UserResponse = OwnerResponse | CoopResponse | null;
 

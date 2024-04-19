@@ -7,9 +7,9 @@ import { LoginForm } from 'model/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import useUserStore from 'store/user';
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 
 interface VerifyInput {
   email: string;
@@ -50,20 +50,22 @@ export const useLogin = () => {
 
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLoginError(err.message || '로그인을 실패했습니다.');
         if (err.status === 401) {
           setLoginError('비밀번호가 일치하지 않습니다.');
         }
         if (err.status === 403) {
-          setLoginError('이메일 인증을 완료해주세요.');
+          setLoginError('관리자 승인 대기 중입니다.');
         }
         if (err.status === 404) {
           setLoginError('가입되지 않은 이메일입니다.');
         }
         if (err.status === 500) {
           setLoginError('서버 오류가 발생했습니다.');
+        } else {
+          sendClientError(err);
         }
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
@@ -95,10 +97,12 @@ export const useLogout = () => {
       removeUser();
       setUserType();
     },
-    onError: (err: unknown) => {
+    onError: (err) => {
       if (isKoinError(err)) {
         setLogoutError(err.message || '로그아웃을 실패했습니다.');
         setLogoutErrorCode(err.code);
+      } else {
+        sendClientError(error);
       }
     },
   });
