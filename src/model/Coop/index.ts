@@ -30,7 +30,7 @@ export const Dinings = z.object({
 
 export const CoopResponse = z.object({
   email: z.string(),
-  gender: z.null(),
+  gender: z.number().nullable(),
   name: z.string(),
   phone_number: z.string(),
   user_type: z.string(),
