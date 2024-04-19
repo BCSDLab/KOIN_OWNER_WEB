@@ -46,12 +46,12 @@ export const useDeleteEvent = (shopId: number, eventIds: number[]) => {
 };
 
 export const useGetEventList = (shopId: number) => {
-  const { data: eventList } = useQuery({
+  const { data: eventList, refetch } = useQuery({
     queryKey: shopKeys.eventList(shopId),
     queryFn: () => getShopEventList({ id: shopId }),
   });
 
-  return { eventList };
+  return { eventList, refetch };
 };
 
 export const useModifyEvent = (shopId: number, eventId: number) => {
@@ -61,8 +61,8 @@ export const useModifyEvent = (shopId: number, eventId: number) => {
     mutationFn: (data: EventInfo) => modifyEvent(shopId, eventId, data),
     onSuccess: () => {
       showToast('success', '이벤트 수정에 성공했습니다.');
+      queryClient.invalidateQueries({ queryKey: shopKeys.eventList(shopId) });
       navigate('/');
-      queryClient.invalidateQueries();
     },
     onError: (e) => {
       if (isKoinError(e)) {
