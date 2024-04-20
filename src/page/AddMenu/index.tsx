@@ -6,6 +6,7 @@ import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
+import { NewMenu } from 'model/shopInfo/newMenu';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import styles from './AddMenu.module.scss';
@@ -40,6 +41,7 @@ export default function AddMenu() {
     optionPrices,
     singlePrice,
   } = useAddMenuStore();
+  // const [newMenuData, setNewMenuData] = useState<NewMenu>({});
   const { addMenuMutation } = useMyShop();
   const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
