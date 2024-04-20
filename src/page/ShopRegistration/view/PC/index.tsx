@@ -289,7 +289,7 @@ export default function ShopRegistrationPC() {
                 <span className={styles.form__title}>배달금액</span>
                 <div className={styles.form__section}>
                   <input
-                    type="string"
+                    type="number"
                     className={styles['form__input-large']}
                     value={deliveryPrice === 0 ? undefined : deliveryPrice}
                     onChange={(e) => {
