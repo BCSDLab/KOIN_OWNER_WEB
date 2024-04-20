@@ -1,6 +1,7 @@
 import { ShopEvent } from 'model/shopInfo/myShopInfo';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import useMyShop from 'query/shop';
 import { useDeleteEvent, useGetEventList } from 'query/event';
 import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
@@ -10,7 +11,8 @@ import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg'
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
 import showToast from 'utils/ts/showToast';
-import EventCard from './components';
+import EventCard from './components/EventCard';
+import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
 
 export default function EventTable() {
@@ -19,6 +21,8 @@ export default function EventTable() {
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
@@ -56,8 +60,12 @@ export default function EventTable() {
                 type="button"
                 className={styles['edit-button']}
                 onClick={() => {
-                  if (selectedEventIds.length > 1) {
-                    showToast('error', '수정은 하나만 가능합니다.');
+                  if (selectedEventIds.length < 1) {
+                    setModalMessage('이벤트/공지 수정은 최소 하나는 선택해야합니다.');
+                    setIsModalOpen(true);
+                  } else if (selectedEventIds.length > 1) {
+                    setModalMessage('이벤트/공지 수정은 중복 선택이 불가합니다.');
+                    setIsModalOpen(true);
                   } else {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
@@ -131,6 +139,14 @@ export default function EventTable() {
             toggleSelect={() => toggleSelectEvent(event.event_id)}
           />
         ))}
+        {isModalOpen && createPortal(
+          <EventErrorModal
+            content={modalMessage}
+            setIsOpen={setIsModalOpen}
+            setSelectAll={setSelectAll}
+          />,
+          document.body,
+        )}
       </div>
     </>
   );

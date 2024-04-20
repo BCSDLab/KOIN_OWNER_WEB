@@ -18,7 +18,7 @@ import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import Coop from 'page/Coop';
-import useUserTypeStore from 'store/userType';
+import useUserTypeStore from 'store/useUserTypeStore';
 import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 
@@ -60,7 +60,6 @@ function App() {
             <Route path="/owner/menu-management" element={<PageNotFound />} />
             <Route path="/owner/order-management" element={<PageNotFound />} />
             <Route path="/owner/sales-management" element={<PageNotFound />} />
-            <Route path="/owner/shop-add" element={<PageNotFound />} />
             <Route path="/owner/event-add/:id" element={<AddingEvent />} />
             <Route path="/owner/event-modify/:id" element={<ModifyEvent />} />
           </Route>
@@ -78,10 +77,8 @@ function App() {
             <Route path="/find-id" element={<PageNotFound />} />
             <Route path="/find-password" element={<FindPassword />} />
           </Route>
-          <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
-            <Route path="/new-password" element={<NewPassword />} />
-            <Route path="/complete-change-password" element={<CompleteChangePassword />} />
-          </Route>
+          <Route path="/new-password" element={<NewPassword />} />
+          <Route path="/complete-change-password" element={<CompleteChangePassword />} />
         </Route>
       </Routes>
       <Toast />

@@ -9,7 +9,7 @@ export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   const {
     status, refetch, isError, error,
   } = useGenerateAuthCode(email);
-  const errorMessage = status === 'error' ? Object(error).response.data.message : null;
+  const errorMessage = status === 'error' ? Object(error).message : null;
   const onSubmit:SubmitHandler<User> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
   };
