@@ -135,10 +135,10 @@ export default function ModifyEvent() {
           content_type: file[i].type,
           file_name: file[i].name,
         }).then((res) => {
-          uploadImage({ presignedUrl: res.data.pre_signed_url, file: file[i] });
-          setEventInfo(
-            { ...eventInfo, thumbnail_image: [...eventInfo.thumbnail_image, res.data.file_url] },
-          );
+          uploadImage({ presignedUrl: res.data.pre_signed_url, file: file[i] })
+            .then(() => setEventInfo(
+              { ...eventInfo, thumbnail_image: [...eventInfo.thumbnail_image, res.data.file_url] },
+            ));
         });
       }
     }
