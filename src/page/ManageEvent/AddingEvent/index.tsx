@@ -81,11 +81,7 @@ export default function AddingEvent() {
   const [error, setError] = useState(initialError);
   const [editor, setEditor] = useState('');
   const param = useParams();
-  const [preImages, setPreImages] = useState<(string | ArrayBuffer | null)[]>([]);
-  const [imageList, setImageList] = useState<ImageList>({
-    presigned: [],
-    file: null,
-  });
+
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
   const navigate = useNavigate();
 
@@ -163,41 +159,23 @@ export default function AddingEvent() {
     const file = e.target.files;
 
     if (file && file.length > 0) {
-      if (file.length + imageList.presigned.length > 3) {
+      if (file.length + eventInfo.thumbnail_image.length > 3) {
         showToast('error', '이미지는 3개까지 등록할 수 있습니다');
         return;
       }
 
-      // presigned URL 목록을 임시 배열에 저장
-      const newPresignedUrls: FileResponse[] = [];
-      const loadPromises = [];
-
       for (let i = 0; i < file.length; i += 1) {
-        const getPresigned = getCoopUrl({
+        getCoopUrl({
           content_length: file[i].size,
           content_type: file[i].type,
           file_name: file[i].name,
         }).then((res) => {
-          newPresignedUrls.push(res.data);
-          const reader = new FileReader();
-          reader.readAsDataURL(file[i]);
-
-          // Promise를 사용하여 모든 이미지 로드 완료를 기다림
-          return new Promise<void>((resolve) => {
-            reader.onload = () => {
-              setPreImages((prev) => [...prev, reader.result]); // 이미지 미리보기 구현
-              resolve();
-            };
-          });
+          uploadImage({ presignedUrl: res.data.pre_signed_url, file: file[i] })
+            .then(() => setEventInfo(
+              { ...eventInfo, thumbnail_image: [...eventInfo.thumbnail_image, res.data.file_url] },
+            ));
         });
-
-        loadPromises.push(getPresigned);
       }
-
-      // 모든 프로미스가 완료되면 state를 업데이트
-      Promise.all(loadPromises).then(() => {
-        setImageList({ file, presigned: [...imageList.presigned, ...newPresignedUrls] });
-      });
     }
   };
 
@@ -207,19 +185,12 @@ export default function AddingEvent() {
     const startDate = `${eventInfo.start_date.year}-${eventInfo.start_date.month.padStart(2, '0')}-${eventInfo.start_date.date.padStart(2, '0')}`;
     const endDate = `${eventInfo.end_date.year}-${eventInfo.end_date.month.padStart(2, '0')}-${eventInfo.end_date.date.padStart(2, '0')}`;
 
-    if (imageList.file) {
-      for (let i = 0; i < imageList.file.length; i += 1) {
-        const url = imageList.presigned[i].pre_signed_url;
-        uploadImage({ presignedUrl: url, file: imageList.file[i] });
-      }
-    }
-
     const requestData = {
       title: eventInfo.title,
       content: editor,
       start_date: startDate,
       end_date: endDate,
-      thumbnail_images: imageList.presigned.map((img) => img.file_url),
+      thumbnail_images: eventInfo.thumbnail_image,
     };
 
     addEvent(requestData);
@@ -233,13 +204,13 @@ export default function AddingEvent() {
           <div className={styles.event__divide}>
             <small className={styles.event__count}>이벤트/공지와 관련된 사진을 올려보세요.</small>
             <small className={styles.event__count}>
-              {`${preImages.length} / 3`}
+              {`${eventInfo.thumbnail_image.length} / 3`}
             </small>
           </div>
-          {preImages.length > 0 && (
+          {eventInfo.thumbnail_image.length > 0 && (
             <div className={styles.event__images}>
               {
-                preImages.map((src, id) => {
+                eventInfo.thumbnail_image.map((src, id) => {
                   if (typeof src === 'string') {
                     return (
                       <div className={styles['event__each-image']}>
@@ -248,14 +219,11 @@ export default function AddingEvent() {
                           type="button"
                           className={styles['event__each-image--delete']}
                           onClick={() => {
-                            // 이미지 미리보기 삭제
-                            const deletedPreview = preImages.filter((item, idx) => idx !== id);
-                            // 실제 이미지 삭제
-                            const deletedImages = imageList.presigned.filter(
+                            // 이미지 삭제
+                            const deletedPreview = eventInfo.thumbnail_image.filter(
                               (item, idx) => idx !== id,
                             );
-                            setPreImages([...deletedPreview]);
-                            setImageList({ ...imageList, presigned: [...deletedImages] });
+                            setEventInfo({ ...eventInfo, thumbnail_image: deletedPreview });
                           }}
                         >
                           <Delete />
