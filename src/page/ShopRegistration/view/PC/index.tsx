@@ -19,14 +19,13 @@ import { WEEK, DAY_OF_WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
-import { useMutation } from '@tanstack/react-query';
-import { postShop } from 'api/shop';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -99,15 +98,12 @@ export default function ShopRegistrationPC() {
     isAllClosed,
   } = CheckSameTime();
 
+  const mutation = usePostData(setStep);
+
   const {
     register, handleSubmit, setValue, formState: { errors },
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
-  });
-
-  const mutation = useMutation({
-    mutationFn: (form: OwnerShop) => postShop(form),
-    onSuccess: () => setStep(5),
   });
 
   const formatPhoneNumber = (inputNumber: string) => {
@@ -205,7 +201,7 @@ export default function ShopRegistrationPC() {
                     )}
                 </label>
                 {uploadError === '' && imageUrls.length === 0 && isError
-                && <ErrorMessage message={ERRORMESSAGE.image} />}
+                  && <ErrorMessage message={ERRORMESSAGE.image} />}
                 {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
               </div>
               <div>
