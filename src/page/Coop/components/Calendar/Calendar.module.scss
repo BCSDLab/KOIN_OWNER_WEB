@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-family: Pretendard, sans-serif;
+  margin-top: 24px;
+
+  &__week {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    color: #8e8e8e;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0 16px;
+
+    &--date {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      color: #8e8e8e;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 0 16px;
+    }
+  }
+}
