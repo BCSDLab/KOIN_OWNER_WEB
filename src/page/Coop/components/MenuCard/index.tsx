@@ -108,8 +108,14 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
           return (
             <div key={corner} className={styles.card}>
               <div className={styles.card__header}>
-                <span className={styles.card__title}>{corner}</span>
-                <div className={styles['card__soldout-wrapper']}>
+                {menu && menu.changed_at !== null ? (
+                  <div className={styles['card__common-wrapper']}>
+                    <span className={styles.card__title}>{corner}</span>
+                    <div className={styles.card__changed}>변경됨</div>
+                  </div>
+                ) : (
+                  <span className={styles.card__title}>{corner}</span>) }
+                <div className={styles['card__common-wrapper']}>
                   {menu && <span className={styles.card__soldout}>품절</span>}
                   {menu && (
                   <SoldoutToggle
