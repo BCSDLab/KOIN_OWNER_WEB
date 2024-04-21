@@ -5,6 +5,7 @@ import { ReactComponent as NonCheck } from 'assets/svg/myshop/non-check.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import cn from 'utils/ts/className';
 import { ShopEvent } from 'model/shopInfo/myShopInfo';
+import EventContent from './components/EventContent';
 import styles from './EventCard.module.scss';
 
 interface EventCardprops {
@@ -79,7 +80,7 @@ export default function EventCard({
           [styles['eventContent--nonHidden']]: hiddenInfo === false,
         })}
         >
-          {event.content}
+          <EventContent html={event.content} />
         </div>
         <div className={styles.eventUpdatedAt}>{event.start_date.replace(/-/g, '.')}</div>
       </div>
