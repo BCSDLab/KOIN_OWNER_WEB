@@ -12,6 +12,7 @@ import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
 import showToast from 'utils/ts/showToast';
 import EventCard from './components/EventCard';
+import DeleteAlertModal from './components/DeleteAlertModal';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
 
@@ -21,7 +22,8 @@ export default function EventTable() {
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModifyErrorModalOpen, setIsModifyErrorModalOpen] = useState(false);
+  const [isDeleteErrorModalOpen, setIsDeleteErrorModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
@@ -61,10 +63,10 @@ export default function EventTable() {
                 onClick={() => {
                   if (selectedEventIds.length < 1) {
                     setModalMessage('이벤트/공지 수정은 최소 하나는 선택해야합니다.');
-                    setIsModalOpen(true);
+                    setIsModifyErrorModalOpen(true);
                   } else if (selectedEventIds.length > 1) {
                     setModalMessage('이벤트/공지 수정은 중복 선택이 불가합니다.');
-                    setIsModalOpen(true);
+                    setIsModifyErrorModalOpen(true);
                   } else showToast('success', '이벤트 수정에 성공했습니다.');
                 }}
               >
@@ -123,11 +125,18 @@ export default function EventTable() {
             toggleSelect={() => toggleSelectEvent(event.event_id)}
           />
         ))}
-        {isModalOpen && createPortal(
+        {isModifyErrorModalOpen && createPortal(
           <EventErrorModal
             content={modalMessage}
-            setIsOpen={setIsModalOpen}
+            setIsOpen={setIsModifyErrorModalOpen}
             setSelectAll={setSelectAll}
+          />,
+          document.body,
+        )}
+        {isDeleteErrorModalOpen && createPortal(
+          <DeleteAlertModal
+            content={modalMessage}
+            setIsOpen={setIsDeleteErrorModalOpen}
           />,
           document.body,
         )}
