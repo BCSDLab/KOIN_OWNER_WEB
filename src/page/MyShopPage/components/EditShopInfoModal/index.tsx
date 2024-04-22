@@ -23,6 +23,8 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import { TOTAL_CATEGORY } from 'utils/constant/category';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
+import { isKoinError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -75,7 +77,7 @@ export default function EditShopInfoModal({
   } = CheckSameTime();
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId([...categoryId, Number(e.target.value)]);
+    setCategoryId([Number(e.target.value)]);
   };
 
   const {
@@ -84,14 +86,24 @@ export default function EditShopInfoModal({
     resolver: zodResolver(OwnerShop),
   });
 
+  useEffect(() => {
+    if (imageFile && !uploadError) {
+      setImageUrls(imageFile);
+    }
+  }, [imageFile, setImageUrls]);
+
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
     onSuccess: () => {
       closeModal();
       setIsSuccess(true);
     },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
+    },
   });
-
   useEffect(() => {
     setImageUrls(shopInfo.image_urls);
     setName(shopInfo.name);
@@ -127,12 +139,6 @@ export default function EditShopInfoModal({
   const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
     ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
     : '휴무일 없음';
-
-  useEffect(() => {
-    if (imageFile && !uploadError) {
-      setImageUrls(imageFile);
-    }
-  }, [imageFile, setImageUrls]);
 
   useEffect(() => {
     if (imageUrls.length > 0) {
