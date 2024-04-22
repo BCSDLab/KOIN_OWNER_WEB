@@ -87,7 +87,7 @@ export default function EditShopInfoModal({
   });
 
   useEffect(() => {
-    if (imageFile && !uploadError) {
+    if (imageFile && !uploadError) { // 초기에 이 값이 true기 때문에 imageUrls가 빈 배열로 초기화되고 있었음
       setImageUrls(imageFile);
     }
   }, [imageFile, setImageUrls]);
