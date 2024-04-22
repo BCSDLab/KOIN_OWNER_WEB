@@ -79,10 +79,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
     if (menu?.soldout_at === null) {
       setIsSoldoutModalOpen((prev) => !prev);
     } else if (menu) {
-      updateSoldOutMutation({
-        menu_id: menu.id,
-        sold_out: false,
-      });
+      setIsSoldoutModalOpen((prev) => !prev);
     }
   };
 
@@ -91,10 +88,16 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
   };
 
   const handleSoldoutModalConfirm = () => {
-    if (selectedMenu) {
+    if (selectedMenu && selectedMenu.soldout_at === null) {
       updateSoldOutMutation({
         menu_id: selectedMenu.id,
         sold_out: true,
+      });
+      setIsSoldoutModalOpen(false);
+    } else if (selectedMenu && selectedMenu.soldout_at) {
+      updateSoldOutMutation({
+        menu_id: selectedMenu.id,
+        sold_out: false,
       });
       setIsSoldoutModalOpen(false);
     }
@@ -192,7 +195,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
         onCancel={handleToggleSoldoutModal}
         buttonText="품절설정"
       >
-        {selectedMenu && selectedCorner && (
+        {selectedMenu?.soldout_at === null ? (selectedMenu && selectedCorner && (
           <div className={styles.modal}>
             <span className={styles.modal__header}>
               {selectedCorner}
@@ -201,7 +204,7 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
               <span className={styles['modal__header--primary']}>품절 상태</span>
               로 설정할까요?
             </span>
-            <span className={styles.modal__description}>품절 상태는 복구할 수 없습니다.</span>
+            <span className={styles.modal__description}>알림이 발송되니 신중하게 설정해주세요.</span>
             <div className={styles.modal__wrapper}>
               <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
                 취소
@@ -211,8 +214,27 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
               </button>
             </div>
           </div>
-        )}
-
+        ))
+          : (selectedMenu && selectedCorner && (
+            <div className={styles.modal}>
+              <span className={styles.modal__header}>
+                {selectedCorner}
+                를
+                {' '}
+                <span className={styles['modal__header--primary']}>품절 취소</span>
+                로 설정할까요?
+              </span>
+              <span className={styles.modal__description}>이미 발송된 알림은 취소되지 않습니다.</span>
+              <div className={styles.modal__wrapper}>
+                <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
+                  취소
+                </button>
+                <button type="button" onClick={handleSoldoutModalConfirm} className={styles['modal__button--primary']}>
+                  품절취소
+                </button>
+              </div>
+            </div>
+          ))}
       </SoldoutModal>
     </>
   );
