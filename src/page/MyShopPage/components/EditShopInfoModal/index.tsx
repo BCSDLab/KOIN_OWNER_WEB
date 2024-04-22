@@ -31,8 +31,11 @@ interface EditShopInfoModalProps {
   setIsSuccess: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function EditShopInfoModal({ shopInfo, closeModal, setIsSuccess }:
-EditShopInfoModalProps) {
+export default function EditShopInfoModal({
+  shopInfo,
+  closeModal,
+  setIsSuccess,
+}: EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
   const {
     setTrue: openOperateTimeModal,
@@ -72,7 +75,7 @@ EditShopInfoModalProps) {
   } = CheckSameTime();
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId(Number(e.target.value));
+    setCategoryId([...categoryId, Number(e.target.value)]);
   };
 
   const {
@@ -99,7 +102,9 @@ EditShopInfoModalProps) {
     setDelivery(shopInfo.delivery);
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
-    setCategoryId(shopInfo.shop_categories[1] ? shopInfo.shop_categories[1].id : TOTAL_CATEGORY);
+    setCategoryId(shopInfo.shop_categories[1]
+      ? [shopInfo.shop_categories[1].id]
+      : [TOTAL_CATEGORY]);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -140,8 +145,8 @@ EditShopInfoModalProps) {
       open_time: openTimeArray[index],
     }));
     // shop_categories[0]은 전체보기이므로 따로 처리
-    const categoryIds = categoryId === TOTAL_CATEGORY
-      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, categoryId];
+    const categoryIds = categoryId.filter((item) => item !== TOTAL_CATEGORY).length === 0
+      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, ...categoryId];
     setValue('category_ids', categoryIds);
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
@@ -214,7 +219,7 @@ EditShopInfoModalProps) {
             </label>
             <label htmlFor="category" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>카테고리</span>
-              <select value={categoryId} name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
+              <select name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
                 {categoryList?.shop_categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -395,7 +400,6 @@ EditShopInfoModalProps) {
             <label htmlFor="category" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>카테고리</span>
               <select
-                value={categoryId}
                 name="category"
                 className={styles['main-info__select']}
                 onChange={handleCategoryIdChange}
