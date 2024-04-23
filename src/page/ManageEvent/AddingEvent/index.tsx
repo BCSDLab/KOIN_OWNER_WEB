@@ -36,6 +36,8 @@ const initialState = {
   },
 };
 
+export type Change = 'year' | 'month' | 'date';
+
 export interface EventInfo {
   title: string,
   content: string,
@@ -85,51 +87,18 @@ export default function AddingEvent() {
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
   const navigate = useNavigate();
 
-  const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 25) setEventInfo({ ...eventInfo, title: e.target.value });
+  const changeInput = (e: React.ChangeEvent<HTMLInputElement>, type: 'title' | 'start' | 'end', change?: Change) => {
+    const value = e.target.value.replaceAll(/[\D]/gi, '');
+    if (type === 'title' && e.target.value.length <= 25) {
+      setEventInfo({ ...eventInfo, title: e.target.value });
+    }
+    if (type === 'start') {
+      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+    }
+    if (type === 'end') {
+      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+    }
     setError({ ...error, title: false });
-  };
-  const changeStartYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 4) {
-      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, year: value } });
-    }
-    setError({ ...error, date: false });
-  };
-  const changeStartMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 2) {
-      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, month: value } });
-    }
-    setError({ ...error, date: false });
-  };
-  const changeStartDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 2) {
-      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, date: value } });
-    }
-    setError({ ...error, date: false });
-  };
-  const changeEndYear = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 4) {
-      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, year: value } });
-    }
-    setError({ ...error, date: false });
-  };
-  const changeEndMonth = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 2) {
-      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, month: value } });
-    }
-    setError({ ...error, date: false });
-  };
-  const changeEndDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replaceAll(/[\D]/gi, '');
-    if (value.length <= 2) {
-      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, date: value } });
-    }
-    setError({ ...error, date: false });
   };
 
   const validation = () => {
@@ -265,7 +234,7 @@ export default function AddingEvent() {
               [styles.event__input]: true,
             })}
             value={eventInfo.title}
-            onChange={changeTitle}
+            onChange={(e) => changeInput(e, 'title')}
           />
           {error.title && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
@@ -302,7 +271,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeStartYear}
+              onChange={(e) => changeInput(e, 'start', 'year')}
             />
             /
             <input
@@ -312,7 +281,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeStartMonth}
+              onChange={(e) => changeInput(e, 'start', 'month')}
             />
             /
             <input
@@ -322,7 +291,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeStartDate}
+              onChange={(e) => changeInput(e, 'start', 'date')}
             />
           </div>
           <div className={styles['event-day']}>
@@ -334,7 +303,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeEndYear}
+              onChange={(e) => changeInput(e, 'end', 'year')}
             />
             /
             <input
@@ -344,7 +313,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeEndMonth}
+              onChange={(e) => changeInput(e, 'end', 'month')}
             />
             /
             <input
@@ -354,7 +323,7 @@ export default function AddingEvent() {
                 [styles['error-border']]: error.date,
                 [styles['event-day__input']]: true,
               })}
-              onChange={changeEndDate}
+              onChange={(e) => changeInput(e, 'end', 'date')}
             />
           </div>
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
