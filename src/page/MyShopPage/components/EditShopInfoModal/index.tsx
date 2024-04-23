@@ -23,7 +23,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import { TOTAL_CATEGORY } from 'utils/constant/category';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './EditShopInfoModal.module.scss';
 
@@ -101,7 +101,9 @@ export default function EditShopInfoModal({
     onError: (e) => {
       if (isKoinError(e)) {
         showToast('error', e.message);
+        return;
       }
+      sendClientError(e);
     },
   });
   useEffect(() => {
