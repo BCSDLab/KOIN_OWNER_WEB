@@ -5,18 +5,7 @@ interface ErrorMessageProps {
   message: string | (string | undefined | null)[]
 }
 
-export default function ErrorMessage({ message }:ErrorMessageProps) {
-  if (typeof message === 'string') {
-    return (
-      <div className={styles.warn}>
-        <Warn />
-        <span className={styles['warn--phrase']}>
-          {message}
-        </span>
-      </div>
-    );
-  }
-
+export default function ErrorMessage({ message }: ErrorMessageProps) {
   if (message.length > 0) {
     return (
       <div className={styles.warn}>

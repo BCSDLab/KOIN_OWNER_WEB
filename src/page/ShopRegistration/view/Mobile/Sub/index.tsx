@@ -46,6 +46,7 @@ export default function Sub() {
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    if (formattedPhoneNumber.length > 13) return formattedPhoneNumber.slice(0, 13);
     return formattedPhoneNumber;
   };
 
