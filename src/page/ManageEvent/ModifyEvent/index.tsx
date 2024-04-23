@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import {
-  initialError, EventInfo, modules, uploadImage, Change,
+  initialError, EventInfo, modules, uploadImage, Change, validateDate,
 } from 'page/ManageEvent/AddingEvent/index';
 import ReactQuill from 'react-quill';
 import showToast from 'utils/ts/showToast';
@@ -74,12 +74,15 @@ export default function ModifyEvent() {
       setError((prevError) => ({ ...prevError, content: true }));
       flag = true;
     }
-    if (eventInfo.start_date.year.length === 0
-      || eventInfo.start_date.month.length === 0
-      || eventInfo.start_date.date.length === 0
-      || eventInfo.end_date.year.length === 0
-      || eventInfo.end_date.month.length === 0
-      || eventInfo.end_date.date.length === 0
+    if (validateDate({
+      year: eventInfo.start_date.year,
+      month: eventInfo.start_date.month,
+      date: eventInfo.start_date.date,
+    }) || validateDate({
+      year: eventInfo.end_date.year,
+      month: eventInfo.end_date.month,
+      date: eventInfo.end_date.date,
+    })
     ) {
       setError((prevError) => ({ ...prevError, date: true }));
       flag = true;

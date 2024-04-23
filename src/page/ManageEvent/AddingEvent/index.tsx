@@ -38,6 +38,16 @@ const initialState = {
 
 export type Change = 'year' | 'month' | 'date';
 
+type Date = {
+  year: string,
+  month: string,
+  date: string,
+};
+
+export const validateDate = (date: Date) => date.year.length === 0
+  || date.month.length === 0
+  || date.date.length === 0;
+
 export interface EventInfo {
   title: string,
   content: string,
@@ -111,13 +121,15 @@ export default function AddingEvent() {
       setError((prevError) => ({ ...prevError, content: true }));
       flag = true;
     }
-    if (eventInfo.start_date.year.length === 0
-      || eventInfo.start_date.month.length === 0
-      || eventInfo.start_date.date.length === 0
-      || eventInfo.end_date.year.length === 0
-      || eventInfo.end_date.month.length === 0
-      || eventInfo.end_date.date.length === 0
-    ) {
+    if (validateDate({
+      year: eventInfo.start_date.year,
+      month: eventInfo.start_date.month,
+      date: eventInfo.start_date.date,
+    }) || validateDate({
+      year: eventInfo.end_date.year,
+      month: eventInfo.end_date.month,
+      date: eventInfo.end_date.date,
+    })) {
       setError((prevError) => ({ ...prevError, date: true }));
       flag = true;
     }
