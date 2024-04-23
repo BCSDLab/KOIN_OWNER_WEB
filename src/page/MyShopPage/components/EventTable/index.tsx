@@ -10,7 +10,6 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-ci
 import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
-import showToast from 'utils/ts/showToast';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
