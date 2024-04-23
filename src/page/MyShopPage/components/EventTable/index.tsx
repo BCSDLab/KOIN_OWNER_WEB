@@ -92,7 +92,6 @@ export default function EventTable() {
                 className={styles['delete-button']}
                 onClick={() => {
                   deleteEvent();
-                  showToast('success', '이벤트 삭제에 성공했습니다.');
                 }}
               >
                 삭제
