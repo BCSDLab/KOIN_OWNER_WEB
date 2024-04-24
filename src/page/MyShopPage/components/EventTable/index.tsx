@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import useMyShop from 'query/shop';
-import { useDeleteEvent, useGetEventList } from 'query/event';
+import { useGetEventList } from 'query/event';
 import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
 import { ReactComponent as AddEventIcon } from 'assets/svg/myshop/add-event-icon.svg';
 import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-circle.svg';
@@ -25,7 +25,6 @@ export default function EventTable() {
   const [isModifyErrorModalOpen, setIsModifyErrorModalOpen] = useState(false);
   const [isDeleteErrorModalOpen, setIsDeleteErrorModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
     setSelectedEventIds((prev : number[]) => (
@@ -77,8 +76,7 @@ export default function EventTable() {
                 type="button"
                 className={styles['delete-button']}
                 onClick={() => {
-                  deleteEvent();
-                  showToast('success', '이벤트 삭제에 성공했습니다.');
+                  setIsDeleteErrorModalOpen(true);
                 }}
               >
                 삭제
@@ -135,7 +133,16 @@ export default function EventTable() {
         )}
         {isDeleteErrorModalOpen && createPortal(
           <DeleteAlertModal
-            content={modalMessage}
+            title={(
+              <div>
+                작성을
+                {' '}
+                <span>취소</span>
+                {' '}
+                하시겠습니까?
+              </div>
+            )}
+            content="삭제한 이벤트는 복구할 수 없습니다."
             setIsOpen={setIsDeleteErrorModalOpen}
           />,
           document.body,
