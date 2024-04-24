@@ -17,7 +17,7 @@ export default function UserPassword() {
   const {
     passwordRegister, passwordConfirmRegister, errors: formErrors, handleSubmit,
   } = usePasswordConfirm();
-  const onSubmit:SubmitHandler<User> = (data) => {
+  const onSubmit: SubmitHandler<User> = (data) => {
     setPassword({ ...userData, password: data.password });
   };
   return (
@@ -32,22 +32,22 @@ export default function UserPassword() {
           autoComplete="off"
         />
         {!isMobile && (
-        <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
-          {isBlind ? <BlindIcon /> : <ShowIcon />}
-        </button>
+          <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
+            {isBlind ? <BlindIcon /> : <ShowIcon />}
+          </button>
         )}
         {formErrors.password ? (<ErrorMessage message={[formErrors.password.message]} />
         ) : <span className={styles.form__alert}>* 특수문자 포함 영어와 숫자 조합 6~18 자리</span>}
       </div>
       <div className={styles.form__input} onChange={handleSubmit(onSubmit)}>
-        <input className={styles.input} placeholder={isMobile ? '비밀번호' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} {...passwordConfirmRegister} autoComplete="off" />
+        <input className={styles.input} placeholder={isMobile ? '비밀번호 확인' : '비밀번호 입력 (필수)'} type={isBlind ? 'password' : 'text'} {...passwordConfirmRegister} autoComplete="off" />
         {!isMobile && (
-        <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
-          {isBlind ? <BlindIcon /> : <ShowIcon />}
-        </button>
+          <button className={styles['form__visible--button']} type="button" onClick={changeIsBlind}>
+            {isBlind ? <BlindIcon /> : <ShowIcon />}
+          </button>
         )}
         {formErrors.passwordConfirm
-        && <ErrorMessage message={[formErrors.passwordConfirm.message]} />}
+          && <ErrorMessage message={[formErrors.passwordConfirm.message]} />}
       </div>
     </div>
   );

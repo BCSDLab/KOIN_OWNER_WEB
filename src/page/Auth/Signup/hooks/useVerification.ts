@@ -1,3 +1,4 @@
+import { isKoinError } from '@bcsdlab/koin';
 import { useVerificationAuthCode } from 'query/register';
 import { useEffect, useRef, useState } from 'react';
 import useRegisterInfo from 'store/registerStore';
@@ -7,7 +8,7 @@ export default function useVerification(
   eamil:string,
 ) {
   const [code, setCode] = useState('');
-  const [errorMessage, setMessage] = useState();
+  const [errorMessage, setMessage] = useState<string>('');
   const codeInput = useRef<HTMLInputElement>(null);
   const { userInfo: userData, setUserInfo: setAuthenticate } = useRegisterInfo();
   const {
@@ -29,10 +30,16 @@ export default function useVerification(
   useEffect(() => {
     if (status === 'success' && !userData.isAuthentication && data) {
       setAuthenticate({ ...userData, isAuthentication: true });
-      setMessage(undefined);
+      setMessage('');
       setUploadToken(data.token);
-    } else if (isError) {
-      setMessage(Object(error).response.data.violations[0]);
+    }
+    if (isError) {
+      if (isKoinError(error)) {
+        setMessage(error.message);
+      }
+    }
+    if (!isError) {
+      setMessage('');
     }
   }, [status, userData, setAuthenticate, error, isError, data, setUploadToken]);
   return {
