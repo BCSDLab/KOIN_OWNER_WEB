@@ -5,7 +5,7 @@ import {
 import SoldoutToggle from 'page/Coop/components/SoldoutToggle';
 import { ReactComponent as Photo } from 'assets/svg/coop/photo.svg';
 import { ReactComponent as SoldOut } from 'assets/svg/coop/soldout.svg';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getCoopUrl } from 'api/uploadFile/index';
 import SoldoutModal from 'page/Coop/components/SoldoutModal';
 import axios from 'axios';
@@ -13,6 +13,7 @@ import styles from './MenuCard.module.scss';
 
 interface MenuCardProps {
   selectedMenuType: Menus;
+  selectedDate: string;
 }
 
 interface FileInfo {
@@ -20,14 +21,15 @@ interface FileInfo {
   presignedUrl: string;
 }
 
-export default function MenuCard({ selectedMenuType }: MenuCardProps) {
-  const { data } = useGetDining();
+export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardProps) {
   const { uploadDiningImageMutation } = useUploadDiningImage();
   const { updateSoldOutMutation } = useUpdateSoldOut();
   const fileInputRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
   const [isSoldoutModalOpen, setIsSoldoutModalOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<Dinings | null>(null);
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
+  const [formmatDate, setFormmatDate] = useState<string>('');
+  const { data } = useGetDining(formmatDate);
 
   const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
     await axios.put(presignedUrl, file, {
@@ -102,6 +104,13 @@ export default function MenuCard({ selectedMenuType }: MenuCardProps) {
       setIsSoldoutModalOpen(false);
     }
   };
+
+  useEffect(
+    () => {
+      setFormmatDate(selectedDate.replace('-', '').replace('-', '').substring(2));
+    },
+    [selectedDate],
+  );
 
   return (
     <>

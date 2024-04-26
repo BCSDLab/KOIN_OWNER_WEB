@@ -1,8 +1,8 @@
 import { accessClient } from 'api';
 import { DiningImages, SoldOut } from 'model/Coop';
 
-export const getDining = async () => {
-  const { data } = await accessClient.get('/dinings');
+export const getDining = async (date: string) => {
+  const { data } = await accessClient.get(`/dinings?date=${date}`);
   return data;
 };
 

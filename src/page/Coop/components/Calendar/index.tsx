@@ -4,9 +4,12 @@ import { getDayOfWeek } from 'page/Coop/hook/useGetDayOfWeek';
 import cn from 'utils/ts/className';
 import styles from './Calendar.module.scss';
 
-export default function Calendar() {
+interface DateProps {
+  selectedDate: string;
+  setSelectedDate: (dateType: string) => void;
+}
+export default function Calendar({ selectedDate, setSelectedDate }: DateProps) {
   const today = dayjs();
-  const [selectedDate, setSelectedDate] = useState(dayjs().format('YYYY-MM-DD'));
   const weekDays = Array.from({ length: 7 }, (_, i) => today.add(i - 3, 'day'));
 
   return (
@@ -27,6 +30,7 @@ export default function Calendar() {
               tabIndex={0}
               role="button"
               onClick={() => setSelectedDate(dayFormat)}
+              className={styles['container__date--wrapper']}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   setSelectedDate(dayFormat);

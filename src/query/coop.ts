@@ -3,11 +3,11 @@ import { getDining, updateSoldOut, uploadDiningImage } from 'api/coop';
 import { DiningImages, SoldOut } from 'model/Coop';
 import { coopKeys } from './KeyFactory/coopKeys';
 
-export const useGetDining = () => {
+export const useGetDining = (date: string) => {
   const { data } = useSuspenseQuery(
     {
       queryKey: coopKeys.dining,
-      queryFn: getDining,
+      queryFn: () => getDining(date),
     },
   );
   return {
