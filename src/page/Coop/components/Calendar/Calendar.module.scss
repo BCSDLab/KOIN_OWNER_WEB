@@ -62,6 +62,8 @@
     &--wrapper {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       gap: 4px;
     }
   }
@@ -69,6 +71,7 @@
   &__today--border {
     display: flex;
     border-color: #175c8e;
+    width: 12px;
     margin-top: 10px;
     border-bottom: 2px solid #175c8e;
   }
