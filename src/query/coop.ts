@@ -6,7 +6,7 @@ import { coopKeys } from './KeyFactory/coopKeys';
 export const useGetDining = (date: string) => {
   const { data } = useSuspenseQuery(
     {
-      queryKey: coopKeys.dining,
+      queryKey: [coopKeys.dining, date],
       queryFn: () => getDining(date),
     },
   );
