@@ -5,6 +5,16 @@
   margin-top: 24px;
   gap: 10px;
 
+  &__calendar {
+    display: flex;
+    flex-direction: column;
+    font-family: Pretendard, sans-serif;
+    padding-top: 24px;
+    padding-bottom: 8px;
+    gap: 10px;
+    background-color: #fff;
+  }
+
   &__week {
     display: flex;
     justify-content: space-around;
@@ -45,8 +55,8 @@
       width: 28px;
       height: 28px;
       padding: 2px;
-      margin: -8px;
-      border: 2px solid #175c8e;
+      margin: -7px;
+      border: 1px solid #175c8e;
       border-radius: 999px;
       justify-content: center;
       align-items: center;
