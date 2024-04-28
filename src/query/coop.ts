@@ -33,7 +33,7 @@ export const useUploadDiningImage = () => {
   const { mutate: uploadDiningImageMutation } = useMutation({
     mutationFn: (data: DiningImages) => uploadDiningImage(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: coopKeys.dining });
+      queryClient.invalidateQueries();
     },
   });
   return {
