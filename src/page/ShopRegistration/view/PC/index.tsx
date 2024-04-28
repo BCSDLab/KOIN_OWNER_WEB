@@ -88,7 +88,6 @@ export default function ShopRegistrationPC() {
     deliveryPrice,
     description,
   } = useShopRegistrationStore();
-
   const operateTimeState = useOperateTimeState();
 
   const {
@@ -109,12 +108,13 @@ export default function ShopRegistrationPC() {
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    if (formattedPhoneNumber.length > 13) return formattedPhoneNumber.slice(0, 13);
     return formattedPhoneNumber;
   };
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrls.length === 0 || name === '' || category === ''
+    if (imageUrls.length === 0 || name === '' || category.length === 0
       || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
@@ -135,10 +135,11 @@ export default function ShopRegistrationPC() {
       open_time: openTimeArray[index],
     }));
     setValue('open', openValue);
-    setValue('category_ids', [categoryId]);
+    setValue('category_ids', categoryId);
     setValue('delivery_price', Number(deliveryPrice));
+    setValue('name', name);
   }, [openTimeState, closeTimeState, shopClosedState,
-    imageFile, categoryId, deliveryPrice, uploadError]);
+    imageFile, categoryId, deliveryPrice, uploadError, name]);
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
@@ -215,7 +216,9 @@ export default function ShopRegistrationPC() {
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
                 </div>
-                {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+                {category.length === 0
+                  && isError
+                  && <ErrorMessage message={ERRORMESSAGE.category} />}
               </div>
               <CustomModal
                 buttonText="다음"
@@ -289,7 +292,7 @@ export default function ShopRegistrationPC() {
                 <span className={styles.form__title}>배달금액</span>
                 <div className={styles.form__section}>
                   <input
-                    type="string"
+                    type="number"
                     className={styles['form__input-large']}
                     value={deliveryPrice === 0 ? undefined : deliveryPrice}
                     onChange={(e) => {

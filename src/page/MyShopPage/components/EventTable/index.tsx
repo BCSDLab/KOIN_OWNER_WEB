@@ -10,7 +10,6 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-ci
 import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
-import showToast from 'utils/ts/showToast';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
@@ -26,14 +25,15 @@ export default function EventTable() {
   const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
-    setSelectedEventIds((prev : number[]) => (
+    setSelectedEventIds((prev: number[]) => (
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     ));
   };
+
   const navigate = useNavigate();
   useEffect(() => {
     if (selectAll && eventList) {
-      setSelectedEventIds(eventList.events.map((event : ShopEvent) => event.event_id));
+      setSelectedEventIds(eventList.events.map((event: ShopEvent) => event.event_id));
     } else {
       setSelectedEventIds([]);
     }
@@ -65,7 +65,22 @@ export default function EventTable() {
                   } else if (selectedEventIds.length > 1) {
                     setModalMessage('이벤트/공지 수정은 중복 선택이 불가합니다.');
                     setIsModalOpen(true);
-                  } else showToast('success', '이벤트 수정에 성공했습니다.');
+                  } else {
+                    const selected = eventList?.events.filter(
+                      (event) => event.event_id === selectedEventIds[0],
+                    )[0];
+                    navigate(`/owner/event-modify/${selectedEventIds[0]}`, {
+                      state: {
+                        content: selected?.content,
+                        event_id: selected?.event_id,
+                        shop_id: selected?.shop_id,
+                        title: selected?.title,
+                        thumbnail_images: selected?.thumbnail_images,
+                        start_date: selected?.start_date,
+                        end_date: selected?.end_date,
+                      },
+                    });
+                  }
                 }}
               >
                 수정
@@ -76,7 +91,6 @@ export default function EventTable() {
                 className={styles['delete-button']}
                 onClick={() => {
                   deleteEvent();
-                  showToast('success', '이벤트 삭제에 성공했습니다.');
                 }}
               >
                 삭제

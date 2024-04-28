@@ -19,7 +19,8 @@ import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
 import Coop from 'page/Coop';
 import useUserTypeStore from 'store/useUserTypeStore';
-import AddingEvent from 'page/AddingEvent';
+import AddingEvent from 'page/ManageEvent/AddingEvent';
+import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -60,6 +61,7 @@ function App() {
             <Route path="/owner/order-management" element={<PageNotFound />} />
             <Route path="/owner/sales-management" element={<PageNotFound />} />
             <Route path="/owner/event-add/:id" element={<AddingEvent />} />
+            <Route path="/owner/event-modify/:id" element={<ModifyEvent />} />
           </Route>
         </Route>
         <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
