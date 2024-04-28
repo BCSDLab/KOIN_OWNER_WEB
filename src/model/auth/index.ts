@@ -40,26 +40,26 @@ export const UserFile = z.object({
 
 export type UserFile = z.infer<typeof UserFile>;
 
-export const UserShop = z.object({
+export const OwnerShop = z.object({
   id: z.number(),
   name: z.string(),
 });
 
-export type UserShop = z.infer<typeof UserShop>;
+export type OwnerShop = z.infer<typeof OwnerShop>;
 
-export const UserResponse = z.object({
+export const OwnerResponse = z.object({
   attachments: z.array(UserFile),
   company_number: z.string(),
   email: z.string(),
   name: z.string(),
-  shops: z.array(UserShop),
+  shops: z.array(OwnerShop),
 });
 
-export type UserResponse = z.infer<typeof UserResponse>;
+export type OwnerResponse = z.infer<typeof OwnerResponse>;
 
 // 해당 주석 위 부분은 api> ayuto> model.ts 에서 가져 온 부분입니다.
 
-export const User = z.nullable(UserResponse);
+export const User = z.nullable(OwnerResponse);
 
 export const UserTypeResponse = z.object({
   user_type: z.union([
