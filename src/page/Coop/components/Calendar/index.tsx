@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { getDayOfWeek } from 'page/Coop/hook/useGetDayOfWeek';
 import cn from 'utils/ts/className';
 import styles from './Calendar.module.scss';
