@@ -10,7 +10,7 @@
   }
 
   &__button {
-    width: 140px;
+    flex-grow: 1;
     height: 35px;
     color: #8e8e8e;
     display: flex;
@@ -24,7 +24,7 @@
   }
 
   &__button--selected {
-    width: 140px;
+    flex-grow: 1;
     height: 35px;
     color: #175c8e;
     display: flex;
