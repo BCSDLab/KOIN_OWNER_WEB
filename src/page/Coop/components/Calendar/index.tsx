@@ -13,7 +13,7 @@ export default function Calendar({ selectedDate, setSelectedDate }: DateProps) {
   const weekDays = Array.from({ length: 7 }, (_, i) => today.add(i - 3, 'day'));
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container__calendar}>
       <div className={styles.container__week}>
         {weekDays.map((day) => (
           <div key={day.format('YYYY-MM-DD')}>
@@ -30,7 +30,11 @@ export default function Calendar({ selectedDate, setSelectedDate }: DateProps) {
               tabIndex={0}
               role="button"
               onClick={() => setSelectedDate(dayFormat)}
-              className={styles['container__date--wrapper']}
+              className={cn({
+                [styles['container__date--wrapper']]: true,
+                [styles['container__date--future']]: day.isAfter(today, 'day'),
+                [styles['container__date--today-font']]: day.isSame(today, 'day'),
+              })}
               onKeyDown={(event) => {
                 if (event.key === 'Enter' || event.key === ' ') {
                   setSelectedDate(dayFormat);

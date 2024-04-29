@@ -35,6 +35,14 @@
     font-weight: 500;
     padding: 0 16px;
 
+    &--future {
+      color: #000;
+    }
+
+    &--today-font {
+      color: #175c8e;
+    }
+
     &--selected {
       display: flex;
       width: 28px;
