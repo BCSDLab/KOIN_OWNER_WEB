@@ -23,6 +23,8 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import { TOTAL_CATEGORY } from 'utils/constant/category';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -31,8 +33,11 @@ interface EditShopInfoModalProps {
   setIsSuccess: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function EditShopInfoModal({ shopInfo, closeModal, setIsSuccess }:
-EditShopInfoModalProps) {
+export default function EditShopInfoModal({
+  shopInfo,
+  closeModal,
+  setIsSuccess,
+}: EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
   const {
     setTrue: openOperateTimeModal,
@@ -72,7 +77,7 @@ EditShopInfoModalProps) {
   } = CheckSameTime();
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId(Number(e.target.value));
+    setCategoryId([Number(e.target.value)]);
   };
 
   const {
@@ -81,14 +86,26 @@ EditShopInfoModalProps) {
     resolver: zodResolver(OwnerShop),
   });
 
+  useEffect(() => {
+    if (imageFile && !uploadError) { // 초기에 이 값이 true기 때문에 imageUrls가 빈 배열로 초기화되고 있었음
+      setImageUrls(imageFile);
+    }
+  }, [imageFile, setImageUrls]);
+
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
     onSuccess: () => {
       closeModal();
       setIsSuccess(true);
     },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+        return;
+      }
+      sendClientError(e);
+    },
   });
-
   useEffect(() => {
     setImageUrls(shopInfo.image_urls);
     setName(shopInfo.name);
@@ -99,7 +116,9 @@ EditShopInfoModalProps) {
     setDelivery(shopInfo.delivery);
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
-    setCategoryId(shopInfo.shop_categories[1] ? shopInfo.shop_categories[1].id : TOTAL_CATEGORY);
+    setCategoryId(shopInfo.shop_categories[1]
+      ? [shopInfo.shop_categories[1].id]
+      : [TOTAL_CATEGORY]);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -124,12 +143,6 @@ EditShopInfoModalProps) {
     : '휴무일 없음';
 
   useEffect(() => {
-    if (imageFile && !uploadError) {
-      setImageUrls(imageFile);
-    }
-  }, [imageFile, setImageUrls]);
-
-  useEffect(() => {
     if (imageUrls.length > 0) {
       setValue('image_urls', imageUrls);
     }
@@ -140,8 +153,8 @@ EditShopInfoModalProps) {
       open_time: openTimeArray[index],
     }));
     // shop_categories[0]은 전체보기이므로 따로 처리
-    const categoryIds = categoryId === TOTAL_CATEGORY
-      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, categoryId];
+    const categoryIds = categoryId.filter((item) => item !== TOTAL_CATEGORY).length === 0
+      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, ...categoryId];
     setValue('category_ids', categoryIds);
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
@@ -214,7 +227,7 @@ EditShopInfoModalProps) {
             </label>
             <label htmlFor="category" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>카테고리</span>
-              <select value={categoryId} name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
+              <select name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
                 {categoryList?.shop_categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -395,7 +408,6 @@ EditShopInfoModalProps) {
             <label htmlFor="category" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>카테고리</span>
               <select
-                value={categoryId}
                 name="category"
                 className={styles['main-info__select']}
                 onChange={handleCategoryIdChange}

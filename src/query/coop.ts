@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { getDining, updateSoldOut, uploadDiningImage } from 'api/coop';
+import {
+  getCoopInfo, getDining, updateSoldOut, uploadDiningImage,
+} from 'api/coop';
 import { DiningImages, SoldOut } from 'model/Coop';
 import { coopKeys } from './KeyFactory/coopKeys';
 
@@ -39,4 +41,12 @@ export const useUploadDiningImage = () => {
   return {
     uploadDiningImageMutation,
   };
+};
+
+export const useSuspenseCoopUser = () => {
+  const { data } = useSuspenseQuery({
+    queryKey: coopKeys.coopInfo,
+    queryFn: getCoopInfo,
+  });
+  return { data };
 };
