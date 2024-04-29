@@ -8,7 +8,7 @@ import axios from 'axios';
 import showToast from 'utils/ts/showToast';
 import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
-import styles from './AddingEvent.module.scss';
+import styles from 'page/ManageEvent/index.module.scss';
 
 /* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -103,10 +103,20 @@ export default function AddingEvent() {
       setEventInfo({ ...eventInfo, title: e.target.value });
     }
     if (type === 'start') {
-      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      if (change === 'year' && e.target.value.length <= 4) {
+        setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      }
+      if (change !== 'year' && e.target.value.length <= 2) {
+        setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      }
     }
     if (type === 'end') {
-      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      if (change === 'year' && e.target.value.length <= 4) {
+        setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      }
+      if (change !== 'year' && e.target.value.length <= 2) {
+        setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      }
     }
     setError({ ...error, title: false });
   };
@@ -184,7 +194,13 @@ export default function AddingEvent() {
           <p className={styles.event__paragraph}>사진</p>
           <div className={styles.event__divide}>
             <small className={styles.event__count}>이벤트/공지와 관련된 사진을 올려보세요.</small>
-            <small className={styles.event__count}>
+            <small className={
+              cn({
+                [styles.event__count]: true,
+                [styles['event__count--full']]: eventInfo.thumbnail_image.length === 3,
+              })
+            }
+            >
               {`${eventInfo.thumbnail_image.length} / 3`}
             </small>
           </div>
@@ -217,7 +233,15 @@ export default function AddingEvent() {
               }
             </div>
           )}
-          <label htmlFor="fileUpload" className={styles.event__upload}>
+          <label
+            htmlFor="fileUpload"
+            className={
+              cn({
+                [styles.event__upload]: true,
+                [styles['event__upload--disable']]: eventInfo.thumbnail_image.length === 3,
+              })
+            }
+          >
             사진 등록하기
           </label>
           <input
@@ -229,12 +253,19 @@ export default function AddingEvent() {
             maxLength={3}
             onChange={handleImages}
             style={{ display: 'none' }}
+            disabled={eventInfo.thumbnail_image.length === 3}
           />
         </div>
         <div>
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>제목</p>
-            <small className={styles.event__count}>
+            <small className={
+              cn({
+                [styles.event__count]: true,
+                [styles['event__count--full']]: eventInfo.title.length === 25,
+              })
+            }
+            >
               {`${eventInfo.title.length} / 25`}
             </small>
           </div>

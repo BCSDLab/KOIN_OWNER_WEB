@@ -14,6 +14,10 @@
 
   &__count {
     color: #8e8e8e;
+
+    &--full {
+      color: #f7941e;
+    }
   }
 
   &__images {
@@ -57,6 +61,10 @@
     border-radius: 5px;
     height: 50px;
     cursor: pointer;
+
+    &--disable {
+      color: #cacaca;
+    }
   }
 
   &__divide {
