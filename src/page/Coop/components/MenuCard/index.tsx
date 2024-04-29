@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useGetDining, useUploadDiningImage, useUpdateSoldOut } from 'query/coop';
 import {
   Dinings, Menus, DINING_TYPES, Corner,
@@ -9,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getCoopUrl } from 'api/uploadFile/index';
 import SoldoutModal from 'page/Coop/components/SoldoutModal';
 import axios from 'axios';
+import { getOpenMenuType, IsOpen } from 'page/Coop/hook/useGetCurrentMenuType';
 import styles from './MenuCard.module.scss';
 
 interface MenuCardProps {
@@ -30,6 +32,7 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
   const [formmatDate, setFormmatDate] = useState<string>('');
   const { data } = useGetDining(formmatDate);
+  const [openMenu, setOpenMenu] = useState<IsOpen>(getOpenMenuType(selectedMenuType, formmatDate));
 
   const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
     await axios.put(presignedUrl, file, {
@@ -112,6 +115,13 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
     [selectedDate],
   );
 
+  useEffect(
+    () => {
+      setOpenMenu(getOpenMenuType(selectedMenuType, formmatDate));
+    },
+    [selectedMenuType, formmatDate],
+  );
+
   return (
     <>
       <div className={styles.container}>
@@ -163,7 +173,7 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
                         {menu.soldout_at && (
                         <div className={styles['card__image--soldout']}>
                           <SoldOut />
-                          <span>품절표시됨</span>
+                          <span>품절된 메뉴입니다.</span>
                         </div>
                         )}
                       </div>
@@ -201,30 +211,30 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
         hasFooter={false}
         isOpen={isSoldoutModalOpen}
         isOverflowVisible
-        onCancel={handleToggleSoldoutModal}
+        onCancel={handleSoldoutModalClose}
         buttonText="품절설정"
       >
-        {selectedMenu?.soldout_at === null ? (selectedMenu && selectedCorner && (
-          <div className={styles.modal}>
-            <span className={styles.modal__header}>
-              {selectedCorner}
-              를
-              {' '}
-              <span className={styles['modal__header--primary']}>품절 상태</span>
-              로 설정할까요?
-            </span>
-            <span className={styles.modal__description}>알림이 발송되니 신중하게 설정해주세요.</span>
-            <div className={styles.modal__wrapper}>
-              <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
-                취소
-              </button>
-              <button type="button" onClick={handleSoldoutModalConfirm} className={styles['modal__button--primary']}>
-                품절설정
-              </button>
+        {openMenu === '운영중' ? (
+          selectedMenu?.soldout_at === null ? (
+            <div className={styles.modal}>
+              <span className={styles.modal__header}>
+                {selectedCorner}
+                를
+                {' '}
+                <span className={styles['modal__header--primary']}>품절 상태</span>
+                로 설정할까요?
+              </span>
+              <span className={styles.modal__description}>알림이 발송되니 신중하게 설정해주세요.</span>
+              <div className={styles.modal__wrapper}>
+                <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
+                  취소
+                </button>
+                <button type="button" onClick={handleSoldoutModalConfirm} className={styles['modal__button--primary']}>
+                  품절설정
+                </button>
+              </div>
             </div>
-          </div>
-        ))
-          : (selectedMenu && selectedCorner && (
+          ) : (
             <div className={styles.modal}>
               <span className={styles.modal__header}>
                 {selectedCorner}
@@ -243,8 +253,53 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
                 </button>
               </div>
             </div>
-          ))}
+          )
+        ) : (selectedMenu?.soldout_at === null ? (
+          <div className={styles.modal}>
+            <span className={styles.modal__header}>
+              현재
+              {' '}
+              <span className={styles['modal__header--secondary']}>운영 중</span>
+              인 식단이 아닙니다.
+            </span>
+            <span className={styles.modal__description}>
+              {selectedCorner}
+              를 품절 상태로 설정할까요?
+            </span>
+            <div className={styles.modal__wrapper}>
+              <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
+                취소
+              </button>
+              <button type="button" onClick={handleSoldoutModalConfirm} className={styles['modal__button--secondary']}>
+                품절설정
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.modal}>
+            <span className={styles.modal__header}>
+              현재
+              {' '}
+              <span className={styles['modal__header--secondary']}>운영 중</span>
+              인 식단이 아닙니다.
+            </span>
+            <span className={styles.modal__description}>
+              {selectedCorner}
+              를 품절 취소로 설정할까요?
+            </span>
+            <div className={styles.modal__wrapper}>
+              <button type="button" onClick={handleSoldoutModalClose} className={styles.modal__button}>
+                취소
+              </button>
+              <button type="button" onClick={handleSoldoutModalConfirm} className={styles['modal__button--secondary']}>
+                품절취소
+              </button>
+            </div>
+          </div>
+        ))}
+
       </SoldoutModal>
+
     </>
   );
 }
