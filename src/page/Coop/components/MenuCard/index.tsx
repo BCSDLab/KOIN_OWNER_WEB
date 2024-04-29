@@ -133,10 +133,25 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
                 {menu && menu.changed_at !== null ? (
                   <div className={styles['card__common-wrapper']}>
                     <span className={styles.card__title}>{corner}</span>
+                    <div className={styles.card__kcal}>
+                      {menu.kcal}
+                      kcal
+                    </div>
                     <div className={styles.card__changed}>변경됨</div>
                   </div>
                 ) : (
-                  <span className={styles.card__title}>{corner}</span>) }
+
+                  menu && (
+                  <div className={styles['card__common-wrapper']}>
+                    <span className={styles.card__title}>{corner}</span>
+                    <div className={styles.card__kcal}>
+                      {menu.kcal}
+                      kcal
+                    </div>
+                  </div>
+                  )
+
+                ) }
                 <div className={styles['card__common-wrapper']}>
                   {menu && <span className={styles.card__soldout}>품절</span>}
                   {menu && (
