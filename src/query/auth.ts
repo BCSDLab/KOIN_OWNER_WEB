@@ -53,22 +53,25 @@ export const useLogin = () => {
     onError: (err) => {
       if (isKoinError(err)) {
         setLoginError(err.message || '로그인을 실패했습니다.');
+        sessionStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
         if (err.status === 401) {
           setLoginError('비밀번호가 일치하지 않습니다.');
+          return;
         }
         if (err.status === 403) {
           setLoginError('관리자 승인 대기 중입니다.');
+          return;
         }
         if (err.status === 404) {
           setLoginError('가입되지 않은 이메일입니다.');
+          return;
         }
         if (err.status === 500) {
           setLoginError('서버 오류가 발생했습니다.');
-        } else {
-          sendClientError(err);
+          return;
         }
-        sessionStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
+        sendClientError(err);
       }
     },
   });
@@ -134,8 +137,7 @@ export const useSubmit = () => {
     mutationFn: ({
       email,
       verify,
-    }
-    :VerifyInput) => findPassword({ address: email, certificationCode: verify }),
+    }: VerifyInput) => findPassword({ address: email, certificationCode: verify }),
     onSuccess: () => {
       navigate('/new-password', { state: { 'find-password': true }, replace: true });
     },
@@ -156,8 +158,7 @@ export const useSubmit = () => {
 export const useNewPassword = () => {
   const navigate = useNavigate();
   const { mutate: submit } = useMutation({
-    mutationFn: ({ email, password }:
-    { email: string, password: string }) => newPassword(
+    mutationFn: ({ email, password }: { email: string, password: string }) => newPassword(
       { address: email, password },
     ),
     onSuccess: () => {
