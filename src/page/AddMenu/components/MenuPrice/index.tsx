@@ -1,27 +1,22 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import useAddMenuStore from 'store/addMenu';
 import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
+import { NewMenu } from 'model/shopInfo/newMenu';
 import styles from './MenuPrice.module.scss';
 
 interface MenuPriceProps {
   isComplete : boolean;
+  newMenuData: NewMenu;
+  setNewMenuData: (newData: NewMenu) => void;
 }
 
-export default function MenuPrice({ isComplete }:MenuPriceProps) {
+export default function MenuPrice({ isComplete, newMenuData, setNewMenuData }:MenuPriceProps) {
   const { isMobile } = useMediaQuery();
-  const {
-    optionPrices,
-    setOptionPrices,
-    isSingle,
-    setIsSingle,
-    singlePrice,
-    setSinglePrice,
-  } = useAddMenuStore();
+
   const updatePriceInput = (inputId: number, field: string, newValue: string | number) => {
-    const updatedOptionPrices = (optionPrices || []).map((price) => {
+    const updatedOptionPrices = (newMenuData.option_prices || []).map((price) => {
       if (price.id === inputId) {
         return { ...price, [field]: newValue };
       }
@@ -61,17 +56,17 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.mobile__header}>
                 <div className={styles['mobile__header-title--complete']}>가격</div>
               </div>
-              {isSingle ? (
+              {newMenuData.is_single ? (
                 <div className={styles['mobile__price-info-text-box']}>
                   <div className={styles['mobile__price-info-text']}>
                     <div className={styles['mobile__price-info-text__price']}>
-                      {singlePrice}
+                      {newMenuData.single_price}
                       원
                     </div>
                   </div>
                 </div>
               )
-                : (optionPrices || []).map((input) => (
+                : (newMenuData.option_prices || []).map((input) => (
                   <div key={input.id} className={styles['mobile__price-info-text-box']}>
                     <div className={styles['mobile__price-info-text']}>
                       <div className={styles['mobile__price-info-text__size']}>
@@ -93,7 +88,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
               <div className={styles.mobile__header}>
                 <div className={styles['mobile__header-title']}>가격</div>
               </div>
-              {isSingle
+              {newMenuData.is_single
                 ? (
                   <div className={styles['mobile__price-info-input-box']}>
                     <div className={styles['mobile__price-info-inputs']}>
@@ -102,7 +97,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
                           type="number"
                           className={styles['mobile__price-info-inputs__price-input']}
                           inputMode="decimal"
-                          value={singlePrice === 0 || singlePrice === null ? '' : singlePrice}
+                          value={newMenuData.single_price === 0 || newMenuData.single_price === null ? '' : newMenuData.single_price}
                           onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
                         />
                         <p className={styles['mobile__price-info-inputs__price-input-won']}>원</p>

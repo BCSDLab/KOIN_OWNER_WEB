@@ -2,19 +2,22 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import cn from 'utils/ts/className';
+import { NewMenu } from 'model/shopInfo/newMenu';
 import styles from './MenuName.module.scss';
 
 interface MenuNameProps {
   isComplete: boolean;
+  newMenuData: NewMenu;
+  setNewMenuData: (newData: NewMenu) => void;
 }
 
-export default function MenuName({ isComplete }: MenuNameProps) {
+export default function MenuName({ isComplete, newMenuData, setNewMenuData }: MenuNameProps) {
   const { isMobile } = useMediaQuery();
-  const { name, setName } = useAddMenuStore();
+  const { name } = useAddMenuStore();
   const { menuError } = useErrorMessageStore();
 
   const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setNewMenuData({ ...newMenuData, name: e.target.value });
   };
 
   return (

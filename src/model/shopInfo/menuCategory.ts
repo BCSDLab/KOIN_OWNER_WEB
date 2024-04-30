@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const MonoMenuBase = z.object({
-  id: z.number(),
+  id: z.number().nullable(),
   name: z.string(),
   image_urls: z.array(z.string()),
   is_hidden: z.boolean(),

@@ -32,16 +32,16 @@ export default function AddMenu() {
     setTrue: openGoMyShopModal,
     setFalse: closeGoMyShopModal,
   } = useBooleanState(false);
-  const {
-    categoryIds,
-    description,
-    imageUrl,
-    isSingle,
-    name,
-    optionPrices,
-    singlePrice,
-  } = useAddMenuStore();
-  // const [newMenuData, setNewMenuData] = useState<NewMenu>({});
+
+  const [newMenuData, setNewMenuData] = useState<NewMenu>({
+    category_ids: [],
+    description: '',
+    image_urls: [],
+    is_single: true,
+    name: '',
+    option_prices: null,
+    single_price: 0,
+  });
   const { addMenuMutation } = useMyShop();
   const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
@@ -50,18 +50,6 @@ export default function AddMenu() {
     }
   };
   const addMenu = () => {
-    const newMenuData = {
-      category_ids: categoryIds,
-      description,
-      image_urls: imageUrl,
-      is_single: isSingle,
-      name,
-      option_prices: isSingle ? null : optionPrices?.map(({ option, price }) => ({
-        option: option === '' ? name : option,
-        price: typeof price === 'string' ? parseInt(price, 10) : price,
-      })) || null,
-      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
-    };
     addMenuMutation(newMenuData);
   };
   const confirmAddMenu = () => {
@@ -87,11 +75,23 @@ export default function AddMenu() {
               메뉴 정보
             </div>
             <div className={styles['mobile__menu-content']}>
-              <MenuName isComplete={isComplete} />
+              <MenuName
+                isComplete={isComplete}
+                newMenuData={newMenuData}
+                setNewMenuData={setNewMenuData}
+              />
               <MobileDivide />
-              <MenuPrice isComplete={isComplete} />
+              <MenuPrice
+                isComplete={isComplete}
+                newMenuData={newMenuData}
+                setNewMenuData={setNewMenuData}
+              />
               <MobileDivide />
-              <MenuCategory isComplete={isComplete} />
+              <MenuCategory
+                isComplete={isComplete}
+                newMenuData={newMenuData}
+                setNewMenuData={setNewMenuData}
+              />
             </div>
           </div>
           <div className={styles['mobile__menu-detail']}>
@@ -99,9 +99,17 @@ export default function AddMenu() {
               메뉴 세부
             </div>
             <div className={styles['mobile__menu-content']}>
-              <MenuDetail isComplete={isComplete} />
+              <MenuDetail
+                isComplete={isComplete}
+                newMenuData={newMenuData}
+                setNewMenuData={setNewMenuData}
+              />
               <MobileDivide />
-              <MenuImage isComplete={isComplete} />
+              <MenuImage
+                isComplete={isComplete}
+                newMenuData={newMenuData}
+                setNewMenuData={setNewMenuData}
+              />
             </div>
           </div>
           <div className={styles['mobile__button-container']}>
