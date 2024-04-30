@@ -65,11 +65,7 @@ export default function EventTable() {
                     setIsModifyErrorModalOpen(true);
                   } else if (selectedEventIds.length > 1) {
                     setModalMessage('이벤트/공지 수정은 중복 선택이 불가합니다.');
-<<<<<<< HEAD
                     setIsModifyErrorModalOpen(true);
-                  } else showToast('success', '이벤트 수정에 성공했습니다.');
-=======
-                    setIsModalOpen(true);
                   } else {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
@@ -86,7 +82,6 @@ export default function EventTable() {
                       },
                     });
                   }
->>>>>>> origin/develop
                 }}
               >
                 수정
@@ -96,11 +91,7 @@ export default function EventTable() {
                 type="button"
                 className={styles['delete-button']}
                 onClick={() => {
-<<<<<<< HEAD
                   setIsDeleteErrorModalOpen(true);
-=======
-                  deleteEvent();
->>>>>>> origin/develop
                 }}
               >
                 삭제
