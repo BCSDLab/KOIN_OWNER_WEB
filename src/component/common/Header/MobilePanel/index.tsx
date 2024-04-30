@@ -5,12 +5,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { createPortal } from 'react-dom';
-import useUserStore from 'store/user';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMobileSidebar from 'component/common/Header/hooks/useMobileSidebar';
 import useUserTypeStore from 'store/useUserTypeStore';
 import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
+import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import styles from './MobilePanel.module.scss';
 
 interface Prop {
@@ -46,8 +46,8 @@ export default function MobilePanel() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { isMobile } = useMediaQuery();
+  const { data: user } = useSuspenseUser();
 
-  const { user } = useUserStore();
   const { setPrevPath } = usePrevPathStore((state) => state);
   const { logout } = useLogout();
   const { userType } = useUserTypeStore();

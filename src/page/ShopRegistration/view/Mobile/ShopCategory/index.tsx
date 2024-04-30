@@ -13,16 +13,26 @@ export default function ShopCategory() {
   const { categoryList } = useMyShop();
   const { increaseStep } = useStepStore();
   const {
-    category, setCategory, setCategoryId,
+    category, categoryId, setCategory, setCategoryId,
   } = useShopRegistrationStore();
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
-    setCategory(categoryInfo.name);
-    setCategoryId(categoryInfo.id);
+    const findPrevCategory = categoryId.find((id) => id === categoryInfo.id);
+    if (findPrevCategory) {
+      const deleteCategoryId = categoryId.filter(
+        (item) => item !== findPrevCategory,
+      ); // 삭제 후 카테고리 id
+      const deleteCategory = category.filter((item) => item !== categoryInfo.name); // 삭제 후 카테고리 이름
+      setCategoryId(deleteCategoryId);
+      setCategory(deleteCategory);
+    } else {
+      setCategoryId([...categoryId, categoryInfo.id]); // 추가 후 카테고리 id
+      setCategory([...category, categoryInfo.name]); // 추가 후 카테고리 이름
+    }
   };
 
   const handleNextClick = () => {
-    if (category === '') {
+    if (category.length === 0) {
       setIsError(true);
     } else {
       setIsError(false);
@@ -38,7 +48,7 @@ export default function ShopCategory() {
           <button
             className={cn({
               [styles.category__menu]: true,
-              [styles['category__menu--selected']]: categoryInfo.name === category,
+              [styles['category__menu--selected']]: !!category.find((item) => item === categoryInfo.name),
             })}
             type="button"
             onClick={() => handleCategoryClick(categoryInfo)}
@@ -53,10 +63,10 @@ export default function ShopCategory() {
           </button>
         ))}
       </div>
-      {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+      {category.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
       <div className={cn({
         [styles.category__button]: true,
-        [styles['category__button--error']]: category === '' && isError,
+        [styles['category__button--error']]: category.length === 0 && isError,
       })}
       >
         <button type="button" onClick={handleNextClick}>다음</button>

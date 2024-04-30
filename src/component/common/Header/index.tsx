@@ -1,4 +1,5 @@
 import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
+import { Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './Header.module.scss';
@@ -37,7 +38,13 @@ function Header() {
       className={styles.header}
     >
       <nav className={styles.header__content}>
-        {isMobile ? <MobilePanel /> : <PCPanel />}
+        {isMobile ? (
+          <Suspense fallback={<div />}>
+            <MobilePanel />
+          </Suspense>
+        ) : (
+          <PCPanel />
+        )}
       </nav>
     </header>
   );

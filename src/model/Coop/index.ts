@@ -28,6 +28,16 @@ export const Dinings = z.object({
   changed_at: z.string(),
 });
 
+export const CoopResponse = z.object({
+  email: z.string(),
+  gender: z.number().nullable(),
+  name: z.string(),
+  phone_number: z.string(),
+  user_type: z.string(),
+});
+
+export type CoopResponse = z.infer<typeof CoopResponse>;
+
 export type Dinings = z.infer<typeof Dinings>;
 
 export const DiningImages = z.object({

@@ -6,11 +6,23 @@ import styles from './Category.module.scss';
 
 export default function Category() {
   const { categoryList } = useMyShop();
-  const { category, setCategory, setCategoryId } = useShopRegistrationStore();
+  const {
+    category, categoryId, setCategory, setCategoryId,
+  } = useShopRegistrationStore();
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
-    setCategory(categoryInfo.name);
-    setCategoryId(categoryInfo.id);
+    const findPrevCategory = categoryId.find((id) => id === categoryInfo.id);
+    if (findPrevCategory) {
+      const deleteCategoryId = categoryId.filter(
+        (item) => item !== findPrevCategory,
+      ); // 삭제 후 카테고리 id
+      const deleteCategory = category.filter((item) => item !== categoryInfo.name); // 삭제 후 카테고리 이름
+      setCategoryId(deleteCategoryId);
+      setCategory(deleteCategory);
+    } else {
+      setCategoryId([...categoryId, categoryInfo.id]); // 추가 후 카테고리 id
+      setCategory([...category, categoryInfo.name]); // 추가 후 카테고리 이름
+    }
   };
 
   return (
@@ -19,7 +31,7 @@ export default function Category() {
         <button
           className={cn({
             [styles.category__menu]: true,
-            [styles['category__menu--selected']]: categoryInfo.name === category,
+            [styles['category__menu--selected']]: !!category.find((item) => item === categoryInfo.name),
           })}
           type="button"
           onClick={() => { handleCategoryClick(categoryInfo); }}
