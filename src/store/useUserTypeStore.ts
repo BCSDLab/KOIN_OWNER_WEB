@@ -12,11 +12,22 @@ interface UserTypeStore {
 const useUserTypeStore = create<UserTypeStore>((set) => ({
   userType: null,
   updateUserType: async () => {
+    if (sessionStorage.getItem('access_token') && sessionStorage.getItem('user_type')) {
+      set((state) => {
+        if (sessionStorage.getItem('user_type') !== state.userType) {
+          return { userType: sessionStorage.getItem('user_type') as UserType };
+        }
+        return state;
+      });
+      return;
+    }
+
     try {
       const response = await getUserType();
       const newUserType = response.user_type;
       set((state) => {
         if (newUserType !== state.userType) {
+          sessionStorage.setItem('user_type', newUserType);
           return { userType: newUserType };
         }
         return state;
