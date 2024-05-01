@@ -6,12 +6,12 @@ import { useErrorMessageStore } from './errorMessageStore';
 
 interface UserTypeStore {
   userType: UserType;
-  setUserType: () => void;
+  updateUserType: () => void;
 }
 
 const useUserTypeStore = create<UserTypeStore>((set) => ({
   userType: null,
-  setUserType: async () => {
+  updateUserType: async () => {
     try {
       const response = await getUserType();
       const newUserType = response.user_type;

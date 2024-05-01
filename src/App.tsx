@@ -27,8 +27,8 @@ interface ProtectedRouteProps {
 }
 
 function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
-  const { userType, setUserType } = useUserTypeStore();
-  setUserType();
+  const { userType, updateUserType } = useUserTypeStore();
+  updateUserType();
 
   if (userType !== userTypeRequired) {
     if (userType === 'OWNER') {
