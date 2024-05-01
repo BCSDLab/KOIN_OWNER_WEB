@@ -1,7 +1,9 @@
 import { Menus } from 'model/Coop';
 import dayjs from 'dayjs';
 
-export type IsOpen = '운영중' | '운영종료';
+export type OperatingStatus = '운영중' | '운영종료';
+
+export const OPEN = '운영중';
 
 export const getCurrentMenuType = (): Menus => {
   const now = new Date();
@@ -22,7 +24,7 @@ export const getCurrentMenuType = (): Menus => {
 };
 
 // date = 'yyMMdd'
-export const getOpenMenuType = (selectedMenuType: Menus, date: string): IsOpen => {
+export const getOpenMenuType = (selectedMenuType: Menus, date: string): OperatingStatus => {
   const today = dayjs().format('YYMMDD');
   const now = new Date();
   const hour = now.getHours();

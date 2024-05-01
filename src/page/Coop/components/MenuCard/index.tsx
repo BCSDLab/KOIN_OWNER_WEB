@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getCoopUrl } from 'api/uploadFile/index';
 import SoldoutModal from 'page/Coop/components/SoldoutModal';
 import axios from 'axios';
-import { getOpenMenuType, IsOpen } from 'page/Coop/hook/useGetCurrentMenuType';
+import { getOpenMenuType, OperatingStatus, OPEN } from 'page/Coop/hook/useGetCurrentMenuType';
 import styles from './MenuCard.module.scss';
 
 interface MenuCardProps {
@@ -32,7 +32,9 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
   const [selectedCorner, setSelectedCorner] = useState<Corner | null>(null);
   const [formmatDate, setFormmatDate] = useState<string>('');
   const { data } = useGetDining(formmatDate);
-  const [openMenu, setOpenMenu] = useState<IsOpen>(getOpenMenuType(selectedMenuType, formmatDate));
+  const [openMenu, setOpenMenu] = useState<OperatingStatus>(
+    getOpenMenuType(selectedMenuType, formmatDate),
+  );
 
   const uploadImage = async ({ presignedUrl, file }: FileInfo) => {
     await axios.put(presignedUrl, file, {
@@ -229,7 +231,7 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
         onCancel={handleSoldoutModalClose}
         buttonText="품절설정"
       >
-        {openMenu === '운영중' ? (
+        {openMenu === OPEN ? (
           selectedMenu?.soldout_at === null ? (
             <div className={styles.modal}>
               <span className={styles.modal__header}>
@@ -312,9 +314,7 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
             </div>
           </div>
         ))}
-
       </SoldoutModal>
-
     </>
   );
 }
