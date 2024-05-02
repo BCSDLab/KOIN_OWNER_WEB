@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import useMyShop from 'query/shop';
-import { useGetEventList } from 'query/event';
+import { useDeleteEvent, useGetEventList } from 'query/event';
 import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
 import { ReactComponent as AddEventIcon } from 'assets/svg/myshop/add-event-icon.svg';
 import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-circle.svg';
 import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
+import DeleteAlertModal from 'model/\balertModal';
 import EventCard from './components/EventCard';
-import DeleteAlertModal from './components/DeleteAlertModal';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
 
@@ -24,6 +24,7 @@ export default function EventTable() {
   const [isModifyErrorModalOpen, setIsModifyErrorModalOpen] = useState(false);
   const [isDeleteErrorModalOpen, setIsDeleteErrorModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const { mutate: deleteEvents } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
     setSelectedEventIds((prev: number[]) => (
@@ -150,15 +151,17 @@ export default function EventTable() {
           <DeleteAlertModal
             title={(
               <div>
-                작성을
+                선택한 이벤트를
                 {' '}
-                <span>취소</span>
-                {' '}
-                하시겠습니까?
+                <span>삭제</span>
+                할까요?
               </div>
             )}
             content="삭제한 이벤트는 복구할 수 없습니다."
             setIsOpen={setIsDeleteErrorModalOpen}
+            cancelText="취소"
+            acceptText="삭제"
+            callBack={deleteEvents}
           />,
           document.body,
         )}

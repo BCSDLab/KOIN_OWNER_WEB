@@ -1,9 +1,14 @@
 .delete-alert-modal-container {
   position: fixed;
-  bottom: 50%;
   display: flex;
   justify-content: center;
-  width: 100%;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0 0 0 / 70%);
+  z-index: 30;
 }
 
 .delete-alert-modal {
@@ -11,6 +16,7 @@
   padding: 24px 32px;
   border-radius: 4px;
   background-color: white;
+  z-index: 40px;
 }
 
 .title {
@@ -27,6 +33,7 @@
   color: #8e8e8e;
   text-align: center;
   font-size: 14px;
+  margin-top: 8px;
 }
 
 .delete-alert-button {
@@ -43,6 +50,10 @@
     color: #4b4b4b;
     font-size: 15px;
     width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &--check {
@@ -56,10 +67,15 @@
     color: #fff;
     font-size: 15px;
     width: 100%;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
 .delete-alert-button-container {
+  margin-top: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
