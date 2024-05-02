@@ -1,15 +1,18 @@
 import z from 'zod';
 
-export type Menus = '아침' | '점심' | '저녁';
+export type Menus = '아침' | '점심' | '저녁' | '기타';
 
-export type DiningTypes = 'BREAKFAST' | 'LUNCH' | 'DINNER';
+export type DiningTypes = 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'CLOSED';
 
 export type Corner = 'A코너' | 'B코너' | 'C코너';
+
+export type Day = '일' | '월' | '화' | '수' | '목' | '금' | '토';
 
 export const DINING_TYPES: Record<Menus, DiningTypes> = {
   아침: 'BREAKFAST',
   점심: 'LUNCH',
   저녁: 'DINNER',
+  기타: 'CLOSED',
 };
 
 export const Dinings = z.object({

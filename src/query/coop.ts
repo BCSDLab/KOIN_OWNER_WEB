@@ -5,11 +5,11 @@ import {
 import { DiningImages, SoldOut } from 'model/Coop';
 import { coopKeys } from './KeyFactory/coopKeys';
 
-export const useGetDining = () => {
+export const useGetDining = (date: string) => {
   const { data } = useSuspenseQuery(
     {
-      queryKey: coopKeys.dining,
-      queryFn: getDining,
+      queryKey: [coopKeys.dining, date],
+      queryFn: () => getDining(date),
     },
   );
   return {
@@ -35,7 +35,7 @@ export const useUploadDiningImage = () => {
   const { mutate: uploadDiningImageMutation } = useMutation({
     mutationFn: (data: DiningImages) => uploadDiningImage(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: coopKeys.dining });
+      queryClient.invalidateQueries();
     },
   });
   return {
