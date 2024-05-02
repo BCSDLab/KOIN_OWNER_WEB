@@ -32,7 +32,7 @@ export interface ErrorResponse {
 }
 
 export const useLogin = () => {
-  const { setUserType } = useUserTypeStore();
+  const { updateUserType } = useUserTypeStore();
   const { setLoginError } = useErrorMessageStore();
 
   const {
@@ -48,7 +48,7 @@ export const useLogin = () => {
         localStorage.setItem('refresh_token', data.refresh_token);
       }
 
-      setUserType();
+      updateUserType();
     },
     onError: (err) => {
       if (isKoinError(err)) {
@@ -82,7 +82,7 @@ export const useLogin = () => {
 };
 
 export const useLogout = () => {
-  const { setUserType } = useUserTypeStore();
+  const { updateUserType } = useUserTypeStore();
   const { removeUser } = useUserStore();
   const { setLogoutError, setLogoutErrorCode } = useErrorMessageStore();
 
@@ -98,7 +98,7 @@ export const useLogout = () => {
       sessionStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       removeUser();
-      setUserType();
+      updateUserType();
     },
     onError: (err) => {
       if (isKoinError(err)) {
