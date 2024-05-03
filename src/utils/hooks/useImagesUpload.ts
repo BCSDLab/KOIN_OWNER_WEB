@@ -22,7 +22,7 @@ export default function useImagesUpload() {
     }
 
     if (files && files.length) {
-      const uploadedFiles: string[] = [];
+      const uploadedFiles: string[] = [...imageFile];
       const correctForm = new RegExp('(.*?)\\.(jpg|jpeg|gif|bmp|png)$');
 
       for (let i = 0; i < files.length; i += 1) {
@@ -71,6 +71,6 @@ export default function useImagesUpload() {
   };
 
   return {
-    imageFile, imgRef, saveImgFile, uploadError,
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile
   };
 }

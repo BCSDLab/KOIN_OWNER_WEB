@@ -45,7 +45,7 @@ export default function EditShopInfoModal({
     value: isOperateTimeModalOpen,
   } = useBooleanState(false);
   const {
-    imageFile, imgRef, saveImgFile, uploadError,
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
 
   const {
@@ -108,6 +108,7 @@ export default function EditShopInfoModal({
   });
   useEffect(() => {
     setImageUrls(shopInfo.image_urls);
+    setImageFile(shopInfo.image_urls);
     setName(shopInfo.name);
     setAddress(shopInfo.address);
     setPhone(shopInfo.phone);
@@ -189,7 +190,10 @@ export default function EditShopInfoModal({
                 <img key={image} src={image} alt={`Selected ${index + 1}`} />
                 <button
                   type="button"
-                  onClick={() => removeImageUrl(image)}
+                  onClick={() => {
+                    removeImageUrl(image);
+                    setImageFile(imageFile.filter((img) => img !== image));
+                  }}
                   className={styles['mobile-container__delete-button']}
                   aria-label="Delete image"
                 >
@@ -369,7 +373,10 @@ export default function EditShopInfoModal({
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['main-image__image']} />
                 <button
                   type="button"
-                  onClick={() => removeImageUrl(image)}
+                  onClick={() => {
+                    removeImageUrl(image);
+                    setImageFile(imageFile.filter((img) => img !== image));
+                  }}
                   className={styles['main-image__delete-button']}
                 >
                   <DeleteImgIcon />
