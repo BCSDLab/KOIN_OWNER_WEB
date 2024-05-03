@@ -143,9 +143,7 @@ export default function EditShopInfoModal({
     : '휴무일 없음';
 
   useEffect(() => {
-    if (imageUrls.length > 0) {
-      setValue('image_urls', imageUrls);
-    }
+    setValue('image_urls', imageUrls);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
