@@ -96,6 +96,7 @@ export const useLogout = () => {
     },
     onSuccess: () => {
       sessionStorage.removeItem('access_token');
+      sessionStorage.removeItem('user_type');
       localStorage.removeItem('refresh_token');
       removeUser();
       updateUserType();
