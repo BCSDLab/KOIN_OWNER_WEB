@@ -1,4 +1,4 @@
-.delete-alert-modal-container {
+.alert-modal-container {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -11,7 +11,7 @@
   z-index: 30;
 }
 
-.delete-alert-modal {
+.alert-modal {
   width: 60%;
   padding: 24px 32px;
   border-radius: 4px;
@@ -36,7 +36,7 @@
   margin-top: 8px;
 }
 
-.delete-alert-button {
+.alert-button {
   width: 100%;
 
   &--cancel {
@@ -74,7 +74,7 @@
   }
 }
 
-.delete-alert-button-container {
+.alert-button-container {
   margin-top: 24px;
   display: flex;
   justify-content: center;

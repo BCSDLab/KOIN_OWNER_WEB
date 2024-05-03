@@ -1,6 +1,6 @@
 import styles from './alertModal.module.scss';
 
-interface DeleteAlertModalProps {
+interface AlertModalProps {
   title: React.ReactNode;
   content: string
   setIsOpen: (isOpen: boolean) => void
@@ -9,9 +9,9 @@ interface DeleteAlertModalProps {
   callBack? : () => void
 }
 
-export default function DeleteAlertModal({
+export default function AlertModal({
   title, content, setIsOpen, callBack, cancelText, acceptText,
-}: DeleteAlertModalProps) {
+}: AlertModalProps) {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       setIsOpen(false);
@@ -20,7 +20,7 @@ export default function DeleteAlertModal({
 
   return (
     <div
-      className={styles['delete-alert-modal-container']}
+      className={styles['alert-modal-container']}
       role="button"
       tabIndex={0}
       onClick={() => {
@@ -28,12 +28,12 @@ export default function DeleteAlertModal({
       }}
       onKeyDown={handleKeyDown}
     >
-      <div className={styles['delete-alert-modal']}>
+      <div className={styles['alert-modal']}>
         <div className={styles.title}>{title}</div>
         <div className={styles.content}>{content}</div>
-        <div className={styles['delete-alert-button-container']}>
+        <div className={styles['alert-button-container']}>
           <div
-            className={styles['delete-alert-button--cancel']}
+            className={styles['alert-button--cancel']}
             role="button"
             tabIndex={0}
             onClick={() => {
@@ -44,7 +44,7 @@ export default function DeleteAlertModal({
             {cancelText}
           </div>
           <div
-            className={styles['delete-alert-button--check']}
+            className={styles['alert-button--check']}
             role="button"
             tabIndex={0}
             onClick={() => {

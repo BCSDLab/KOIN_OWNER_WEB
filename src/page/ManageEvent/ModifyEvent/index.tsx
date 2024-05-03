@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   initialError, EventInfo, modules, uploadImage, Change, validateDate,
 } from 'page/ManageEvent/AddingEvent/index';
+import AlertModal from 'component/common/Modal/alertModal';
 import ReactQuill from 'react-quill';
 import showToast from 'utils/ts/showToast';
 import { getCoopUrl } from 'api/uploadFile';
@@ -10,6 +11,7 @@ import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
 import styles from 'page/ManageEvent/index.module.scss';
 import { useModifyEvent } from 'query/event';
+import { createPortal } from 'react-dom';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
@@ -46,6 +48,7 @@ export default function ModifyEvent() {
   const [eventInfo, setEventInfo] = useState<EventInfo>(initialState);
   const [error, setError] = useState(initialError);
   const [editor, setEditor] = useState(event.content);
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
 
   const { mutate: modifyEvent, isPending } = useModifyEvent(event.shop_id, event.event_id);
   const navigate = useNavigate();
@@ -295,11 +298,28 @@ export default function ModifyEvent() {
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div className={styles.buttons}>
-          <button type="button" className={styles.cancel} onClick={() => navigate(-1)}>취소하기</button>
+          <button type="button" className={styles.cancel} onClick={() => { setIsAlertModalOpen(true); }}>취소하기</button>
           <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>등록하기</button>
         </div>
       </div>
+      {isAlertModalOpen && createPortal(
+        <AlertModal
+          title={(
+            <div>
+              작성을
+              {' '}
+              <span>취소</span>
+              하시겠습니까?
+            </div>
+            )}
+          content="취소한 글은 되돌릴 수 없습니다."
+          setIsOpen={setIsAlertModalOpen}
+          cancelText="이어쓰기"
+          acceptText="취소하기"
+          callBack={() => navigate('/')}
+        />,
+        document.body,
+      )}
     </div>
-
   );
 }
