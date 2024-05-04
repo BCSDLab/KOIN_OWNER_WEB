@@ -138,7 +138,8 @@ export default function ShopRegistrationPC() {
     setValue('category_ids', [categoryId]);
     setValue('delivery_price', Number(deliveryPrice));
     setValue('name', name);
-  }, [openTimeState, closeTimeState, shopClosedState,
+    setValue('image_urls', imageUrls);
+  }, [openTimeState, closeTimeState, shopClosedState, imageUrls,
     imageFile, categoryId, deliveryPrice, uploadError, name]);
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
