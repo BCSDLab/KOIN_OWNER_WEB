@@ -10,6 +10,7 @@ import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-ci
 import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
+import DeleteAlertModal from 'component/common/Modal/alertModal';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
@@ -20,9 +21,10 @@ export default function EventTable() {
   const [editMenu, setEditMenu] = useState(false);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedEventIds, setSelectedEventIds] = useState<number[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModifyErrorModalOpen, setIsModifyErrorModalOpen] = useState(false);
+  const [isDeleteErrorModalOpen, setIsDeleteErrorModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
-  const { mutate: deleteEvent } = useDeleteEvent(shopData!.id, selectedEventIds);
+  const { mutate: deleteEvents } = useDeleteEvent(shopData!.id, selectedEventIds);
 
   const toggleSelectEvent = (id: number): void => {
     setSelectedEventIds((prev: number[]) => (
@@ -61,10 +63,10 @@ export default function EventTable() {
                 onClick={() => {
                   if (selectedEventIds.length < 1) {
                     setModalMessage('이벤트/공지 수정은 최소 하나는 선택해야합니다.');
-                    setIsModalOpen(true);
+                    setIsModifyErrorModalOpen(true);
                   } else if (selectedEventIds.length > 1) {
                     setModalMessage('이벤트/공지 수정은 중복 선택이 불가합니다.');
-                    setIsModalOpen(true);
+                    setIsModifyErrorModalOpen(true);
                   } else {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
@@ -90,7 +92,7 @@ export default function EventTable() {
                 type="button"
                 className={styles['delete-button']}
                 onClick={() => {
-                  deleteEvent();
+                  setIsDeleteErrorModalOpen(true);
                 }}
               >
                 삭제
@@ -137,11 +139,29 @@ export default function EventTable() {
             toggleSelect={() => toggleSelectEvent(event.event_id)}
           />
         ))}
-        {isModalOpen && createPortal(
+        {isModifyErrorModalOpen && createPortal(
           <EventErrorModal
             content={modalMessage}
-            setIsOpen={setIsModalOpen}
+            setIsOpen={setIsModifyErrorModalOpen}
             setSelectAll={setSelectAll}
+          />,
+          document.body,
+        )}
+        {isDeleteErrorModalOpen && createPortal(
+          <DeleteAlertModal
+            title={(
+              <div>
+                선택한 이벤트를
+                {' '}
+                <span>삭제</span>
+                할까요?
+              </div>
+            )}
+            content="삭제한 이벤트는 복구할 수 없습니다."
+            setIsOpen={setIsDeleteErrorModalOpen}
+            cancelText="취소"
+            acceptText="삭제"
+            callBack={deleteEvents}
           />,
           document.body,
         )}
