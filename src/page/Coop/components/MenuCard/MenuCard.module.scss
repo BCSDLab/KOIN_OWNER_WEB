@@ -14,8 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #f5f5f5;
-    padding: 10px;
+    padding: 16px 24px;
   }
 
   &__title {
@@ -100,7 +99,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 0 24px 16px;
     gap: 12px;
     min-height: 120px;
 
