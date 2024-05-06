@@ -13,22 +13,12 @@ export default function ShopCategory() {
   const { categoryList } = useMyShop();
   const { increaseStep } = useStepStore();
   const {
-    category, categoryId, setCategory, setCategoryId,
+    category, setCategory, setCategoryId,
   } = useShopRegistrationStore();
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
-    const findPrevCategory = categoryId.find((id) => id === categoryInfo.id);
-    if (findPrevCategory) {
-      const deleteCategoryId = categoryId.filter(
-        (item) => item !== findPrevCategory,
-      ); // 삭제 후 카테고리 id
-      const deleteCategory = category.filter((item) => item !== categoryInfo.name); // 삭제 후 카테고리 이름
-      setCategoryId(deleteCategoryId);
-      setCategory(deleteCategory);
-    } else {
-      setCategoryId([...categoryId, categoryInfo.id]); // 추가 후 카테고리 id
-      setCategory([...category, categoryInfo.name]); // 추가 후 카테고리 이름
-    }
+    setCategory(categoryInfo.name);
+    setCategoryId(categoryInfo.id);
   };
 
   const handleNextClick = () => {
@@ -48,7 +38,7 @@ export default function ShopCategory() {
           <button
             className={cn({
               [styles.category__menu]: true,
-              [styles['category__menu--selected']]: !!category.find((item) => item === categoryInfo.name),
+              [styles['category__menu--selected']]: category === categoryInfo.name,
             })}
             type="button"
             onClick={() => handleCategoryClick(categoryInfo)}
