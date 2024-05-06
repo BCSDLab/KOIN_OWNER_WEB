@@ -52,6 +52,8 @@
     justify-content: center;
     object-fit: cover;
     cursor: pointer;
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+    -webkit-tap-highlight-color: transparent;
 
     img {
       width: 100%;
