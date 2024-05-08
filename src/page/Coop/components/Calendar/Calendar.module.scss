@@ -11,7 +11,7 @@
     font-family: Pretendard, sans-serif;
     padding-top: 24px;
     padding-bottom: 8px;
-    gap: 10px;
+    gap: 16px;
     background-color: #fff;
   }
 
@@ -53,9 +53,11 @@
       background-color: #175c8e;
       justify-content: center;
       align-items: center;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
       color: #fff;
+      -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+      -webkit-tap-highlight-color: transparent;
     }
 
     &--today {
@@ -68,7 +70,7 @@
       border-radius: 999px;
       justify-content: center;
       align-items: center;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 500;
     }
 
@@ -88,10 +90,10 @@
 
   &__today--border {
     display: flex;
-    border-color: #175c8e;
     width: 12px;
     margin-top: 10px;
     border-bottom: 2px solid #175c8e;
+    border-radius: 999px;
   }
 
   &__common--border {

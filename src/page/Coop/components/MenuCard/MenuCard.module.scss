@@ -14,8 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #f5f5f5;
-    padding: 10px;
+    padding: 16px 24px;
   }
 
   &__title {
@@ -45,7 +44,7 @@
     width: 150px;
     height: 100px;
     flex-shrink: 0;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #cacaca;
     background: #fafafa;
     display: flex;
@@ -53,6 +52,8 @@
     justify-content: center;
     object-fit: cover;
     cursor: pointer;
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+    -webkit-tap-highlight-color: transparent;
 
     img {
       width: 100%;
@@ -74,6 +75,7 @@
       font-weight: 400;
       color: #fff;
       gap: 4px;
+      border-radius: 8px;
     }
 
     &--add {
@@ -99,8 +101,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    gap: 40px;
+    padding: 0 24px 16px;
+    gap: 12px;
     min-height: 120px;
 
     @media screen and (max-width: 350px) {
@@ -192,6 +194,7 @@
     cursor: pointer;
     font-family: Pretendard, sans-serif;
     font-size: 15px;
+    color: #000;
   }
 
   &__button--primary {
