@@ -32,10 +32,6 @@ export default function useTimer(targetTime:number) {
     }
   }, [time]);
 
-  useEffect(() => {
-    startTimer();
-  }, [startTimer]);
-
   const getTime = () => getTimeString(time);
 
   return { getTime, startTimer, stopTimer };

@@ -7,6 +7,7 @@ import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import useRegisterInfo from 'store/registerStore';
 import useTimer from 'page/Auth/Signup/hooks/useTimer';
 import { useEffect } from 'react';
+import { isKoinError } from '@bcsdlab/koin';
 import styles from './UserEmail.module.scss';
 
 export default function UserEmail() {
@@ -16,22 +17,29 @@ export default function UserEmail() {
     emailHandleSubmit, errors, emailDuplicateRegister, watch,
   } = useValidateEmail();
   const {
-    isOpen, onSubmit: emailSubmit, email, refetch, errorMessage,
-  } = useAuthCheck(userData.email ? userData.email : '', isMobile);
+    isOpen, onSubmit: emailSubmit, email, refetch, errorMessage, status,
+  } = useAuthCheck(userData.email ? userData.email : '', isMobile); // 회원가입 인증번호 전송
   const {
     verificationCode,
-    codeInput, errorMessage: verificateError, status,
-  } = useVerification(email);
+    codeInput, errorMessage: verificateError,
+  } = useVerification(email); // 사장님 이메일 인증번호 확인
   const { getTime, startTimer, stopTimer } = useTimer(300);
-  const reSubmit = () => {
+  const reSubmit = async () => {
+    const { error, isError } = await refetch();
+    if (isError) {
+      if (isKoinError(error)) {
+        if (error.status === 409) {
+          return; // 재발송 요청이 너무 빠르면 시간을 초기화하지 않고 에러를 보여줌
+        }
+      }
+    }
     startTimer();
-    refetch();
   };
   useEffect(() => {
     if (userData.isAuthentication) {
       stopTimer();
     }
-  }, [stopTimer, userData.isAuthentication]);
+  }, [stopTimer, userData.isAuthentication, verificateError]);
   useEffect(() => {
     if (status === 'success') {
       startTimer();
@@ -89,6 +97,7 @@ export default function UserEmail() {
               <input className={styles.input} type="password" pattern="\d*" maxLength={6} placeholder="인증번호 입력" ref={codeInput} />
             </div>
             {verificateError && <ErrorMessage message={verificateError} />}
+            {errorMessage && <ErrorMessage message={errorMessage} />}
             <span className={styles['email-check__alert']}>{`* 제한시간 ${getTime()}`}</span>
           </div>
           <div className={styles.buttons}>
