@@ -75,7 +75,7 @@ export default function ShopConfirmation() {
       open_time: openTimeArray[index],
     }));
     setValue('image_urls', imageUrls);
-    setValue('category_ids', categoryId);
+    setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);
     setValue('phone', phone);

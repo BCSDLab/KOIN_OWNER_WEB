@@ -77,7 +77,7 @@ export default function EditShopInfoModal({
   } = CheckSameTime();
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId([Number(e.target.value)]);
+    setCategoryId(Number(e.target.value));
   };
 
   const {
@@ -118,8 +118,8 @@ export default function EditShopInfoModal({
     setPayBank(shopInfo.pay_bank);
     setPayCard(shopInfo.pay_card);
     setCategoryId(shopInfo.shop_categories[1]
-      ? [shopInfo.shop_categories[1].id]
-      : [TOTAL_CATEGORY]);
+      ? shopInfo.shop_categories[1].id
+      : TOTAL_CATEGORY);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -152,9 +152,12 @@ export default function EditShopInfoModal({
       open_time: openTimeArray[index],
     }));
     // shop_categories[0]은 전체보기이므로 따로 처리
-    const categoryIds = categoryId.filter((item) => item !== TOTAL_CATEGORY).length === 0
-      ? [TOTAL_CATEGORY] : [TOTAL_CATEGORY, ...categoryId];
-    setValue('category_ids', categoryIds);
+    if (shopInfo.shop_categories.length === 1) {
+      setValue('category_ids', [shopInfo.shop_categories[0].id]);
+    } else {
+      const categoryIds = shopInfo.shop_categories.map((category) => category.id);
+      setValue('category_ids', categoryIds);
+    }
     setValue('open', openValue);
     setValue('delivery_price', Number(deliveryPrice));
     setValue('description', description);

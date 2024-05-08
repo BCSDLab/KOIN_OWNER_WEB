@@ -179,13 +179,12 @@ export default function MenuCard({ selectedMenuType, selectedDate }: MenuCardPro
                       >
                         {menu.image_url ? (
                           <img src={menu.image_url} alt="" className={styles.card__image} />
-                        ) : (
-
+                        ) : (!menu.soldout_at && (
                           <div className={styles['card__image--add']}>
                             <Photo />
                             <span>사진 추가하기</span>
                           </div>
-                        )}
+                        ))}
 
                         {menu.soldout_at && (
                         <div className={styles['card__image--soldout']}>
