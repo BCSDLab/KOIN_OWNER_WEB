@@ -43,7 +43,6 @@ export default function useImagesUpload() {
 
         try {
           const data = await uploadFile(formData);
-          console.log(data);
           if (data?.data?.file_url) {
             uploadedFiles.push(data.data.file_url);
           }

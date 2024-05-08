@@ -79,7 +79,7 @@ export default function AddMenu() {
   return (
     <div>
       {isMobile ? (
-        <div className={styles.mobile__container}>
+        <div>
           <div className={styles['mobile__menu-info']}>
             <div className={styles.mobile__caption}>
               메뉴 정보
