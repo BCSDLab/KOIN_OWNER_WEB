@@ -1,10 +1,12 @@
 import { createPortal } from 'react-dom';
+import { useErrorMessageStore } from 'store/errorMessageStore';
 import showToast from 'utils/ts/showToast';
 import styles from './ApprovalModal.module.scss';
 
 const PHONE_NUMBER = '010-7724-5536';
 
-export default function ApprovalModal({ toggle }:{ toggle: () => void }) {
+export default function ApprovalModal() {
+  const { setLoginErrorStatus } = useErrorMessageStore();
   const copyPhone = () => {
     navigator.clipboard.writeText(PHONE_NUMBER).then(() => {
       showToast('success', '전화번호를 클립보드에 복사하였습니다.');
@@ -26,11 +28,25 @@ export default function ApprovalModal({ toggle }:{ toggle: () => void }) {
         </div>
         <div className={styles.container__phone}>{PHONE_NUMBER}</div>
         <div className={styles.button}>
-          <button type="button" className={styles.button__confirm} onClick={toggle}>확인</button>
-          <button type="button" className={styles.button__clipboard} onClick={copyPhone}>번호 복사</button>
+          <button
+            type="button"
+            className={styles.button__confirm}
+            onClick={() => setLoginErrorStatus(0)}
+          >
+            확인
+          </button>
+          <button
+            type="button"
+            className={styles.button__clipboard}
+            onClick={() => {
+              copyPhone();
+              setLoginErrorStatus(0);
+            }}
+          >
+            번호 복사
+          </button>
         </div>
       </div>
-
     </div>,
     document.body,
   );

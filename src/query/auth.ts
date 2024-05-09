@@ -33,7 +33,7 @@ export interface ErrorResponse {
 
 export const useLogin = () => {
   const { updateUserType } = useUserTypeStore();
-  const { setLoginError } = useErrorMessageStore();
+  const { setLoginError, setLoginErrorStatus } = useErrorMessageStore();
 
   const {
     mutate, error, isError, isSuccess,
@@ -60,6 +60,7 @@ export const useLogin = () => {
           return;
         }
         if (err.status === 403) {
+          setLoginErrorStatus(err.status);
           setLoginError('관리자 승인 대기 중입니다.');
           return;
         }
