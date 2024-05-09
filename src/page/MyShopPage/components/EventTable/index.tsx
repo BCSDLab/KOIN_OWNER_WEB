@@ -130,7 +130,8 @@ export default function EventTable() {
         )}
       </div>
       <div className={styles.eventContainer}>
-        {eventList && eventList.events.map((event: ShopEvent) => (
+        {eventList
+        && eventList.events.length > 0 ? eventList.events.map((event: ShopEvent) => (
           <EventCard
             key={event.title}
             event={event}
@@ -138,7 +139,12 @@ export default function EventTable() {
             selectedEventIds={selectedEventIds}
             toggleSelect={() => toggleSelectEvent(event.event_id)}
           />
-        ))}
+          )) : (
+            <div className={styles['event-default-img-container']}>
+              <img className={styles['event-default-img']} src="https://static.koreatech.in/assets/img/shop-event-tab-default-img.png" alt="기술적 오류 발생" />
+              <div className={styles['event-default-text']}>사장님이 이벤트를 준비 중입니다.</div>
+            </div>
+          )}
         {isModifyErrorModalOpen && createPortal(
           <EventErrorModal
             content={modalMessage}
