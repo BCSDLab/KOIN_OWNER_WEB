@@ -37,6 +37,7 @@ export default function EventCard({
         />
       );
     }
+    // 전체보기가 아닌 경우 로고를 보여주고 전체보기의 경우 기본 이미지를 보여준다.
     if (hiddenInfo) {
       return (
         <img
