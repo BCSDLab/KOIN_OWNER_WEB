@@ -55,8 +55,8 @@ export const useLogin = () => {
         setLoginError(err.message || '로그인을 실패했습니다.');
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        if (err.status === 401) {
-          setLoginError('비밀번호가 일치하지 않습니다.');
+        if (err.status === 400) {
+          setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
           return;
         }
         if (err.status === 403) {
