@@ -68,6 +68,9 @@ export default function MyShopPage() {
       />
     );
   }
+  const onCancel = () => {
+    setListOpen(false);
+  };
 
   return (
     <div>
@@ -79,7 +82,7 @@ export default function MyShopPage() {
               && (
                 <>
                   <button type="button" className={styles['mobile-header__btn-add']} onClick={() => setListOpen(true)}>상점 선택</button>
-                  {listOpen && <MyShopList setListOpen={setListOpen} />}
+                  {listOpen && <MyShopList isOpen={listOpen} onCancel={onCancel} />}
                 </>
               )}
             <Link to="/owner/add-menu">
@@ -139,6 +142,14 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
+            <Link to={`/owner/event-add/${shopData?.id}`}>
+              <button
+                type="button"
+                className={styles['header__btn-add']}
+              >
+                이벤트 추가
+              </button>
+            </Link>
             <Link to="/owner/add-menu">
               <button
                 type="button"

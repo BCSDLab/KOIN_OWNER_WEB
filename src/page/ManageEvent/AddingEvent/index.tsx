@@ -8,7 +8,13 @@ import axios from 'axios';
 import showToast from 'utils/ts/showToast';
 import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
-import styles from './AddingEvent.module.scss';
+import styles from 'page/ManageEvent/index.module.scss';
+import { ReactComponent as CheckBox } from 'assets/svg/common/checkbox.svg';
+import { ReactComponent as Cancel } from 'assets/svg/common/cancel.svg';
+import { ReactComponent as Picture } from 'assets/svg/common/picture.svg';
+import { ReactComponent as PictureDisalbe } from 'assets/svg/common/picture-disable.svg';
+import { createPortal } from 'react-dom';
+import AlertModal from 'component/common/Modal/alertModal';
 
 /* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -92,6 +98,7 @@ export default function AddingEvent() {
   const [eventInfo, setEventInfo] = useState<EventInfo>(initialState);
   const [error, setError] = useState(initialError);
   const [editor, setEditor] = useState('');
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const param = useParams();
 
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
@@ -103,10 +110,20 @@ export default function AddingEvent() {
       setEventInfo({ ...eventInfo, title: e.target.value });
     }
     if (type === 'start') {
-      setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      if (change === 'year' && e.target.value.length <= 4) {
+        setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      }
+      if (change !== 'year' && e.target.value.length <= 2) {
+        setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
+      }
     }
     if (type === 'end') {
-      setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      if (change === 'year' && e.target.value.length <= 4) {
+        setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      }
+      if (change !== 'year' && e.target.value.length <= 2) {
+        setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
+      }
     }
     setError({ ...error, title: false });
   };
@@ -184,7 +201,13 @@ export default function AddingEvent() {
           <p className={styles.event__paragraph}>사진</p>
           <div className={styles.event__divide}>
             <small className={styles.event__count}>이벤트/공지와 관련된 사진을 올려보세요.</small>
-            <small className={styles.event__count}>
+            <small className={
+              cn({
+                [styles.event__count]: true,
+                [styles['event__count--full']]: eventInfo.thumbnail_image.length === 3,
+              })
+            }
+            >
               {`${eventInfo.thumbnail_image.length} / 3`}
             </small>
           </div>
@@ -217,7 +240,16 @@ export default function AddingEvent() {
               }
             </div>
           )}
-          <label htmlFor="fileUpload" className={styles.event__upload}>
+          <label
+            htmlFor="fileUpload"
+            className={
+              cn({
+                [styles.event__upload]: true,
+                [styles['event__upload--disable']]: eventInfo.thumbnail_image.length === 3,
+              })
+            }
+          >
+            {eventInfo.thumbnail_image.length === 3 ? <PictureDisalbe /> : <Picture />}
             사진 등록하기
           </label>
           <input
@@ -229,12 +261,19 @@ export default function AddingEvent() {
             maxLength={3}
             onChange={handleImages}
             style={{ display: 'none' }}
+            disabled={eventInfo.thumbnail_image.length === 3}
           />
         </div>
         <div>
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>제목</p>
-            <small className={styles.event__count}>
+            <small className={
+              cn({
+                [styles.event__count]: true,
+                [styles['event__count--full']]: eventInfo.title.length === 25,
+              })
+            }
+            >
               {`${eventInfo.title.length} / 25`}
             </small>
           </div>
@@ -341,10 +380,34 @@ export default function AddingEvent() {
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
         <div className={styles.buttons}>
-          <button type="button" className={styles.cancel} onClick={() => navigate(-1)}>취소하기</button>
-          <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>등록하기</button>
+          <button type="button" className={styles.cancel} onClick={() => setIsAlertModalOpen(true)}>
+            <Cancel />
+            취소하기
+          </button>
+          <button type="button" className={styles.add} onClick={postEvent} disabled={isPending}>
+            <CheckBox />
+            등록하기
+          </button>
         </div>
       </div>
+      {isAlertModalOpen && createPortal(
+        <AlertModal
+          title={(
+            <div>
+              작성을
+              {' '}
+              <span>취소</span>
+              하시겠습니까?
+            </div>
+          )}
+          content="취소한 글은 되돌릴 수 없습니다."
+          setIsOpen={setIsAlertModalOpen}
+          cancelText="이어쓰기"
+          acceptText="취소하기"
+          callBack={() => navigate('/')}
+        />,
+        document.body,
+      )}
     </div>
   );
 }

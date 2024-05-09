@@ -1,6 +1,6 @@
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
 }
@@ -14,6 +14,10 @@
 
   &__count {
     color: #8e8e8e;
+
+    &--full {
+      color: #f7941e;
+    }
   }
 
   &__images {
@@ -57,6 +61,11 @@
     border-radius: 5px;
     height: 50px;
     cursor: pointer;
+    gap: 10px;
+
+    &--disable {
+      color: #cacaca;
+    }
   }
 
   &__divide {
@@ -120,6 +129,10 @@
   border-radius: 5px;
   width: 35%;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .add {
@@ -129,6 +142,10 @@
   border-radius: 5px;
   width: 55%;
   height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .error-message {

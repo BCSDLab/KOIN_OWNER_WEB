@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import CustomModal from 'component/common/CustomModal';
 import useMyShop from 'query/shop';
 import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,35 +20,38 @@ const useSelectMyShop = () => {
 };
 
 interface Props {
-  setListOpen: (bool: boolean) => void;
+  isOpen: boolean;
+  onCancel: () => void
 }
 
-export default function MyShopList({ setListOpen }: Props) {
+export default function MyShopList({ isOpen, onCancel }: Props) {
   const { myShop, selectShop } = useSelectMyShop();
   return (
-    <div className={styles.container}>
-      <div className={styles.modal}>
-        <button
-          type="button"
-          onClick={() => setListOpen(false)}
-          className={styles.close}
-        >
-          x
-        </button>
-        <Suspense fallback={<div />}>
+    <CustomModal
+      title="가게 선택"
+      hasFooter={false}
+      isOpen={isOpen}
+      onCancel={onCancel}
+      isOverflowVisible={false}
+      modalSize="small"
+    >
+      <Suspense fallback={<div />}>
+        <div className={styles.modal}>
           {myShop.shops.map((shop, idx) => (
             <button
               type="button"
               onClick={() => {
-                setListOpen(false);
+                onCancel();
                 selectShop(shop.id);
               }}
             >
-              {`${idx + 1}. ${shop.name}`}
+              <h2>
+                {`${idx + 1}. ${shop.name}`}
+              </h2>
             </button>
           ))}
-        </Suspense>
-      </div>
-    </div>
+        </div>
+      </Suspense>
+    </CustomModal>
   );
 }
