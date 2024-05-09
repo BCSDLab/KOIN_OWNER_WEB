@@ -139,6 +139,14 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
+            <Link to={`/owner/event-add/${shopData?.id}`}>
+              <button
+                type="button"
+                className={styles['header__btn-add']}
+              >
+                이벤트 추가
+              </button>
+            </Link>
             <Link to="/owner/add-menu">
               <button
                 type="button"
