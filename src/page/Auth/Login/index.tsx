@@ -26,7 +26,6 @@ export default function Login() {
   const navigate = useNavigate();
   const { loginError, loginErrorStatus } = useErrorMessageStore();
   const [emailError, setEmailError] = useState('');
-  const { value: isModalOpen, changeValue: toggle } = useBooleanState(false);
   const isError = isServerError || isFormError;
 
   const {
@@ -108,7 +107,7 @@ export default function Login() {
               [styles['form__button--login']]: true,
             })}
             type="submit"
-            onClick={toggle}
+            // onClick={toggle}
           >
             로그인
           </button>
@@ -134,7 +133,7 @@ export default function Login() {
           </div>
         </form>
       </div>
-      {loginErrorStatus === 403 && isModalOpen && <ApprovalModal toggle={toggle} />}
+      {loginErrorStatus === 403 && <ApprovalModal />}
     </div>
   );
 }
