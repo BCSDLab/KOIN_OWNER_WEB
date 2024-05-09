@@ -68,6 +68,9 @@ export default function MyShopPage() {
       />
     );
   }
+  const onCancel = () => {
+    setListOpen(false);
+  };
 
   return (
     <div>
@@ -79,7 +82,7 @@ export default function MyShopPage() {
               && (
                 <>
                   <button type="button" className={styles['mobile-header__btn-add']} onClick={() => setListOpen(true)}>상점 선택</button>
-                  {listOpen && <MyShopList setListOpen={setListOpen} />}
+                  {listOpen && <MyShopList isOpen={listOpen} onCancel={onCancel} />}
                 </>
               )}
             <Link to="/owner/add-menu">
