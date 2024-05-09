@@ -25,7 +25,7 @@ export default function EventCard({
     } else setHiddenInfo(true);
   };
   const renderThumbnail = () => {
-    if (event.thumbnail_images.length > 1) {
+    if (event.thumbnail_images.length > 0) {
       return (
         <img
           src={event.thumbnail_images[0]}
