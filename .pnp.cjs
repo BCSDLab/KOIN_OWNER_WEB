@@ -42,6 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:5.62.0"],\
             ["assert", "npm:2.1.0"],\
             ["axios", "npm:1.6.7"],\
+            ["dayjs", "npm:1.11.10"],\
             ["eslint", "npm:8.56.0"],\
             ["eslint-config-airbnb", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:19.0.4"],\
             ["eslint-config-airbnb-typescript", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:17.1.0"],\
@@ -7888,6 +7889,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["dayjs", [\
+        ["npm:1.11.10", {\
+          "packageLocation": "./.yarn/cache/dayjs-npm-1.11.10-2b4382efc1-a6b5a3813b.zip/node_modules/dayjs/",\
+          "packageDependencies": [\
+            ["dayjs", "npm:1.11.10"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["debug", [\
         ["npm:2.6.9", {\
           "packageLocation": "./.yarn/cache/debug-npm-2.6.9-7d4cb597dc-d2f51589ca.zip/node_modules/debug/",\
@@ -12499,6 +12509,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:5.62.0"],\
             ["assert", "npm:2.1.0"],\
             ["axios", "npm:1.6.7"],\
+            ["dayjs", "npm:1.11.10"],\
             ["eslint", "npm:8.56.0"],\
             ["eslint-config-airbnb", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:19.0.4"],\
             ["eslint-config-airbnb-typescript", "virtual:2a928e07684dc9ad50d6744a82230310880d82a84463b276e7d19ce4f4762d0780e66ccb13980e8f3eb76ec0bcd5207e76cb8696dbcb80089851be6e3a1536fb#npm:17.1.0"],\

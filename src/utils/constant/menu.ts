@@ -1,4 +1,3 @@
-// 추후 추천, 메인, 세트, 사이드로 변경 예정
 const MENU_CATEGORY = [
   {
     id: 1,

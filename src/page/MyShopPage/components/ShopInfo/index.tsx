@@ -22,11 +22,11 @@ export default function ShopInfo({
   isEditShopInfoModalOpen, onClickImage,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
-  const openDayIndex = shopInfo.open.filter((day) => !day.closed)
-    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
-  const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[openDayIndex[0]].open_time);
+  const today = new Date().getDay();
+  const todayIndex = today === 0 ? 6 : today - 1; // 오늘의 운영시간을 보여주도록 변경
+  const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[todayIndex].open_time);
   const [closeTime, setCloseTime] = useState<string | null>(
-    shopInfo.open[openDayIndex[0]].close_time,
+    shopInfo.open[todayIndex].close_time,
   );
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)

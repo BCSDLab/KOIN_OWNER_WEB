@@ -31,8 +31,8 @@ export default function Complete({
 
   const initialize = () => {
     setStep(0);
-    setCategory([]);
-    setCategoryId([]);
+    setCategory('');
+    setCategoryId(0);
     setDelivery(false);
     setDeliveryPrice(0);
     setDescription('');

@@ -8,17 +8,13 @@
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  margin: 10px 20px;
-  border-radius: 4px;
-  box-shadow: 0 1px 9px 1px rgb(0 0 0 / 6%);
-  border: 1px solid #e1e1e1;
+  margin: 10px 0;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #f5f5f5;
-    padding: 10px;
+    padding: 16px 24px;
   }
 
   &__title {
@@ -48,7 +44,7 @@
     width: 150px;
     height: 100px;
     flex-shrink: 0;
-    border-radius: 4px;
+    border-radius: 8px;
     border: 1px solid #cacaca;
     background: #fafafa;
     display: flex;
@@ -56,6 +52,8 @@
     justify-content: center;
     object-fit: cover;
     cursor: pointer;
+    -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+    -webkit-tap-highlight-color: transparent;
 
     img {
       width: 100%;
@@ -74,9 +72,10 @@
       flex-direction: column;
       font-family: Pretendard, sans-serif;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 400;
       color: #fff;
       gap: 4px;
+      border-radius: 8px;
     }
 
     &--add {
@@ -91,7 +90,7 @@
     }
   }
 
-  &__soldout-wrapper {
+  &__common-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,8 +101,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    gap: 40px;
+    padding: 0 24px 16px;
+    gap: 12px;
     min-height: 120px;
 
     @media screen and (max-width: 350px) {
@@ -119,12 +118,33 @@
     align-items: center;
     justify-content: center;
   }
+
+  &__changed {
+    width: 48px;
+    height: 22px;
+    border-radius: 4px;
+    background-color: #eee;
+    font-family: Pretendard, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b4b4b;
+  }
+
+  &__kcal {
+    font-size: 12px;
+    font-weight: 400;
+    color: #8e8e8e;
+  }
 }
 
 .modal {
   display: flex;
   flex-direction: column;
   padding-top: 24px;
+  font-family: Pretendard, sans-serif;
 
   &__header {
     text-align: center;
@@ -137,6 +157,13 @@
     font-size: 18px;
     font-weight: 500;
     color: #175c8e;
+  }
+
+  &__header--secondary {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #f7941e;
   }
 
   &__description {
@@ -167,6 +194,7 @@
     cursor: pointer;
     font-family: Pretendard, sans-serif;
     font-size: 15px;
+    color: #000;
   }
 
   &__button--primary {
@@ -179,6 +207,21 @@
     border-radius: 4px;
     cursor: pointer;
     background-color: #175c8e;
+    color: #ffffff;
+    font-family: Pretendard, sans-serif;
+    font-size: 15px;
+  }
+
+  &__button--secondary {
+    width: 110px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f7941e;
     color: #ffffff;
     font-family: Pretendard, sans-serif;
     font-size: 15px;
