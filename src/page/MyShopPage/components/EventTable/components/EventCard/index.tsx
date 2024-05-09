@@ -101,7 +101,7 @@ export default function EventCard({
         >
           <EventContent html={event.content} />
         </div>
-        <div className={styles.eventUpdatedAt}>{event.start_date.replace(/-/g, '.')}</div>
+        <div className={styles.eventUpdatedAt}>{`${event.start_date.replace(/-/g, '.')} - ${event.end_date.replace(/-/g, '.')}`}</div>
       </div>
     </div>
   );
