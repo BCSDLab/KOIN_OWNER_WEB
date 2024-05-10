@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useAddEvent } from 'query/event';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -97,17 +96,25 @@ export const initialError = {
 export default function AddingEvent() {
   const [eventInfo, setEventInfo] = useState<EventInfo>(initialState);
   const [error, setError] = useState(initialError);
-  const [editor, setEditor] = useState('');
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const param = useParams();
 
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
   const navigate = useNavigate();
 
-  const changeInput = (e: React.ChangeEvent<HTMLInputElement>, type: 'title' | 'start' | 'end', change?: Change) => {
+  const changeInput = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
+    type: 'title' | 'start' | 'end' | 'content',
+    change?: Change,
+  ) => {
     const value = e.target.value.replaceAll(/[\D]/gi, '');
     if (type === 'title' && e.target.value.length <= 25) {
       setEventInfo({ ...eventInfo, title: e.target.value });
+      setError({ ...error, title: false });
+    }
+    if (type === 'content' && e.target.value.length <= 500) {
+      setEventInfo({ ...eventInfo, content: e.target.value });
+      setError({ ...error, content: false });
     }
     if (type === 'start') {
       if (change === 'year' && e.target.value.length <= 4) {
@@ -116,6 +123,7 @@ export default function AddingEvent() {
       if (change !== 'year' && e.target.value.length <= 2) {
         setEventInfo({ ...eventInfo, start_date: { ...eventInfo.start_date, [change!]: value } });
       }
+      setError({ ...error, date: false });
     }
     if (type === 'end') {
       if (change === 'year' && e.target.value.length <= 4) {
@@ -124,8 +132,8 @@ export default function AddingEvent() {
       if (change !== 'year' && e.target.value.length <= 2) {
         setEventInfo({ ...eventInfo, end_date: { ...eventInfo.end_date, [change!]: value } });
       }
+      setError({ ...error, date: false });
     }
-    setError({ ...error, title: false });
   };
 
   const validation = () => {
@@ -134,7 +142,7 @@ export default function AddingEvent() {
       setError((prevError) => ({ ...prevError, title: true }));
       flag = true;
     }
-    if (editor.length === 0) {
+    if (eventInfo.content.length === 0) {
       setError((prevError) => ({ ...prevError, content: true }));
       flag = true;
     }
@@ -185,7 +193,7 @@ export default function AddingEvent() {
 
     const requestData = {
       title: eventInfo.title,
-      content: editor,
+      content: eventInfo.content,
       start_date: startDate,
       end_date: endDate,
       thumbnail_images: eventInfo.thumbnail_image,
@@ -292,21 +300,25 @@ export default function AddingEvent() {
         <div>
           <div className={styles.event__divide}>
             <p className={styles.event__paragraph}>이벤트/공지 내용</p>
-            <small className={styles.event__count} />
+            <small className={
+              cn({
+                [styles.event__count]: true,
+                [styles['event__count--full']]: eventInfo.content.length === 500,
+              })
+            }
+            >
+              {`${eventInfo.content.length} / 500`}
+            </small>
           </div>
           <div>
-            <ReactQuill
-              theme="snow"
-              value={editor}
-              onChange={(e) => {
-                setError({ ...error, content: false });
-                return setEditor(e);
-              }}
-              modules={modules}
-              placeholder="이벤트/공지 내용을 입력해 주세요."
+            <textarea
+              value={eventInfo.content}
+              placeholder="이벤트 내용을 입력해주세요"
               className={cn({
                 [styles['error-border']]: error.content,
+                [styles.event__content]: true,
               })}
+              onChange={(e) => changeInput(e, 'content')}
             />
           </div>
           {error.content && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}

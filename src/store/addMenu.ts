@@ -46,8 +46,8 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   setImageUrl: (newImageUrl) => set((state) => ({
     imageUrl: [...state.imageUrl, newImageUrl],
   })),
-  setImageUrls: (newImageUrl) => set((state) => ({
-    imageUrl: [...state.imageUrl, ...newImageUrl],
+  setImageUrls: (newImageUrl) => set(() => ({
+    imageUrl: newImageUrl,
   })),
   removeImageUrl: (imageUrlToRemove) => set((state) => ({
     imageUrl: state.imageUrl.filter((img) => img !== imageUrlToRemove),

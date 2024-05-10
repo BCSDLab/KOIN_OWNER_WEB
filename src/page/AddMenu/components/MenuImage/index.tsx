@@ -24,17 +24,23 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
   } = useBooleanState(false);
 
   const {
-    imageFile, imgRef, saveImgFile, uploadError,
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
+  const imageObject = {
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
+  }; // AddMenuImgModal에 넘길 props
   const handleAddImage = () => {
     imgRef.current?.click();
   };
   const handleDeleteImage = (image: string) => {
     removeImageUrl(image);
+    setImageFile(imageFile.filter((img) => img !== image)); // pc 버전 이미지 동기화
   };
+
   const handleImageChange = async () => {
     await saveImgFile();
   };
+
   useEffect(() => {
     if (imageFile) {
       setImageUrls(imageFile);
@@ -50,14 +56,14 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
           </div>
           <div className={styles['mobile__new-image__container']}>
             {!isComplete && (
-            <button
-              type="button"
-              className={styles['mobile__new-image__add-btn']}
-              onClick={openAddMenuImgModal}
-            >
-              <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
-              <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
-            </button>
+              <button
+                type="button"
+                className={styles['mobile__new-image__add-btn']}
+                onClick={openAddMenuImgModal}
+              >
+                <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
+                <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
+              </button>
             )}
             {imageUrl.map((image, index) => (
               <div key={image} className={styles['mobile__new-image__item']}>
@@ -78,6 +84,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
           <AddMenuImgModal
             isOpen={isAddMenuImgModal}
             closeModal={closeAddMenuImgModal}
+            imageObject={imageObject}
           />
         </div>
       ) : (
