@@ -99,7 +99,7 @@ input::-webkit-inner-spin-button {
     border: 1px solid #d2dae2;
     padding: 53px 80px 54px;
     cursor: pointer;
-  
+
     &--active {
       display: flex;
       flex-direction: column;
@@ -130,7 +130,7 @@ input::-webkit-inner-spin-button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    word-break:break-all;
+    word-break: break-all;
     color: #858585;
   }
 
