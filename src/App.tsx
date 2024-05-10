@@ -21,6 +21,7 @@ import Coop from 'page/Coop';
 import useUserTypeStore from 'store/useUserTypeStore';
 import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
+import LogPage from 'component/common/PageLog';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -82,6 +83,7 @@ function App() {
         </Route>
       </Routes>
       <Toast />
+      <LogPage />
     </Suspense>
   );
 }
