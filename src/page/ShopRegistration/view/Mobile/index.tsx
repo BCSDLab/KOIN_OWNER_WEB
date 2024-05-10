@@ -14,10 +14,10 @@ import styles from './ShopRegistrationMobile.module.scss';
 
 export default function ShopRegistrationMobile() {
   const { TOTAL_STEP, step, decreaseStep } = useStepStore();
-
+  // 임시로 step 0 일때 뒤로가기 버튼 삭제
   return (
     <div>
-      <PreviousStep step={step} clickEvent={decreaseStep} />
+      {step !== 0 && <PreviousStep step={step} clickEvent={decreaseStep} />}
       <div className={styles.content}>
         {step === 0 && <ShopEntry />}
         {step === 1 && (
