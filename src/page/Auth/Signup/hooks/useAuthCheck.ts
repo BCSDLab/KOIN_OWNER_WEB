@@ -2,6 +2,7 @@ import { useGenerateAuthCode } from 'query/register';
 import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { User } from 'page/Auth/Signup/types/User';
+import { AxiosError } from 'axios';
 
 export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   const [email, setEmail] = useState('');
@@ -9,7 +10,7 @@ export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   const {
     status, refetch, isError, error,
   } = useGenerateAuthCode(email);
-  const errorMessage = status === 'error' ? Object(error).response.data.message : null;
+  const errorMessage = isError ? (error as AxiosError).message : null;
   const onSubmit:SubmitHandler<User> = (data) => {
     setEmail(() => (data.email ? data.email : ''));
   };
@@ -33,6 +34,6 @@ export default function useAuthCheck(userEmail:string, isMobile:boolean) {
   }, [status, isError, error]);
 
   return {
-    onSubmit, isOpen, errorMessage, email, refetch, status,
+    onSubmit, isOpen, errorMessage, email, refetch, status, error,
   };
 }

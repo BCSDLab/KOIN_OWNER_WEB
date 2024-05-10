@@ -14,19 +14,20 @@ import ConfirmPopup from 'page/ShopRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
+import cn from 'utils/ts/className';
 import useModalStore from 'store/modalStore';
 import { WEEK, DAY_OF_WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
-import { useMutation } from '@tanstack/react-query';
-import { postShop } from 'api/shop';
-import useImageUpload from 'utils/hooks/useImageUpload';
+import useImagesUpload from 'utils/hooks/useImagesUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
+import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -54,8 +55,8 @@ export default function ShopRegistrationPC() {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
   const {
-    imageFile, imgRef, saveImgFile, uploadError,
-  } = useImageUpload();
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
+  } = useImagesUpload();
   const [isError, setIsError] = useState(false);
 
   const {
@@ -65,7 +66,7 @@ export default function ShopRegistrationPC() {
   } = useModalStore();
 
   const {
-    setImageUrl,
+    setImageUrls,
     setName,
     setDelivery,
     setPayCard,
@@ -74,10 +75,11 @@ export default function ShopRegistrationPC() {
     setPhone,
     setDeliveryPrice,
     setDescription,
+    removeImageUrl,
   } = useShopRegistrationStore();
 
   const {
-    imageUrl,
+    imageUrls,
     categoryId,
     category,
     name,
@@ -89,7 +91,6 @@ export default function ShopRegistrationPC() {
     deliveryPrice,
     description,
   } = useShopRegistrationStore();
-
   const operateTimeState = useOperateTimeState();
 
   const {
@@ -99,26 +100,24 @@ export default function ShopRegistrationPC() {
     isAllClosed,
   } = CheckSameTime();
 
+  const mutation = usePostData(setStep);
+
   const {
     register, handleSubmit, setValue, formState: { errors },
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
   });
 
-  const mutation = useMutation({
-    mutationFn: (form: OwnerShop) => postShop(form),
-    onSuccess: () => setStep(5),
-  });
-
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    if (formattedPhoneNumber.length > 13) return formattedPhoneNumber.slice(0, 13);
     return formattedPhoneNumber;
   };
   const phoneNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
   const isValidPhoneNumber = phoneNumberPattern.test(phone);
   const handleNextClick = () => {
-    if (imageUrl === '' || name === '' || category === ''
+    if (imageUrls.length === 0 || name === '' || category.length === 0
       || address === '' || phone === '' || !isValidPhoneNumber) {
       setIsError(true);
     } else {
@@ -130,8 +129,14 @@ export default function ShopRegistrationPC() {
   const closeTimeArray = Object.values(closeTimeState);
   const shopClosedArray = Object.values(shopClosedState);
 
+  const onClickRemoveImageUrl = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
+    e.preventDefault();
+    setImageFile(imageFile.filter((img) => img !== imageUrl));
+    removeImageUrl(imageUrl);
+  };
+
   useEffect(() => {
-    if (imageFile !== '' || uploadError !== '') setImageUrl(imageFile);
+    if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
@@ -141,8 +146,10 @@ export default function ShopRegistrationPC() {
     setValue('open', openValue);
     setValue('category_ids', [categoryId]);
     setValue('delivery_price', Number(deliveryPrice));
-  }, [openTimeState, closeTimeState, shopClosedState,
-    imageFile, categoryId, deliveryPrice, uploadError]);
+    setValue('name', name);
+    setValue('image_urls', imageUrls);
+  }, [openTimeState, closeTimeState, shopClosedState, imageUrls,
+    imageFile, categoryId, deliveryPrice, uploadError, name]);
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
@@ -185,26 +192,44 @@ export default function ShopRegistrationPC() {
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <span className={styles.form__title}>대표 이미지</span>
-                <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
+                <label
+                  className={cn({
+                    [styles['form__image-upload']]: true,
+                    [styles['form__image-upload--active']]: imageUrls.length !== 0,
+                  })}
+                  htmlFor="mainMenuImage"
+                >
                   <input
                     type="file"
                     accept="image/*"
                     id="mainMenuImage"
                     className={styles['form__upload-file']}
-                    {...register('image_urls', { value: [imageUrl] })}
+                    {...register('image_urls', { value: imageUrls })}
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  {imageUrl
-                    ? <img src={imageUrl} className={styles['form__main-menu']} alt="메인 메뉴" />
-                    : (
+                  {imageUrls.length !== 0
+                    ? (
+                      imageUrls.map((imageUrl: string) => (
+                        <div
+                          key={imageUrl}
+                          className={styles['form__main-item']}
+                          onClick={(e) => onClickRemoveImageUrl(e, imageUrl)}
+                          aria-hidden
+                        >
+                          <FileImage />
+                          <div className={styles['form__main-text']}>{imageUrl}</div>
+                        </div>
+                      ))
+                    ) : (
                       <>
                         <Cutlery className={styles['form__cutlery-cross']} />
                         <span className={styles.form__text}>클릭하여 이미지를 등록해주세요.</span>
                       </>
                     )}
                 </label>
-                {uploadError === '' && imageUrl === '' && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+                {uploadError === '' && imageUrls.length === 0 && isError
+                  && <ErrorMessage message={ERRORMESSAGE.image} />}
                 {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
               </div>
               <div>
@@ -218,7 +243,9 @@ export default function ShopRegistrationPC() {
                   />
                   <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
                 </div>
-                {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+                {category.length === 0
+                  && isError
+                  && <ErrorMessage message={ERRORMESSAGE.category} />}
               </div>
               <CustomModal
                 buttonText="다음"
@@ -292,9 +319,9 @@ export default function ShopRegistrationPC() {
                 <span className={styles.form__title}>배달금액</span>
                 <div className={styles.form__section}>
                   <input
-                    type="string"
+                    type="number"
                     className={styles['form__input-large']}
-                    value={deliveryPrice}
+                    value={deliveryPrice === 0 ? undefined : deliveryPrice}
                     onChange={(e) => {
                       setDeliveryPrice(Number(e.target.value));
                     }}

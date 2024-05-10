@@ -39,15 +39,15 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
   imageUrl: [],
   isSingle: true,
   name: '',
-  optionPrices: [{ id: 0, option: '', price: 0 }],
+  optionPrices: null,
   singlePrice: 0,
   setCategoryIds: (categoryIds) => set({ categoryIds }),
   setDescription: (description) => set({ description }),
   setImageUrl: (newImageUrl) => set((state) => ({
     imageUrl: [...state.imageUrl, newImageUrl],
   })),
-  setImageUrls: (newImageUrl) => set((state) => ({
-    imageUrl: [...state.imageUrl, ...newImageUrl],
+  setImageUrls: (newImageUrl) => set(() => ({
+    imageUrl: newImageUrl,
   })),
   removeImageUrl: (imageUrlToRemove) => set((state) => ({
     imageUrl: state.imageUrl.filter((img) => img !== imageUrlToRemove),
@@ -63,7 +63,7 @@ const useAddMenuStore = create<AddMenuStore>((set) => ({
     imageUrl: [],
     isSingle: true,
     name: '',
-    optionPrices: [{ id: 0, option: '', price: 0 }],
+    optionPrices: null,
     singlePrice: 0,
   }),
   resetCategoryIds: () => set({ categoryIds: [] }),

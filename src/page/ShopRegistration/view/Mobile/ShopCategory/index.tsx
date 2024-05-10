@@ -1,7 +1,7 @@
 import useStepStore from 'store/useStepStore';
-import useShopCategory from 'query/shopCategory';
+import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-import { Category as CategoryProps } from 'model/category/storeCategory';
+import { Category as CategoryProps } from 'model/category/shopCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
@@ -10,7 +10,7 @@ import styles from './ShopCategory.module.scss';
 
 export default function ShopCategory() {
   const [isError, setIsError] = useState(false);
-  const { categoryList } = useShopCategory();
+  const { categoryList } = useMyShop();
   const { increaseStep } = useStepStore();
   const {
     category, setCategory, setCategoryId,
@@ -22,7 +22,7 @@ export default function ShopCategory() {
   };
 
   const handleNextClick = () => {
-    if (category === '') {
+    if (category.length === 0) {
       setIsError(true);
     } else {
       setIsError(false);
@@ -38,7 +38,7 @@ export default function ShopCategory() {
           <button
             className={cn({
               [styles.category__menu]: true,
-              [styles['category__menu--selected']]: categoryInfo.name === category,
+              [styles['category__menu--selected']]: category === categoryInfo.name,
             })}
             type="button"
             onClick={() => handleCategoryClick(categoryInfo)}
@@ -53,10 +53,10 @@ export default function ShopCategory() {
           </button>
         ))}
       </div>
-      {category === '' && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+      {category.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
       <div className={cn({
         [styles.category__button]: true,
-        [styles['category__button--error']]: category === '' && isError,
+        [styles['category__button--error']]: category.length === 0 && isError,
       })}
       >
         <button type="button" onClick={handleNextClick}>다음</button>

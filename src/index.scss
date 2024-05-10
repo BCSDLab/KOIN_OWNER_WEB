@@ -26,3 +26,13 @@ button {
   border: none;
   font-family: NotoSansKR, sans-serif;
 }
+
+a,
+button {
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul {
+  list-style: none;
+}

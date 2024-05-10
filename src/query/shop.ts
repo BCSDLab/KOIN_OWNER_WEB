@@ -2,18 +2,24 @@ import {
   useMutation, useQuery, useQueryClient, useSuspenseQuery,
 } from '@tanstack/react-query';
 import {
-  getMyShopList, getShopInfo, getMenuInfoList, addMenu,
+  getMyShopList, getShopInfo, getMenuInfoList, addMenu, getShopEventList,
 } from 'api/shop';
-import useUserStore from 'store/user';
 import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import getShopCategory from 'api/category';
+import useSuspenseUser from 'utils/hooks/useSuspenseUser';
+import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
-  const myShopQueryKey = useUserStore.getState().user?.company_number;
+  let myShopQueryKey = '';
+  const { data: user } = useSuspenseUser();
+  if (user && 'company_number' in user) {
+    myShopQueryKey = user.company_number;
+  }
   const queryClient = useQueryClient();
   const { resetAddMenuStore } = useAddMenuStore();
   const { data: myShop } = useSuspenseQuery({
-    queryKey: ['myShop', myShopQueryKey],
+    queryKey: shopKeys.myShopList(myShopQueryKey),
     queryFn: () => getMyShopList(),
   });
 
@@ -25,15 +31,20 @@ const useMyShop = () => {
   const shopId = currentMyShopId;
 
   const { data: shopData, refetch: refetchShopData, isLoading } = useQuery({
-    queryKey: ['myShopInfo', shopId],
+    queryKey: shopKeys.myShopInfo(shopId),
     queryFn: () => getShopInfo({ id: shopId }),
     enabled: !!shopId,
   });
 
   const { data: menusData } = useQuery({
-    queryKey: ['myMenuInfo', shopId],
+    queryKey: shopKeys.myMenuInfo(shopId),
     queryFn: () => getMenuInfoList({ id: shopId }),
     enabled: !!shopId,
+  });
+
+  const { data: categoryList } = useQuery({
+    queryKey: shopKeys.shopCategoryInfo,
+    queryFn: () => getShopCategory(),
   });
 
   const { mutate: addMenuMutation, isError: addMenuError } = useMutation({
@@ -45,12 +56,25 @@ const useMyShop = () => {
     },
     onSuccess: () => {
       resetAddMenuStore();
-      queryClient.invalidateQueries({ queryKey: ['myMenuInfo', shopId] });
+      queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
     },
   });
 
+  const { data: eventList } = useQuery({
+    queryKey: shopKeys.eventList(shopId),
+    queryFn: () => getShopEventList({ id: shopId }),
+  });
+
   return {
-    shopData, menusData, addMenuMutation, addMenuError, refetchShopData, isLoading, myShop,
+    shopData,
+    menusData,
+    addMenuMutation,
+    addMenuError,
+    refetchShopData,
+    isLoading,
+    categoryList,
+    eventList,
+    myShop,
   };
 };
 

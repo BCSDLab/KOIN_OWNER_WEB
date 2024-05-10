@@ -1,12 +1,14 @@
-import useShopCategory from 'query/shopCategory';
+import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
-import { Category as CategoryProps } from 'model/category/storeCategory';
+import { Category as CategoryProps } from 'model/category/shopCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import styles from './Category.module.scss';
 
 export default function Category() {
-  const { categoryList } = useShopCategory();
-  const { category, setCategory, setCategoryId } = useShopRegistrationStore();
+  const { categoryList } = useMyShop();
+  const {
+    category, setCategory, setCategoryId,
+  } = useShopRegistrationStore();
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setCategory(categoryInfo.name);
@@ -19,7 +21,7 @@ export default function Category() {
         <button
           className={cn({
             [styles.category__menu]: true,
-            [styles['category__menu--selected']]: categoryInfo.name === category,
+            [styles['category__menu--selected']]: category === categoryInfo.name,
           })}
           type="button"
           onClick={() => { handleCategoryClick(categoryInfo); }}

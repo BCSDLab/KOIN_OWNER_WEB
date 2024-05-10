@@ -2,13 +2,14 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getMenu, modifyMenu, deleteMenu } from 'api/shop';
 import { NewMenu } from 'model/shopInfo/newMenu';
 import useAddMenuStore from 'store/addMenu';
+import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMenuInfo = (menuId:number) => {
   const { resetAddMenuStore } = useAddMenuStore();
   const queryClient = useQueryClient();
   const { data: menuData, refetch } = useQuery(
     {
-      queryKey: ['menuInfo', menuId],
+      queryKey: shopKeys.myMenuInfo(menuId),
       queryFn: () => getMenu(menuId),
       refetchOnWindowFocus: true,
     },
@@ -34,6 +35,7 @@ export const useDeleteMenu = () => {
       queryClient.invalidateQueries();
     },
   });
+
   return {
     deleteMenuMutation,
   };

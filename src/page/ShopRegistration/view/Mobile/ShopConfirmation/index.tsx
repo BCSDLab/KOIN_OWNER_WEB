@@ -11,15 +11,22 @@ import { useEffect } from 'react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
+import { isKoinError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './ShopConfirmation.module.scss';
 
-const usePostData = (setStep: (step: number) => void) => {
+export const usePostData = (setStep: (step: number) => void) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => {
       setStep(5);
       queryClient.refetchQueries();
+    },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
     },
   });
   return mutation;
@@ -30,7 +37,7 @@ export default function ShopConfirmation() {
   const {
     category,
     categoryId,
-    imageUrl,
+    imageUrls,
     name,
     address,
     phone,
@@ -67,7 +74,7 @@ export default function ShopConfirmation() {
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    setValue('image_urls', [imageUrl]);
+    setValue('image_urls', imageUrls);
     setValue('category_ids', [categoryId]);
     setValue('name', name);
     setValue('address', address);
@@ -78,7 +85,9 @@ export default function ShopConfirmation() {
     setValue('pay_bank', payBank);
     setValue('pay_card', payCard);
     setValue('open', openValue);
-  }, []);
+  }, [openTimeArray, closeTimeArray, shopClosedArray, categoryId, name,
+    address, phone, deliveryPrice, description, delivery, payBank, payCard, imageUrls]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>

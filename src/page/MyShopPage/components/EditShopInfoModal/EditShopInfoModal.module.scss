@@ -126,17 +126,17 @@
   }
 }
 
-.content {
+.main-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 22px;
-}
 
-.main-info {
-  display: flex;
-  flex-direction: column;
-  margin-right: 24px;
-  margin-bottom: 24px;
+  &__label {
+    display: flex;
+    flex-direction: column;
+    margin-right: 24px;
+    margin-bottom: 24px;
+  }
 
   &__header {
     font-size: 18px;
@@ -149,6 +149,12 @@
     width: 328px;
     height: 21px;
     padding: 8px 0 8px 12px;
+  }
+
+  &__select {
+    width: 345px;
+    height: 40px;
+    padding-left: 12px;
   }
 
   &__operate-time {
@@ -171,6 +177,7 @@
   &__checkboxes {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
 
   &__checkbox {
@@ -212,31 +219,64 @@
 .mobile-container {
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
 
   &__image-content {
-    position: relative;
-    min-width: 328px;
-    height: 255px;
-    box-shadow: 0 0 1px 0 #00000080;
+    height: 220px;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
-  &__main-image {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
+  &__image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+
+    img {
+      display: flex;
+      height: 80%;
+      width: 375px;
+    }
+  }
+
+  &__delete-button {
+    position: absolute;
+    top: 15px;
+    right: -10px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7941e;
+    width: 16.765px;
+    height: 16.765px;
+    border-radius: 50%;
+
+    svg {
+      display: flex;
+      width: 100%;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__add-button {
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 24px;
-    right: 16px;
-    width: 84px;
-    height: 29px;
-    background-color: #00000080;
-    cursor: pointer;
+    right: 10px;
+    top: 250px;
+
+    label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      width: 84px;
+      height: 29px;
+      background-color: #00000080;
+    }
   }
 
   &__modify-image-caption {
@@ -246,13 +286,6 @@
 
   &__add-file {
     display: none;
-  }
-
-  &__main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 22px;
   }
 
   &__confirm-button-wrapper {
@@ -277,9 +310,16 @@
 
 .mobile-main-info {
   display: flex;
-  margin-bottom: 16px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 22px;
 
-  &--header {
+  &__label {
+    display: flex;
+    margin-bottom: 16px;
+  }
+
+  &__header {
     display: flex;
     align-items: center;
     width: 68px;
@@ -288,11 +328,17 @@
     color: #17518e;
   }
 
-  &--input {
+  &__input {
     width: 252px;
     height: 21px;
     padding: 8px 0 8px 8px;
     border: 1px solid #898a8d;
+  }
+
+  &__select {
+    width: 262px;
+    height: 37px;
+    padding: 0 8px;
   }
 
   &__checkboxes {
@@ -342,16 +388,16 @@
 .mobile-operate-time {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 252px;
   height: auto;
-  margin-left: 8px;
 
-  &--content {
+  &__content {
     color: #858585;
     font-size: 14px;
   }
 
-  &--button {
+  &__button {
     width: 58px;
     height: 29px;
     background-color: #17518e;

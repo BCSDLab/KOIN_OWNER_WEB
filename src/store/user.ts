@@ -1,4 +1,4 @@
-import { getMe } from 'api/auth';
+import { getOwnerInfo } from 'api/auth';
 import { User } from 'model/auth';
 import { create } from 'zustand';
 
@@ -11,7 +11,7 @@ interface UserStore {
 const useUserStore = create<UserStore>((set) => ({
   user: null,
   setUser: async () => {
-    const user = await getMe();
+    const user = await getOwnerInfo();
     set(() => ({ user }));
   },
   removeUser: () => {

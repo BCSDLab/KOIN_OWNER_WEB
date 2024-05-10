@@ -1,8 +1,7 @@
 import { accessClient, client } from 'api';
-import { LoginParams, LoginResponse, UserResponse } from 'model/auth';
-// import {
-//   LoginParams, LoginResponse, UserResponse,
-// } from 'api/auth/model';
+import {
+  LoginParams, LoginResponse, OwnerResponse, UserTypeResponse,
+} from 'model/auth';
 
 export const postLogin = async (param: LoginParams) => {
   const { data } = await client.post<LoginResponse>('/user/login', param);
@@ -11,9 +10,14 @@ export const postLogin = async (param: LoginParams) => {
 
 export const postLogout = () => accessClient.post('/user/logout');
 
-export const getMe = async () => {
-  const { data } = await accessClient.get<UserResponse>('/owner');
-  return UserResponse.parse(data);
+export const getUserType = async () => {
+  const { data } = await accessClient.get<UserTypeResponse>('/user/auth');
+  return UserTypeResponse.parse(data);
+};
+
+export const getOwnerInfo = async () => {
+  const { data } = await accessClient.get<OwnerResponse>('/owner');
+  return OwnerResponse.parse(data);
 };
 
 export const findPasswordVerify = ({ email }: { email: string }) => client.post('/owners/password/reset/verification', { address: email });

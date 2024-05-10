@@ -133,7 +133,7 @@ export default function OwnerData({ goNext }:ButtonClickEvent) {
             {ownerData.registerFiles ? (
               <div className={styles['file-box__files']}>
                 {ownerData.registerFiles.map((file:File, index:number) => (
-                  <button type="button" className={styles['file-box__file']} onClick={(e) => onClick(index, e)}>
+                  <button key={file.name} type="button" className={styles['file-box__file']} onClick={(e) => onClick(index, e)}>
                     <FileImage />
                     <span className={styles['file-box__file--name']}>{file.name}</span>
                   </button>

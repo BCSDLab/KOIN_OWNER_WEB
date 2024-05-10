@@ -20,7 +20,7 @@ export default function PageNotFound() {
         <button
           type="button"
           className={styles.content__button}
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/owner')}
         >
           메인 화면 바로가기
         </button>

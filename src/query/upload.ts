@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { uploadFile, uploadFiles } from 'api/uploadFile/Uploadfile';
+import { uploadFile, uploadFiles } from 'api/uploadFile';
 
 const useUploadFile = () => {
   const uploadFileMutation = useMutation({
