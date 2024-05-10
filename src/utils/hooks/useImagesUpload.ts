@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import showToast from 'utils/ts/showToast';
 
 // 정의할 수 있는 에러 타입
-type UploadError = '413' | '415' | '404' | '422' | 'networkError' | '401' | '';
+export type UploadError = '413' | '415' | '404' | '422' | 'networkError' | '401' | '';
 
 const MAXSIZE = 1024 * 1024 * 10;
 
@@ -15,8 +15,9 @@ export default function useImagesUpload() {
 
   const saveImgFile = async () => {
     const files = imgRef.current?.files;
-
-    if (files && (files.length > 3 || imageFile.length >= 3)) {
+    console.log(files?.length)
+    // imageFile.length + files.length을 통해 저장된 이미지 + 새로 추가할 이미지의 개수를 파악함
+    if (files && (files.length > 3 || imageFile.length >= 3 || imageFile.length + files.length > 3)) {
       showToast('error', '파일은 3개까지 등록할 수 있습니다.')
       return;
     }
