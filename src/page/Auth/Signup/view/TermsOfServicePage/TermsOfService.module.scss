@@ -51,9 +51,10 @@
 
 .buttons {
   width: 100%;
+  background-color: white;
 
   @include media.media-breakpoint-down(mobile) {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     width: 100%;
     background-color: #ffffff;
