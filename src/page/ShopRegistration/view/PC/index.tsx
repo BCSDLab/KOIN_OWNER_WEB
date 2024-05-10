@@ -14,6 +14,7 @@ import ConfirmPopup from 'page/ShopRegistration/component/ConfirmPopup';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import CustomModal from 'component/common/CustomModal';
+import cn from 'utils/ts/className';
 import useModalStore from 'store/modalStore';
 import { WEEK, DAY_OF_WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -26,6 +27,7 @@ import useShopRegistrationStore from 'store/shopRegistration';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
+import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import styles from './ShopRegistrationPC.module.scss';
 
 export default function ShopRegistrationPC() {
@@ -53,7 +55,7 @@ export default function ShopRegistrationPC() {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
   const {
-    imageFile, imgRef, saveImgFile, uploadError,
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
   const [isError, setIsError] = useState(false);
 
@@ -73,6 +75,7 @@ export default function ShopRegistrationPC() {
     setPhone,
     setDeliveryPrice,
     setDescription,
+    removeImageUrl,
   } = useShopRegistrationStore();
 
   const {
@@ -125,6 +128,12 @@ export default function ShopRegistrationPC() {
   const openTimeArray = Object.values(openTimeState);
   const closeTimeArray = Object.values(closeTimeState);
   const shopClosedArray = Object.values(shopClosedState);
+
+  const onClickRemoveImageUrl = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
+    e.preventDefault();
+    setImageFile(imageFile.filter((img) => img !== imageUrl));
+    removeImageUrl(imageUrl);
+  };
 
   useEffect(() => {
     if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
@@ -183,7 +192,13 @@ export default function ShopRegistrationPC() {
             <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <span className={styles.form__title}>대표 이미지</span>
-                <label className={styles['form__image-upload']} htmlFor="mainMenuImage">
+                <label
+                  className={cn({
+                    [styles['form__image-upload']]: true,
+                    [styles['form__image-upload--active']]: imageUrls.length !== 0,
+                  })}
+                  htmlFor="mainMenuImage"
+                >
                   <input
                     type="file"
                     accept="image/*"
@@ -193,9 +208,20 @@ export default function ShopRegistrationPC() {
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  {imageUrls
-                    ? <img src={imageUrls[0]} className={styles['form__main-menu']} alt="메인 메뉴" />
-                    : (
+                  {imageUrls.length !== 0
+                    ? (
+                      imageUrls.map((imageUrl: string) => (
+                        <div
+                          key={imageUrl}
+                          className={styles['form__main-item']}
+                          onClick={(e) => onClickRemoveImageUrl(e, imageUrl)}
+                          aria-hidden
+                        >
+                          <FileImage />
+                          <div className={styles['form__main-text']}>{imageUrl}</div>
+                        </div>
+                      ))
+                    ) : (
                       <>
                         <Cutlery className={styles['form__cutlery-cross']} />
                         <span className={styles.form__text}>클릭하여 이미지를 등록해주세요.</span>
