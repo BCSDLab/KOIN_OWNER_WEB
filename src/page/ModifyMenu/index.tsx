@@ -14,11 +14,18 @@ import MenuDetail from 'page/AddMenu/components/MenuDetail';
 import GoMyShopModal from 'page/AddMenu/components/GoMyShop';
 import MobileDivide from 'page/AddMenu/components/MobileDivide';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
+import useFormValidation from 'page/AddMenu/hook/useFormValidation';
 
 export default function ModifyMenu() {
   useScrollToTop();
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const { validateFields } = useFormValidation();
+  const toggleConfirmClick = () => {
+    if (validateFields()) {
+      setIsComplete((prevState) => !prevState);
+    }
+  };
   const { menuId } = useParams();
 
   assert(menuId != null, 'menuId가 없습니다.');
@@ -29,10 +36,6 @@ export default function ModifyMenu() {
   }, [refetch]);
   const goMyShop = () => {
     navigate('/owner');
-  };
-
-  const toggleConfirmClick = () => {
-    setIsComplete((prevState) => !prevState);
   };
 
   const { deleteMenuMutation } = useDeleteMenu();
