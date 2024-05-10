@@ -39,7 +39,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   deliveryPrice: 0,
   description: '',
   imageUrl: '',
-  imageUrls: [],
+  imageUrls: ['aa'],
   owner: '',
   name: '',
   phone: '',
@@ -56,8 +56,8 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   setImageUrls: (newImageUrls: string[]) => set({
     imageUrls: newImageUrls,
   }),
-  removeImageUrl: (imageUrlToRemove) => set((state) => ({
-    imageUrls: state.imageUrls.filter((img) => img !== imageUrlToRemove),
+  removeImageUrl: (imageUrl: string) => set((state) => ({
+    imageUrls: state.imageUrls.filter((img) => img !== imageUrl),
   })),
   setOwner: (owner: string) => set({ owner }),
   setName: (name: string) => set({ name }),

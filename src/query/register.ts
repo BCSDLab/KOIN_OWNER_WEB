@@ -1,8 +1,8 @@
+import { isKoinError } from '@bcsdlab/koin';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
-import axios from 'axios';
 import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
@@ -85,8 +85,8 @@ export const useGetFileUrls = (goNext:()=>void) => {
         try {
           await register.mutateAsync(data.file_urls);
         } catch (e) {
-          if (axios.isAxiosError(e)) {
-            showToast('error', `${e.response?.data.message || e.message}`);
+          if (isKoinError(e)) {
+            showToast('error', `${e.message}`);
           }
         }
       } catch (e) {
