@@ -4,7 +4,6 @@
 * {
   margin: 0;
   padding: 0;
-  color: #000;
 }
 
 body {
@@ -32,6 +31,7 @@ a,
 button {
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
   -webkit-tap-highlight-color: transparent;
+  color: #000;
 }
 
 ul {
