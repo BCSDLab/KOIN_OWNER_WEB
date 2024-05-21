@@ -15,12 +15,20 @@ import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './ShopConfirmation.module.scss';
 
-export const usePostData = (setStep: (step: number) => void) => {
+interface UsePostDataProps {
+  onNext?:() => void
+}
+
+export const usePostData = ({ onNext } : UsePostDataProps) => {
   const queryClient = useQueryClient();
+  const { setStep } = useStepStore();
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => {
       setStep(5);
+      if (onNext) {
+        onNext();
+      }
       queryClient.refetchQueries();
     },
     onError: (e) => {
@@ -32,8 +40,7 @@ export const usePostData = (setStep: (step: number) => void) => {
   return mutation;
 };
 
-export default function ShopConfirmation() {
-  const { setStep } = useStepStore();
+export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const {
     category,
     categoryId,
@@ -54,7 +61,7 @@ export default function ShopConfirmation() {
     resolver: zodResolver(OwnerShop),
   });
 
-  const mutation = usePostData(setStep);
+  const mutation = usePostData({ onNext });
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);

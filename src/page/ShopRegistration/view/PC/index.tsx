@@ -100,7 +100,7 @@ export default function ShopRegistrationPC() {
     isAllClosed,
   } = CheckSameTime();
 
-  const mutation = usePostData(setStep);
+  const mutation = usePostData({});
 
   const {
     register, handleSubmit, setValue, formState: { errors },

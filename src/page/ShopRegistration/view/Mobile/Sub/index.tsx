@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import useStepStore from 'store/useStepStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
@@ -13,8 +12,7 @@ import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
 import styles from './Sub.module.scss';
 
-export default function Sub() {
-  const { increaseStep } = useStepStore();
+export default function Sub({ onNext }:{ onNext: () => void }) {
   const {
     value: showOperateTime,
     setTrue: openOperateTime,
@@ -57,7 +55,7 @@ export default function Sub() {
       setIsError(true);
     } else {
       setIsError(false);
-      increaseStep();
+      onNext();
     }
   };
 

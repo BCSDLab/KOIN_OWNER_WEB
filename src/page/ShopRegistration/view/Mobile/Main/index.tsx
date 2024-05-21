@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
-import useStepStore from 'store/useStepStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useEffect, useState } from 'react';
 import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
@@ -9,9 +8,8 @@ import cn from 'utils/ts/className';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './Main.module.scss';
 
-export default function Main() {
+export default function Main({ onNext }:{ onNext: () => void }) {
   const [isError, setIsError] = useState(false);
-  const { increaseStep } = useStepStore();
   const {
     imageFile, imgRef, saveImgFile, uploadError,
   } = useImagesUpload();
@@ -24,7 +22,7 @@ export default function Main() {
       setIsError(true);
     } else {
       setIsError(false);
-      increaseStep();
+      onNext();
     }
   };
 

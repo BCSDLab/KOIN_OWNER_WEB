@@ -1,57 +1,107 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import PreviousStep from 'component/common/Auth/PreviousStep';
 import ProgressBar from 'component/common/Auth/ProgressBar';
 import Complete from 'component/common/Auth/Complete';
 import SubTitle from 'component/common/Auth/SubTitle';
-import useStepStore from 'store/useStepStore';
 import PROGRESS_TITLE from 'utils/constant/progress';
 import ShopEntry from 'page/ShopRegistration/view/Mobile/ShopEntry';
 import ShopCategory from 'page/ShopRegistration/view/Mobile/ShopCategory';
 import Main from 'page/ShopRegistration/view/Mobile/Main';
 import Sub from 'page/ShopRegistration/view/Mobile/Sub';
 import ShopConfirmation from 'page/ShopRegistration/view/Mobile/ShopConfirmation';
+import { useFunnel } from 'utils/hooks/useFunnel';
 import styles from './ShopRegistrationMobile.module.scss';
 
 export default function ShopRegistrationMobile() {
-  const { TOTAL_STEP, step, decreaseStep } = useStepStore();
-  // 임시로 step 0 일때 뒤로가기 버튼 삭제
+  const {
+    Funnel, Step, setStep, currentStep,
+  } = useFunnel('가게 등록');
+
+  const currentIndex = PROGRESS_TITLE.findIndex((step) => step.title === currentStep);
+
+  const decreaseStep = () => {
+    if (currentIndex > 0) {
+      setStep(PROGRESS_TITLE[currentIndex - 1].title);
+    }
+  };
+
   return (
     <div>
-      {step !== 0 && <PreviousStep step={step} clickEvent={decreaseStep} />}
+      {currentStep !== '가게 등록' && <PreviousStep step={currentIndex} clickEvent={decreaseStep} />}
       <div className={styles.content}>
-        {step === 0 && <ShopEntry />}
-        {step === 1 && (
-        <>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
-          <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <ShopCategory />
-        </>
-        )}
-        {step === 2 && (
-        <>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="메인 정보를 입력해 주세요." />
-          <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <Main />
-        </>
-        )}
-        {step === 3 && (
-        <>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="등록 하시려는 업체의" bottomText="세부 정보를 입력해 주세요." />
-          <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <Sub />
-        </>
-        )}
-        {step === 4 && (
-        <>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
-          <div className={styles.margin} />
-          <ProgressBar step={step - 1} total={TOTAL_STEP} progressTitle={PROGRESS_TITLE} />
-          <ShopConfirmation />
-        </>
-        )}
-        {step === 5 && (
-        <Complete title="가게 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/" linkText="메인 화면 바로가기" />
-        )}
+        <Funnel>
+          <Step name="가게 등록">
+            <ShopEntry onNext={() => setStep('가게 카테고리 설정')} />
+          </Step>
+          <Step name="가게 카테고리 설정">
+            <>
+              <SubTitle
+                topTitle="가게 등록"
+                bottomTitle=""
+                topText="등록 하시려는 업체의"
+                bottomText="메인 정보를 입력해 주세요."
+              />
+              <ProgressBar
+                step={PROGRESS_TITLE[1].step}
+                total={PROGRESS_TITLE.length}
+                progressTitle={PROGRESS_TITLE[1].title}
+              />
+              <ShopCategory onNext={() => setStep('메인 정보 입력')} />
+            </>
+          </Step>
+          <Step name="메인 정보 입력">
+            <>
+              <SubTitle
+                topTitle="가게 등록"
+                bottomTitle=""
+                topText="등록 하시려는 업체의"
+                bottomText="메인 정보를 입력해 주세요."
+              />
+              <ProgressBar
+                step={PROGRESS_TITLE[2].step}
+                total={PROGRESS_TITLE.length}
+                progressTitle={PROGRESS_TITLE[2].title}
+              />
+              <Main onNext={() => setStep('세부 정보 입력')} />
+            </>
+          </Step>
+          <Step name="세부 정보 입력">
+            <>
+              <SubTitle
+                topTitle="가게 등록"
+                bottomTitle=""
+                topText="등록 하시려는 업체의"
+                bottomText="세부 정보를 입력해 주세요."
+              />
+              <ProgressBar
+                step={PROGRESS_TITLE[3].step}
+                total={PROGRESS_TITLE.length}
+                progressTitle={PROGRESS_TITLE[3].title}
+              />
+              <Sub onNext={() => setStep('가게 정보 확인')} />
+            </>
+          </Step>
+          <Step name="가게 정보 확인">
+            <>
+              <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
+              <div className={styles.margin} />
+              <ProgressBar
+                step={PROGRESS_TITLE[4].step}
+                total={PROGRESS_TITLE.length}
+                progressTitle={PROGRESS_TITLE[4].title}
+              />
+              <ShopConfirmation onNext={() => setStep('가게 등록 완료')} />
+            </>
+          </Step>
+          <Step name="가게 등록 완료">
+            <Complete
+              title="가게 등록 완료"
+              topText="가게 등록이 완료되었습니다."
+              bottomText="업체 정보 수정은 내 상점에서 가능합니다."
+              link="/"
+              linkText="메인 화면 바로가기"
+            />
+          </Step>
+        </Funnel>
       </div>
     </div>
   );

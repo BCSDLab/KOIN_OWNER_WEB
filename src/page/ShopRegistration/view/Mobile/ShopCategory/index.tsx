@@ -1,4 +1,3 @@
-import useStepStore from 'store/useStepStore';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/shopCategory';
@@ -8,10 +7,9 @@ import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import styles from './ShopCategory.module.scss';
 
-export default function ShopCategory() {
+export default function ShopCategory({ onNext }:{ onNext: () => void }) {
   const [isError, setIsError] = useState(false);
   const { categoryList } = useMyShop();
-  const { increaseStep } = useStepStore();
   const {
     category, setCategory, setCategoryId,
   } = useShopRegistrationStore();
@@ -26,7 +24,7 @@ export default function ShopCategory() {
       setIsError(true);
     } else {
       setIsError(false);
-      increaseStep();
+      onNext();
     }
   };
 
