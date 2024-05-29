@@ -3,7 +3,7 @@ import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import useValidateEmail from 'page/Auth/Signup/hooks/useValidateEmail';
 import useAuthCheck from 'page/Auth/Signup/hooks/useAuthCheck';
 import useVerification from 'page/Auth/Signup/hooks/useVerification';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import useRegisterInfo from 'store/registerStore';
 import useTimer from 'page/Auth/Signup/hooks/useTimer';
 import { useEffect } from 'react';

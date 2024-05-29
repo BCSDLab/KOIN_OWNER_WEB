@@ -1,4 +1,4 @@
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { FieldErrors } from 'react-hook-form';
 import { useState } from 'react';
 import styles from './ConfirmPopup.module.scss';
