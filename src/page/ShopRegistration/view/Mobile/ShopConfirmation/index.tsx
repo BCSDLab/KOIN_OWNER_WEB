@@ -1,18 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import useStepStore from 'store/useStepStore';
-import useShopRegistrationStore from 'store/shopRegistration';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
-import { useEffect } from 'react';
-import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
+import useMyShop from 'query/shop';
 import styles from './ShopConfirmation.module.scss';
 
 interface UsePostDataProps {
@@ -41,82 +39,43 @@ export const usePostData = ({ onNext } : UsePostDataProps) => {
 };
 
 export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
-  const {
-    category,
-    categoryId,
-    imageUrls,
-    name,
-    address,
-    phone,
-    deliveryPrice,
-    description,
-    delivery,
-    payBank,
-    payCard,
-  } = useShopRegistrationStore();
-
+  const { categoryList } = useMyShop();
   const operateTimeState = useOperateTimeState();
 
-  const { handleSubmit, setValue } = useForm<OwnerShop>({
-    resolver: zodResolver(OwnerShop),
-  });
+  const { handleSubmit, getValues } = useFormContext<OwnerShop>();
+  const values = getValues();
+  const categoryId = categoryList?.shop_categories[values.category_ids[0] - 1].name;
 
   const mutation = usePostData({ onNext });
-
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
   };
 
-  const { openTimeState, closeTimeState, shopClosedState } = useModalStore();
+  const { shopClosedState } = useModalStore();
   const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
-
-  const openTimeArray = Object.values(openTimeState);
-  const closeTimeArray = Object.values(closeTimeState);
-  const shopClosedArray = Object.values(shopClosedState);
-
-  useEffect(() => {
-    const openValue = DAY_OF_WEEK.map((day, index) => ({
-      close_time: closeTimeArray[index],
-      closed: shopClosedArray[index],
-      day_of_week: day,
-      open_time: openTimeArray[index],
-    }));
-    setValue('image_urls', imageUrls);
-    setValue('category_ids', [categoryId]);
-    setValue('name', name);
-    setValue('address', address);
-    setValue('phone', phone);
-    setValue('delivery_price', Number(deliveryPrice));
-    setValue('description', description);
-    setValue('delivery', delivery);
-    setValue('pay_bank', payBank);
-    setValue('pay_card', payCard);
-    setValue('open', openValue);
-  }, [openTimeArray, closeTimeArray, shopClosedArray, categoryId, name,
-    address, phone, deliveryPrice, description, delivery, payBank, payCard, imageUrls]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
         <div className={styles.form__info}>
           <span className={styles.form__title}>카테고리</span>
-          <span className={styles.form__value}>{category}</span>
+          <span className={styles.form__value}>{categoryId ?? values.category_ids}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>가게명</span>
-          <span className={styles.form__value}>{name}</span>
+          <span className={styles.form__value}>{values.name}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>주소정보</span>
-          <span className={styles.form__value}>{address}</span>
+          <span className={styles.form__value}>{values.address}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>전화번호</span>
-          <span className={styles.form__value}>{phone}</span>
+          <span className={styles.form__value}>{values.phone}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>배달금액</span>
-          <span className={styles.form__value}>{deliveryPrice === 0 ? '무료' : `${deliveryPrice}원`}</span>
+          <span className={styles.form__value}>{Number(values.delivery_price) === 0 ? '무료' : `${Number(values.delivery_price)}원`}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>운영시간</span>
@@ -154,19 +113,19 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>기타정보</span>
-          <span className={styles.form__value}>{description}</span>
+          <span className={styles.form__value}>{values.description}</span>
         </div>
         <div className={styles.form__checkbox}>
           <label htmlFor="delivery" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} readOnly checked={delivery} />
+            <input type="checkbox" id="delivery" className={styles['form__checkbox-input']} readOnly checked={values.delivery} />
             <span>배달 가능</span>
           </label>
           <label htmlFor="card" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="card" className={styles['form__checkbox-input']} readOnly checked={payCard} />
+            <input type="checkbox" id="card" className={styles['form__checkbox-input']} readOnly checked={values.pay_card} />
             <span>카드 가능</span>
           </label>
           <label htmlFor="bank" className={styles['form__checkbox-label']}>
-            <input type="checkbox" id="bank" className={styles['form__checkbox-input']} readOnly checked={payBank} />
+            <input type="checkbox" id="bank" className={styles['form__checkbox-input']} readOnly checked={values.pay_bank} />
             <span>계좌이체 가능</span>
           </label>
         </div>

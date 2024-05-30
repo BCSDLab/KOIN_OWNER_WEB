@@ -1,7 +1,7 @@
-import PreviousStep from 'component/common/Auth/PreviousStep';
-import ProgressBar from 'component/common/Auth/ProgressBar';
-import Complete from 'component/common/Auth/Complete';
-import SubTitle from 'component/common/Auth/SubTitle';
+import PreviousStep from 'component/Auth/PreviousStep';
+import ProgressBar from 'component/Auth/ProgressBar';
+import Complete from 'component/Auth/Complete';
+import SubTitle from 'component/Auth/SubTitle';
 import PROGRESS_TITLE from 'utils/constant/progress';
 import ShopEntry from 'page/ShopRegistration/view/Mobile/ShopEntry';
 import ShopCategory from 'page/ShopRegistration/view/Mobile/ShopCategory';
@@ -9,6 +9,7 @@ import Main from 'page/ShopRegistration/view/Mobile/Main';
 import Sub from 'page/ShopRegistration/view/Mobile/Sub';
 import ShopConfirmation from 'page/ShopRegistration/view/Mobile/ShopConfirmation';
 import { useFunnel } from 'utils/hooks/useFunnel';
+import { FormProvider, useForm } from 'react-hook-form';
 import styles from './ShopRegistrationMobile.module.scss';
 
 export default function ShopRegistrationMobile() {
@@ -24,8 +25,24 @@ export default function ShopRegistrationMobile() {
     }
   };
 
+  const methods = useForm({
+    defaultValues: {
+      category_ids: [],
+      delivery_price: 0,
+      description: '',
+      image_urls: [],
+      owner: '',
+      name: '',
+      phone: '',
+      address: '',
+      delivery: false,
+      pay_bank: false,
+      pay_card: false,
+    },
+  });
+
   return (
-    <div>
+    <FormProvider {...methods}>
       {currentStep !== '가게 등록' && <PreviousStep step={currentIndex} clickEvent={decreaseStep} />}
       <div className={styles.content}>
         <Funnel>
@@ -103,6 +120,6 @@ export default function ShopRegistrationMobile() {
           </Step>
         </Funnel>
       </div>
-    </div>
+    </FormProvider>
   );
 }
