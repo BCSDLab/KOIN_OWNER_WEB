@@ -54,11 +54,8 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
 
   const formatPhoneNumber = (inputNumber:string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
-    const phoneNumberLength = phoneNumber.length;
-
-    if (phoneNumberLength < 4) return phoneNumber;
-    if (phoneNumberLength < 7) return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
-    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7, 11)}`;
+    const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    return formattedPhoneNumber;
   };
 
   const handlePhoneChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +64,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
   };
 
   const handleNextClick = async () => {
-    const isValid = await trigger(['phone']);
+    const isValid = await trigger(['phone', 'delivery_price']);
     if (!isValid) {
       return;
     }
@@ -116,7 +113,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
         <input
           type="number"
           id="deliveryPrice"
-          value={deliveryPrice === 0 ? '' : deliveryPrice}
+          value={deliveryPrice}
           className={styles.form__input}
           {...register('delivery_price')}
           onWheel={(e) => (e.target as HTMLElement).blur()} // 마우스 스크롤로 숫자 변경 방지

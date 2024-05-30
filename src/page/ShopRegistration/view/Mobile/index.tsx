@@ -31,7 +31,6 @@ export default function ShopRegistrationMobile() {
       delivery_price: 0,
       description: '',
       image_urls: [],
-      owner: '',
       name: '',
       phone: '',
       address: '',

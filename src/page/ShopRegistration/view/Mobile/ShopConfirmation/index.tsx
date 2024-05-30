@@ -20,6 +20,7 @@ interface UsePostDataProps {
 export const usePostData = ({ onNext } : UsePostDataProps) => {
   const queryClient = useQueryClient();
   const { setStep } = useStepStore();
+  const { resetOperatingTime } = useModalStore();
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => {
@@ -28,6 +29,7 @@ export const usePostData = ({ onNext } : UsePostDataProps) => {
         onNext();
       }
       queryClient.refetchQueries();
+      resetOperatingTime();
     },
     onError: (e) => {
       if (isKoinError(e)) {
@@ -45,7 +47,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const { handleSubmit, getValues } = useFormContext<OwnerShop>();
   const values = getValues();
   const categoryId = categoryList?.shop_categories[values.category_ids[0] - 1].name;
-
   const mutation = usePostData({ onNext });
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
@@ -59,7 +60,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
       <div className={styles.form}>
         <div className={styles.form__info}>
           <span className={styles.form__title}>카테고리</span>
-          <span className={styles.form__value}>{categoryId ?? values.category_ids}</span>
+          <span className={styles.form__value}>{categoryId}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>가게명</span>
@@ -75,7 +76,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>배달금액</span>
-          <span className={styles.form__value}>{Number(values.delivery_price) === 0 ? '무료' : `${Number(values.delivery_price)}원`}</span>
+          <span className={styles.form__value}>{values.delivery_price === 0 ? '무료' : `${values.delivery_price}원`}</span>
         </div>
         <div className={styles.form__info}>
           <span className={styles.form__title}>운영시간</span>

@@ -26,8 +26,10 @@ export default function Main({ onNext }:{ onNext: () => void }) {
   };
 
   useEffect(() => {
-    setValue('image_urls', imageFile);
-  }, [imageFile, setValue, uploadError]);
+    if (imageFile.length > 0) {
+      setValue('image_urls', imageFile);
+    }
+  }, [imageFile, setValue]);
 
   const handleNextClick = async () => {
     const isValid = await trigger(['image_urls', 'name', 'address']);
