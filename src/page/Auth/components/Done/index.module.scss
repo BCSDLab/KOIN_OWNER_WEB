@@ -1,0 +1,21 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 3vh;
+}
+
+.title {
+  color: #175C8E;
+  font-weight: bold;
+}
+
+.content {
+  color: #8e8e8e;
+  text-align: center;
+}
