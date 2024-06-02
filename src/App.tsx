@@ -22,6 +22,7 @@ import useUserTypeStore from 'store/useUserTypeStore';
 import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 import LogPage from 'component/common/PageLog';
+import CommonLayout from 'page/Auth/components/Common';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -74,9 +75,13 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route element={<ProtectedRoute userTypeRequired={null} />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/find-id" element={<PageNotFound />} />
-            <Route path="/find-password" element={<FindPassword />} />
+            <Route element={<CommonLayout />}>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/find-id" element={<PageNotFound />} />
+              <Route path="/find-password" element={<FindPassword />} />
+            </Route>
+            <Route path="/find" element={<CommonLayout />} />
+            <Route path="/register" element={<CommonLayout />} />
           </Route>
           <Route path="/new-password" element={<NewPassword />} />
           <Route path="/complete-change-password" element={<CompleteChangePassword />} />
