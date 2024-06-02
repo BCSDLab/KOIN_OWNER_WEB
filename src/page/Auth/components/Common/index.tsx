@@ -87,7 +87,7 @@ export default function CommonLayout() {
             />
           </div>
           <div className={styles.content}>
-            {isComplete ? <Done isFindPassword={isFindPassword} /> : <Outlet />}
+            {isComplete ? <Done isFindPassword={isFindPassword} /> : <Outlet context={steps} />}
           </div>
           <button
             type="button"
