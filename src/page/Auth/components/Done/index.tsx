@@ -10,7 +10,7 @@ const completeFindPassword = {
 const completeRegister = {
   title: '회원가입 완료',
   content: '회원가입이 완료되었습니다!',
-  final: '가입 승인 시 로그인이 가능합니.',
+  final: '가입 승인 시 로그인이 가능합니다.',
 };
 
 interface Props {
