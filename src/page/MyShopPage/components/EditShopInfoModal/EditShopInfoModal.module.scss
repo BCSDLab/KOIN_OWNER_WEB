@@ -138,6 +138,10 @@
     margin-bottom: 24px;
   }
 
+  &__error-message {
+    margin-bottom: 5px;
+  }
+
   &__header {
     font-size: 18px;
     color: #17518e;
@@ -316,7 +320,15 @@
 
   &__label {
     display: flex;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+
+    &--error {
+      margin-bottom: 0px;
+    }
+  }
+
+  &__error-message {
+    margin-bottom: 5px;
   }
 
   &__header {
