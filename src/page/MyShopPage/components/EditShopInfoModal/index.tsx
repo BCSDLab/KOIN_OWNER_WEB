@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
-import { WEEK } from 'utils/constant/week';
+import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -48,8 +48,9 @@ export default function EditShopInfoModal({
   } = useImagesUpload();
 
   const { categoryList } = useShopCategory();
-
-  const { shopClosedState } = useModalStore();
+  const {
+    openTimeState, closeTimeState, shopClosedState, resetOperatingTime,
+  } = useModalStore();
 
   const {
     isAllSameTime,
@@ -65,6 +66,12 @@ export default function EditShopInfoModal({
     defaultValues: {
       ...shopInfo,
       category_ids: shopInfo.shop_categories.map((category) => category.id),
+      open: shopInfo.open.map((day) => ({
+        day_of_week: day.day_of_week,
+        closed: day.closed,
+        open_time: day.open_time,
+        close_time: day.close_time,
+      })),
     },
   });
 
@@ -112,6 +119,7 @@ export default function EditShopInfoModal({
     onSuccess: () => {
       closeModal();
       setIsSuccess(true);
+      resetOperatingTime();
     },
     onError: (e) => {
       if (isKoinError(e)) {
@@ -123,6 +131,40 @@ export default function EditShopInfoModal({
   });
 
   const operateTimeState = useOperateTimeState();
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const shopClosedArray = Object.values(shopClosedState);
+
+  useEffect(() => {
+    shopInfo.open.forEach((day, index) => {
+      useModalStore.setState((prev) => ({
+        ...prev,
+        openTimeState: {
+          ...prev.openTimeState,
+          [WEEK[index]]: day.open_time,
+        },
+        closeTimeState: {
+          ...prev.closeTimeState,
+          [WEEK[index]]: day.close_time,
+        },
+        shopClosedState: {
+          ...prev.shopClosedState,
+          [WEEK[index]]: day.closed,
+        },
+      }));
+    });
+  }, [shopInfo.open]);
+
+  useEffect(() => {
+    const openValue = DAY_OF_WEEK.map((day, index) => ({
+      close_time: closeTimeArray[index],
+      closed: shopClosedArray[index],
+      day_of_week: day,
+      open_time: openTimeArray[index],
+    }));
+    setValue('open', openValue);
+  }, [closeTimeArray, openTimeArray, setValue, shopClosedArray]);
+
   const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
     ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
     : '휴무일 없음';
