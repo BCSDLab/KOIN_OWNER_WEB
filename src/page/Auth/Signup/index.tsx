@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as NonCheck } from 'assets/svg/auth/non-check.svg';
 import { ReactComponent as Check } from 'assets/svg/auth/checked.svg';
 import { useFormContext } from 'react-hook-form';
@@ -9,6 +9,7 @@ import styles from './SignUp.module.scss';
 
 interface Step {
   index: number;
+  setIsStepComplete: (state : boolean) => {};
 }
 
 interface SelectOptions {
@@ -24,6 +25,7 @@ const initialSelectOption: SelectOptions = {
 export default function SignUp() {
   const { register } = useFormContext();
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
+  const steps = useOutletContext<Step>();
 
   const handleSelect = (option: keyof SelectOptions | 'all') => {
     if (option === 'all') {
@@ -32,16 +34,20 @@ export default function SignUp() {
         personal: newState,
         koin: newState,
       });
+      steps.setIsStepComplete(true);
     } else {
       setSelectItems((prevState) => ({
         ...prevState,
         [option]: !prevState[option],
       }));
+      if (selectItems.koin && selectItems.personal) {
+        steps.setIsStepComplete(true);
+      }
     }
   };
-
-  const steps = useOutletContext<Step>();
-
+  useEffect(() => {
+    setSelectItems(initialSelectOption);
+  }, [steps.index]);
   return (
     <>
       {steps.index === 0 && (
