@@ -5,16 +5,63 @@
 .agree-all {
   border-radius: 5px;
   background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-top: 9px;
 
-  &--button {
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     background-color: #f5f5f5;
+    color: #175c8e;
+    padding: 12px;
   }
 
-  &--text {
+  &__text {
     background-color: #f5f5f5;
   }
 }
 
-.test {
-  background-color: red;
+.personal {
+  margin-top: 4px;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    color: #8e8e8e;
+    padding: 12px;
+  }
+
+  &__content {
+    margin-top: 5px;
+    border: 1px dashed #d2dae2;
+    padding: 12px;
+    height: 20vh;
+    overflow: scroll;
+  }
+}
+
+.koin {
+  margin-top: 4px;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    color: #8e8e8e;
+    padding: 12px;
+  }
+
+  &__content {
+    margin-top: 5px;
+    border: 1px dashed #d2dae2;
+    padding: 12px;
+    height: 20vh;
+    overflow: scroll;
+  }
 }

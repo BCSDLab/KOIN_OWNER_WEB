@@ -3,6 +3,7 @@ import { ReactComponent as NonCheck } from 'assets/svg/auth/non-check.svg';
 import { ReactComponent as Check } from 'assets/svg/auth/checked.svg';
 import { useFormContext } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
+import TERMS from 'page/Auth/Signup/constant/terms';
 // eslint-disable-next-line
 import styles from './SignUp.module.scss';
 
@@ -46,30 +47,31 @@ export default function SignUp() {
       {steps.index === 0 && (
         <div className={styles['step-one']}>
           <div className={styles['agree-all']}>
-            <button type="button" className="test" onClick={() => handleSelect('all')}>
+            <button type="button" className={styles['agree-all__button']} onClick={() => handleSelect('all')}>
               {selectItems.personal && selectItems.koin
                 ? <Check />
                 : <NonCheck />}
-              <span className="agree-all--text">모두 동의합니다.</span>
+              <span className="agree-all__text">모두 동의합니다.</span>
             </button>
           </div>
           <div className={styles.personal}>
-            <button type="button" className="personal--button" onClick={() => handleSelect('personal')}>
+            <button type="button" className={styles.personal__button} onClick={() => handleSelect('personal')}>
               {selectItems.personal ? <Check /> : <NonCheck />}
-              <span className="personal--text">개인정보 이용약관(필수)</span>
+              <span className="personal__text">개인정보 이용약관(필수)</span>
             </button>
+            <div className={styles.personal__content}>{TERMS[0].text}</div>
           </div>
           <div className={styles.koin}>
-            <button type="button" className="koin--button" onClick={() => handleSelect('koin')}>
+            <button type="button" className={styles.koin__button} onClick={() => handleSelect('koin')}>
               {selectItems.koin ? <Check /> : <NonCheck />}
-              <span className="koin--text">개인정보 이용약관(필수)</span>
+              <span className="koin__text">코인 이용약관(필수)</span>
             </button>
+            <div className={styles.personal__content}>{TERMS[1].text}</div>
           </div>
         </div>
       )}
       {steps.index === 1 && (
         <div>
-          {/* UI for step 1 */}
           <span className={styles['phone-number']}>전화번호</span>
           <input {...register('phone_number')} />
         </div>
