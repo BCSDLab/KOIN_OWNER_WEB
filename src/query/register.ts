@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
-import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
+import parseRegisterData from 'page/Auth/SignupTmp/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import useUploadToken from 'store/uploadToken';

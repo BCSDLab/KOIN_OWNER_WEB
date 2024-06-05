@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
 import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import CustomModal from 'component/common/CustomModal';
-import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
-import useFileController from 'page/Auth/Signup/hooks/useFileController';
-import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
+import useCheckOwnerData from 'page/Auth/SignupTmp/hooks/useOwnerData';
+import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
+import useFileController from 'page/Auth/SignupTmp/hooks/useFileController';
+import useCheckNext from 'page/Auth/SignupTmp/hooks/useCheckNext';
 import { useEffect } from 'react';
 import useRegisterInfo from 'store/registerStore';
 import { useGetFileUrls } from 'query/register';

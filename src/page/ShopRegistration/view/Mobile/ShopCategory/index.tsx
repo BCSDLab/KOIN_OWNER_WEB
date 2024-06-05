@@ -4,7 +4,7 @@ import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/shopCategory';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useState } from 'react';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import styles from './ShopCategory.module.scss';
 

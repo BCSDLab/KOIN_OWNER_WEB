@@ -3,7 +3,7 @@ import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobi
 import useStepStore from 'store/useStepStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import { useEffect, useState } from 'react';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
 import useImagesUpload from 'utils/hooks/useImagesUpload';

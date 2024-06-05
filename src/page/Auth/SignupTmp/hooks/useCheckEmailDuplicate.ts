@@ -3,7 +3,7 @@ import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { User } from 'page/Auth/Signup/types/User';
+import { User } from 'page/Auth/SignupTmp/types/User';
 import useRegisterInfo from 'store/registerStore';
 import { isKoinError } from '@bcsdlab/koin';
 

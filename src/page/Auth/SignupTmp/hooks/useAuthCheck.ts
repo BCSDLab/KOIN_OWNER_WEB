@@ -1,7 +1,7 @@
 import { useGenerateAuthCode } from 'query/register';
 import { useEffect, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { User } from 'page/Auth/Signup/types/User';
+import { User } from 'page/Auth/SignupTmp/types/User';
 import { AxiosError } from 'axios';
 
 export default function useAuthCheck(userEmail:string, isMobile:boolean) {

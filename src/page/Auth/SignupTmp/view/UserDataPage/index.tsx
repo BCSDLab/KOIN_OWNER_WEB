@@ -1,12 +1,12 @@
-import UserEmail from 'page/Auth/Signup/component/UserEmail';
-import UserId from 'page/Auth/Signup/component/UserId';
-import UserPassword from 'page/Auth/Signup/component/UserPassword';
+import UserEmail from 'page/Auth/SignupTmp/component/UserEmail';
+import UserId from 'page/Auth/SignupTmp/component/UserId';
+import UserPassword from 'page/Auth/SignupTmp/component/UserPassword';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import { useEffect, useState } from 'react';
-import { User } from 'page/Auth/Signup/types/User';
+import { User } from 'page/Auth/SignupTmp/types/User';
 import useStepStore from 'store/useStepStore';
-import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
+import useCheckNext from 'page/Auth/SignupTmp/hooks/useCheckNext';
 import useRegisterInfo from 'store/registerStore';
 import styles from './UserData.module.scss';
 

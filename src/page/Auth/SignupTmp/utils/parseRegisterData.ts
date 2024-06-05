@@ -1,5 +1,5 @@
-import { User } from 'page/Auth/Signup/types/User';
-import { Owner } from 'page/Auth/Signup/types/Owner';
+import { User } from 'page/Auth/SignupTmp/types/User';
+import { Owner } from 'page/Auth/SignupTmp/types/Owner';
 import sha256 from 'utils/ts/SHA-256';
 
 const parseRegisterData = async (

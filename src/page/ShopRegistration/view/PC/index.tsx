@@ -5,7 +5,7 @@ import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.s
 import { useEffect, useState } from 'react';
 import useStepStore from 'store/useStepStore';
 import Copyright from 'component/common/Copyright';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import Complete from 'component/common/Auth/Complete';
 import Category from 'page/ShopRegistration/component/Modal/Category';
 import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
@@ -24,7 +24,7 @@ import useImagesUpload from 'utils/hooks/useImagesUpload';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import useShopRegistrationStore from 'store/shopRegistration';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
 import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';

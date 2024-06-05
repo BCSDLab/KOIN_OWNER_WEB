@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { User, UserParam } from 'page/Auth/Signup/types/User';
-import { Owner, OwnerParam } from 'page/Auth/Signup/types/Owner';
+import { User, UserParam } from 'page/Auth/SignupTmp/types/User';
+import { Owner, OwnerParam } from 'page/Auth/SignupTmp/types/Owner';
 
 export default function useCheckNext() {
   const [isDone, setDone] = useState(false);
