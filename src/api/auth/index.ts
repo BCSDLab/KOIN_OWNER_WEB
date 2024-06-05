@@ -34,3 +34,11 @@ export const findPassword = ({
 });
 
 export const newPassword = ({ address, password }: { address: string, password: string }) => client.put('/owners/password/reset', { address, password });
+
+export const sendVerifyCode = (phone_number: string) => client.post('/owners/password/reset/verification/sms', {
+  phone_number,
+});
+
+export const verifyCode = ({ phone_number, certification_code } : { phone_number:string, certification_code:string }) => client.post('/owners/password/reset/send/sms', {
+  phone_number, certification_code,
+});

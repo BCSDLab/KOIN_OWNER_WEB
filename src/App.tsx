@@ -5,7 +5,7 @@ import OwnerLayout from 'layout/OwnerLayout';
 import CoopLayout from 'layout/CoopLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
-import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
+// import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
 import NewPassword from 'page/Auth/FindPassword/NewPassword';
 import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePassword';
 import AuthLayout from 'layout/AuthLayout';
@@ -23,6 +23,7 @@ import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 import LogPage from 'component/common/PageLog';
 import CommonLayout from 'page/Auth/components/Common';
+import FindPassword from 'page/Auth/FindPassword';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;

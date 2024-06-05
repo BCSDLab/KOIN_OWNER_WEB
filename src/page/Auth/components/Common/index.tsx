@@ -21,7 +21,7 @@ interface Register extends FindPassword {
   shop_name: string,
   attachment_urls: {
     file_url: string
-  }[]
+  }[],
 }
 
 export default function CommonLayout() {
