@@ -34,20 +34,23 @@ export default function SignUp() {
         personal: newState,
         koin: newState,
       });
-      steps.setIsStepComplete(true);
     } else {
       setSelectItems((prevState) => ({
         ...prevState,
         [option]: !prevState[option],
       }));
-      if (selectItems.koin && selectItems.personal) {
-        steps.setIsStepComplete(true);
-      }
     }
   };
   useEffect(() => {
     setSelectItems(initialSelectOption);
   }, [steps.index]);
+  useEffect(() => {
+    if (selectItems.koin && selectItems.personal) {
+      steps.setIsStepComplete(true);
+    } else {
+      steps.setIsStepComplete(false);
+    }
+  });
   return (
     <>
       {steps.index === 0 && (
