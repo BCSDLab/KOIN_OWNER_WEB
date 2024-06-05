@@ -13,10 +13,16 @@ export const useStep = (type: Type) => {
   const target = type === 'find' ? findPassword : register;
   const [index, setIndex] = useState(0);
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isStepComplete, setIsStepComplete] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const nextStep = () => {
-    if (index + 1 < target.length) setIndex((prev) => prev + 1);
+    if (isStepComplete && index + 1 < target.length) {
+      setIndex((prev) => prev + 1);
+      setIsStepComplete(false);
+    } else if (isStepComplete && index + 1 === target.length) {
+      setIsComplete(true);
+    }
   };
 
   const previousStep = () => {
@@ -25,10 +31,17 @@ export const useStep = (type: Type) => {
   };
 
   const currentStep = target[index];
-
   const totalStep = target.length;
 
   return {
-    nextStep, previousStep, currentStep, index, totalStep, isComplete, setIsComplete,
+    nextStep,
+    previousStep,
+    currentStep,
+    index,
+    totalStep,
+    isComplete,
+    setIsComplete,
+    isStepComplete,
+    setIsStepComplete,
   };
 };
