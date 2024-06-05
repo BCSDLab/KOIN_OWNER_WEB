@@ -26,8 +26,10 @@ export const useStep = (type: Type) => {
   };
 
   const previousStep = () => {
-    if (index > 0) setIndex((prev) => prev - 1);
-    else navigate(-1);
+    if (index > 0) {
+      setIndex((prev) => prev - 1);
+      setIsStepComplete(true); // step을 통과한 사람만 뒤로 갈 수 있음
+    } else navigate(-1);
   };
 
   const currentStep = target[index];
