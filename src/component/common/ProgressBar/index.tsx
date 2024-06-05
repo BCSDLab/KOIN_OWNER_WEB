@@ -1,4 +1,4 @@
-import STEPS from 'page/Auth/SignupTmp/constant/signupStep';
+import STEPS from 'page/Auth/Signup/constant/signupStep';
 import styles from './ProgressBar.module.scss';
 
 interface ProgressBarProps {

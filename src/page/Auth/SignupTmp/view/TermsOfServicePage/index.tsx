@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import CustomButton from 'page/Auth/Signup/CustomButton';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import TERMS from 'page/Auth/SignupTmp/constant/terms';
+import TERMS from 'page/Auth/Signup/constant/terms';
 import React, { useEffect, useRef, useState } from 'react';
 
 import styles from './TermsOfService.module.scss';
