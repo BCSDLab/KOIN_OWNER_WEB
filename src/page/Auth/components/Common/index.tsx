@@ -95,7 +95,7 @@ export default function CommonLayout() {
             disabled={!isStepComplete}
             className={
               cn({
-                [styles.button__active]: isStepComplete || isComplete,
+                [styles['button--active']]: isStepComplete || isComplete,
                 [styles.button]: true,
               })
             }
