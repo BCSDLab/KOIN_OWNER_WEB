@@ -38,7 +38,7 @@ export default function CommonLayout() {
 
   const steps = useStep(isFindPassword ? 'find' : 'register');
   const {
-    nextStep, previousStep, currentStep, index, totalStep, isComplete,
+    nextStep, previousStep, currentStep, index, totalStep, isComplete, isStepComplete,
   } = steps;
 
   // eslint-disable-next-line
@@ -92,10 +92,10 @@ export default function CommonLayout() {
           <button
             type="button"
             onClick={stepCheck}
-            disabled={!!errors.root}
+            disabled={!isStepComplete}
             className={
               cn({
-                [styles.button__active]: !!errors.root,
+                [styles['button--active']]: isStepComplete || isComplete,
                 [styles.button]: true,
               })
             }
