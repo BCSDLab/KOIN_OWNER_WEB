@@ -1,0 +1,36 @@
+.container {
+  height: calc(100vh - 30vh);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.input {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: none;
+  height: 50px;
+  padding: 2px 10px;
+  box-sizing: border-box;
+}
+
+.button {
+  background-color: #eeeeee;
+  border: 4px;
+  height: 50px;
+  width: 40%;
+}
+
+.error {
+  color: #f7941e;
+  font-size: 10px;
+}
