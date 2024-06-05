@@ -1,3 +1,20 @@
 .id-input {
   font-size: 12px;
 }
+
+.agree-all {
+  border-radius: 5px;
+  background: #f5f5f5;
+
+  &--button {
+    background-color: #f5f5f5;
+  }
+
+  &--text {
+    background-color: #f5f5f5;
+  }
+}
+
+.test {
+  background-color: red;
+}

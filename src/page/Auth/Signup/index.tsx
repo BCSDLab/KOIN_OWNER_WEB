@@ -4,7 +4,7 @@ import { ReactComponent as Check } from 'assets/svg/auth/checked.svg';
 import { useFormContext } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 // eslint-disable-next-line
-import styles from './Signup.module.scss';
+import styles from './SignUp.module.scss';
 
 interface Step {
   index: number;
@@ -46,7 +46,7 @@ export default function SignUp() {
       {steps.index === 0 && (
         <div className={styles['step-one']}>
           <div className={styles['agree-all']}>
-            <button type="button" className="agree-all--button" onClick={() => handleSelect('all')}>
+            <button type="button" className="test" onClick={() => handleSelect('all')}>
               {selectItems.personal && selectItems.koin
                 ? <Check />
                 : <NonCheck />}
