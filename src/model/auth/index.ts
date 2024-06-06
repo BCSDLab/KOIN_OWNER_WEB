@@ -77,3 +77,7 @@ export type User = z.infer<typeof User>;
 export interface LoginForm extends LoginParams {
   isAutoLogin: boolean;
 }
+
+export interface CertificationResponse {
+  token: string;
+}

@@ -1,5 +1,6 @@
 import { accessClient, client } from 'api';
 import {
+  CertificationResponse,
   LoginParams, LoginResponse, OwnerResponse, UserTypeResponse,
 } from 'model/auth';
 
@@ -39,6 +40,6 @@ export const sendVerifyCode = (phone_number: string) => client.post('/owners/pas
   phone_number,
 });
 
-export const verifyCode = ({ phone_number, certification_code } : { phone_number:string, certification_code:string }) => client.post('/owners/password/reset/send/sms', {
+export const verifyCode = ({ phone_number, certification_code } : { phone_number:string, certification_code:string }) => client.post<CertificationResponse>('/owners/password/reset/send/sms', {
   phone_number, certification_code,
 });
