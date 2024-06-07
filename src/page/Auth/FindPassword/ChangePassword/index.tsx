@@ -5,8 +5,7 @@ import { ChangePasswordForm } from 'model/auth';
 // eslint-disable-next-line
 import { OutletProps } from 'page/Auth/FindPassword/index';
 import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
-// eslint-disable-next-line
-import styles from '../Verify/index.module.scss';
+import styles from 'page/Auth/FindPassword/index.module.scss';
 
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/;
 

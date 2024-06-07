@@ -8,7 +8,7 @@ import {
 import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
-import styles from './index.module.scss';
+import styles from 'page/Auth/FindPassword/index.module.scss';
 // eslint-disable-next-line
 import { OutletProps } from '..';
 
