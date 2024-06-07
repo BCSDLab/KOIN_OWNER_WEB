@@ -7,6 +7,7 @@ import {
 } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
+import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
 import styles from './index.module.scss';
 // eslint-disable-next-line
 import { OutletProps } from '..';
@@ -112,9 +113,14 @@ export default function Verify() {
           type="text"
           placeholder="-없이 번호를 입력해주세요."
         />
-        <div className={styles.error}>
-          {errors.phone_number && errors.phone_number.message}
-        </div>
+
+        {errors.phone_number
+          && (
+            <div className={styles.error}>
+              <Warning />
+              {errors.phone_number.message}
+            </div>
+          )}
       </section>
       <section className={styles.section}>
         <div className={styles.title}>인증번호</div>
@@ -141,9 +147,13 @@ export default function Verify() {
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
         </div>
-        <div className={styles.error}>
-          {errors.certification_code && errors.certification_code.message}
-        </div>
+        {errors.certification_code
+          && (
+            <div className={styles.error}>
+              <Warning />
+              {errors.certification_code.message}
+            </div>
+          )}
       </section>
     </form>
   );

@@ -4,6 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { ChangePasswordForm } from 'model/auth';
 // eslint-disable-next-line
 import { OutletProps } from 'page/Auth/FindPassword/index';
+import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
 // eslint-disable-next-line
 import styles from '../Verify/index.module.scss';
 
@@ -47,6 +48,7 @@ export default function ChangePassword() {
         {errors.password
           ? (
             <div className={styles.error}>
+              <Warning />
               {errors.password.message}
             </div>
           ) : <div className={styles.comment}>* 특수문자 포함 영어와 숫자 6~18 자리</div>}
@@ -62,9 +64,14 @@ export default function ChangePassword() {
             validate: (value) => value === getValues('password') || '비밀번호가 일치하지 않습니다.',
           })}
         />
-        <div className={styles.error}>
-          {errors.passwordCheck && errors.passwordCheck.message}
-        </div>
+
+        {errors.passwordCheck
+          && (
+            <div className={styles.error}>
+              <Warning />
+              {errors.passwordCheck.message}
+            </div>
+          )}
       </section>
     </form>
   );

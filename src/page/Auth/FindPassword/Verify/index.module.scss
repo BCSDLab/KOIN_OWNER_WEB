@@ -64,6 +64,9 @@
 .error {
   color: #f7941e;
   font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .comment {
