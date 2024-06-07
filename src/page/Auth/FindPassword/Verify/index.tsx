@@ -9,8 +9,7 @@ import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
 import styles from 'page/Auth/FindPassword/index.module.scss';
-// eslint-disable-next-line
-import { OutletProps } from '..';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
 
 // 코드 발송 및 에러 처리
 const code = (
