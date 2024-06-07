@@ -11,13 +11,14 @@ const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6
 export default function ChangePassword() {
   const method = useFormContext<ChangePasswordForm>();
   const {
-    register, formState: { errors, isValid }, getValues,
+    register, formState: { errors, isValid }, getValues, clearErrors,
   } = method;
   const steps: OutletProps = useOutletContext();
   const { setIsStepComplete } = steps;
 
   useEffect(() => {
     if (isValid) {
+      clearErrors();
       setIsStepComplete(true);
     } else {
       setIsStepComplete(false);
