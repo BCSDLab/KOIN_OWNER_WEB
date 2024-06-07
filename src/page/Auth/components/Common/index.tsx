@@ -1,28 +1,29 @@
 import { ReactComponent as BackArrow } from 'assets/svg/common/back-arrow.svg';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, UseFormSetError } from 'react-hook-form';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'utils/ts/className';
+import { Register } from 'model/auth';
 // eslint-disable-next-line
-import { useStep } from '../../hook/useStep';
+import { changePassword } from 'api/auth';
+import { isKoinError } from '@bcsdlab/koin';
+import { useStep } from 'page/Auth/hook/useStep';
 // eslint-disable-next-line
 import Done from '../Done/index';
 import styles from './index.module.scss';
 
-interface FindPassword {
-  phone_number: string;
-  certification_code: string;
-  password: string;
-}
-
-interface Register extends FindPassword {
-  company_number: string,
-  name: string,
-  shop_id: number,
-  shop_name: string,
-  attachment_urls: {
-    file_url: string
-  }[],
-}
+const setNewPassword = (
+  phone_number: string,
+  password: string,
+  setError: UseFormSetError<Register>,
+) => {
+  changePassword({ phone_number, password })
+    .then(() => sessionStorage.removeItem('accessToken'))
+    .catch((e) => {
+      if (isKoinError(e)) {
+        setError('password', { type: 'custom', message: e.message });
+      }
+    });
+};
 
 export default function CommonLayout() {
   const location = useLocation();
@@ -34,7 +35,7 @@ export default function CommonLayout() {
   const method = useForm<Register>({
     mode: 'onChange',
   });
-  const { formState: { errors } } = method;
+  const { formState: { errors }, setError, getValues } = method;
 
   const steps = useStep(isFindPassword ? 'find' : 'register');
   const {
@@ -48,6 +49,7 @@ export default function CommonLayout() {
   const stepCheck = () => {
     if (isComplete) navigate('/login');
     if (!errors.root) {
+      if (index + 1 === totalStep && isFindPassword) setNewPassword(getValues('phone_number'), getValues('password'), setError);
       nextStep();
     }
   };

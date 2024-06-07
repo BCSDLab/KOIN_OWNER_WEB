@@ -1,5 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 // eslint-disable-next-line
+import ChangePassword from './ChangePassword';
+// eslint-disable-next-line
 import Verify from './Verify';
 
 export interface OutletProps {
@@ -10,6 +12,8 @@ export interface OutletProps {
   totalStep: number;
   isComplete: boolean;
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  isStepComplete: boolean;
+  setIsStepComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function FindPassword() {
@@ -18,7 +22,7 @@ export default function FindPassword() {
   return (
     <>
       {index === 0 && <Verify />}
-      {index === 1 && <div>비밀번호 변경</div>}
+      {index === 1 && <ChangePassword />}
     </>
   );
 }

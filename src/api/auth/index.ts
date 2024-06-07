@@ -43,3 +43,8 @@ export const sendVerifyCode = (phone_number: string) => client.post('/owners/pas
 export const verifyCode = ({ phone_number, certification_code } : { phone_number:string, certification_code:string }) => client.post<CertificationResponse>('/owners/password/reset/send/sms', {
   phone_number, certification_code,
 });
+
+export const changePassword = ({ phone_number, password } : { phone_number:string, password:string }) => client.put('/owners/password/reset/sms', {
+  phone_number,
+  password,
+});
