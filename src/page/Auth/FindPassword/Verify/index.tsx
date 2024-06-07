@@ -1,4 +1,4 @@
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { sendVerifyCode, verifyCode } from 'api/auth';
 import { ChangeEvent, useEffect, useState } from 'react';
 import {
@@ -10,12 +10,21 @@ import cn from 'utils/ts/className';
 import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
 import styles from 'page/Auth/FindPassword/index.module.scss';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
+import { useDebounce } from 'utils/hooks/useDebounce';
+
+interface SendCode {
+  getValues: UseFormGetValues<Verify>;
+  setError: UseFormSetError<Verify>;
+  setIsSent: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 // 코드 발송 및 에러 처리
 const code = (
-  getValues: UseFormGetValues<Verify>,
-  setError: UseFormSetError<Verify>,
-  setIsSent: React.Dispatch<React.SetStateAction<boolean>>,
+  {
+    getValues,
+    setError,
+    setIsSent,
+  }: SendCode,
 ) => {
   sendVerifyCode(getValues('phone_number'))
     .then(() => setIsSent(true))
@@ -49,6 +58,8 @@ const useCheckCode = (
         .catch((e) => {
           if (isKoinError(e)) {
             setError('certification_code', { type: 'error', message: e.message });
+          } else {
+            sendClientError(e);
           }
           setIsStepComplete(false);
         });
@@ -69,7 +80,7 @@ export default function Verify() {
     register, getValues, setError, formState: { errors }, watch, clearErrors,
   } = method;
   const [isSent, setIsSent] = useState(false);
-  const [id, setId] = useState<null | NodeJS.Timeout>(null);
+  const debounce = useDebounce<SendCode>(code, { getValues, setError, setIsSent });
   const steps: OutletProps = useOutletContext();
 
   const { setCertificationCode, isCertified } = useCheckCode(
@@ -78,13 +89,6 @@ export default function Verify() {
     setError,
     clearErrors,
   );
-
-  // 디바운싱
-  const debounce = () => {
-    if (id) clearTimeout(id);
-    const timeId = setTimeout(() => code(getValues, setError, setIsSent), 200);
-    setId(timeId);
-  };
 
   const sendCode = () => {
     if (getValues('phone_number').length === 0) {

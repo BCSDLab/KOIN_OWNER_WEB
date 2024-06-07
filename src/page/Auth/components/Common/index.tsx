@@ -5,7 +5,7 @@ import cn from 'utils/ts/className';
 import { Register } from 'model/auth';
 // eslint-disable-next-line
 import { changePassword } from 'api/auth';
-import { isKoinError } from '@bcsdlab/koin';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
 // eslint-disable-next-line
 import Done from '../Done/index';
@@ -21,6 +21,8 @@ const setNewPassword = (
     .catch((e) => {
       if (isKoinError(e)) {
         setError('password', { type: 'custom', message: e.message });
+      } else {
+        sendClientError(e);
       }
     });
 };
