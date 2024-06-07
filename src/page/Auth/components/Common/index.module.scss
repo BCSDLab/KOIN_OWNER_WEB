@@ -20,9 +20,9 @@
 
   &__back {
     position: absolute;
-    left: 0px;
+    left: 0;
     cursor: pointer;
-    
+
     @include media.media-breakpoint-up(mobile) {
       display: none;
     }
@@ -42,7 +42,7 @@
   &__progress {
     display: flex;
     justify-content: space-between;
-    color: #175C8E;
+    color: #175c8e;
     font-weight: 600;
     margin: 10px 0;
   }
@@ -79,10 +79,11 @@
   font-weight: 600;
 
   &--active {
-     width: 100%;
-    background-color: #175C8E;
+    width: 100%;
+    background-color: #175c8e;
     height: 50px;
     border-radius: 4px;
     font-weight: 600;
+    color: white;
   }
 }
