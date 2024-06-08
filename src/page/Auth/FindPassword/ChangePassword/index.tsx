@@ -9,10 +9,10 @@ import styles from 'page/Auth/FindPassword/index.module.scss';
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/;
 
 export default function ChangePassword() {
-  const method = useFormContext<ChangePasswordForm>();
   const {
     register, formState: { errors, isValid }, getValues, clearErrors,
-  } = method;
+  } = useFormContext<ChangePasswordForm>();
+
   const steps: OutletProps = useOutletContext();
   const { setIsStepComplete } = steps;
 
@@ -44,13 +44,19 @@ export default function ChangePassword() {
             },
           })}
         />
-        {errors.password
-          ? (
-            <div className={styles.error}>
-              <Warning />
-              {errors.password.message}
-            </div>
-          ) : <div className={styles.comment}>* 특수문자 포함 영어와 숫자 6~18 자리</div>}
+        {
+          errors.password
+            ? (
+              <div className={styles.error}>
+                <Warning />
+                {errors.password.message}
+              </div>
+            ) : (
+              <div className={styles.comment}>
+                * 특수문자 포함 영어와 숫자 6~18 자리
+              </div>
+            )
+        }
 
       </section>
       <section className={styles.section}>
@@ -63,14 +69,14 @@ export default function ChangePassword() {
             validate: (value) => value === getValues('password') || '비밀번호가 일치하지 않습니다.',
           })}
         />
-
-        {errors.passwordCheck
-          && (
+        {
+          errors.passwordCheck && (
             <div className={styles.error}>
               <Warning />
               {errors.passwordCheck.message}
             </div>
-          )}
+          )
+        }
       </section>
     </form>
   );

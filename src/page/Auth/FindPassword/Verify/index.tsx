@@ -75,10 +75,10 @@ interface Verify {
 }
 
 export default function Verify() {
-  const method = useFormContext<Verify>();
   const {
     register, getValues, setError, formState: { errors }, watch, clearErrors,
-  } = method;
+  } = useFormContext<Verify>();
+
   const [isSent, setIsSent] = useState(false);
   const debounce = useDebounce<SendCode>(code, { getValues, setError, setIsSent });
   const steps: OutletProps = useOutletContext();
@@ -150,13 +150,14 @@ export default function Verify() {
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
         </div>
-        {errors.certification_code
-          && (
+        {
+          errors.certification_code && (
             <div className={styles.error}>
               <Warning />
               {errors.certification_code.message}
             </div>
-          )}
+          )
+        }
       </section>
     </form>
   );
