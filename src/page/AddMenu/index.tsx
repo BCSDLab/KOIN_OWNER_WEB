@@ -47,6 +47,7 @@ export default function AddMenu() {
       setIsComplete((prevState) => !prevState);
     }
   };
+
   const addMenu = () => {
     const newMenuData = {
       category_ids: categoryIds,
@@ -62,10 +63,30 @@ export default function AddMenu() {
     };
     addMenuMutation(newMenuData);
   };
-  const confirmAddMenu = () => {
-    addMenu();
-    goMyShop();
+
+  const onClickMenuAddCancleHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (isComplete) {
+      toggleConfirmClick();
+    } else {
+      goMyShop();
+    }
   };
+
+  const onClickMenuAddConfirmHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (isComplete) {
+      if (isMobile) {
+        openGoMyShopModal();
+        return;
+      }
+      addMenu();
+      navigate('./owners');
+    } else {
+      toggleConfirmClick();
+    }
+  };
+
   useEffect(
     () => {
       resetMenuName();
@@ -103,41 +124,20 @@ export default function AddMenu() {
             </div>
           </div>
           <div className={styles['mobile__button-container']}>
-            {isComplete ? (
-              <>
-                <button
-                  className={styles['mobile__button-cancel']}
-                  type="button"
-                  onClick={toggleConfirmClick}
-                >
-                  취소
-                </button>
-                <button
-                  className={styles['mobile__button-check']}
-                  type="button"
-                  onClick={confirmAddMenu}
-                >
-                  확인
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  className={styles['mobile__button-cancel']}
-                  type="button"
-                  onClick={goMyShop}
-                >
-                  취소
-                </button>
-                <button
-                  className={styles['mobile__button-check']}
-                  type="button"
-                  onClick={toggleConfirmClick}
-                >
-                  확인
-                </button>
-              </>
-            )}
+            <button
+              className={styles['mobile__button-cancel']}
+              type="button"
+              onClick={(e) => onClickMenuAddCancleHandler(e)}
+            >
+              취소
+            </button>
+            <button
+              className={styles['mobile__button-check']}
+              type="button"
+              onClick={(e) => onClickMenuAddConfirmHandler(e)}
+            >
+              확인
+            </button>
           </div>
         </div>
       ) : (
@@ -145,41 +145,20 @@ export default function AddMenu() {
           <div className={styles.header}>
             <h1 className={styles.header__title}>메뉴 추가</h1>
             <div className={styles['header__button-container']}>
-              {isComplete ? (
-                <>
-                  <button
-                    className={styles['header__button-cancel']}
-                    type="button"
-                    onClick={toggleConfirmClick}
-                  >
-                    취소
-                  </button>
-                  <button
-                    className={styles['header__button-check']}
-                    type="button"
-                    onClick={openGoMyShopModal}
-                  >
-                    확인
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    className={styles['header__button-cancel']}
-                    type="button"
-                    onClick={goMyShop}
-                  >
-                    취소
-                  </button>
-                  <button
-                    className={styles['header__button-check']}
-                    type="button"
-                    onClick={toggleConfirmClick}
-                  >
-                    확인
-                  </button>
-                </>
-              )}
+              <button
+                className={styles['header__button-cancel']}
+                type="button"
+                onClick={(e) => onClickMenuAddCancleHandler(e)}
+              >
+                취소
+              </button>
+              <button
+                className={styles['header__button-check']}
+                type="button"
+                onClick={(e) => onClickMenuAddConfirmHandler(e)}
+              >
+                확인
+              </button>
             </div>
           </div>
           <div className={styles.content}>
