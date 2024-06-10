@@ -5,9 +5,6 @@ import OwnerLayout from 'layout/OwnerLayout';
 import CoopLayout from 'layout/CoopLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
-import FindPassword from 'page/Auth/FindPassword/SendAuthNumber';
-import NewPassword from 'page/Auth/FindPassword/NewPassword';
-import CompleteChangePassword from 'page/Auth/FindPassword/CompleteChangePassword';
 import AuthLayout from 'layout/AuthLayout';
 import MyShopPage from 'page/MyShopPage';
 import ShopRegistration from 'page/ShopRegistration';
@@ -23,6 +20,7 @@ import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 import LogPage from 'component/common/PageLog';
 import CommonLayout from 'page/Auth/components/Common';
+import FindPassword from 'page/Auth/FindPassword';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -80,11 +78,7 @@ function App() {
               <Route path="/find-id" element={<PageNotFound />} />
               <Route path="/find-password" element={<FindPassword />} />
             </Route>
-            <Route path="/find" element={<CommonLayout />} />
-            <Route path="/register" element={<CommonLayout />} />
           </Route>
-          <Route path="/new-password" element={<NewPassword />} />
-          <Route path="/complete-change-password" element={<CompleteChangePassword />} />
         </Route>
       </Routes>
       <Toast />
