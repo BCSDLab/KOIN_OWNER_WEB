@@ -12,7 +12,7 @@
   align-items: center;
 
   @include media.media-breakpoint-down(mobile) {
-    align-items: start;
+    align-items: flex-start;
   }
 }
 
