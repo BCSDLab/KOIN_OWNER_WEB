@@ -1,18 +1,16 @@
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/shopCategory';
-import useShopRegistrationStore from 'store/shopRegistration';
+import { useFormContext, useWatch } from 'react-hook-form';
 import styles from './Category.module.scss';
 
 export default function Category() {
   const { categoryList } = useMyShop();
-  const {
-    category, setCategory, setCategoryId,
-  } = useShopRegistrationStore();
+  const { control, setValue } = useFormContext();
+  const categoryId = useWatch({ control, name: 'category_ids' });
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
-    setCategory(categoryInfo.name);
-    setCategoryId(categoryInfo.id);
+    setValue('category_ids', [categoryInfo.id, 0]);
   };
 
   return (
@@ -21,10 +19,10 @@ export default function Category() {
         <button
           className={cn({
             [styles.category__menu]: true,
-            [styles['category__menu--selected']]: category === categoryInfo.name,
+            [styles['category__menu--selected']]: categoryId[0] === categoryInfo.id,
           })}
           type="button"
-          onClick={() => { handleCategoryClick(categoryInfo); }}
+          onClick={() => handleCategoryClick(categoryInfo)}
           key={categoryInfo.id}
         >
           <img

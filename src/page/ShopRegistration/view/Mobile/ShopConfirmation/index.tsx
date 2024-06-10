@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import useStepStore from 'store/useStepStore';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
@@ -19,12 +17,10 @@ interface UsePostDataProps {
 
 export const usePostData = ({ onNext } : UsePostDataProps) => {
   const queryClient = useQueryClient();
-  const { setStep } = useStepStore();
   const { resetOperatingTime } = useModalStore();
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => postShop(form),
     onSuccess: () => {
-      setStep(5);
       if (onNext) {
         onNext();
       }
@@ -82,33 +78,26 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
           <span className={styles.form__title}>운영시간</span>
           <span className={styles.form__value}>
             <span>
-              {
-                isAllSameTime && !hasClosedDay ? (
-                  <div>
-                    {operateTimeState.time}
-                  </div>
-                )
-                  : null
-              }
-              {
-                isSpecificDayClosedAndAllSameTime ? (
-                  <div>
-                    <div>{operateTimeState.time}</div>
-                    <div>{operateTimeState.holiday}</div>
-                  </div>
-                ) : null
-              }
-              {
-                !isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
-                  <>
-                    {WEEK.map((day) => (
-                      <div key={day}>
-                        {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                      </div>
-                    ))}
-                  </>
-                ) : null
-              }
+              {isAllSameTime && !hasClosedDay ? (
+                <div>
+                  {operateTimeState.time}
+                </div>
+              ) : null}
+              {isSpecificDayClosedAndAllSameTime ? (
+                <div>
+                  <div>{operateTimeState.time}</div>
+                  <div>{operateTimeState.holiday}</div>
+                </div>
+              ) : null}
+              {!isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+                <>
+                  {WEEK.map((day) => (
+                    <div key={day}>
+                      {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                    </div>
+                  ))}
+                </>
+              ) : null}
             </span>
           </span>
         </div>

@@ -12,6 +12,30 @@ import { useFunnel } from 'utils/hooks/useFunnel';
 import { FormProvider, useForm } from 'react-hook-form';
 import styles from './ShopRegistrationMobile.module.scss';
 
+const OPEN_DEFAULT_VALUES = [
+  {
+    day_of_week: 'MONDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'TUESDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'WEDNESDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'THURSDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'FRIDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'SATURDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+  {
+    day_of_week: 'SUNDAY', closed: false, open_time: '00:00', close_time: '00:00',
+  },
+];
+
 export default function ShopRegistrationMobile() {
   const {
     Funnel, Step, setStep, currentStep,
@@ -37,6 +61,7 @@ export default function ShopRegistrationMobile() {
       delivery: false,
       pay_bank: false,
       pay_card: false,
+      open: OPEN_DEFAULT_VALUES,
     },
   });
 
