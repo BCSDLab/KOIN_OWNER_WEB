@@ -1,8 +1,8 @@
-import { ReactElement, ReactNode, useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 export interface StepProps {
   name: string;
-  children: ReactNode;
+  children: ReactElement;
 }
 
 export interface FunnelProps {
@@ -12,16 +12,12 @@ export interface FunnelProps {
 export const useFunnel = (defaultStep: string) => {
   const [step, setStep] = useState(defaultStep);
 
-  const Step = (props: StepProps): ReactElement | any => props.children;
+  const Step = (props: StepProps) => props.children;
 
   function Funnel({ children }: FunnelProps): ReactElement | null {
-    const targetStep = children.find((child) => child.props.name === step);
+    const targetStep = children.find((childStep) => childStep.props.name === step);
 
-    if (!targetStep) {
-      return null;
-    }
-
-    return targetStep;
+    return targetStep ?? null;
   }
 
   return {
