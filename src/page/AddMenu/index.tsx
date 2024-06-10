@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
+import showToast from 'utils/ts/showToast';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import MenuImage from './components/MenuImage';
@@ -23,9 +24,6 @@ export default function AddMenu() {
   const navigate = useNavigate();
   const { resetMenuName, resetCategoryIds } = useAddMenuStore();
   const { setMenuError, setCategoryError } = useErrorMessageStore();
-  const goMyShop = () => {
-    navigate('/owner');
-  };
   const {
     value: isGoMyShopModal,
     setTrue: openGoMyShopModal,
@@ -40,7 +38,7 @@ export default function AddMenu() {
     optionPrices,
     singlePrice,
   } = useAddMenuStore();
-  const { addMenuMutation } = useMyShop();
+  const { addMenuMutation, addMenuError } = useMyShop();
   const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
     if (validateFields()) {
@@ -48,7 +46,7 @@ export default function AddMenu() {
     }
   };
 
-  const addMenu = () => {
+  const addMenuMutationEvent = () => {
     const newMenuData = {
       category_ids: categoryIds,
       description,
@@ -62,6 +60,11 @@ export default function AddMenu() {
       single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
     };
     addMenuMutation(newMenuData);
+    if (addMenuError) {
+      showToast('error', '메뉴 추가에 실패했습니다.');
+    } else {
+      navigate('/owners');
+    }
   };
 
   const onClickMenuAddCancleHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +72,7 @@ export default function AddMenu() {
     if (isComplete) {
       toggleConfirmClick();
     } else {
-      goMyShop();
+      navigate('/owners');
     }
   };
 
@@ -80,22 +83,18 @@ export default function AddMenu() {
         openGoMyShopModal();
         return;
       }
-      addMenu();
-      navigate('./owners');
+      addMenuMutationEvent();
     } else {
       toggleConfirmClick();
     }
   };
 
-  useEffect(
-    () => {
-      resetMenuName();
-      resetCategoryIds();
-      setMenuError('');
-      setCategoryError('');
-    },
-    [resetMenuName, setMenuError, resetCategoryIds, setCategoryError],
-  );
+  useEffect(() => {
+    resetMenuName();
+    resetCategoryIds();
+    setMenuError('');
+    setCategoryError('');
+  }, [resetMenuName, setMenuError, resetCategoryIds, setCategoryError]);
 
   return (
     <div>
@@ -175,7 +174,7 @@ export default function AddMenu() {
           <GoMyShopModal
             isOpen={isGoMyShopModal}
             onCancel={closeGoMyShopModal}
-            onConfirm={addMenu}
+            onConfirm={addMenuMutationEvent}
             mainMessage="신규 메뉴 추가 완료되었습니다."
             subMessage="메뉴 관리에서 기존 메뉴의 정보 수정이 가능합니다."
           />
