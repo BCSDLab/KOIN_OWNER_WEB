@@ -54,21 +54,6 @@
     gap: 8px;
   }
 
-  &__box {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    gap: 8px;
-
-    @include media.media-breakpoint-down(mobile) {
-      margin-top: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 4px;
-    }
-  }
-
   &__size-input {
     box-sizing: border-box;
     width: 335px;

@@ -3,7 +3,7 @@ import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-de
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
 import styles from './PriceInput.module.scss';
 
-interface PriceInput {
+interface PriceInputProps {
   singlePrice: number;
   isSingle: boolean;
   optionPrices: OptionPrices[] | null
@@ -21,7 +21,7 @@ export default function PriceInput({
   updatePriceInput,
   deletePriceInput,
   addPriceInput,
-}: PriceInput) {
+}: PriceInputProps) {
   return (
     <>
       <div className={styles.header}>
