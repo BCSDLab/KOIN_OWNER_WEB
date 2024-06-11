@@ -89,6 +89,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
         전화번호
         <input
           type="text"
+          inputMode="numeric"
           id="phone"
           value={phone}
           className={styles.form__input}
@@ -112,6 +113,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
         배달금액
         <input
           type="number"
+          inputMode="numeric"
           id="deliveryPrice"
           value={deliveryPrice}
           className={styles.form__input}

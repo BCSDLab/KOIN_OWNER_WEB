@@ -20,7 +20,7 @@ import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
 import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import useMyShop from 'query/shop';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import styles from './ShopConfirmation.module.scss';
 
@@ -55,11 +55,13 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const { categoryList } = useMyShop();
 
   const {
-    register, control, trigger, setValue, handleSubmit, formState: { errors },
+    register, control, setValue, handleSubmit, formState: { errors },
   } = useFormContext<OwnerShop>();
   const {
     imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
+
+  const [isError, setIsError] = useState(false);
 
   const operateTimeState = useOperateTimeState();
 
@@ -93,12 +95,14 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     setValue('phone', formattedValue);
   };
 
-  const handleNextClick = async () => {
-    const isValid = await trigger(['image_urls', 'name', 'address', 'category_ids', 'phone']);
-    if (!isValid) {
-      return;
+  const handleNextClick = () => {
+    if (imageUrls.length === 0 || name === '' || categoryId.length === 0
+      || address === '' || phone === '') {
+      setIsError(true);
+    } else {
+      setIsError(false);
+      openConfirmPopup();
     }
-    openConfirmPopup();
   };
 
   const openTimeArray = Object.values(openTimeState);
@@ -175,7 +179,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                   </>
                 )}
             </label>
-            {uploadError === '' && errors.image_urls
+            {uploadError === '' && isError && imageUrls.length === 0
                   && <ErrorMessage message={ERRORMESSAGE.image} />}
             {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
           </div>
@@ -196,7 +200,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
 
               <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
             </div>
-            {errors.category_ids && <ErrorMessage message={ERRORMESSAGE.category} />}
+            {isError && categoryId.length === 0 && <ErrorMessage message={ERRORMESSAGE.category} />}
           </div>
           <CustomModal
             buttonText="다음"
@@ -220,7 +224,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
               />
               <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
             </div>
-            {errors.name && <ErrorMessage message={ERRORMESSAGE.name} />}
+            {isError && name === '' && <ErrorMessage message={ERRORMESSAGE.name} />}
           </div>
           <CustomModal
             title="가게검색"
@@ -242,13 +246,14 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 {...register('address', { required: true })}
               />
             </div>
-            {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
+            {isError && address === '' && <ErrorMessage message={ERRORMESSAGE.address} />}
           </div>
           <div>
             <span className={styles.form__title}>전화번호</span>
             <div className={styles.form__section}>
               <input
                 type="text"
+                inputMode="numeric"
                 className={styles['form__input-large']}
                 value={phone}
                 {...register('phone', {
@@ -257,13 +262,14 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 })}
               />
             </div>
-            {errors.phone && <ErrorMessage message={ERRORMESSAGE.phone} />}
+            {isError && phone === '' && <ErrorMessage message={ERRORMESSAGE.phone} />}
           </div>
           <div>
             <span className={styles.form__title}>배달금액</span>
             <div className={styles.form__section}>
               <input
                 type="number"
+                inputMode="numeric"
                 className={styles['form__input-large']}
                 value={deliveryPrice === 0 ? undefined : deliveryPrice}
                 {...register('delivery_price')}
