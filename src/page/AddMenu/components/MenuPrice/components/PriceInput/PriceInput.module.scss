@@ -166,19 +166,23 @@
   width: 24px;
   height: 24px;
   background-color: white;
+
   @include media.media-breakpoint-down(mobile) {
     width: auto;
     height: auto;
     background-color: white;
   }
+
   &__icon {
     width: 24px;
     height: 24px;
+
     @include media.media-breakpoint-down(mobile) {
       width: 16px;
       height: 16px;
       margin-left: 4px;
     }
+
     &:hover {
       cursor: pointer;
     }
@@ -216,7 +220,7 @@
     color: #f7941e;
     font-size: 20px;
     font-weight: 700;
-  
+
     @include media.media-breakpoint-down(mobile) {
       font-size: 13px;
     }
