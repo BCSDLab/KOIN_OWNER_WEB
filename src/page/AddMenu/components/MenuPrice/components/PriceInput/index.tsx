@@ -40,9 +40,7 @@ export default function PriceInput({
                 }
                 onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
               />
-              <p
-                className={styles['inputs__price-input-won']}
-              >
+              <p className={styles['inputs__price-input-won']}>
                 원
               </p>
             </div>
@@ -62,9 +60,7 @@ export default function PriceInput({
                 onChange={(e) => updatePriceInput(input.id, 'option', e.target.value)}
                 disabled={isSingle}
               />
-              <div
-                className={styles['inputs__price-input-box']}
-              >
+              <div className={styles['inputs__price-input-box']}>
                 <input
                   type="number"
                   className={styles['inputs__price-input']}
@@ -72,11 +68,7 @@ export default function PriceInput({
                   value={input.price === 0 ? '' : input.price}
                   onChange={(e) => updatePriceInput(input.id, 'price', Number(e.target.value))}
                 />
-                <p
-                  className={
-                    styles['inputs__price-input-won']
-                  }
-                >
+                <p className={styles['inputs__price-input-won']}>
                   원
                 </p>
               </div>
