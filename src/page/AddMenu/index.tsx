@@ -9,13 +9,13 @@ import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
-import styles from './AddMenu.module.scss';
 import MenuPrice from './components/MenuPrice';
 import MenuCategory from './components/MenuCategory';
 import MenuDetail from './components/MenuDetail';
 import GoMyShopModal from './components/GoMyShop';
 import MobileDivide from './components/MobileDivide';
 import useFormValidation from './hook/useFormValidation';
+import styles from './AddMenu.module.scss';
 
 export default function AddMenu() {
   useScrollToTop();
@@ -63,7 +63,7 @@ export default function AddMenu() {
     if (addMenuError) {
       showToast('error', '메뉴 추가에 실패했습니다.');
     } else {
-      navigate('/owners');
+      navigate('/owner');
     }
   };
 
@@ -94,7 +94,8 @@ export default function AddMenu() {
     resetCategoryIds();
     setMenuError('');
     setCategoryError('');
-  }, [resetMenuName, setMenuError, resetCategoryIds, setCategoryError]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
