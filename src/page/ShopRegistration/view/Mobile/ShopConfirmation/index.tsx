@@ -78,18 +78,18 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
           <span className={styles.form__title}>운영시간</span>
           <span className={styles.form__value}>
             <span>
-              {isAllSameTime && !hasClosedDay ? (
+              {isAllSameTime && !hasClosedDay && (
                 <div>
                   {operateTimeState.time}
                 </div>
-              ) : null}
-              {isSpecificDayClosedAndAllSameTime ? (
+              )}
+              {isSpecificDayClosedAndAllSameTime && (
                 <div>
                   <div>{operateTimeState.time}</div>
                   <div>{operateTimeState.holiday}</div>
                 </div>
-              ) : null}
-              {!isAllSameTime && !isSpecificDayClosedAndAllSameTime ? (
+              )}
+              {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && (
                 <>
                   {WEEK.map((day) => (
                     <div key={day}>
@@ -97,7 +97,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                     </div>
                   ))}
                 </>
-              ) : null}
+              )}
             </span>
           </span>
         </div>

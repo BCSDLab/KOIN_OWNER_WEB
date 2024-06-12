@@ -105,7 +105,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     }
   };
 
-  const onClickRemoveImageUrl = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
+  const handleDeleteImage = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
     e.preventDefault();
     setImageFile(imageFile.filter((img) => img !== imageUrl));
   };
@@ -151,7 +151,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                     <div
                       key={imageUrl}
                       className={styles['form__main-item']}
-                      onClick={(e) => onClickRemoveImageUrl(e, imageUrl)}
+                      onClick={(e) => handleDeleteImage(e, imageUrl)}
                       aria-hidden
                     >
                       <FileImage />
@@ -268,18 +268,18 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
             <div className={styles.form__section}>
               <div className={styles['form__operate-time']}>
                 <div>
-                  {isAllSameTime && !hasClosedDay ? (
+                  {isAllSameTime && !hasClosedDay && (
                     <div>
                       {operateTimeState.time}
                     </div>
-                  ) : null}
-                  {isSpecificDayClosedAndAllSameTime ? (
+                  )}
+                  {isSpecificDayClosedAndAllSameTime && (
                     <div>
                       <div>{operateTimeState.time}</div>
                       <div>{operateTimeState.holiday}</div>
                     </div>
-                  ) : null}
-                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
+                  )}
+                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
                     <>
                       {WEEK.map((day) => (
                         <div key={day}>
@@ -287,10 +287,10 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                         </div>
                       ))}
                     </>
-                  ) : null}
-                  {isAllClosed ? (
+                  )}
+                  {isAllClosed && (
                     <span>매일 휴무</span>
-                  ) : null}
+                  )}
                 </div>
               </div>
               <CustomButton content="시간수정" buttonSize="small" onClick={openOperateTime} />

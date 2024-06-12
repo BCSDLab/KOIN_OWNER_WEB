@@ -21,8 +21,8 @@ export default function Main({ onNext }:{ onNext: () => void }) {
     imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
 
-  const handleDeleteImage = (image: string) => {
-    setImageFile(imageFile.filter((img) => img !== image));
+  const handleDeleteImage = (url: string) => {
+    setImageFile(imageFile.filter((img) => img !== url));
   };
 
   useEffect(() => {
@@ -60,12 +60,12 @@ export default function Main({ onNext }:{ onNext: () => void }) {
         {imageUrls.length !== 0
           ? (
             <div className={styles['form__main-menu']}>
-              {imageUrls.map((image:string) => (
+              {imageUrls.map((url: string) => (
                 <>
-                  <img key={image} src={image} className={styles['form__main-menu-image']} alt="대표 이미지" />
+                  <img key={url} src={url} className={styles['form__main-menu-image']} alt="대표 이미지" />
                   <button
                     type="button"
-                    onClick={() => handleDeleteImage(image)}
+                    onClick={() => handleDeleteImage(url)}
                     className={styles['form__delete-img-button']}
                     aria-label="Delete image"
                   >
