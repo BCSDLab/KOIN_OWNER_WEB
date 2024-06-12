@@ -9,7 +9,7 @@ import ConfirmPopup from 'page/ShopRegistration/component/ConfirmPopup';
 import CustomModal from 'component/common/CustomModal';
 import cn from 'utils/ts/className';
 import useModalStore from 'store/modalStore';
-import { WEEK, DAY_OF_WEEK } from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 import { SubmitHandler, useFormContext, useWatch } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
@@ -22,6 +22,7 @@ import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import useMyShop from 'query/shop';
 import { useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
+import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
@@ -46,17 +47,21 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
 
+  const { shopClosedState } = useModalStore();
+
   const {
-    openTimeState,
-    closeTimeState,
-    shopClosedState,
-  } = useModalStore();
+    isAllSameTime,
+    hasClosedDay,
+    isSpecificDayClosedAndAllSameTime,
+    isAllClosed,
+  } = CheckSameTime();
 
   const { categoryList } = useMyShop();
 
   const {
     register, control, setValue, handleSubmit, formState: { errors },
   } = useFormContext<OwnerShop>();
+
   const {
     imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
@@ -77,12 +82,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const payBank = useWatch({ control, name: 'pay_bank' });
   const selectedId = categoryList?.shop_categories[categoryId[0] - 1]?.name;
 
-  const {
-    isAllSameTime,
-    hasClosedDay,
-    isSpecificDayClosedAndAllSameTime,
-    isAllClosed,
-  } = CheckSameTime();
+  useStoreTimeSetUp({ setValue });
 
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
@@ -105,24 +105,10 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     }
   };
 
-  const openTimeArray = Object.values(openTimeState);
-  const closeTimeArray = Object.values(closeTimeState);
-  const shopClosedArray = Object.values(shopClosedState);
-
   const onClickRemoveImageUrl = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
     e.preventDefault();
     setImageFile(imageFile.filter((img) => img !== imageUrl));
   };
-
-  useEffect(() => {
-    const openValue = DAY_OF_WEEK.map((day, index) => ({
-      close_time: closeTimeArray[index],
-      closed: shopClosedArray[index],
-      day_of_week: day,
-      open_time: openTimeArray[index],
-    }));
-    setValue('open', openValue);
-  }, [closeTimeArray, imageFile, openTimeArray, setValue, shopClosedArray]);
 
   useEffect(() => {
     if (imageFile.length > 0) {

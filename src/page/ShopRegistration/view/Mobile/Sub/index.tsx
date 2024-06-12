@@ -2,13 +2,14 @@ import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTime
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
-import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useEffect } from 'react';
+import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
+import { OwnerShop } from 'model/shopInfo/ownerShop';
 import styles from './Sub.module.scss';
 
 export default function Sub({ onNext }:{ onNext: () => void }) {
@@ -26,31 +27,20 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
     isAllClosed,
   } = CheckSameTime();
 
-  const { openTimeState, closeTimeState, shopClosedState } = useModalStore();
-  const openTimeArray = Object.values(openTimeState);
-  const closeTimeArray = Object.values(closeTimeState);
-  const shopClosedArray = Object.values(shopClosedState);
+  const { shopClosedState } = useModalStore();
 
   const {
     register, control, trigger, setValue, formState: { errors },
-  } = useFormContext();
+  } = useFormContext<OwnerShop>();
 
   const phone = useWatch({ control, name: 'phone' });
   const deliveryPrice = useWatch({ control, name: 'delivery_price' });
   const description = useWatch({ control, name: 'description' });
   const delivery = useWatch({ control, name: 'delivery' });
-  const payBank = useWatch({ control, name: 'paya_bank' });
+  const payBank = useWatch({ control, name: 'pay_bank' });
   const payCard = useWatch({ control, name: 'pay_card' });
 
-  useEffect(() => {
-    const openValue = DAY_OF_WEEK.map((day, index) => ({
-      close_time: closeTimeArray[index],
-      closed: shopClosedArray[index],
-      day_of_week: day,
-      open_time: openTimeArray[index],
-    }));
-    setValue('open', openValue);
-  }, [closeTimeArray, openTimeArray, setValue, shopClosedArray]);
+  useStoreTimeSetUp({ setValue });
 
   const formatPhoneNumber = (inputNumber:string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
