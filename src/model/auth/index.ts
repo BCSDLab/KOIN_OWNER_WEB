@@ -77,3 +77,29 @@ export type User = z.infer<typeof User>;
 export interface LoginForm extends LoginParams {
   isAutoLogin: boolean;
 }
+
+export interface CertificationResponse {
+  token: string;
+}
+
+export interface ChangePasswordForm {
+  password: string;
+  passwordCheck: string;
+  phone_number: string;
+}
+
+interface FindPassword {
+  phone_number: string;
+  certification_code: string;
+  password: string;
+}
+
+export interface Register extends FindPassword {
+  company_number: string,
+  name: string,
+  shop_id: number,
+  shop_name: string,
+  attachment_urls: {
+    file_url: string
+  }[],
+}
