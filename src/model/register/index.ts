@@ -5,11 +5,19 @@ export const EmailRegisterParam = z.object({
 });
 export type EmailRegisterParam = z.infer<typeof EmailRegisterParam>;
 
+export const PhoneNumberRegisterParam = z.object({
+  phone_number: z.string(),
+});
+export type PhoneNumberRegisterParam = z.infer<typeof PhoneNumberRegisterParam>;
+
 export const EmailRegisterResponse = z.string();
 export type EmailRegisterResponse = z.infer<typeof EmailRegisterResponse>;
 
+export const PhoneNumberRegisterResponse = z.string();
+export type PhoneNumberRegisterResponse = z.infer<typeof PhoneNumberRegisterResponse>;
+
 export const AuthCodeParam = z.object({
-  address: z.string().email(),
+  phone_number: z.string().email(),
   certification_code: z.string(),
 });
 export type AuthCodeParam = z.infer<typeof AuthCodeParam>;

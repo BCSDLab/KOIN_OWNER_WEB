@@ -60,3 +60,10 @@
     outline: 1px solid #f7941e !important;
   }
 }
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #f7941e;
+  font-size: 12px;
+}

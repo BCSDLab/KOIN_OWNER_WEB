@@ -1,9 +1,8 @@
 import { client, multipartClient } from 'api';
 import {
   AuthCodeParam,
+  PhoneNumberRegisterParam,
   AuthCodeResponse,
-  EmailRegisterParam,
-  EmailRegisterResponse,
   FilesResponse,
   RegisterParam,
 } from 'model/register';
@@ -13,13 +12,17 @@ export const getEmailDuplicate = async (param: string) => {
   return status;
 };
 
-export const getEmailAuthCode = async (param: EmailRegisterParam) => {
-  const { data } = await client.post<EmailRegisterResponse>('/owners/verification/email', param);
-  return EmailRegisterResponse.parse(data);
-};
+// export const getEmailAuthCode = async (param: EmailRegisterParam) => {
+//   const { data } = await client.post<EmailRegisterResponse>('/owners/verification/email', param);
+//   return EmailRegisterResponse.parse(data);
+// };
 
+export const getPhoneAuthCode = async (param: PhoneNumberRegisterParam) => {
+  const { data } = await client.post<AuthCodeResponse>('/owners/verification/sms', param);
+  return AuthCodeResponse.parse(data);
+};
 export const verificationAuthCode = async (param:AuthCodeParam) => {
-  const { data } = await client.post<AuthCodeResponse>('/owners/verification/code', param);
+  const { data } = await client.post<AuthCodeResponse>('/owners/verification/code/sms', param);
   return AuthCodeResponse.parse(data);
 };
 
