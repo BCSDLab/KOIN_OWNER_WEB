@@ -1,5 +1,9 @@
 const PROGRESS_TITLE = [
   {
+    step: 0,
+    title: '가게 등록',
+  },
+  {
     step: 1,
     title: '가게 카테고리 설정',
   },

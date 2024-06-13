@@ -6,7 +6,7 @@ import usePasswordConfirm from 'page/Auth/Signup/hooks/usePasswordConfirm';
 import { User } from 'page/Auth/Signup/types/User';
 
 import { SubmitHandler } from 'react-hook-form';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import useRegisterInfo from 'store/registerStore';
 import styles from './UserPassword.module.scss';
 

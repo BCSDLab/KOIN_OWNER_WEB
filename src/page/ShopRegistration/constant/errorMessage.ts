@@ -5,6 +5,7 @@ export const ERRORMESSAGE: { [key: string]: string } = {
   address: '주소를 입력해주세요.',
   phone: '전화번호를 입력해주세요.',
   invalidPhone: '전화번호 형식이 올바르지 않습니다.',
+  invalidPrice: '배달금액 형식이 올바르지 않습니다',
   networkError: '네트워크 오류가 발생했습니다. 다시 시도해주세요.',
   401: '이미지 등록에 실패했습니다. 다시 시도해주세요.',
   404: '존재하지 않는 도메인입니다.',

@@ -12,8 +12,9 @@ interface ModalStore {
   setOpenTimeState: (state: OperatingTime) => void;
   setCloseTimeState: (state: OperatingTime) => void;
   setShopClosedState: (state: { [key: string]: boolean }) => void;
-  setSearchShopState: (state: string) => void; // 수정 요망
-  setSelectedShopId:(state:string) => void; // 수정 요망
+  setSearchShopState: (state: string) => void;
+  setSelectedShopId:(state:string) => void;
+  resetOperatingTime: ()=> void;
 }
 
 const initialOperatingTime: OperatingTime = {
@@ -40,13 +41,20 @@ const useModalStore = create<ModalStore>((set) => ({
   openTimeState: initialOperatingTime,
   closeTimeState: initialOperatingTime,
   shopClosedState: initialShopClosed,
-  searchShopState: '', // 수정 요망
-  selectedShopId: '', // 수정 요망
+  searchShopState: '',
+  selectedShopId: '',
   setOpenTimeState: (state) => set(() => ({ openTimeState: state })),
   setCloseTimeState: (state) => set(() => ({ closeTimeState: state })),
   setShopClosedState: (state) => set({ shopClosedState: state }),
-  setSearchShopState: (state) => set({ searchShopState: state }), // 수정 요망
-  setSelectedShopId: (state) => set({ selectedShopId: state }), // 수정 요망
+  setSearchShopState: (state) => set({ searchShopState: state }),
+  setSelectedShopId: (state) => set({ selectedShopId: state }),
+  resetOperatingTime: () => {
+    set(() => ({
+      openTimeState: initialOperatingTime,
+      closeTimeState: initialOperatingTime,
+      shopClosedState: initialShopClosed,
+    }));
+  },
 }));
 
 export default useModalStore;

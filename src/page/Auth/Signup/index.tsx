@@ -3,7 +3,7 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
 import { Link } from 'react-router-dom';
 import ProgressBar from 'component/common/ProgressBar';
-import PreviousStep from 'component/common/Auth/PreviousStep';
+import PreviousStep from 'component/Auth/PreviousStep';
 import { useRef } from 'react';
 import OwnerData from './view/OwnerDataPage';
 import TermsOfService from './view/TermsOfServicePage';

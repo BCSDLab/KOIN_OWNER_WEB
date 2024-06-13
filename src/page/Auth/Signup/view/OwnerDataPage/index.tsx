@@ -6,7 +6,7 @@ import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
 import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/Signup/hooks/useOwnerData';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import useFileController from 'page/Auth/Signup/hooks/useFileController';
 import useCheckNext from 'page/Auth/Signup/hooks/useCheckNext';
 import { useEffect } from 'react';

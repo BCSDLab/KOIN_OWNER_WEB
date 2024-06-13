@@ -1,9 +1,9 @@
 import { ReactComponent as Magnifier } from 'assets/svg/shopRegistration/magnifier.svg';
 import cn from 'utils/ts/className';
 import { ChangeEvent, useEffect, useState } from 'react';
-import useBooleanState from 'utils/hooks/useBooleanState';
 import ConfirmShop from 'page/ShopRegistration/component/Modal/ConfirmShop';
 import useShopList from 'query/shops';
+import { useFormContext } from 'react-hook-form';
 import styles from './SearchShop.module.scss';
 
 interface SearchShopProps {
@@ -12,54 +12,40 @@ interface SearchShopProps {
 }
 
 export default function SearchShop({ open, onCancel }: SearchShopProps) {
-  const [selectedShop, setSelectedShop] = useState({
-    name: '',
-    phone: '',
-    id: '',
-  });
-  const { value: showConfirmShop, setValue: setConfirmShop } = useBooleanState(false);
   const [searchText, setSearchText] = useState('');
 
   const { shopList, isError } = useShopList();
+  const { getValues, setValue } = useFormContext();
+  const values = getValues();
 
-  function handleClickShop(e: React.MouseEvent<HTMLButtonElement>) {
-    const { name, phone, id } = JSON.parse(e.currentTarget.value);
-    if (!showConfirmShop) {
-      setSelectedShop({
-        name,
-        phone,
-        id,
-      });
-    } else {
-      setSelectedShop({
-        name: '',
-        phone: '',
-        id: '',
-      });
-    }
-  }
-
+  const handleClickShop = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const {
+      name, phone, id, delivery, payBank, payCard,
+    } = JSON.parse(e.currentTarget.value);
+    setValue('name', name);
+    setValue('phone', phone);
+    setValue('id', id);
+    setValue('delivery', delivery);
+    setValue('pay_bank', payBank);
+    setValue('pay_card', payCard);
+  };
   const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
 
-  function handleSearch() {
+  const handleSearch = () => {
     if (searchText !== '') {
       setFilteredShopList(shopList?.shops.filter(({ name }) => name.includes(searchText)));
     }
-  }
+  };
 
-  function handleChangeSearchText(e: ChangeEvent<HTMLInputElement>) {
+  const handleChangeSearchText = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  }
+  };
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
-  }
-
-  function toggleConfirmShop() {
-    setConfirmShop((prev) => !prev);
-  }
+  };
 
   useEffect(() => {
     if (searchText === '') {
@@ -92,17 +78,19 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
             key={shop.id}
             className={cn({
               [styles.shop]: true,
-              [styles['shop--selected']]: selectedShop.name === shop.name,
+              [styles['shop--selected']]: values.name === shop.name,
             })}
             value={JSON.stringify({
               name: shop.name,
               phone: shop.phone,
               id: shop.id,
+              delivery: shop.delivery,
+              payBank: shop.pay_bank,
+              payCard: shop.pay_card,
             })}
             type="button"
             onClick={(e) => {
               handleClickShop(e);
-              toggleConfirmShop();
             }}
           >
             <span className={styles.shop__title}>{shop.name}</span>
@@ -132,7 +120,7 @@ export default function SearchShop({ open, onCancel }: SearchShopProps) {
           </button>
         ))}
       </div>
-      <ConfirmShop open={showConfirmShop} onCancel={onCancel} selectedShop={selectedShop} />
+      {values.id && <ConfirmShop onCancel={onCancel} />}
     </div>
   );
 }
