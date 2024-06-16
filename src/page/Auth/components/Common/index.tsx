@@ -43,7 +43,6 @@ export default function CommonLayout() {
   const {
     nextStep, previousStep, currentStep, index, totalStep, isComplete, isStepComplete,
   } = steps;
-
   // eslint-disable-next-line
   const progressPercentage = (index + 1) / totalStep * 100;
 

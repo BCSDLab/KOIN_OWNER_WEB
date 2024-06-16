@@ -22,7 +22,7 @@ const initialSelectOption: SelectOptions = {
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
   const steps = useOutletContext<Step>();
-
+  const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
   const handleSelect = (option: keyof SelectOptions | 'all') => {
     if (option === 'all') {
       const newState = !(selectItems.personal && selectItems.koin);
@@ -50,15 +50,23 @@ export default function SignUp() {
     }
   }, [selectItems, steps]);
 
+  useEffect(() => {
+  }, [steps.setIsStepComplete]);
+
+  useEffect(() => {
+    if (stepPhoneComplete) {
+      steps.setIsStepComplete(true);
+    }
+  }, [stepPhoneComplete, steps]);
   return (
     <>
       {steps.index === 0 && (
         <AgreeStep selectItems={selectItems} handleSelect={handleSelect} />
       )}
-      {steps.index === 2 && (
-        <PhoneStep setIsStepComplete={steps.setIsStepComplete} />
-      )}
       {steps.index === 1 && (
+        <PhoneStep setIsStepComplete={setStepPhoneComplete} />
+      )}
+      {steps.index === 2 && (
         <OwnerInfoStep />
       )}
     </>

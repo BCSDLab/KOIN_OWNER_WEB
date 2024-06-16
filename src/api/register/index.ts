@@ -5,6 +5,7 @@ import {
   AuthCodeResponse,
   FilesResponse,
   RegisterParam,
+  PhoneNumberRegisterResponse,
 } from 'model/register';
 
 export const getEmailDuplicate = async (param: string) => {
@@ -18,8 +19,8 @@ export const getEmailDuplicate = async (param: string) => {
 // };
 
 export const getPhoneAuthCode = async (param: PhoneNumberRegisterParam) => {
-  const { data } = await client.post<AuthCodeResponse>('/owners/verification/sms', param);
-  return AuthCodeResponse.parse(data);
+  const { data } = await client.post<PhoneNumberRegisterResponse>('/owners/verification/sms', param);
+  return PhoneNumberRegisterResponse.parse(data);
 };
 export const verificationAuthCode = async (param:AuthCodeParam) => {
   const { data } = await client.post<AuthCodeResponse>('/owners/verification/code/sms', param);

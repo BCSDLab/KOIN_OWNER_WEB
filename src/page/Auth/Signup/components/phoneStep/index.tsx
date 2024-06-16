@@ -3,25 +3,24 @@ import {
   useFormContext, UseFormClearErrors, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';
 import {
-  useState, useEffect, ChangeEvent, useCallback,
+  useState, useEffect, ChangeEvent,
 } from 'react';
 import cn from 'utils/ts/className';
-import { verifyCode } from 'api/auth';
-import { getPhoneAuthCode } from 'api/register';
+import { verificationAuthCode, getPhoneAuthCode } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useDebounce } from 'utils/hooks/useDebounce';
 import { PhoneNumberRegisterParam } from 'model/register';
 import styles from './phoneStep.module.scss';
 
 interface PhoneStepProps {
-  setIsStepComplete: (state: boolean) => void;
+  setIsStepComplete: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Verify {
   phoneNumber: string;
   verificationCode: string;
   password: string;
-  'password-confirm': string;
+  passwordConfirm: string;
 }
 
 interface SendCodeParams {
@@ -34,7 +33,9 @@ const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
   const phoneNumber = getValues('phoneNumber');
   const phoneNumberParam: PhoneNumberRegisterParam = { phone_number: phoneNumber };
   getPhoneAuthCode(phoneNumberParam)
-    .then(() => setIsSent(true))
+    .then(() => {
+      setIsSent(true);
+    })
     .catch((e) => {
       if (isKoinError(e)) {
         setError('phoneNumber', { type: 'custom', message: e.message });
@@ -43,7 +44,6 @@ const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
 };
 
 const useCheckCode = (
-  setIsStepComplete: (state: boolean) => void,
   getValues: UseFormGetValues<Verify>,
   setError: UseFormSetError<Verify>,
   clearErrors: UseFormClearErrors<Verify>,
@@ -53,15 +53,13 @@ const useCheckCode = (
 
   useEffect(() => {
     if (certificationCode.length === 6) {
-      verifyCode({
+      verificationAuthCode({
         certification_code: certificationCode,
         phone_number: getValues('phoneNumber'),
       })
-        .then((data) => {
-          setIsStepComplete(true);
+        .then(() => {
           setIsCertified(true);
           clearErrors();
-          sessionStorage.setItem('accessToken', data.data.token);
         })
         .catch((e) => {
           if (isKoinError(e)) {
@@ -69,10 +67,9 @@ const useCheckCode = (
           } else {
             sendClientError(e);
           }
-          setIsStepComplete(false);
         });
     }
-  }, [certificationCode, setIsStepComplete, getValues, setError, clearErrors]);
+  }, [certificationCode, getValues, setError, clearErrors]);
 
   return { setCertificationCode, isCertified };
 };
@@ -86,7 +83,6 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   const debounce = useDebounce<SendCodeParams>(code, { getValues, setError, setIsSent });
 
   const { setCertificationCode, isCertified } = useCheckCode(
-    setIsStepComplete,
     getValues,
     setError,
     clearErrors,
@@ -102,21 +98,24 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
 
   const setCode = (e: ChangeEvent<HTMLInputElement>) => setCertificationCode(e.target.value);
 
-  const checkCompletion = useCallback(() => {
-    const values = getValues();
-    const isComplete = values.phoneNumber && values.verificationCode && values.password && values['password-confirm'] && isCertified;
-    setIsStepComplete(!!isComplete);
-  }, [getValues, isCertified, setIsStepComplete]);
-
-  const watchedValues = watch(['phoneNumber', 'verificationCode', 'password', 'password-confirm']);
+  const watchedValues = watch(['phoneNumber', 'verificationCode', 'password', 'passwordConfirm']);
 
   useEffect(() => {
-    checkCompletion();
-  }, [watchedValues, isCertified, checkCompletion]);
+    const values = getValues();
+    const isComplete = (
+      values.password === values.passwordConfirm
+       && values.password.length > 0
+    ) && isCertified && !!errors;
+    if (isComplete) {
+      setIsStepComplete(true);
+    } else {
+      setIsStepComplete(false);
+    }
+  }, [watchedValues, isCertified, getValues, setIsStepComplete, errors]);
 
   return (
     <div className={styles['default-info']}>
-      <div className={`${styles['phone-number']} ${styles['input-box']}`}>
+      <div className={styles['phone-number']}>
         <span className={styles['phone-number__label']}>전화번호</span>
         <div className={styles['input-container']}>
           <input
@@ -136,8 +135,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             })}
             placeholder="-없이 번호를 입력해주세요."
           />
-          <button type="button" className={styles['phone-number']} onClick={sendCode} disabled={isCertified}>
-            {isSent ? '인증번호 재발송' : '인증번호 발송'}
+          <button type="button" className={styles['phone-number__button']} onClick={sendCode} disabled={isCertified}>
+            중복 확인
           </button>
         </div>
         <div className={styles['error-message']}>
@@ -149,6 +148,10 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
         <span className={styles['verification-code__label']}>인증번호</span>
         <div className={styles['input-container']}>
           <input
+            className={cn({
+              [styles['verification-code__input']]: true,
+              [styles['error-border']]: !!errors.verificationCode,
+            })}
             {...register('verificationCode', {
               required: {
                 value: true,
@@ -164,6 +167,18 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             onChange={setCode}
             disabled={isCertified}
           />
+          <button
+            type="button"
+            className={cn({
+              [styles['verification-code__button']]: true,
+              [styles['verification-code__button--active']]: isSent,
+            })}
+            onClick={sendCode}
+            disabled={isCertified}
+          >
+            {isSent ? '인증번호 재발송' : '인증번호 발송'}
+          </button>
+
         </div>
         <div className={styles['error-message']}>
           {errors.verificationCode && (
@@ -180,7 +195,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
       </div>
       <div className={`${styles['password-confirm']} ${styles['input-box']}`}>
         <span className={styles.password__label}>비밀번호 확인</span>
-        <input {...register('password-confirm')} type="password" placeholder="비밀번호를 확인해주세요." />
+        <input {...register('passwordConfirm')} type="password" placeholder="비밀번호를 확인해주세요." />
       </div>
     </div>
   );
