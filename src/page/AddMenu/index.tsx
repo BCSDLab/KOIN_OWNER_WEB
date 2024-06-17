@@ -67,7 +67,7 @@ export default function AddMenu() {
     }
   };
 
-  const onClickMenuAddCancleHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickMenuAddCancelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isComplete) {
       toggleConfirmClick();
@@ -127,7 +127,7 @@ export default function AddMenu() {
             <button
               className={styles['mobile__button-cancel']}
               type="button"
-              onClick={(e) => onClickMenuAddCancleHandler(e)}
+              onClick={(e) => onClickMenuAddCancelHandler(e)}
             >
               취소
             </button>
@@ -148,7 +148,7 @@ export default function AddMenu() {
               <button
                 className={styles['header__button-cancel']}
                 type="button"
-                onClick={(e) => onClickMenuAddCancleHandler(e)}
+                onClick={(e) => onClickMenuAddCancelHandler(e)}
               >
                 취소
               </button>
