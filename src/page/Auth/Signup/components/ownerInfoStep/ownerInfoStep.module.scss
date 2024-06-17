@@ -1,0 +1,117 @@
+.owner-info-container {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.owner-info-container input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: #f5f5f5;
+  padding: 12px 16px;
+  border: none;
+  margin-top: 8px;
+  margin-bottom: 2px;
+
+  &:focus {
+    outline: 1px solid #4590bb;
+  }
+}
+
+.owner-info-container span {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  padding-left: 5px;
+  padding-bottom: 8px;
+}
+
+.document-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &__condition {
+    color: #8e8e8e;
+    font-size: 12px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.shop-name {
+  &__input {
+    width: 72% !important;
+  }
+}
+
+.owner-file-input {
+  &__button {
+    position: absolute;
+    bottom: -40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+    height: 46px;
+    width: 100%;
+    border-radius: 5px;
+    background: #cacaca;
+    color: #4b4b4b;
+    z-index: 2;
+  }
+}
+
+.shop-search-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-button {
+  margin-top: 8px;
+  margin-bottom: 2px;
+  padding: 12px;
+  width: 23%;
+  border-radius: 4px;
+  background: #175c8e;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.shop-name,
+.company-registration-number,
+.document-input {
+  margin-top: 17px;
+}
+
+.file-list {
+  border-radius: 5px;
+  background: #f5f5f5;
+  max-height: 178px;
+  padding: 10px;
+  width: 94%;
+  margin-top: 10px;
+}
+
+.file-card {
+  display: flex;
+  gap: 11px;
+}
+
+.file-name {
+  color: #8e8e8e;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.delete-button {
+  background-color: #f5f5f5;
+}

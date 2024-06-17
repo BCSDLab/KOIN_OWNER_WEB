@@ -31,6 +31,10 @@
     padding-bottom: 10px;
   }
 
+  &__slide-wrapper button {
+    background-color: white;
+  }
+
   &__content {
     display: flex;
     justify-content: center;
@@ -130,8 +134,4 @@
     color: #f7941e;
     font-family: "Noto Sans CJK KR", sans-serif;
   }
-}
-
-button {
-  background-color: white;
 }

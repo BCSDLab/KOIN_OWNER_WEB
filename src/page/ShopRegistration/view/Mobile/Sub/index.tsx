@@ -8,7 +8,7 @@ import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
 import { useState } from 'react';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
 import styles from './Sub.module.scss';

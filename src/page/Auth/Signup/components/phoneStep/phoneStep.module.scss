@@ -1,4 +1,5 @@
 .default-info {
+  width: 100%;
   margin-top: 25px;
   display: flex;
   flex-direction: column;
@@ -25,12 +26,24 @@
 }
 
 .default-info button {
-  width: 40%;
+  width: 33.33%;
   padding: 8px 12px;
   border-radius: 4px;
   background: #eee;
   color: #4b4b4b;
   font-size: 13px;
+}
+
+.phone-number__input,
+.verification-code__input {
+  width: 66.67% !important;
+}
+
+.verification-code__button {
+  &--active {
+    background-color: #175c8e !important;
+    color: white !important;
+  }
 }
 
 .phone-number {
@@ -59,4 +72,11 @@
   &:focus {
     outline: 1px solid #f7941e !important;
   }
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #f7941e;
+  font-size: 12px;
 }

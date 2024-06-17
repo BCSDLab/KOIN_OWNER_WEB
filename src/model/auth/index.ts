@@ -97,9 +97,19 @@ interface FindPassword {
 export interface Register extends FindPassword {
   company_number: string,
   name: string,
-  shop_id: number,
+  shop_id: number | null,
   shop_name: string,
   attachment_urls: {
     file_url: string
   }[],
+}
+
+export interface RegisterUser {
+  phone_number: string;
+  password: string;
+  company_number: string,
+  name: string,
+  shop_id: number | null,
+  shop_name: string,
+  attachment_urls: { file_url: string }[];
 }
