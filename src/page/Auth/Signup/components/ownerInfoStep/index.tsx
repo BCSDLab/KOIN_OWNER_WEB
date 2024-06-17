@@ -1,17 +1,67 @@
 import { useFormContext } from 'react-hook-form';
+import { useState } from 'react';
+import { ReactComponent as File } from 'assets/svg/auth/file-icon.svg';
+import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
+import useUploadFile from 'query/upload';
 import styles from './ownerInfoStep.module.scss';
+import SearchShop from '../searchShop';
 
 interface OwnerInfo {
   ownerName: string;
   shopName: string;
+  shopId: string | null;
   companyRegistrationNumber: string;
-  verificationFile: string;
+  verificationFiles: string[];
 }
+
 export default function OwnerInfoStep() {
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext<OwnerInfo>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSearchShopOpen, setIsSearchShopOpen] = useState(false);
+  const { uploadFiles } = useUploadFile();
+  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const openSearchShopModal = () => setIsSearchShopOpen(true);
+  const closeSearchShopModal = () => setIsSearchShopOpen(false);
+
+  const handleUpload = async (files: FileList) => {
+    const formData = new FormData();
+    Array.from(files).forEach((file, index) => {
+      formData.append(`files[${index}]`, file);
+      console.log(`Selected file: ${file.name}`);
+    });
+
+    try {
+      const response = await uploadFiles(formData);
+      const { urls } = response.data;
+      setUploadedFiles((prev) => [...prev, ...urls]);
+      setValue('verificationFiles', [...uploadedFiles, ...urls]);
+    } catch (error: any) {
+      if (error.response) {
+        console.error('File upload error - response:', error.response.data);
+        console.error('File upload error - status:', error.response.status);
+        console.error('File upload error - headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('File upload error - request:', error.request);
+      } else {
+        console.error('File upload error - message:', error.message);
+      }
+      console.error('File upload error - config:', error.config);
+    }
+  };
+
+  const handleShopSelect = (name: string, id: string) => {
+    setValue('shopName', name);
+    setValue('shopId', id);
+    closeSearchShopModal();
+  };
 
   return (
     <div className={styles['owner-info-container']}>
@@ -34,19 +84,28 @@ export default function OwnerInfoStep() {
       </div>
       <div className={styles['shop-name']}>
         <span className="shop-name__label">가게명</span>
-        <input
-          {...register('shopName', {
-            required: {
-              value: true,
-              message: '가게명을 입력해주세요',
-            },
-            pattern: {
-              value: /^[가-힣a-zA-Z\s]+$/,
-              message: '유효한 가게명을 입력해주세요',
-            },
-          })}
-          placeholder="가게명을 입력해주세요."
-        />
+        <div className={styles['shop-search-box']}>
+          <input
+            {...register('shopName', {
+              required: {
+                value: true,
+                message: '가게명을 입력해주세요',
+              },
+              pattern: {
+                value: /^[가-힣a-zA-Z\s]+$/,
+                message: '유효한 가게명을 입력해주세요',
+              },
+            })}
+            placeholder="가게명을 입력해주세요."
+          />
+          <button
+            type="button"
+            className={styles['search-button']}
+            onClick={openSearchShopModal}
+          >
+            가게 검색
+          </button>
+        </div>
         {errors.shopName && <span className={styles['error-message']}>{errors.shopName.message}</span>}
       </div>
       <div className={styles['company-registration-number']}>
@@ -68,16 +127,34 @@ export default function OwnerInfoStep() {
       </div>
       <div className={styles['document-input']}>
         <span className="document-input__label">사업자 인증 파일</span>
-        <input
-          type="file"
-          {...register('verificationFile', {
-            required: {
-              value: true,
-              message: '파일을 업로드해주세요',
-            },
-          })}
-        />
-        {errors.verificationFile && <span className={styles['error-message']}>{errors.verificationFile.message}</span>}
+        <div className={styles['document-input__condition']}>
+          <span>사업자 등록증, 영업신고증, 통장사본을 첨부하세요.</span>
+          <div className={styles['document-count']}>
+            {uploadedFiles.length}
+            {' '}
+            / 5
+          </div>
+        </div>
+        <button
+          type="button"
+          className={styles['owner-file-input__button']}
+          onClick={openModal}
+        >
+          <File />
+          <span>파일 첨부</span>
+        </button>
+        {errors.verificationFiles && <span className={styles['error-message']}>{errors.verificationFiles.message}</span>}
+      </div>
+      {isModalOpen && <FileUploadModal onClose={closeModal} onUpload={handleUpload} />}
+      {isSearchShopOpen && (
+        <SearchShop onClose={closeSearchShopModal} onSelect={handleShopSelect} />
+      )}
+      <div className={styles['file-list']}>
+        {uploadedFiles.map((file) => (
+          <div key={file}>
+            {file}
+          </div>
+        ))}
       </div>
     </div>
   );
