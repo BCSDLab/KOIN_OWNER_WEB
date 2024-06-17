@@ -3,6 +3,7 @@ import useShopList from 'query/shops';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
+import { createPortal } from 'react-dom';
 import styles from './searchShop.module.scss';
 
 interface SearchShopProps {
@@ -65,9 +66,10 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
 
   const handleSelectClick = () => {
     onSelect(selectedShop.name, selectedShop.id);
+    onClose();
   };
 
-  return createModal(
+  return createPortal(
     <div className={styles['search-shop-container']}>
       <div className={styles['search-input-container']}>
         <input
@@ -137,6 +139,14 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
       >
         선택 완료
       </button>
+      <button
+        type="button"
+        className={styles['cancel-button']}
+        onClick={onClose}
+      >
+        취소
+      </button>
     </div>,
+    document.body,
   );
 }

@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { ReactComponent as File } from 'assets/svg/auth/file-icon.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
+import SearchShop from 'page/Auth/Signup/components/searchShop';
 import styles from './ownerInfoStep.module.scss';
-import SearchShop from '../searchShop';
 
 interface OwnerInfo {
   ownerName: string;
