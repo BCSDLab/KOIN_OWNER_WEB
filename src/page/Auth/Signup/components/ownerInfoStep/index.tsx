@@ -1,9 +1,12 @@
 import { useFormContext } from 'react-hook-form';
 import { useState } from 'react';
-import { ReactComponent as File } from 'assets/svg/auth/file-icon.svg';
+import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
 import SearchShop from 'page/Auth/Signup/components/searchShop';
+// import { File } from 'model/File';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import styles from './ownerInfoStep.module.scss';
 
 interface OwnerInfo {
@@ -33,27 +36,18 @@ export default function OwnerInfoStep() {
 
   const handleUpload = async (files: FileList) => {
     const formData = new FormData();
-    Array.from(files).forEach((file, index) => {
-      formData.append(`files[${index}]`, file);
-      console.log(`Selected file: ${file.name}`);
-    });
 
+    Array.from(files).map((file) => formData.append('files', file));
     try {
       const response = await uploadFiles(formData);
-      const { urls } = response.data;
-      setUploadedFiles((prev) => [...prev, ...urls]);
-      setValue('verificationFiles', [...uploadedFiles, ...urls]);
-    } catch (error: any) {
-      if (error.response) {
-        console.error('File upload error - response:', error.response.data);
-        console.error('File upload error - status:', error.response.status);
-        console.error('File upload error - headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('File upload error - request:', error.request);
-      } else {
-        console.error('File upload error - message:', error.message);
+      const { file_urls: fileUrls } = response.data;
+      setUploadedFiles((prev) => [...prev, ...fileUrls]);
+      setValue('verificationFiles', [...uploadedFiles, ...fileUrls]);
+    } catch (error) {
+      if (isKoinError(error)) {
+        showToast('error', error.message);
       }
-      console.error('File upload error - config:', error.config);
+      sendClientError(error);
     }
   };
 
@@ -140,7 +134,7 @@ export default function OwnerInfoStep() {
           className={styles['owner-file-input__button']}
           onClick={openModal}
         >
-          <File />
+          <FileIcon />
           <span>파일 첨부</span>
         </button>
         {errors.verificationFiles && <span className={styles['error-message']}>{errors.verificationFiles.message}</span>}
