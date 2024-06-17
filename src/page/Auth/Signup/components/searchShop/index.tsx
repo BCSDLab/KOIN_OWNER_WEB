@@ -8,7 +8,7 @@ import styles from './searchShop.module.scss';
 
 interface SearchShopProps {
   onClose: () => void;
-  onSelect: (name: string, id: string) => void;
+  onSelect: (name: string, id: number) => void;
 }
 
 export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
@@ -65,7 +65,7 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
   }, [searchText, shopList?.shops]);
 
   const handleSelectClick = () => {
-    onSelect(selectedShop.name, selectedShop.id);
+    onSelect(selectedShop.name, Number(selectedShop.id));
     onClose();
   };
 

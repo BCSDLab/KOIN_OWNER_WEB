@@ -63,10 +63,10 @@ export default function SignUp() {
       {steps.index === 0 && (
         <AgreeStep selectItems={selectItems} handleSelect={handleSelect} />
       )}
-      {steps.index === 1 && (
+      {steps.index === 2 && (
         <PhoneStep setIsStepComplete={setStepPhoneComplete} />
       )}
-      {steps.index === 2 && (
+      {steps.index === 1 && (
         <OwnerInfoStep />
       )}
     </>

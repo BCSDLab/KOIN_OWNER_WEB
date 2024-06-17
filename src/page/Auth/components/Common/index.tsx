@@ -2,9 +2,10 @@ import { ReactComponent as BackArrow } from 'assets/svg/common/back-arrow.svg';
 import { FormProvider, useForm, UseFormSetError } from 'react-hook-form';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'utils/ts/className';
-import { Register } from 'model/auth';
+import { Register, RegisterUser } from 'model/auth';
 // eslint-disable-next-line
 import { changePassword } from 'api/auth';
+import { phoneRegisterUser } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
 // eslint-disable-next-line
@@ -18,6 +19,28 @@ const setNewPassword = (
 ) => {
   changePassword({ phone_number, password })
     .then(() => sessionStorage.removeItem('accessToken'))
+    .catch((e) => {
+      if (isKoinError(e)) {
+        setError('password', { type: 'custom', message: e.message });
+      } else {
+        sendClientError(e);
+      }
+    });
+};
+
+const registerUser = (
+  company_number: string,
+  name: string,
+  password: string,
+  phone_number: string,
+  shop_id: number | null,
+  shop_name: string,
+  attachment_urls: { file_url: string }[],
+  setError: UseFormSetError<RegisterUser>,
+) => {
+  phoneRegisterUser({
+    company_number, name, password, phone_number, shop_id, shop_name, attachment_urls,
+  }).then(() => sessionStorage.removeItem('accessToken'))
     .catch((e) => {
       if (isKoinError(e)) {
         setError('password', { type: 'custom', message: e.message });
@@ -50,11 +73,24 @@ export default function CommonLayout() {
   const stepCheck = () => {
     if (isComplete) navigate('/login');
     if (!errors.root) {
-      if (index + 1 === totalStep && isFindPassword) setNewPassword(getValues('phone_number'), getValues('password'), setError);
+      if (index + 1 === totalStep && isFindPassword) {
+        setNewPassword(getValues('phone_number'), getValues('password'), setError);
+      } else if (index + 1 === totalStep && !isFindPassword) {
+        registerUser(
+          getValues('company_number'),
+          getValues('name'),
+          getValues('password'),
+          getValues('phone_number'),
+          getValues('shop_id'),
+          getValues('shop_name'),
+          getValues('attachment_urls').map((url : any) => ({ file_url: url })),
+          setError,
+        );
+      }
       nextStep();
     }
   };
-
+  console.log(getValues('attachment_urls'));
   return (
     <div className={styles.container}>
       <FormProvider {...method}>

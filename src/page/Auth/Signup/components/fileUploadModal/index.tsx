@@ -39,17 +39,17 @@ export default function FileUploadModal({ onClose, onUpload }: FileUploadModalPr
           />
           <button
             type="button"
-            className={styles['upload-button--upload']}
-            onClick={() => document.getElementById('file-upload')?.click()}
-          >
-            첨부하기
-          </button>
-          <button
-            type="button"
             className={styles['upload-button--cancel']}
             onClick={onClose}
           >
             취소하기
+          </button>
+          <button
+            type="button"
+            className={styles['upload-button--upload']}
+            onClick={() => document.getElementById('file-upload')?.click()}
+          >
+            첨부하기
           </button>
         </div>
       </div>

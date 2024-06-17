@@ -7,6 +7,7 @@ import {
   RegisterParam,
   PhoneNumberRegisterResponse,
 } from 'model/register';
+import { RegisterUser } from 'model/auth';
 
 export const getEmailDuplicate = async (param: string) => {
   const { status } = await client.get(`/user/check/email?address=${param}`);
@@ -32,6 +33,10 @@ export const registerUser = async (param:RegisterParam) => {
   return status;
 };
 
+export const phoneRegisterUser = async (param:RegisterUser) => {
+  const { status } = await client.post('/owners/register/phone', param);
+  return status;
+};
 export const getFileUrls = async (param:FormData, token:string) => {
   multipartClient.defaults.headers.common.Authorization = `Bearer ${token}`;
   const { data } = await multipartClient.post('/owners/upload/files', param);

@@ -1,20 +1,22 @@
 import { useFormContext } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
+import { ReactComponent as DeleteFile } from 'assets/svg/auth/delete-file.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
 import SearchShop from 'page/Auth/Signup/components/searchShop';
-// import { File } from 'model/File';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './ownerInfoStep.module.scss';
 
 interface OwnerInfo {
-  ownerName: string;
-  shopName: string;
-  shopId: string | null;
-  companyRegistrationNumber: string;
-  verificationFiles: string[];
+  name: string;
+  shop_name: string;
+  shop_id: number | null;
+  company_number: string;
+  attachment_urls: {
+    file_url: string;
+  }[];
 }
 
 export default function OwnerInfoStep() {
@@ -26,8 +28,9 @@ export default function OwnerInfoStep() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchShopOpen, setIsSearchShopOpen] = useState(false);
   const { uploadFiles } = useUploadFile();
+  const [fileNames, setFileNames] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
-
+  const [disable, setDisable] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -36,13 +39,15 @@ export default function OwnerInfoStep() {
 
   const handleUpload = async (files: FileList) => {
     const formData = new FormData();
+    const names = Array.from(files).map((file) => file.name);
 
-    Array.from(files).map((file) => formData.append('files', file));
+    Array.from(files).forEach((file) => formData.append('files', file));
     try {
       const response = await uploadFiles(formData);
       const { file_urls: fileUrls } = response.data;
       setUploadedFiles((prev) => [...prev, ...fileUrls]);
-      setValue('verificationFiles', [...uploadedFiles, ...fileUrls]);
+      setFileNames((prev) => [...prev, ...names]);
+      setValue('attachment_urls', [...uploadedFiles, ...fileUrls].map((url) => ({ file_url: url })));
     } catch (error) {
       if (isKoinError(error)) {
         showToast('error', error.message);
@@ -51,10 +56,28 @@ export default function OwnerInfoStep() {
     }
   };
 
-  const handleShopSelect = (name: string, id: string) => {
-    setValue('shopName', name);
-    setValue('shopId', id);
+  const handleShopSelect = (name: string, id: number) => {
+    setValue('shop_name', name);
+    setValue('shop_id', id);
     closeSearchShopModal();
+  };
+
+  const formatCompanyNumber = (value: string) => {
+    const cleaned = value.replace(/\D/g, ''); // Remove non-digit characters
+    const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,5})$/);
+    if (match) {
+      return [match[1], match[2], match[3]].filter(Boolean).join('-');
+    }
+    return value;
+  };
+
+  const handleCompanyNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (inputValue.length <= 12) {
+      const formattedValue = formatCompanyNumber(inputValue);
+      setValue('company_number', formattedValue);
+      setDisable(true);
+    }
   };
 
   return (
@@ -62,7 +85,7 @@ export default function OwnerInfoStep() {
       <div className={styles['owner-name']}>
         <span className="owner-name__label">대표자명(실명)</span>
         <input
-          {...register('ownerName', {
+          {...register('name', {
             required: {
               value: true,
               message: '이름을 입력해주세요',
@@ -74,13 +97,13 @@ export default function OwnerInfoStep() {
           })}
           placeholder="이름을 입력해주세요."
         />
-        {errors.ownerName && <span className={styles['error-message']}>{errors.ownerName.message}</span>}
+        {errors.name && <span className={styles['error-message']}>{errors.name.message}</span>}
       </div>
       <div className={styles['shop-name']}>
         <span className="shop-name__label">가게명</span>
         <div className={styles['shop-search-box']}>
           <input
-            {...register('shopName', {
+            {...register('shop_name', {
               required: {
                 value: true,
                 message: '가게명을 입력해주세요',
@@ -91,6 +114,7 @@ export default function OwnerInfoStep() {
               },
             })}
             placeholder="가게명을 입력해주세요."
+            className={styles['shop-name__input']}
           />
           <button
             type="button"
@@ -100,56 +124,68 @@ export default function OwnerInfoStep() {
             가게 검색
           </button>
         </div>
-        {errors.shopName && <span className={styles['error-message']}>{errors.shopName.message}</span>}
+        {errors.shop_name && <span className={styles['error-message']}>{errors.shop_name.message}</span>}
       </div>
       <div className={styles['company-registration-number']}>
         <span className="company-registration-number__label">사업자 등록번호</span>
         <input
-          {...register('companyRegistrationNumber', {
+          {...register('company_number', {
             required: {
               value: true,
               message: '사업자 등록번호를 입력해주세요.',
             },
             pattern: {
-              value: /^[0-9]+$/,
-              message: '숫자만 입력해주세요',
+              value: /^[0-9]{3}-[0-9]{2}-[0-9]{5}$/,
+              message: '형식에 맞게 작성해주세요.',
             },
           })}
           placeholder="숫자만 입력해주세요."
+          onChange={handleCompanyNumberChange}
+          disabled={disable}
         />
-        {errors.companyRegistrationNumber && <span className={styles['error-message']}>{errors.companyRegistrationNumber.message}</span>}
+        {errors.company_number && <span className={styles['error-message']}>{errors.company_number.message}</span>}
       </div>
       <div className={styles['document-input']}>
         <span className="document-input__label">사업자 인증 파일</span>
         <div className={styles['document-input__condition']}>
           <span>사업자 등록증, 영업신고증, 통장사본을 첨부하세요.</span>
           <div className={styles['document-count']}>
-            {uploadedFiles.length}
+            {fileNames.length}
             {' '}
             / 5
           </div>
         </div>
+        {fileNames.length > 0 && (
+        <div className={styles['file-list']}>
+          {fileNames.map((name) => (
+            <div className={styles['file-card']} key={name}>
+              <button
+                type="button"
+                className={styles['delete-button']}
+              >
+                <DeleteFile />
+              </button>
+              <div className={styles['file-name']}>
+                {name}
+              </div>
+            </div>
+          ))}
+        </div>
+        )}
         <button
           type="button"
           className={styles['owner-file-input__button']}
           onClick={openModal}
         >
           <FileIcon />
-          <span>파일 첨부</span>
+          <div>파일 첨부</div>
         </button>
-        {errors.verificationFiles && <span className={styles['error-message']}>{errors.verificationFiles.message}</span>}
+        {errors.attachment_urls && <span className={styles['error-message']}>{errors.attachment_urls.message}</span>}
       </div>
       {isModalOpen && <FileUploadModal onClose={closeModal} onUpload={handleUpload} />}
       {isSearchShopOpen && (
         <SearchShop onClose={closeSearchShopModal} onSelect={handleShopSelect} />
       )}
-      <div className={styles['file-list']}>
-        {uploadedFiles.map((file) => (
-          <div key={file}>
-            {file}
-          </div>
-        ))}
-      </div>
     </div>
   );
 }

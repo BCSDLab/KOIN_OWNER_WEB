@@ -42,6 +42,19 @@ export const RegisterParam = z.object({
 
 export type RegisterParam = z.infer<typeof RegisterParam>;
 
+export const PhoneRegisterParam = z.object({
+  company_number: z.string(),
+  name: z.string(),
+  password: z.string(),
+  phone_number: z.string(),
+  shop_id: z.number().nullable(),
+  shop_name: z.string(),
+  attachment_urls: z.array(z.object({
+    file_url: z.string(),
+  })),
+});
+export type PhoneRegisterParam = z.infer<typeof PhoneRegisterParam>;
+
 export const FilesResponse = z.object({
   file_urls: z.array(z.string()),
 });

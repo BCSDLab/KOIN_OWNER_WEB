@@ -17,8 +17,11 @@ interface PhoneStepProps {
 }
 
 interface Verify {
-  phoneNumber: string;
-  verificationCode: string;
+  phone_number: string;
+  attachment_urls: {
+    file_url: string
+  }[];
+  verificationCode:string;
   password: string;
   passwordConfirm: string;
 }
@@ -30,7 +33,7 @@ interface SendCodeParams {
 }
 
 const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
-  const phoneNumber = getValues('phoneNumber');
+  const phoneNumber = getValues('phone_number');
   const phoneNumberParam: PhoneNumberRegisterParam = { phone_number: phoneNumber };
   getPhoneAuthCode(phoneNumberParam)
     .then(() => {
@@ -38,7 +41,7 @@ const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
     })
     .catch((e) => {
       if (isKoinError(e)) {
-        setError('phoneNumber', { type: 'custom', message: e.message });
+        setError('phone_number', { type: 'custom', message: e.message });
       }
     });
 };
@@ -55,7 +58,7 @@ const useCheckCode = (
     if (certificationCode.length === 6) {
       verificationAuthCode({
         certification_code: certificationCode,
-        phone_number: getValues('phoneNumber'),
+        phone_number: getValues('phone_number'),
       })
         .then((res) => {
           sessionStorage.setItem('access_token', res.token);
@@ -64,7 +67,7 @@ const useCheckCode = (
         })
         .catch((e) => {
           if (isKoinError(e)) {
-            setError('verificationCode', { type: 'error', message: e.message });
+            setError('attachment_urls', { type: 'error', message: e.message });
           } else {
             sendClientError(e);
           }
@@ -90,8 +93,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   );
 
   const sendCode = () => {
-    if (!getValues('phoneNumber')) {
-      setError('phoneNumber', { type: 'custom', message: '필수 입력 항목입니다.' });
+    if (!getValues('phone_number')) {
+      setError('phone_number', { type: 'custom', message: '필수 입력 항목입니다.' });
       return;
     }
     debounce();
@@ -99,7 +102,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
 
   const setCode = (e: ChangeEvent<HTMLInputElement>) => setCertificationCode(e.target.value);
 
-  const watchedValues = watch(['phoneNumber', 'verificationCode', 'password', 'passwordConfirm']);
+  const watchedValues = watch(['attachment_urls', 'verificationCode', 'password', 'passwordConfirm']);
 
   useEffect(() => {
     const values = getValues();
@@ -120,7 +123,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
         <span className={styles['phone-number__label']}>전화번호</span>
         <div className={styles['input-container']}>
           <input
-            {...register('phoneNumber', {
+            {...register('phone_number', {
               required: {
                 value: true,
                 message: '전화번호를 입력해주세요',
@@ -132,7 +135,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             })}
             className={cn({
               [styles['phone-number__input']]: true,
-              [styles['error-border']]: !!errors.phoneNumber,
+              [styles['error-border']]: !!errors.phone_number,
             })}
             placeholder="-없이 번호를 입력해주세요."
           />
@@ -141,8 +144,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
           </button>
         </div>
         <div className={styles['error-message']}>
-          {errors.phoneNumber && <Error />}
-          {errors.phoneNumber?.message}
+          {errors.phone_number && <Error />}
+          {errors.phone_number?.message}
         </div>
       </div>
       <div className={`${styles['verification-code']} ${styles['input-box']}`}>
