@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
-import showToast from 'utils/ts/showToast';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import MenuImage from './components/MenuImage';
@@ -38,7 +37,7 @@ export default function AddMenu() {
     optionPrices,
     singlePrice,
   } = useAddMenuStore();
-  const { addMenuMutation, addMenuError } = useMyShop();
+  const { addMenuMutation } = useMyShop();
   const { validateFields } = useFormValidation();
   const toggleConfirmClick = () => {
     if (validateFields()) {
@@ -60,15 +59,9 @@ export default function AddMenu() {
       single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
     };
     addMenuMutation(newMenuData);
-    if (addMenuError) {
-      showToast('error', '메뉴 추가에 실패했습니다.');
-    } else {
-      navigate('/owner');
-    }
   };
 
-  const onClickMenuAddCancelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onClickMenuAddCancelHandler = () => {
     if (isComplete) {
       toggleConfirmClick();
     } else {
@@ -76,8 +69,7 @@ export default function AddMenu() {
     }
   };
 
-  const onClickMenuAddConfirmHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onClickMenuAddConfirmHandler = () => {
     if (isComplete) {
       if (isMobile) {
         openGoMyShopModal();
@@ -127,14 +119,14 @@ export default function AddMenu() {
             <button
               className={styles['mobile__button-cancel']}
               type="button"
-              onClick={(e) => onClickMenuAddCancelHandler(e)}
+              onClick={() => onClickMenuAddCancelHandler()}
             >
               취소
             </button>
             <button
               className={styles['mobile__button-check']}
               type="button"
-              onClick={(e) => onClickMenuAddConfirmHandler(e)}
+              onClick={() => onClickMenuAddConfirmHandler()}
             >
               확인
             </button>
@@ -148,14 +140,14 @@ export default function AddMenu() {
               <button
                 className={styles['header__button-cancel']}
                 type="button"
-                onClick={(e) => onClickMenuAddCancelHandler(e)}
+                onClick={() => onClickMenuAddCancelHandler()}
               >
                 취소
               </button>
               <button
                 className={styles['header__button-check']}
                 type="button"
-                onClick={(e) => onClickMenuAddConfirmHandler(e)}
+                onClick={() => onClickMenuAddConfirmHandler()}
               >
                 확인
               </button>
