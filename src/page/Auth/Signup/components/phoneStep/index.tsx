@@ -57,7 +57,8 @@ const useCheckCode = (
         certification_code: certificationCode,
         phone_number: getValues('phoneNumber'),
       })
-        .then(() => {
+        .then((res) => {
+          sessionStorage.setItem('access_token', res.token);
           setIsCertified(true);
           clearErrors();
         })
@@ -104,7 +105,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
     const values = getValues();
     const isComplete = (
       values.password === values.passwordConfirm
-       && values.password.length > 0
+      && values.password.length > 0
     ) && isCertified && !!errors;
     if (isComplete) {
       setIsStepComplete(true);
