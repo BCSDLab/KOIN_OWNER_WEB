@@ -1,7 +1,6 @@
 import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
 import Copyright from 'component/common/Copyright';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
 import Category from 'page/ShopRegistration/component/Modal/Category';
 import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
@@ -23,6 +22,7 @@ import useMyShop from 'query/shop';
 import { useEffect, useState } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
