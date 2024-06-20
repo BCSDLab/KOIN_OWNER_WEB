@@ -48,3 +48,11 @@ export const changePassword = ({ phone_number, password } : { phone_number:strin
   phone_number,
   password,
 });
+
+export const loginByPhone = async (param: LoginParams) => {
+  const { data } = await client.post('/owners/login', {
+    param,
+  });
+
+  return LoginResponse.parse(data);
+};

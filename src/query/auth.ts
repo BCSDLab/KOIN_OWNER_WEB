@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import {
-  postLogin, postLogout, findPasswordVerify, findPassword, newPassword,
+  loginByPhone, postLogout, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
 import axios, { AxiosError } from 'axios';
 import { LoginForm } from 'model/auth';
@@ -38,8 +38,8 @@ export const useLogin = () => {
   const {
     mutate, error, isError, isSuccess,
   } = useMutation({
-    mutationFn: (variables: LoginForm) => postLogin({
-      email: variables.email, password: variables.password,
+    mutationFn: (variables: LoginForm) => loginByPhone({
+      account: variables.account, password: variables.password,
     }),
     onSuccess: async (data, variables) => {
       if (data.token) { sessionStorage.setItem('access_token', data.token); }

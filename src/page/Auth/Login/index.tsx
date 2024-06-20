@@ -37,13 +37,13 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginParams> = async (data) => {
     const hashedPassword = await sha256(data.password);
-    login({ email: data.email, password: hashedPassword, isAutoLogin });
+    login({ account: data.account, password: hashedPassword, isAutoLogin });
   };
 
   const onError = (error: FieldErrors<LoginParams>) => {
     setIsFormError(true);
-    if (error.email) {
-      setEmailError(error.email?.message || '');
+    if (error.account) {
+      setEmailError(error.account?.message || '');
     }
   };
 
@@ -59,8 +59,8 @@ export default function Login() {
                 [styles['form__input--error']]: isError,
               })}
               type="text"
-              placeholder={isMobile ? '이메일' : '아이디 입력'}
-              {...register('email')}
+              placeholder={isMobile ? '휴대폰번호' : '휴대폰 번호를 입력하세요'}
+              {...register('account')}
             />
           </div>
           <div className={styles.form__container}>
@@ -107,7 +107,7 @@ export default function Login() {
               [styles['form__button--login']]: true,
             })}
             type="submit"
-            // onClick={toggle}
+          // onClick={toggle}
           >
             로그인
           </button>
