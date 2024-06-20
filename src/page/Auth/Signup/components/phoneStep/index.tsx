@@ -195,11 +195,45 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
       </div>
       <div className={`${styles.password} ${styles['input-box']}`}>
         <span className={styles.password__label}>비밀번호</span>
-        <input {...register('password')} type="password" placeholder="비밀번호를 입력해주세요" />
+        <input
+          {...register('password', {
+            pattern: {
+              value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/,
+              message: '특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요.',
+            },
+          })}
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+        />
+        <div className={styles['error-message']}>
+          {errors.password && (
+            <>
+              <Error />
+              {errors.password.message}
+            </>
+          )}
+        </div>
       </div>
       <div className={`${styles['password-confirm']} ${styles['input-box']}`}>
         <span className={styles.password__label}>비밀번호 확인</span>
-        <input {...register('passwordConfirm')} type="password" placeholder="비밀번호를 확인해주세요." />
+        <input
+          {...register('passwordConfirm', {
+            pattern: {
+              value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/,
+              message: '특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요.',
+            },
+          })}
+          type="password"
+          placeholder="비밀번호를 확인해주세요."
+        />
+        <div className={styles['error-message']}>
+          {errors.passwordConfirm && (
+            <>
+              <Error />
+              {errors.passwordConfirm.message}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

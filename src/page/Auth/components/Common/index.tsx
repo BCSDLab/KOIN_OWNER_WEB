@@ -8,7 +8,7 @@ import { changePassword } from 'api/auth';
 import { phoneRegisterUser } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
-import { useDebounce } from 'utils/hooks/useDebounce';
+import sha256 from 'utils/ts/SHA-256';
 // eslint-disable-next-line
 import Done from '../Done/index';
 import styles from './index.module.scss';
@@ -77,17 +77,6 @@ export default function CommonLayout() {
     formState: { errors }, setError, getValues, setValue,
   } = method;
 
-  const debounce = useDebounce<RegisterParam>(registerUser, {
-    company_number: getValues('company_number'),
-    name: getValues('name'),
-    password: getValues('password'),
-    phone_number: getValues('phone_number'),
-    shop_id: getValues('shop_id'),
-    shop_name: getValues('shop_name'),
-    attachment_urls: getValues('attachment_urls'),
-    setError,
-  });
-
   const steps = useStep(isFindPassword ? 'find' : 'register');
   const {
     nextStep,
@@ -104,13 +93,25 @@ export default function CommonLayout() {
   // eslint-disable-next-line
   const progressPercentage = (index + 1) / totalStep * 100;
 
-  const stepCheck = () => {
+  const stepCheck = async () => {
     if (isComplete) navigate('/login');
     if (!errors.root) {
       if (index + 1 === totalStep && isFindPassword) {
         setNewPassword(getValues('phone_number'), getValues('password'), setError);
       } else if (index + 1 === totalStep && !isFindPassword) {
-        debounce();
+        const hash = await sha256(getValues('password'));
+        registerUser(
+          {
+            company_number: getValues('company_number'),
+            name: getValues('name'),
+            password: hash,
+            phone_number: getValues('phone_number'),
+            shop_id: getValues('shop_id'),
+            shop_name: getValues('shop_name'),
+            attachment_urls: getValues('attachment_urls'),
+            setError,
+          },
+        );
       }
       nextStep();
     }

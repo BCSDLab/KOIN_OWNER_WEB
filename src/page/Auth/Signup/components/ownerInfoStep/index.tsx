@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
 import { ReactComponent as DeleteFile } from 'assets/svg/auth/delete-file.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
@@ -18,9 +18,10 @@ interface OwnerInfo {
 
 interface OwnerInfoStepProps {
   onSearch: () => void;
+  setIsStepComplete: (state: boolean) => void;
 }
 
-export default function OwnerInfoStep({ onSearch }: OwnerInfoStepProps) {
+export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfoStepProps) {
   const {
     register,
     watch,
@@ -76,6 +77,16 @@ export default function OwnerInfoStep({ onSearch }: OwnerInfoStepProps) {
       setDisable(true);
     }
   };
+
+  const watchedValues = watch(['name', 'shop_name', 'company_number', 'attachment_urls']);
+
+  useEffect(() => {
+    const values = watch();
+    const isComplete = values.name && values.shop_name
+    && values.company_number
+    && values.attachment_urls;
+    setIsStepComplete(!!isComplete);
+  }, [watchedValues, setIsStepComplete, watch]);
 
   return (
     <div className={styles['owner-info-container']}>

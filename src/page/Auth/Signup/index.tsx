@@ -75,7 +75,12 @@ export default function SignUp() {
       {steps.index === 2 && (steps.isSearch
         ? (
           <SearchShop />
-        ) : <OwnerInfoStep onSearch={() => steps.setIsSearch(true)} />
+        ) : (
+          <OwnerInfoStep
+            onSearch={() => steps.setIsSearch(true)}
+            setIsStepComplete={setStepPhoneComplete}
+          />
+        )
       )}
     </>
   );

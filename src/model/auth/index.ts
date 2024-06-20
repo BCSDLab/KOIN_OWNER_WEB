@@ -10,11 +10,6 @@ export type LoginParams = z.infer<typeof LoginParams>;
 export const LoginResponse = z.object({
   refresh_token: z.string(),
   token: z.string(),
-  user_type: z.union([
-    z.literal('OWNER'),
-    z.literal('COOP'),
-    z.null(),
-  ]),
 });
 
 export type LoginResponse = z.infer<typeof LoginResponse>;
@@ -50,7 +45,6 @@ export type OwnerShop = z.infer<typeof OwnerShop>;
 export const OwnerResponse = z.object({
   attachments: z.array(UserFile),
   company_number: z.string(),
-  email: z.string(),
   name: z.string(),
   shops: z.array(OwnerShop),
 });
