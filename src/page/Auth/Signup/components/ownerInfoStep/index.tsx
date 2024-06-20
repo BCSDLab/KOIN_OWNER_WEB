@@ -14,9 +14,7 @@ interface OwnerInfo {
   shop_name: string;
   shop_id: number | null;
   company_number: string;
-  attachment_urls: {
-    file_url: string;
-  }[];
+  attachment_urls: { file_url: string }[];
 }
 
 export default function OwnerInfoStep() {
@@ -31,6 +29,7 @@ export default function OwnerInfoStep() {
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
   const [disable, setDisable] = useState(false);
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -45,9 +44,10 @@ export default function OwnerInfoStep() {
     try {
       const response = await uploadFiles(formData);
       const { file_urls: fileUrls } = response.data;
-      setUploadedFiles((prev) => [...prev, ...fileUrls]);
+      const formattedUrls = fileUrls.map((url: string) => ({ file_url: url }));
+      setUploadedFiles((prev) => [...prev, ...formattedUrls]);
       setFileNames((prev) => [...prev, ...names]);
-      setValue('attachment_urls', [...uploadedFiles, ...fileUrls].map((url) => ({ file_url: url })));
+      setValue('attachment_urls', [...uploadedFiles, ...formattedUrls]);
     } catch (error) {
       if (isKoinError(error)) {
         showToast('error', error.message);
@@ -63,7 +63,7 @@ export default function OwnerInfoStep() {
   };
 
   const formatCompanyNumber = (value: string) => {
-    const cleaned = value.replace(/\D/g, ''); // Remove non-digit characters
+    const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,5})$/);
     if (match) {
       return [match[1], match[2], match[3]].filter(Boolean).join('-');
@@ -73,9 +73,12 @@ export default function OwnerInfoStep() {
 
   const handleCompanyNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    if (inputValue.length <= 12) {
-      const formattedValue = formatCompanyNumber(inputValue);
+    const cleanedValue = inputValue.replace(/\D/g, '');
+    if (cleanedValue.length <= 10) {
+      const formattedValue = formatCompanyNumber(cleanedValue);
       setValue('company_number', formattedValue);
+    }
+    if (cleanedValue.length === 10) {
       setDisable(true);
     }
   };

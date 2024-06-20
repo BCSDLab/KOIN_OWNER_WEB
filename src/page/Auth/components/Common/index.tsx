@@ -35,7 +35,7 @@ const registerUser = (
   phone_number: string,
   shop_id: number | null,
   shop_name: string,
-  attachment_urls: { file_url: string }[],
+  attachment_urls: { file_url: string; }[],
   setError: UseFormSetError<RegisterUser>,
 ) => {
   phoneRegisterUser({
@@ -69,7 +69,6 @@ export default function CommonLayout() {
   // eslint-disable-next-line
   const progressPercentage = (index + 1) / totalStep * 100;
 
-  // form에 error가 없으면 다음 단계로 넘어감
   const stepCheck = () => {
     if (isComplete) navigate('/login');
     if (!errors.root) {
@@ -83,14 +82,14 @@ export default function CommonLayout() {
           getValues('phone_number'),
           getValues('shop_id'),
           getValues('shop_name'),
-          getValues('attachment_urls').map((url : any) => ({ file_url: url })),
+          getValues('attachment_urls'),
           setError,
         );
       }
       nextStep();
     }
   };
-  console.log(getValues('attachment_urls'));
+
   return (
     <div className={styles.container}>
       <FormProvider {...method}>
