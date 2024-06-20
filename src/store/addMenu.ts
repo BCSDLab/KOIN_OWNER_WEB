@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import { MonoMenu } from 'model/shopInfo/menuCategory';
 
-interface OptionPrices {
+export type OptionPrices = {
   id: number;
   option: string;
   price: number;
-}
+};
 
 interface AddMenuStore {
   menuId: number;

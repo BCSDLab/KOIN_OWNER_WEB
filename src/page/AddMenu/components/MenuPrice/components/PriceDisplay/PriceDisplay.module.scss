@@ -1,0 +1,48 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 117px;
+  border-bottom: 2px solid #175c8e;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+  }
+
+  &__title {
+    margin-right: auto;
+    height: 47px;
+    font-size: 36px;
+    font-weight: 500;
+    color: #175c8e;
+    font-family: "Noto Sans CJK KR", sans-serif;
+
+    @include media.media-breakpoint-down(mobile) {
+      height: auto;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+  }
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 500;
+
+  @include media.media-breakpoint-down(mobile) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}

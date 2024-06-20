@@ -21,6 +21,10 @@
 
   &:focus {
     outline: 1px solid #4590bb;
+
+    @include media.media-breakpoint-down(mobile) {
+      align-items: flex-start;
+    }
   }
 }
 

@@ -1,13 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import {
-  Dispatch, SetStateAction, useEffect,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
-import useShopRegistrationStore from 'store/shopRegistration';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
@@ -21,10 +17,12 @@ import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import useModalStore from 'store/modalStore';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTimeMobile';
-import { TOTAL_CATEGORY } from 'utils/constant/category';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
+import cn from 'utils/ts/className';
+import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -44,30 +42,15 @@ export default function EditShopInfoModal({
     setFalse: closeOperateTimeModal,
     value: isOperateTimeModalOpen,
   } = useBooleanState(false);
+
   const {
-    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
+    imageFile, imgRef, saveImgFile, setImageFile,
   } = useImagesUpload();
 
-  const {
-    setName, setAddress, setPhone, setDeliveryPrice, setDescription,
-    setImageUrls, setDelivery, setPayBank, setPayCard, setCategoryId,
-  } = useShopRegistrationStore();
-  const {
-    name, address, phone, deliveryPrice, description, imageUrls,
-    delivery, payBank, payCard, categoryId, removeImageUrl,
-  } = useShopRegistrationStore();
-
   const { categoryList } = useShopCategory();
-
   const {
-    openTimeState,
-    closeTimeState,
-    shopClosedState,
+    openTimeState, closeTimeState, shopClosedState, resetOperatingTime,
   } = useModalStore();
-
-  const openTimeArray = Object.values(openTimeState);
-  const closeTimeArray = Object.values(closeTimeState);
-  const shopClosedArray = Object.values(shopClosedState);
 
   const {
     isAllSameTime,
@@ -76,27 +59,67 @@ export default function EditShopInfoModal({
     isAllClosed,
   } = CheckSameTime();
 
-  const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId(Number(e.target.value));
-  };
-
   const {
-    handleSubmit, setValue,
+    register, control, handleSubmit, setValue, formState: { errors },
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
+    defaultValues: {
+      ...shopInfo,
+      category_ids: shopInfo.shop_categories.map((category) => category.id),
+      open: shopInfo.open.map((day) => ({
+        day_of_week: day.day_of_week,
+        closed: day.closed,
+        open_time: day.open_time,
+        close_time: day.close_time,
+      })),
+    },
   });
 
+  const imageUrls = useWatch({ control, name: 'image_urls' });
+  const name = useWatch({ control, name: 'name' });
+  const categoryId = useWatch({ control, name: 'category_ids' });
+  const phone = useWatch({ control, name: 'phone' });
+  const address = useWatch({ control, name: 'address' });
+  const deliveryPrice = useWatch({ control, name: 'delivery_price' });
+  const description = useWatch({ control, name: 'description' });
+  const delivery = useWatch({ control, name: 'delivery' });
+  const payCard = useWatch({ control, name: 'pay_card' });
+  const payBank = useWatch({ control, name: 'pay_bank' });
+
+  const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue('category_ids', [Number(e.target.value), 0]);
+  };
+
+  const handleDeleteImage = (image: string) => {
+    setImageFile(imageFile.filter((img) => img !== image));
+  };
+
+  const formatPhoneNumber = (inputNumber:string) => {
+    const phoneNumber = inputNumber.replace(/\D/g, '');
+    const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    return formattedPhoneNumber;
+  };
+
+  const handlePhoneChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatPhoneNumber(event.target.value);
+    setValue('phone', formattedValue);
+  };
+
   useEffect(() => {
-    if (imageFile && !uploadError) { // 초기에 이 값이 true기 때문에 imageUrls가 빈 배열로 초기화되고 있었음
-      setImageUrls(imageFile);
+    if (imageFile.length > 0) {
+      setValue('image_urls', imageFile);
+    } else if (imageFile.length !== imageUrls.length) {
+      setImageFile(imageUrls);
     }
-  }, [imageFile, setImageUrls]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageFile]);
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
     onSuccess: () => {
       closeModal();
       setIsSuccess(true);
+      resetOperatingTime();
     },
     onError: (e) => {
       if (isKoinError(e)) {
@@ -106,20 +129,13 @@ export default function EditShopInfoModal({
       sendClientError(e);
     },
   });
+
+  const operateTimeState = useOperateTimeState();
+  const openTimeArray = Object.values(openTimeState);
+  const closeTimeArray = Object.values(closeTimeState);
+  const shopClosedArray = Object.values(shopClosedState);
+
   useEffect(() => {
-    setImageUrls(shopInfo.image_urls);
-    setImageFile(shopInfo.image_urls);
-    setName(shopInfo.name);
-    setAddress(shopInfo.address);
-    setPhone(shopInfo.phone);
-    setDeliveryPrice(shopInfo.delivery_price);
-    setDescription(shopInfo.description);
-    setDelivery(shopInfo.delivery);
-    setPayBank(shopInfo.pay_bank);
-    setPayCard(shopInfo.pay_card);
-    setCategoryId(shopInfo.shop_categories[1]
-      ? shopInfo.shop_categories[1].id
-      : TOTAL_CATEGORY);
     shopInfo.open.forEach((day, index) => {
       useModalStore.setState((prev) => ({
         ...prev,
@@ -137,38 +153,21 @@ export default function EditShopInfoModal({
         },
       }));
     });
-  }, []);
-  const operateTimeState = useOperateTimeState();
-  const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
-    ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
-    : '휴무일 없음';
+  }, [shopInfo.open]);
 
   useEffect(() => {
-    setValue('image_urls', imageUrls);
     const openValue = DAY_OF_WEEK.map((day, index) => ({
       close_time: closeTimeArray[index],
       closed: shopClosedArray[index],
       day_of_week: day,
       open_time: openTimeArray[index],
     }));
-    // shop_categories[0]은 전체보기이므로 따로 처리
-    if (shopInfo.shop_categories.length === 1) {
-      setValue('category_ids', [shopInfo.shop_categories[0].id]);
-    } else {
-      const categoryIds = shopInfo.shop_categories.map((category) => category.id);
-      setValue('category_ids', categoryIds);
-    }
     setValue('open', openValue);
-    setValue('delivery_price', Number(deliveryPrice));
-    setValue('description', description);
-    setValue('delivery', delivery);
-    setValue('pay_bank', payBank);
-    setValue('pay_card', payCard);
-    setValue('name', name);
-    setValue('phone', phone);
-    setValue('address', address);
-  }, [imageUrls, openTimeState, closeTimeState, shopClosedState, deliveryPrice,
-    description, delivery, payBank, payCard, name, phone, address, categoryId]);
+  }, [closeTimeArray, openTimeArray, setValue, shopClosedArray]);
+
+  const holiday = WEEK.filter((day) => shopClosedState[day]).length > 0
+    ? `매주 ${WEEK.filter((day) => shopClosedState[day]).join('요일, ')}요일`
+    : '휴무일 없음';
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
@@ -193,10 +192,7 @@ export default function EditShopInfoModal({
                 <img key={image} src={image} alt={`Selected ${index + 1}`} />
                 <button
                   type="button"
-                  onClick={() => {
-                    removeImageUrl(image);
-                    setImageFile(imageFile.filter((img) => img !== image));
-                  }}
+                  onClick={() => handleDeleteImage(image)}
                   className={styles['mobile-container__delete-button']}
                   aria-label="Delete image"
                 >
@@ -213,6 +209,7 @@ export default function EditShopInfoModal({
                 id="mainMenuImage"
                 multiple
                 className={styles['mobile-container__add-file']}
+                {...register('image_urls')}
                 onChange={saveImgFile}
                 ref={imgRef}
               />
@@ -226,14 +223,19 @@ export default function EditShopInfoModal({
                 type="text"
                 id="shopName"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
                 className={styles['mobile-main-info__input']}
+                {...register('name')}
               />
             </label>
             <label htmlFor="category" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>카테고리</span>
-              <select name="category" className={styles['mobile-main-info__select']} onChange={handleCategoryIdChange}>
-                {categoryList?.shop_categories.map((category) => (
+              <select
+                name="category"
+                className={styles['mobile-main-info__select']}
+                value={categoryId[0]}
+                onChange={handleCategoryIdChange}
+              >
+                {categoryList?.shop_categories.slice(1).map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
@@ -246,8 +248,8 @@ export default function EditShopInfoModal({
                 type="text"
                 id="phone"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
                 className={styles['mobile-main-info__input']}
+                {...register('phone', { onChange: handlePhoneChange })}
               />
             </label>
             <div className={styles['mobile-main-info__label']}>
@@ -302,39 +304,50 @@ export default function EditShopInfoModal({
                 type="text"
                 id="shopAddress"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
                 className={styles['mobile-main-info__input']}
+                {...register('address', { required: true })}
               />
             </label>
-            <label htmlFor="deliveryPrice" className={styles['mobile-main-info__label']}>
+            <label
+              htmlFor="deliveryPrice"
+              className={cn({
+                [styles['mobile-main-info__label']]: true,
+                [styles['mobile-main-info__label--error']]: Number.isNaN(deliveryPrice),
+              })}
+            >
               <span className={styles['mobile-main-info__header']}>배달금액</span>
               <input
                 type="number"
                 inputMode="decimal"
                 id="deliveryPrice"
-                value={deliveryPrice === 0 ? undefined : deliveryPrice}
-                onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+                value={deliveryPrice}
                 className={styles['mobile-main-info__input']}
+                {...register('delivery_price', { valueAsNumber: true })}
+                onWheel={(e) => (e.target as HTMLElement).blur()} // 마우스 스크롤로 숫자 변경 방지
               />
             </label>
+            <div className={styles['mobile-main-info__error-message']}>
+              {Number.isNaN(deliveryPrice) && <ErrorMessage message={ERRORMESSAGE.invalidPrice} />}
+            </div>
             <label htmlFor="description" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>기타정보</span>
               <input
                 type="text"
                 id="description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
                 className={styles['mobile-main-info__input']}
+                {...register('description')}
               />
             </label>
+
             <div className={styles['mobile-main-info__checkboxes']}>
               <label htmlFor="delivery" className={styles['mobile-main-info__checkbox']}>
                 <input
                   type="checkbox"
                   id="delivery"
                   className={styles['mobile-main-info__checkbox-input']}
-                  onChange={(e) => setDelivery(e.target.checked)}
                   checked={delivery}
+                  {...register('delivery')}
                 />
                 <span>배달 가능</span>
               </label>
@@ -343,8 +356,8 @@ export default function EditShopInfoModal({
                   type="checkbox"
                   id="payCard"
                   className={styles['mobile-main-info__checkbox-input']}
-                  onChange={(e) => setPayCard(e.target.checked)}
                   checked={payCard}
+                  {...register('pay_card')}
                 />
                 <span>카드 가능</span>
               </label>
@@ -353,8 +366,8 @@ export default function EditShopInfoModal({
                   type="checkbox"
                   id="payBank"
                   className={styles['mobile-main-info__checkbox-input']}
-                  onChange={(e) => setPayBank(e.target.checked)}
                   checked={payBank}
+                  {...register('pay_bank')}
                 />
                 <span>계좌이체 가능</span>
               </label>
@@ -376,10 +389,7 @@ export default function EditShopInfoModal({
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['main-image__image']} />
                 <button
                   type="button"
-                  onClick={() => {
-                    removeImageUrl(image);
-                    setImageFile(imageFile.filter((img) => img !== image));
-                  }}
+                  onClick={() => handleDeleteImage(image)}
                   className={styles['main-image__delete-button']}
                 >
                   <DeleteImgIcon />
@@ -393,6 +403,7 @@ export default function EditShopInfoModal({
                   accept="image/*"
                   id="mainMenuImage"
                   className={styles['main-image__add-file']}
+                  {...register('image_urls')}
                   onChange={saveImgFile}
                   ref={imgRef}
                 />
@@ -409,8 +420,8 @@ export default function EditShopInfoModal({
                 type="text"
                 id="shopName"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
                 className={styles['main-info__input']}
+                {...register('name')}
               />
             </label>
             <label htmlFor="category" className={styles['main-info__label']}>
@@ -420,7 +431,7 @@ export default function EditShopInfoModal({
                 className={styles['main-info__select']}
                 onChange={handleCategoryIdChange}
               >
-                {categoryList?.shop_categories.map((category) => (
+                {categoryList?.shop_categories.slice(1).map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
@@ -433,8 +444,8 @@ export default function EditShopInfoModal({
                 type="text"
                 id="shopAddress"
                 value={address}
-                onChange={(e) => setAddress(e.target.value)}
                 className={styles['main-info__input']}
+                {...register('address')}
               />
             </label>
             <label htmlFor="phone" className={styles['main-info__label']}>
@@ -443,8 +454,8 @@ export default function EditShopInfoModal({
                 type="text"
                 id="phone"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
                 className={styles['main-info__input']}
+                {...register('phone', { onChange: handlePhoneChange })}
               />
             </label>
             <label htmlFor="deliveryPrice" className={styles['main-info__label']}>
@@ -452,10 +463,14 @@ export default function EditShopInfoModal({
               <input
                 type="number"
                 id="deliveryPrice"
-                value={deliveryPrice === 0 ? undefined : deliveryPrice}
-                onChange={(e) => setDeliveryPrice(Number(e.target.value))}
+                value={deliveryPrice}
                 className={styles['main-info__input']}
+                {...register('delivery_price', { valueAsNumber: true })}
+                onWheel={(e) => (e.target as HTMLElement).blur()} // 마우스 스크롤로 숫자 변경 방지
               />
+              <div className={styles['main-info__error-message']}>
+                {errors.delivery_price && <ErrorMessage message={ERRORMESSAGE.invalidPrice} />}
+              </div>
             </label>
             <div className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>운영시간</span>
@@ -522,8 +537,8 @@ export default function EditShopInfoModal({
                 type="text"
                 id="description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
                 className={styles['main-info__input']}
+                {...register('description')}
               />
             </label>
             <label htmlFor="closedDay" className={styles['main-info__label']}>
@@ -542,8 +557,8 @@ export default function EditShopInfoModal({
                   type="checkbox"
                   id="delivery"
                   className={styles['main-info__checkbox-input']}
-                  onChange={(e) => setDelivery(e.target.checked)}
                   checked={delivery}
+                  {...register('delivery')}
                 />
                 <span>배달 가능</span>
               </label>
@@ -552,8 +567,8 @@ export default function EditShopInfoModal({
                   type="checkbox"
                   id="payCard"
                   className={styles['main-info__checkbox-input']}
-                  onChange={(e) => setPayCard(e.target.checked)}
                   checked={payCard}
+                  {...register('pay_card')}
                 />
                 <span>카드 가능</span>
               </label>
@@ -562,8 +577,8 @@ export default function EditShopInfoModal({
                   type="checkbox"
                   id="payBank"
                   className={styles['main-info__checkbox-input']}
-                  onChange={(e) => setPayBank(e.target.checked)}
                   checked={payBank}
+                  {...register('pay_bank')}
                 />
                 <span>계좌이체 가능</span>
               </label>

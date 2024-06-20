@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-end;
   width: 752px;
   height: calc(80vh - 78px);
   margin-left: 40px;
@@ -30,7 +30,7 @@
 
   &__modify-main-image {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     width: 704px;
     height: 136px;
     margin-top: 24px;
@@ -136,6 +136,10 @@
     flex-direction: column;
     margin-right: 24px;
     margin-bottom: 24px;
+  }
+
+  &__error-message {
+    margin-bottom: 5px;
   }
 
   &__header {
@@ -290,7 +294,7 @@
 
   &__confirm-button-wrapper {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     max-width: 328px;
     width: 100%;
   }
@@ -316,7 +320,15 @@
 
   &__label {
     display: flex;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+
+    &--error {
+      margin-bottom: 0;
+    }
+  }
+
+  &__error-message {
+    margin-bottom: 5px;
   }
 
   &__header {

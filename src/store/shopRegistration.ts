@@ -39,7 +39,7 @@ const useShopRegistrationStore = create<ShopRegistrationStore>((set) => ({
   deliveryPrice: 0,
   description: '',
   imageUrl: '',
-  imageUrls: ['aa'],
+  imageUrls: [],
   owner: '',
   name: '',
   phone: '',

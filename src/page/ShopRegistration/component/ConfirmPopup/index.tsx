@@ -1,4 +1,4 @@
-import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { FieldErrors } from 'react-hook-form';
 import { useState } from 'react';
 import styles from './ConfirmPopup.module.scss';
@@ -9,7 +9,9 @@ interface ConfirmPopupProps {
   errors: FieldErrors;
 }
 
-export default function ConfirmPopup({ isOpen, onCancel, errors }: ConfirmPopupProps) {
+export default function ConfirmPopup({
+  isOpen, onCancel, errors,
+}: ConfirmPopupProps) {
   const [isConfirmClicked, setIsConfirmClicked] = useState(false);
   const errorMessage = Object.keys(errors).map((key) => errors[key]?.message);
 
@@ -35,7 +37,9 @@ export default function ConfirmPopup({ isOpen, onCancel, errors }: ConfirmPopupP
           <button
             type="submit"
             className={styles['content__next-button']}
-            onClick={() => setIsConfirmClicked(true)}
+            onClick={() => {
+              setIsConfirmClicked(true);
+            }}
           >
             확인
           </button>

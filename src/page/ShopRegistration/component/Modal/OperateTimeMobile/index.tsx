@@ -1,11 +1,12 @@
-import PreviousStep from 'component/common/Auth/PreviousStep';
-import SubTitle from 'component/common/Auth/SubTitle';
-import useStepStore from 'store/useStepStore';
+import PreviousStep from 'component/Auth/PreviousStep';
+import SubTitle from 'component/Auth/SubTitle';
 import TimePicker from 'page/ShopRegistration/component/TimePicker';
 import { WEEK } from 'utils/constant/week';
 import { createPortal } from 'react-dom';
 import useModalStore, { OperatingTime } from 'store/modalStore';
 import cn from 'utils/ts/className';
+import { useFunnel } from 'utils/hooks/useFunnel';
+import PROGRESS_TITLE from 'utils/constant/progress';
 import styles from './OperateTimeMobile.module.scss';
 
 interface OperateTimeMobileProps {
@@ -14,7 +15,9 @@ interface OperateTimeMobileProps {
 }
 
 export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMobileProps) {
-  const step = useStepStore((state) => state.step);
+  const { currentStep } = useFunnel('세부 정보 입력');
+  const currentIndex = PROGRESS_TITLE.findIndex((step) => step.title === currentStep);
+
   const { shopClosedState } = useModalStore();
 
   const handleShopClosedChange = (day: typeof WEEK[number]) => {
@@ -43,7 +46,7 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
     <div>
       <div className={styles.container}>
         <div className={styles['chevron-left']}>
-          <PreviousStep step={step} clickEvent={closeModal} />
+          <PreviousStep step={currentIndex} clickEvent={closeModal} />
         </div>
         <div className={styles.content}>
           <SubTitle topTitle="가게 등록" bottomTitle="" topText="시간 설정" bottomText="" />

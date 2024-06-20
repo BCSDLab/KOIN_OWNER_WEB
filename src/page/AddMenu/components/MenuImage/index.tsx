@@ -5,7 +5,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import AddMenuImgModal from 'page/AddMenu/components/AddMenuImgModal';
 import useAddMenuStore from 'store/addMenu';
-import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
 import styles from './MenuImage.module.scss';

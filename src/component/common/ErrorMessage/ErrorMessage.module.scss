@@ -1,0 +1,12 @@
+.warn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 3px;
+
+  &--phrase {
+    display: block;
+    color: #f05d3d;
+    font-size: 11px;
+  }
+}

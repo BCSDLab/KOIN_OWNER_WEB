@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancle-icon.svg';
 import useAddMenuStore from 'store/addMenu';
-import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { UploadError } from 'utils/hooks/useImagesUpload';
 import styles from './AddMenuImgModal.module.scss';

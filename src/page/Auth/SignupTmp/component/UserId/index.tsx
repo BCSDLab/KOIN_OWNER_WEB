@@ -1,8 +1,8 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
+import ErrorMessage from 'component/common/ErrorMessage';
 import CustomButton from 'page/Auth/Signup/CustomButton';
 import useValidateEmail from 'page/Auth/SignupTmp/hooks/useValidateEmail';
 import useCheckEmailDuplicate from 'page/Auth/SignupTmp/hooks/useCheckEmailDuplicate';
-import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
 import styles from './UserId.module.scss';
 
 export default function UserId() {

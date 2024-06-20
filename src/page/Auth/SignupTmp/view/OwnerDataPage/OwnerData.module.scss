@@ -138,7 +138,7 @@
   &__shop-name {
     &--wrapper {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
     }
 
     width: calc(272px - 34px);
@@ -218,7 +218,7 @@
     display: flex;
     gap: 8px;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
 
     &--name {
       width: 90%;
@@ -297,7 +297,7 @@
 .button {
   margin-top: 16px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 
   &--upload {
     display: flex;

@@ -1,43 +1,50 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
-import useStepStore from 'store/useStepStore';
-import useShopRegistrationStore from 'store/shopRegistration';
-import { useEffect, useState } from 'react';
-import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
+import { ReactComponent as MobileDeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
+import { useEffect } from 'react';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import cn from 'utils/ts/className';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
+import { useFormContext, useWatch } from 'react-hook-form';
 import styles from './Main.module.scss';
 
-export default function Main() {
-  const [isError, setIsError] = useState(false);
-  const { increaseStep } = useStepStore();
+export default function Main({ onNext }:{ onNext: () => void }) {
   const {
-    imageFile, imgRef, saveImgFile, uploadError,
-  } = useImagesUpload();
-  const {
-    name, setName, address, setAddress, imageUrls, setImageUrls,
-  } = useShopRegistrationStore();
+    register, control, setValue, trigger, formState: { errors },
+  } = useFormContext();
 
-  const handleNextClick = () => {
-    if (name === '' || address === '' || imageUrls.length === 0 || uploadError !== '') {
-      setIsError(true);
-    } else {
-      setIsError(false);
-      increaseStep();
-    }
+  const name = useWatch({ control, name: 'name' });
+  const address = useWatch({ control, name: 'address' });
+  const imageUrls = useWatch({ control, name: 'image_urls' });
+
+  const {
+    imageFile, imgRef, saveImgFile, uploadError, setImageFile,
+  } = useImagesUpload();
+
+  const handleDeleteImage = (url: string) => {
+    setImageFile(imageFile.filter((img) => img !== url));
   };
 
   useEffect(() => {
-    if (imageFile.length > 0 || uploadError !== '') setImageUrls(imageFile);
-  }, [imageFile]);
+    if (imageFile.length > 0) {
+      setValue('image_urls', imageFile);
+    }
+  }, [imageFile, setValue]);
+
+  const handleNextClick = async () => {
+    const isValid = await trigger(['image_urls', 'name', 'address']);
+    if (!isValid) {
+      return;
+    }
+    onNext();
+  };
 
   return (
     <div className={styles.form}>
       <label
         className={cn({
           [styles['form__image-upload']]: true,
-          [styles['form__image-upload--error']]: uploadError !== '' || (imageUrls.length === 0 && isError),
+          [styles['form__image-upload--error']]: uploadError !== '' || errors.image_urls !== undefined,
         })}
         htmlFor="mainMenuImage"
       >
@@ -46,11 +53,28 @@ export default function Main() {
           accept="image/*"
           id="mainMenuImage"
           className={styles['form__upload-file']}
-          onChange={saveImgFile}
+          {...register('image_urls', { required: true })}
           ref={imgRef}
+          onChange={saveImgFile}
         />
-        {imageUrls
-          ? <img src={imageUrls[0]} className={styles['form__main-menu']} alt="메인 메뉴" />
+        {imageUrls.length !== 0
+          ? (
+            <div className={styles['form__main-menu']}>
+              {imageUrls.map((url: string) => (
+                <>
+                  <img key={url} src={url} className={styles['form__main-menu-image']} alt="대표 이미지" />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteImage(url)}
+                    className={styles['form__delete-img-button']}
+                    aria-label="Delete image"
+                  >
+                    <MobileDeleteImgIcon />
+                  </button>
+                </>
+              ))}
+            </div>
+          )
           : (
             <>
               <EmptyImgIcon />
@@ -59,46 +83,46 @@ export default function Main() {
           )}
       </label>
       <div className={styles['form__image-error-message']}>
-        {uploadError === '' && imageUrls.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.image} />}
+        {errors.image_urls && <ErrorMessage message={ERRORMESSAGE.image} />}
         {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
       </div>
       <label
         htmlFor="shopName"
         className={cn({
           [styles.form__label]: true,
-          [styles['form__label--error']]: name === '' && isError,
+          [styles['form__label--error']]: errors.name !== undefined,
         })}
       >
         가게명
         <input
           type="text"
           id="shopName"
-          onChange={(e) => setName(e.target.value)}
           value={name}
           className={styles.form__input}
+          {...register('name', { required: true })}
         />
       </label>
       <div className={styles['form__error-message']}>
-        {name === '' && isError && <ErrorMessage message={ERRORMESSAGE.name} />}
+        {errors.name && <ErrorMessage message={ERRORMESSAGE.name} />}
       </div>
       <label
         htmlFor="shopAddress"
         className={cn({
           [styles.form__label]: true,
-          [styles['form__label--error']]: address === '' && isError,
+          [styles['form__label--error']]: errors.address !== undefined,
         })}
       >
         주소정보
         <input
           type="text"
           id="shopAddress"
-          onChange={(e) => setAddress(e.target.value)}
           value={address}
           className={styles.form__input}
+          {...register('address', { required: true })}
         />
       </label>
       <div className={styles['form__error-message']}>
-        {address === '' && isError && <ErrorMessage message={ERRORMESSAGE.address} />}
+        {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
       </div>
       <div className={styles.form__button}>
         <button type="button" onClick={handleNextClick}>다음</button>
