@@ -6,13 +6,13 @@ import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import styles from './searchShop.module.scss';
 
+interface Step {
+  isShopSelect: boolean;
+  setIsShopSelect: (state: boolean) => void;
+}
 interface ShopInfo {
   shop_name: string;
   shop_id: number | null;
-}
-
-interface Step {
-  setIsShopSelect: (state: boolean) => void;
 }
 export default function SearchShop() {
   const [searchText, setSearchText] = useState('');
@@ -75,8 +75,8 @@ export default function SearchShop() {
           <button
             key={shop.id}
             className={cn({
-              [styles.shop]: true,
-              [styles['shop--selected']]: watch('shop_name').length > 0,
+              [styles['shop-card']]: true,
+              [styles['shop-card--selected']]: watch('shop_name') === shop.name,
             })}
             value={JSON.stringify({
               name: shop.name,
@@ -87,25 +87,25 @@ export default function SearchShop() {
               handleClickShop(e);
             }}
           >
-            <span className={styles.shop__title}>{shop.name}</span>
-            <div className={styles.shop__info}>
+            <span className={styles['shop-card__title']}>{shop.name}</span>
+            <div className={styles['shop-card-info-container']}>
               <span className={cn({
-                [styles.shop__delivery]: true,
-                [styles['shop__delivery--selected']]: shop.delivery,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.delivery,
               })}
               >
                 배달
               </span>
               <span className={cn({
-                [styles['shop__pay-card']]: true,
-                [styles['shop__pay-card--selected']]: shop.pay_card,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.pay_card,
               })}
               >
                 카드결제
               </span>
               <span className={cn({
-                [styles['shop__pay-bank']]: true,
-                [styles['shop__pay-bank--selected']]: shop.pay_bank,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.pay_bank,
               })}
               >
                 계좌이체
