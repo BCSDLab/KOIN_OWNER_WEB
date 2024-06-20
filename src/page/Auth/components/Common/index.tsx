@@ -8,6 +8,7 @@ import { changePassword } from 'api/auth';
 import { phoneRegisterUser } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
+import { useDebounce } from 'utils/hooks/useDebounce';
 // eslint-disable-next-line
 import Done from '../Done/index';
 import styles from './index.module.scss';
@@ -18,7 +19,6 @@ const setNewPassword = (
   setError: UseFormSetError<Register>,
 ) => {
   changePassword({ phone_number, password })
-    .then(() => sessionStorage.removeItem('accessToken'))
     .catch((e) => {
       if (isKoinError(e)) {
         setError('password', { type: 'custom', message: e.message });
@@ -28,7 +28,7 @@ const setNewPassword = (
     });
 };
 
-const registerUser = (
+interface RegisterParam {
   company_number: string,
   name: string,
   password: string,
@@ -37,6 +37,19 @@ const registerUser = (
   shop_name: string,
   attachment_urls: { file_url: string; }[],
   setError: UseFormSetError<RegisterUser>,
+}
+
+const registerUser = (
+  {
+    company_number,
+    name,
+    password,
+    phone_number,
+    shop_id,
+    shop_name,
+    attachment_urls,
+    setError,
+  }: RegisterParam,
 ) => {
   phoneRegisterUser({
     company_number, name, password, phone_number, shop_id, shop_name, attachment_urls,
@@ -64,6 +77,17 @@ export default function CommonLayout() {
     formState: { errors }, setError, getValues, setValue,
   } = method;
 
+  const debounce = useDebounce<RegisterParam>(registerUser, {
+    company_number: getValues('company_number'),
+    name: getValues('name'),
+    password: getValues('password'),
+    phone_number: getValues('phone_number'),
+    shop_id: getValues('shop_id'),
+    shop_name: getValues('shop_name'),
+    attachment_urls: getValues('attachment_urls'),
+    setError,
+  });
+
   const steps = useStep(isFindPassword ? 'find' : 'register');
   const {
     nextStep,
@@ -86,16 +110,7 @@ export default function CommonLayout() {
       if (index + 1 === totalStep && isFindPassword) {
         setNewPassword(getValues('phone_number'), getValues('password'), setError);
       } else if (index + 1 === totalStep && !isFindPassword) {
-        registerUser(
-          getValues('company_number'),
-          getValues('name'),
-          getValues('password'),
-          getValues('phone_number'),
-          getValues('shop_id'),
-          getValues('shop_name'),
-          getValues('attachment_urls'),
-          setError,
-        );
+        debounce();
       }
       nextStep();
     }
