@@ -1,5 +1,5 @@
 import { ReactComponent as XClose } from 'assets/svg/shopRegistration/close-x.svg';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import { createPortal } from 'react-dom';
 import cn from 'utils/ts/className';
 import { useEffect } from 'react';

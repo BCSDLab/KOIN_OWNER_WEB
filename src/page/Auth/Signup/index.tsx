@@ -1,73 +1,87 @@
-import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as Back } from 'assets/svg/common/back-arrow.svg';
-import { Link } from 'react-router-dom';
-import ProgressBar from 'component/common/ProgressBar';
-import PreviousStep from 'component/Auth/PreviousStep';
-import { useRef } from 'react';
-import OwnerData from './view/OwnerDataPage';
-import TermsOfService from './view/TermsOfServicePage';
-import UserData from './view/UserDataPage';
-import styles from './SignUp.module.scss';
-import Complete from './view/CompletePage';
-import useRegisterStep from './hooks/useRegisterStep';
+import { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import AgreeStep from './components/agreeStep';
+import OwnerInfoStep from './components/ownerInfoStep';
+import PhoneStep from './components/phoneStep';
+import SearchShop from './components/searchShop';
 
-export default function Signup() {
-  const { isMobile } = useMediaQuery();
-  const {
-    goNext, registerStep, goPrev, step,
-  } = useRegisterStep();
-  const termsRef = useRef<HTMLDivElement>(null);
-  const STEPS = [
-    <TermsOfService clickEvent={goNext} termsRef={termsRef} />,
-    <UserData goNext={goNext} />,
-    <OwnerData goNext={goNext} />,
-  ];
+interface Step {
+  index: number;
+  previousStep: () => void;
+  setIsStepComplete: (state: boolean) => void;
+  isSearch: boolean;
+  setIsSearch: (state: boolean) => void;
+}
+
+interface SelectOptions {
+  personal: boolean;
+  koin: boolean;
+}
+
+const initialSelectOption: SelectOptions = {
+  personal: false,
+  koin: false,
+};
+
+export default function SignUp() {
+  const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
+  const { steps } = useOutletContext<{ steps: Step; }>();
+  const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
+
+  const handleSelect = (option: keyof SelectOptions | 'all') => {
+    if (option === 'all') {
+      const newState = !(selectItems.personal && selectItems.koin);
+      setSelectItems({
+        personal: newState,
+        koin: newState,
+      });
+    } else {
+      setSelectItems((prevState) => ({
+        ...prevState,
+        [option]: !prevState[option],
+      }));
+    }
+  };
+
+  useEffect(() => {
+    setSelectItems(initialSelectOption);
+  }, [steps.index]);
+
+  useEffect(() => {
+    if (selectItems.koin && selectItems.personal) {
+      steps.setIsStepComplete(true);
+    } else {
+      steps.setIsStepComplete(false);
+    }
+  }, [selectItems, steps]);
+
+  useEffect(() => {
+  }, [steps.setIsStepComplete]);
+
+  useEffect(() => {
+    if (stepPhoneComplete) {
+      steps.setIsStepComplete(true);
+    }
+  }, [stepPhoneComplete, steps]);
+
   return (
-    <div className={styles.page}>
-      {!isMobile
+    <>
+      {steps.index === 0 && (
+        <AgreeStep selectItems={selectItems} handleSelect={handleSelect} />
+      )}
+      {steps.index === 1 && (
+        <PhoneStep setIsStepComplete={setStepPhoneComplete} />
+      )}
+      {steps.index === 2 && (steps.isSearch
         ? (
-          <>
-            {registerStep < 3 && (
-              <section className={styles.section}>
-                <Logo className={styles.section__logo} />
-                <div className={styles.section__steps}>
-                  {STEPS[registerStep]}
-                </div>
-              </section>
-            )}
-            {registerStep === 3 && <Complete />}
-          </>
+          <SearchShop />
+        ) : (
+          <OwnerInfoStep
+            onSearch={() => steps.setIsSearch(true)}
+            setIsStepComplete={setStepPhoneComplete}
+          />
         )
-        : (
-          <>
-            {registerStep < 3 && (
-            <>
-              {registerStep === 0 ? (
-                <Link to="/login" className={styles['back-button']}>
-                  <Back />
-                </Link>
-              ) : <PreviousStep step={step} clickEvent={goPrev} />}
-              <section className={styles.section} ref={termsRef}>
-                <span className={styles.section__name}>
-                  사장님용
-                  <br />
-                  회원가입
-                </span>
-                <div className={styles.section__steps}>
-                  {registerStep < 3 && (
-                    <>
-                      {registerStep > 0 && <ProgressBar step={step} />}
-                      {STEPS[registerStep]}
-                    </>
-                  )}
-                </div>
-              </section>
-            </>
-            )}
-            {registerStep === 3 && <Complete />}
-          </>
-        )}
-    </div>
+      )}
+    </>
   );
 }

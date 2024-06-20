@@ -1,9 +1,9 @@
 import { isKoinError } from '@bcsdlab/koin';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  getEmailAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
+  getPhoneAuthCode, getEmailDuplicate, getFileUrls, registerUser, verificationAuthCode,
 } from 'api/register';
-import parseRegisterData from 'page/Auth/Signup/utils/parseRegisterData';
+import parseRegisterData from 'page/Auth/SignupTmp/utils/parseRegisterData';
 import useRegisterInfo from 'store/registerStore';
 import useShopRegistrationStore from 'store/shopRegistration';
 import useUploadToken from 'store/uploadToken';
@@ -19,26 +19,52 @@ export const useCheckDuplicate = (email:string) => {
   return { status, refetch, error };
 };
 
-export const useGenerateAuthCode = (email:string) => {
+// export const useGenerateAuthCode = (email:string) => {
+//   const {
+//     status, refetch, isError, error,
+//   } = useQuery({
+//     queryKey: registerKeys.authCode(email),
+//     queryFn: () => getEmailAuthCode({ address: email }),
+//     enabled: false,
+//   });
+
+//   return {
+//     status, refetch, isError, error,
+//   };
+// };
+
+// export const useVerificationAuthCode = (code:string, email:string) => {
+//   const {
+//     status, refetch, isError, error, data,
+//   } = useQuery({
+//     queryKey: registerKeys.verificationCode(code, email),
+//     queryFn: () => verificationAuthCode({ certification_code: code, address: email }),
+//     enabled: false,
+//   });
+
+//   return {
+//     status, refetch, isError, error, data,
+//   };
+// };
+
+export const usePhoneAuthCode = (phoneNumber:string) => {
   const {
     status, refetch, isError, error,
   } = useQuery({
-    queryKey: registerKeys.authCode(email),
-    queryFn: () => getEmailAuthCode({ address: email }),
+    queryKey: registerKeys.phoneAuthCode(phoneNumber),
+    queryFn: () => getPhoneAuthCode({ phone_number: phoneNumber }),
     enabled: false,
   });
-
   return {
     status, refetch, isError, error,
   };
 };
-
-export const useVerificationAuthCode = (code:string, email:string) => {
+export const usePhoneVerificationAuthCode = (code:string, phoneNumber:string) => {
   const {
     status, refetch, isError, error, data,
   } = useQuery({
-    queryKey: registerKeys.verificationCode(code, email),
-    queryFn: () => verificationAuthCode({ certification_code: code, address: email }),
+    queryKey: registerKeys.phoneVerificationCode(code, phoneNumber),
+    queryFn: () => verificationAuthCode({ certification_code: code, phone_number: phoneNumber }),
     enabled: false,
   });
 
@@ -46,7 +72,6 @@ export const useVerificationAuthCode = (code:string, email:string) => {
     status, refetch, isError, error, data,
   };
 };
-
 export const useRegisterUser = (goNext:()=>void) => {
   const { userInfo, ownerInfo, resetRegisterInfo } = useRegisterInfo();
   const { shopId, name } = useShopRegistrationStore();

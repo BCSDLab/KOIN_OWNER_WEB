@@ -1,0 +1,89 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin-top: 20px;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: 90%;
+  }
+
+  &__back {
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+
+    @include media.media-breakpoint-up(mobile) {
+      display: none;
+    }
+  }
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-top: 20px;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: 90%;
+  }
+
+  &__progress {
+    display: flex;
+    justify-content: space-between;
+    color: #175c8e;
+    font-weight: 600;
+    margin: 10px 0;
+  }
+}
+
+.step-container {
+  position: relative;
+}
+
+.progress-bar {
+  border: none;
+  height: 4px;
+  background-color: #eeeeee;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.content {
+  height: calc(100vh - 40vh);
+
+  @include media.media-breakpoint-down(mobile) {
+    height: calc(100vh - 28vh);
+  }
+}
+
+.button {
+  width: 100%;
+  background-color: #e1e1e1;
+  height: 50px;
+  border-radius: 4px;
+  font-weight: 600;
+
+  &--active {
+    width: 100%;
+    background-color: #175c8e;
+    height: 50px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: white;
+  }
+}

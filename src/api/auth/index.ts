@@ -1,5 +1,6 @@
 import { accessClient, client } from 'api';
 import {
+  CertificationResponse,
   LoginParams, LoginResponse, OwnerResponse, UserTypeResponse,
 } from 'model/auth';
 
@@ -34,3 +35,25 @@ export const findPassword = ({
 });
 
 export const newPassword = ({ address, password }: { address: string, password: string }) => client.put('/owners/password/reset', { address, password });
+
+export const sendVerifyCode = (phone_number: string) => client.post('/owners/password/reset/verification/sms', {
+  phone_number,
+});
+
+export const verifyCode = ({ phone_number, certification_code } : { phone_number:string, certification_code:string }) => client.post<CertificationResponse>('/owners/password/reset/send/sms', {
+  phone_number, certification_code,
+});
+
+export const changePassword = ({ phone_number, password } : { phone_number:string, password:string }) => client.put('/owners/password/reset/sms', {
+  phone_number,
+  password,
+});
+
+export const loginByPhone = async (param: LoginParams) => {
+  const { data } = await client.post('/owner/login', {
+    account: param.account,
+    password: param.password,
+  });
+
+  return LoginResponse.parse(data);
+};
