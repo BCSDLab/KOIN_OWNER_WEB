@@ -3,10 +3,14 @@ import { useOutletContext } from 'react-router-dom';
 import AgreeStep from './components/agreeStep';
 import OwnerInfoStep from './components/ownerInfoStep';
 import PhoneStep from './components/phoneStep';
+import SearchShop from './components/searchShop';
 
 interface Step {
   index: number;
+  previousStep: () => void;
   setIsStepComplete: (state: boolean) => void;
+  isSearch: boolean;
+  setIsSearch: (state: boolean) => void;
 }
 
 interface SelectOptions {
@@ -21,8 +25,9 @@ const initialSelectOption: SelectOptions = {
 
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
-  const steps = useOutletContext<Step>();
+  const { steps } = useOutletContext<{ steps: Step; }>();
   const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
+
   const handleSelect = (option: keyof SelectOptions | 'all') => {
     if (option === 'all') {
       const newState = !(selectItems.personal && selectItems.koin);
@@ -58,6 +63,7 @@ export default function SignUp() {
       steps.setIsStepComplete(true);
     }
   }, [stepPhoneComplete, steps]);
+
   return (
     <>
       {steps.index === 0 && (
@@ -66,8 +72,10 @@ export default function SignUp() {
       {steps.index === 1 && (
         <PhoneStep setIsStepComplete={setStepPhoneComplete} />
       )}
-      {steps.index === 2 && (
-        <OwnerInfoStep />
+      {steps.index === 2 && (steps.isSearch
+        ? (
+          <SearchShop />
+        ) : <OwnerInfoStep onSearch={() => steps.setIsSearch(true)} />
       )}
     </>
   );

@@ -4,7 +4,6 @@ import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
 import { ReactComponent as DeleteFile } from 'assets/svg/auth/delete-file.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
-import SearchShop from 'page/Auth/Signup/components/searchShop';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './ownerInfoStep.module.scss';
@@ -17,14 +16,18 @@ interface OwnerInfo {
   attachment_urls: { file_url: string }[];
 }
 
-export default function OwnerInfoStep() {
+interface OwnerInfoStepProps {
+  onSearch: () => void;
+}
+
+export default function OwnerInfoStep({ onSearch }: OwnerInfoStepProps) {
   const {
     register,
+    watch,
     formState: { errors },
     setValue,
   } = useFormContext<OwnerInfo>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSearchShopOpen, setIsSearchShopOpen] = useState(false);
   const { uploadFiles } = useUploadFile();
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
@@ -32,9 +35,6 @@ export default function OwnerInfoStep() {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const openSearchShopModal = () => setIsSearchShopOpen(true);
-  const closeSearchShopModal = () => setIsSearchShopOpen(false);
 
   const handleUpload = async (files: FileList) => {
     const formData = new FormData();
@@ -54,12 +54,6 @@ export default function OwnerInfoStep() {
       }
       sendClientError(error);
     }
-  };
-
-  const handleShopSelect = (name: string, id: number) => {
-    setValue('shop_name', name);
-    setValue('shop_id', id);
-    closeSearchShopModal();
   };
 
   const formatCompanyNumber = (value: string) => {
@@ -118,11 +112,12 @@ export default function OwnerInfoStep() {
             })}
             placeholder="가게명을 입력해주세요."
             className={styles['shop-name__input']}
+            value={watch('shop_name')}
           />
           <button
             type="button"
             className={styles['search-button']}
-            onClick={openSearchShopModal}
+            onClick={onSearch}
           >
             가게 검색
           </button>
@@ -186,9 +181,6 @@ export default function OwnerInfoStep() {
         {errors.attachment_urls && <span className={styles['error-message']}>{errors.attachment_urls.message}</span>}
       </div>
       {isModalOpen && <FileUploadModal onClose={closeModal} onUpload={handleUpload} />}
-      {isSearchShopOpen && (
-        <SearchShop onClose={closeSearchShopModal} onSelect={handleShopSelect} />
-      )}
     </div>
   );
 }

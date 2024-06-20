@@ -60,12 +60,23 @@ export default function CommonLayout() {
   const method = useForm<Register>({
     mode: 'onChange',
   });
-  const { formState: { errors }, setError, getValues } = method;
+  const {
+    formState: { errors }, setError, getValues, setValue,
+  } = method;
 
   const steps = useStep(isFindPassword ? 'find' : 'register');
   const {
-    nextStep, previousStep, currentStep, index, totalStep, isComplete, isStepComplete,
+    nextStep,
+    previousStep,
+    currentStep,
+    index,
+    totalStep,
+    isComplete,
+    isStepComplete,
+    isSearch,
+    setIsSearch,
   } = steps;
+
   // eslint-disable-next-line
   const progressPercentage = (index + 1) / totalStep * 100;
 
@@ -88,6 +99,11 @@ export default function CommonLayout() {
       }
       nextStep();
     }
+  };
+
+  const handleSelectComplete = () => {
+    setIsSearch(false);
+    steps.setIsStepComplete(true);
   };
 
   return (
@@ -125,23 +141,40 @@ export default function CommonLayout() {
             />
           </div>
           <div className={styles.content}>
-            {isComplete ? <Done isFindPassword={isFindPassword} /> : <Outlet context={steps} />}
+            {isComplete
+              ? <Done isFindPassword={isFindPassword} />
+              : <Outlet context={{ steps, setValue, getValues }} />}
           </div>
-          <button
-            type="button"
-            onClick={stepCheck}
-            disabled={!isStepComplete}
-            className={
-              cn({
-                [styles['button--active']]: isStepComplete || isComplete,
-                [styles.button]: true,
-              })
-            }
-          >
-            {!isComplete
-              ? <div>{!isComplete && (index + 1 === totalStep) ? '완료' : '다음'}</div>
-              : '로그인 화면 바로 가기'}
-          </button>
+          {!isComplete && !isSearch && (
+            <button
+              type="button"
+              onClick={stepCheck}
+              disabled={!isStepComplete}
+              className={
+                cn({
+                  [styles['button--active']]: isStepComplete,
+                  [styles.button]: true,
+                })
+              }
+            >
+              {index + 1 === totalStep ? '완료' : '다음'}
+            </button>
+          )}
+          {isSearch && (
+            <button
+              type="button"
+              onClick={handleSelectComplete}
+              disabled={!steps.isShopSelect}
+              className={
+                cn({
+                  [styles['button--active']]: steps.isShopSelect,
+                  [styles.button]: true,
+                })
+              }
+            >
+              선택완료
+            </button>
+          )}
         </div>
       </FormProvider>
     </div>
