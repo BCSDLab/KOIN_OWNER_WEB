@@ -12,8 +12,10 @@ const register = ['약관 동의', '기본 정보 입력', '사업자 인증'];
 export const useStep = (type: Type) => {
   const target = type === 'find' ? findPassword : register;
   const [index, setIndex] = useState(0);
+  const [isSearch, setIsSearch] = useState(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isStepComplete, setIsStepComplete] = useState<boolean>(false);
+  const [isShopSelect, setIsShopSelect] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const nextStep = () => {
@@ -45,5 +47,9 @@ export const useStep = (type: Type) => {
     setIsComplete,
     isStepComplete,
     setIsStepComplete,
+    isSearch,
+    setIsSearch,
+    isShopSelect,
+    setIsShopSelect,
   };
 };

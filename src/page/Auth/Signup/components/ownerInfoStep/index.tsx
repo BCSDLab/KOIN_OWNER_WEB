@@ -4,7 +4,6 @@ import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
 import { ReactComponent as DeleteFile } from 'assets/svg/auth/delete-file.svg';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
-import SearchShop from 'page/Auth/Signup/components/searchShop';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import styles from './ownerInfoStep.module.scss';
@@ -14,28 +13,28 @@ interface OwnerInfo {
   shop_name: string;
   shop_id: number | null;
   company_number: string;
-  attachment_urls: {
-    file_url: string;
-  }[];
+  attachment_urls: { file_url: string }[];
 }
 
-export default function OwnerInfoStep() {
+interface OwnerInfoStepProps {
+  onSearch: () => void;
+}
+
+export default function OwnerInfoStep({ onSearch }: OwnerInfoStepProps) {
   const {
     register,
+    watch,
     formState: { errors },
     setValue,
   } = useFormContext<OwnerInfo>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSearchShopOpen, setIsSearchShopOpen] = useState(false);
   const { uploadFiles } = useUploadFile();
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
   const [disable, setDisable] = useState(false);
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const openSearchShopModal = () => setIsSearchShopOpen(true);
-  const closeSearchShopModal = () => setIsSearchShopOpen(false);
 
   const handleUpload = async (files: FileList) => {
     const formData = new FormData();
@@ -45,9 +44,10 @@ export default function OwnerInfoStep() {
     try {
       const response = await uploadFiles(formData);
       const { file_urls: fileUrls } = response.data;
-      setUploadedFiles((prev) => [...prev, ...fileUrls]);
+      const formattedUrls = fileUrls.map((url: string) => ({ file_url: url }));
+      setUploadedFiles((prev) => [...prev, ...formattedUrls]);
       setFileNames((prev) => [...prev, ...names]);
-      setValue('attachment_urls', [...uploadedFiles, ...fileUrls].map((url) => ({ file_url: url })));
+      setValue('attachment_urls', [...uploadedFiles, ...formattedUrls]);
     } catch (error) {
       if (isKoinError(error)) {
         showToast('error', error.message);
@@ -56,14 +56,8 @@ export default function OwnerInfoStep() {
     }
   };
 
-  const handleShopSelect = (name: string, id: number) => {
-    setValue('shop_name', name);
-    setValue('shop_id', id);
-    closeSearchShopModal();
-  };
-
   const formatCompanyNumber = (value: string) => {
-    const cleaned = value.replace(/\D/g, ''); // Remove non-digit characters
+    const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,5})$/);
     if (match) {
       return [match[1], match[2], match[3]].filter(Boolean).join('-');
@@ -73,9 +67,12 @@ export default function OwnerInfoStep() {
 
   const handleCompanyNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    if (inputValue.length <= 12) {
-      const formattedValue = formatCompanyNumber(inputValue);
+    const cleanedValue = inputValue.replace(/\D/g, '');
+    if (cleanedValue.length <= 10) {
+      const formattedValue = formatCompanyNumber(cleanedValue);
       setValue('company_number', formattedValue);
+    }
+    if (cleanedValue.length === 10) {
       setDisable(true);
     }
   };
@@ -115,11 +112,12 @@ export default function OwnerInfoStep() {
             })}
             placeholder="가게명을 입력해주세요."
             className={styles['shop-name__input']}
+            value={watch('shop_name')}
           />
           <button
             type="button"
             className={styles['search-button']}
-            onClick={openSearchShopModal}
+            onClick={onSearch}
           >
             가게 검색
           </button>
@@ -183,9 +181,6 @@ export default function OwnerInfoStep() {
         {errors.attachment_urls && <span className={styles['error-message']}>{errors.attachment_urls.message}</span>}
       </div>
       {isModalOpen && <FileUploadModal onClose={closeModal} onUpload={handleUpload} />}
-      {isSearchShopOpen && (
-        <SearchShop onClose={closeSearchShopModal} onSelect={handleShopSelect} />
-      )}
     </div>
   );
 }

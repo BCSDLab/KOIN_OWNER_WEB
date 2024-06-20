@@ -1,39 +1,31 @@
 import { ReactComponent as SearchIcon } from 'assets/svg/auth/search-icon.svg';
 import useShopList from 'query/shops';
 import { ChangeEvent, useEffect, useState } from 'react';
-import useBooleanState from 'utils/hooks/useBooleanState';
+import { useFormContext } from 'react-hook-form';
+import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
-import { createPortal } from 'react-dom';
 import styles from './searchShop.module.scss';
 
-interface SearchShopProps {
-  onClose: () => void;
-  onSelect: (name: string, id: number) => void;
+interface Step {
+  isShopSelect: boolean;
+  setIsShopSelect: (state: boolean) => void;
 }
-
-export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
-  const [selectedShop, setSelectedShop] = useState({
-    name: '',
-    id: '',
-  });
-  const { value: showConfirmShop, setValue: setConfirmShop } = useBooleanState(false);
+interface ShopInfo {
+  shop_name: string;
+  shop_id: number | null;
+}
+export default function SearchShop() {
   const [searchText, setSearchText] = useState('');
-
+  const { steps, setValue } = useOutletContext<{ steps: Step; setValue: Function }>();
   const { shopList, isError } = useShopList();
-
+  const {
+    watch,
+  } = useFormContext<ShopInfo>();
   function handleClickShop(e: React.MouseEvent<HTMLButtonElement>) {
     const { name, id } = JSON.parse(e.currentTarget.value);
-    if (!showConfirmShop) {
-      setSelectedShop({
-        name,
-        id,
-      });
-    } else {
-      setSelectedShop({
-        name: '',
-        id: '',
-      });
-    }
+    setValue('shop_name', name);
+    setValue('shop_id', id);
+    steps.setIsShopSelect(true);
   }
 
   const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
@@ -54,22 +46,13 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
     }
   }
 
-  function toggleConfirmShop() {
-    setConfirmShop((prev) => !prev);
-  }
-
   useEffect(() => {
     if (searchText === '') {
       setFilteredShopList(shopList?.shops);
     }
   }, [searchText, shopList?.shops]);
 
-  const handleSelectClick = () => {
-    onSelect(selectedShop.name, Number(selectedShop.id));
-    onClose();
-  };
-
-  return createPortal(
+  return (
     <div className={styles['search-shop-container']}>
       <div className={styles['search-input-container']}>
         <input
@@ -92,8 +75,8 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
           <button
             key={shop.id}
             className={cn({
-              [styles.shop]: true,
-              [styles['shop--selected']]: selectedShop.name === shop.name,
+              [styles['shop-card']]: true,
+              [styles['shop-card--selected']]: watch('shop_name') === shop.name,
             })}
             value={JSON.stringify({
               name: shop.name,
@@ -102,28 +85,27 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
             type="button"
             onClick={(e) => {
               handleClickShop(e);
-              toggleConfirmShop();
             }}
           >
-            <span className={styles.shop__title}>{shop.name}</span>
-            <div className={styles.shop__info}>
+            <span className={styles['shop-card__title']}>{shop.name}</span>
+            <div className={styles['shop-card-info-container']}>
               <span className={cn({
-                [styles.shop__delivery]: true,
-                [styles['shop__delivery--selected']]: shop.delivery,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.delivery,
               })}
               >
                 배달
               </span>
               <span className={cn({
-                [styles['shop__pay-card']]: true,
-                [styles['shop__pay-card--selected']]: shop.pay_card,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.pay_card,
               })}
               >
                 카드결제
               </span>
               <span className={cn({
-                [styles['shop__pay-bank']]: true,
-                [styles['shop__pay-bank--selected']]: shop.pay_bank,
+                [styles['shop-card__info']]: true,
+                [styles['shop-card__info--activate']]: shop.pay_bank,
               })}
               >
                 계좌이체
@@ -132,21 +114,6 @@ export default function SearchShop({ onClose, onSelect }: SearchShopProps) {
           </button>
         ))}
       </div>
-      <button
-        type="button"
-        className={styles['select-button']}
-        onClick={handleSelectClick}
-      >
-        선택 완료
-      </button>
-      <button
-        type="button"
-        className={styles['cancel-button']}
-        onClick={onClose}
-      >
-        취소
-      </button>
-    </div>,
-    document.body,
+    </div>
   );
 }
