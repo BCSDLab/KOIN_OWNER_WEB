@@ -13,7 +13,7 @@ interface ShopInfo {
 }
 export default function SearchShop() {
   const [searchText, setSearchText] = useState('');
-  const steps : OutletProps = useOutletContext();
+  const steps = useOutletContext<OutletProps>();
   const { shopList, isError } = useShopList();
   const {
     watch, setValue,

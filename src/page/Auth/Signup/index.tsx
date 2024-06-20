@@ -18,7 +18,7 @@ const initialSelectOption: SelectOptions = {
 
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
-  const steps:OutletProps = useOutletContext();
+  const steps = useOutletContext<OutletProps >();
   const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
 
   const handleSelect = (option: keyof SelectOptions | 'all') => {

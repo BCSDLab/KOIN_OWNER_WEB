@@ -13,7 +13,7 @@ export default function ChangePassword() {
     register, formState: { errors, isValid }, getValues, clearErrors,
   } = useFormContext<ChangePasswordForm>();
 
-  const steps: OutletProps = useOutletContext();
+  const steps = useOutletContext<OutletProps>();
   const { setIsStepComplete } = steps;
 
   useEffect(() => {
