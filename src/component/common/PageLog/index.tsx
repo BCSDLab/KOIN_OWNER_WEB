@@ -6,6 +6,7 @@ function LogPage() {
   const location = useLocation();
 
   React.useEffect(() => {
+    console.log(location.pathname);
     gtag.pageView(location.pathname + location.search);
   }, [location]);
 
