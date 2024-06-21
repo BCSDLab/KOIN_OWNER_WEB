@@ -71,7 +71,7 @@ export default function AddMenu() {
 
   const onClickMenuAddConfirmHandler = () => {
     if (isComplete) {
-      if (isMobile) {
+      if (!isMobile) {
         openGoMyShopModal();
         return;
       }
@@ -86,7 +86,7 @@ export default function AddMenu() {
     resetCategoryIds();
     setMenuError('');
     setCategoryError('');
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
