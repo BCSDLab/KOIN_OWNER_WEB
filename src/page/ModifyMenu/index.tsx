@@ -110,9 +110,9 @@ export default function ModifyMenu() {
       }
       modifyMenu();
       goMyShop();
-    } else {
-      toggleConfirmClick();
+      return;
     }
+    toggleConfirmClick();
   };
 
   const handleDeleteMenu = () => {
