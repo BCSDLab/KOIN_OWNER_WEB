@@ -39,6 +39,9 @@ export default function PriceInput({
                   singlePrice === 0 || singlePrice === null ? '' : singlePrice
                 }
                 onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
+                onWheel={(e) => {
+                  if (e.target instanceof HTMLElement) e.target.blur();
+                }}
               />
               <p className={styles['inputs__price-input-won']}>
                 원
