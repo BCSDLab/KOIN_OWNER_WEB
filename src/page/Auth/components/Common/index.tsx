@@ -13,12 +13,13 @@ import sha256 from 'utils/ts/SHA-256';
 import Done from '../Done/index';
 import styles from './index.module.scss';
 
-const setNewPassword = (
+const setNewPassword = async (
   phone_number: string,
   password: string,
   setError: UseFormSetError<Register>,
 ) => {
-  changePassword({ phone_number, password })
+  const hashPassword = await sha256(password);
+  changePassword({ phone_number, password: hashPassword })
     .catch((e) => {
       if (isKoinError(e)) {
         setError('password', { type: 'custom', message: e.message });

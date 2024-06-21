@@ -125,7 +125,7 @@ export default function Login() {
                   {OPTION[1].name}
                 </Link>
               )
-              : OPTION.map((option) => (
+              : OPTION.filter((option) => option.name !== '아이디 찾기').map((option) => (
                 <Link to={option.path} key={option.name} className={styles.option__link}>
                   {option.name}
                 </Link>

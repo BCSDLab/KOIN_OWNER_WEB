@@ -75,9 +75,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<CommonLayout />}>
               <Route path="/signup" element={<Signup />} />
-              <Route path="/find-id" element={<PageNotFound />} />
               <Route path="/find-password" element={<FindPassword />} />
             </Route>
+            <Route path="/find-id" element={<PageNotFound />} />
           </Route>
         </Route>
       </Routes>
