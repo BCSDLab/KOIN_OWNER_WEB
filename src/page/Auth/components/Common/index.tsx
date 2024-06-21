@@ -74,7 +74,7 @@ export default function CommonLayout() {
     mode: 'onChange',
   });
   const {
-    formState: { errors }, setError, getValues, setValue,
+    formState: { errors }, setError, getValues,
   } = method;
 
   const steps = useStep(isFindPassword ? 'find' : 'register');
@@ -159,7 +159,7 @@ export default function CommonLayout() {
           <div className={styles.content}>
             {isComplete
               ? <Done isFindPassword={isFindPassword} />
-              : <Outlet context={{ steps, setValue, getValues }} />}
+              : <Outlet context={steps} />}
           </div>
           {!isComplete && !isSearch && (
             <button

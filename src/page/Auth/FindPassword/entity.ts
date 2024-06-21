@@ -8,4 +8,8 @@ export interface OutletProps {
   setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
   isStepComplete: boolean;
   setIsStepComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearch: boolean;
+  setIsSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  isShopSelect: boolean;
+  setIsShopSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
 import AgreeStep from './components/agreeStep';
 import OwnerInfoStep from './components/ownerInfoStep';
 import PhoneStep from './components/phoneStep';
 import SearchShop from './components/searchShop';
-
-interface Step {
-  index: number;
-  previousStep: () => void;
-  setIsStepComplete: (state: boolean) => void;
-  isSearch: boolean;
-  setIsSearch: (state: boolean) => void;
-}
 
 interface SelectOptions {
   personal: boolean;
@@ -25,7 +18,7 @@ const initialSelectOption: SelectOptions = {
 
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
-  const { steps } = useOutletContext<{ steps: Step; }>();
+  const steps = useOutletContext<OutletProps >();
   const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
 
   const handleSelect = (option: keyof SelectOptions | 'all') => {

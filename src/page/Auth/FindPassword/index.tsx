@@ -4,7 +4,7 @@ import { OutletProps } from './entity';
 import Verify from './Verify';
 
 export default function FindPassword() {
-  const steps: OutletProps = useOutletContext();
+  const steps = useOutletContext<OutletProps>();
   const { index } = steps;
   return (
     <>

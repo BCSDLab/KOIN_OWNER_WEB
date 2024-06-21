@@ -4,22 +4,19 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
 import styles from './searchShop.module.scss';
 
-interface Step {
-  isShopSelect: boolean;
-  setIsShopSelect: (state: boolean) => void;
-}
 interface ShopInfo {
   shop_name: string;
   shop_id: number | null;
 }
 export default function SearchShop() {
   const [searchText, setSearchText] = useState('');
-  const { steps, setValue } = useOutletContext<{ steps: Step; setValue: Function }>();
+  const steps = useOutletContext<OutletProps>();
   const { shopList, isError } = useShopList();
   const {
-    watch,
+    watch, setValue,
   } = useFormContext<ShopInfo>();
   function handleClickShop(e: React.MouseEvent<HTMLButtonElement>) {
     const { name, id } = JSON.parse(e.currentTarget.value);
