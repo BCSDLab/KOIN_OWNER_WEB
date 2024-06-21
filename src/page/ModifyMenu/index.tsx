@@ -103,8 +103,16 @@ export default function ModifyMenu() {
   };
 
   const confirmModifyMenu = () => {
-    modifyMenu();
-    goMyShop();
+    if (isComplete) {
+      if (!isMobile) {
+        openGoMyShopModal();
+        return;
+      }
+      modifyMenu();
+      goMyShop();
+    } else {
+      toggleConfirmClick();
+    }
   };
 
   const handleDeleteMenu = () => {
