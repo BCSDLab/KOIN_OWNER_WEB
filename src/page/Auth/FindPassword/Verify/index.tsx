@@ -81,7 +81,7 @@ export default function Verify() {
 
   const [isSent, setIsSent] = useState(false);
   const debounce = useDebounce<SendCode>(code, { getValues, setError, setIsSent });
-  const steps: OutletProps = useOutletContext();
+  const steps = useOutletContext<OutletProps>();
 
   const { setCertificationCode, isCertified } = useCheckCode(
     steps.setIsStepComplete,
