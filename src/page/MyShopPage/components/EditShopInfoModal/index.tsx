@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  Dispatch, SetStateAction, useEffect, useState,
+} from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
@@ -23,6 +25,7 @@ import showToast from 'utils/ts/showToast';
 import cn from 'utils/ts/className';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import ErrorMessage from 'component/common/ErrorMessage';
+import BankList from 'page/MyShopPage/components/BankList';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -75,6 +78,11 @@ export default function EditShopInfoModal({
     },
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+  const openBankList = () => setIsOpen(true);
+  const [bank, setBank] = useState('');
+  const [account, setAccount] = useState('');
+
   const imageUrls = useWatch({ control, name: 'image_urls' });
   const name = useWatch({ control, name: 'name' });
   const categoryId = useWatch({ control, name: 'category_ids' });
@@ -94,13 +102,13 @@ export default function EditShopInfoModal({
     setImageFile(imageFile.filter((img) => img !== image));
   };
 
-  const formatPhoneNumber = (inputNumber:string) => {
+  const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
     return formattedPhoneNumber;
   };
 
-  const handlePhoneChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhoneNumber(event.target.value);
     setValue('phone', formattedValue);
   };
@@ -111,7 +119,7 @@ export default function EditShopInfoModal({
     } else if (imageFile.length !== imageUrls.length) {
       setImageFile(imageUrls);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageFile]);
 
   const mutation = useMutation({
@@ -186,35 +194,34 @@ export default function EditShopInfoModal({
     <div>
       {isMobile ? (
         <form className={styles['mobile-container']} onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles['mobile-container__image-content']}>
+          <div className={styles['container__modify-main-image']}>
             {imageUrls.map((image, index) => (
-              <div className={styles['mobile-container__image']}>
-                <img key={image} src={image} alt={`Selected ${index + 1}`} />
+              <div className={styles['main-image']} key={image}>
+                <img src={image} alt={`Selected ${index + 1}`} className={styles['main-image__image']} />
                 <button
                   type="button"
                   onClick={() => handleDeleteImage(image)}
-                  className={styles['mobile-container__delete-button']}
-                  aria-label="Delete image"
+                  className={styles['main-image__delete-button']}
                 >
-                  <DeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                  <DeleteImgIcon />
                 </button>
               </div>
             ))}
-          </div>
-          <div className={styles['mobile-container__add-button']}>
-            <label htmlFor="mainMenuImage">
-              <input
-                type="file"
-                accept="image/*"
-                id="mainMenuImage"
-                multiple
-                className={styles['mobile-container__add-file']}
-                {...register('image_urls')}
-                onChange={saveImgFile}
-                ref={imgRef}
-              />
-              <span className={styles['mobile-container__modify-image-caption']}>사진변경</span>
-            </label>
+            {imageUrls.length < 3 && (
+              <label className={styles['main-image__add-button']} htmlFor="mainMenuImage">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="mainMenuImage"
+                  className={styles['main-image__add-file']}
+                  {...register('image_urls')}
+                  onChange={saveImgFile}
+                  ref={imgRef}
+                />
+                <ImgPlusIcon className={styles['main-image__add-image-icon']} />
+                <span className={styles['main-image__add-caption']}>이미지 추가</span>
+              </label>
+            )}
           </div>
           <div className={styles['mobile-main-info']}>
             <label htmlFor="shopName" className={styles['mobile-main-info__label']}>
@@ -329,6 +336,26 @@ export default function EditShopInfoModal({
             <div className={styles['mobile-main-info__error-message']}>
               {Number.isNaN(deliveryPrice) && <ErrorMessage message={ERRORMESSAGE.invalidPrice} />}
             </div>
+            <label htmlFor="account" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>계좌번호</span>
+              <input
+                type="text"
+                id="account"
+                placeholder="계좌번호를 추가할 수 있습니다."
+                className={styles['mobile-main-info__input']}
+                onFocus={openBankList}
+                value={`${bank} ${account} `}
+              />
+            </label>
+            {isOpen && (
+              <BankList
+                bankName={bank}
+                account={account}
+                setBank={setBank}
+                setAccount={setAccount}
+                close={() => setIsOpen(false)}
+              />
+            )}
             <label htmlFor="description" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>기타정보</span>
               <input
@@ -583,6 +610,26 @@ export default function EditShopInfoModal({
                 <span>계좌이체 가능</span>
               </label>
             </div>
+            <label htmlFor="account" className={styles['main-info__label']}>
+              <span className={styles['main-info__header']}>계좌번호</span>
+              <input
+                type="text"
+                id="account"
+                placeholder="계좌번호를 추가할 수 있습니다."
+                className={styles['main-info__input']}
+                onFocus={openBankList}
+                value={`${bank} ${account} `}
+              />
+            </label>
+            {isOpen && (
+              <BankList
+                bankName={bank}
+                account={account}
+                setBank={setBank}
+                setAccount={setAccount}
+                close={() => setIsOpen(false)}
+              />
+            )}
           </div>
           <div className={styles.container__buttons}>
             <button type="button" onClick={closeModal} className={styles['container__buttons--cancel']}>취소</button>

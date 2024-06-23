@@ -1,0 +1,137 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+@keyframes mobile-appearence {
+  from {
+    transform: translateY(100%);    
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pc-appearence {
+  from {
+    scale: 0.5;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+.overlay {
+  background-color: rgba($color: #000000, $alpha: 0.8);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+
+  @include media.media-breakpoint-up(mobile) {
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.modal {
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  animation-name: mobile-appearence;
+  animation-duration: 0.5s;
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+
+  &__divide {
+    width: 100vw;
+
+    @include media.media-breakpoint-up(mobile) {
+      width: 752px;
+      border-radius: 0;
+    }
+
+  }
+  
+  @include media.media-breakpoint-up(mobile) {
+    animation-name: pc-appearence;
+    width: 752px;
+    border-radius: 0;
+  }
+}
+
+.top {
+  height: 70px;
+  margin-top: 10px;
+
+  &__account {
+    font-weight: bold;
+  }
+
+  &__input {
+    width: 80vw;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #cacaca;
+
+    @include media.media-breakpoint-up(mobile) {
+      width: 680px;
+    }
+  }
+}
+
+.banks {
+  display: flex;
+  width: 100vw;
+  padding: 0 20px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  height: calc(80vh - 200px);
+  overflow-y: scroll;
+
+  @include media.media-breakpoint-up(mobile) {
+    width: 752px;
+  }
+
+  &__bank {
+    width: 25vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: #6DBBDD;
+    border-radius: 15px;
+    cursor: pointer;
+
+    @include media.media-breakpoint-up(mobile) {
+      width: 100px;
+    }
+
+    &--selected {
+      background-color: #FCCC77;
+    }
+  }
+}
+
+.button {
+  background-color: #17518e;
+  color: white;
+  width: 80vw;
+  height: 50px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+
+  @include media.media-breakpoint-up(mobile) {
+    width: 680px;
+  }
+}
