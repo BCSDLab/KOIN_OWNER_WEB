@@ -5,11 +5,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 170px;
+  padding-top: 100px;
   padding-bottom: 120px;
 
   @include media.media-breakpoint-down(mobile) {
-    padding: 160px 0 170px;
+    padding: 120px 0 170px;
   }
 }
 
@@ -25,9 +25,10 @@
 
 .logo {
   margin: auto;
+  height: 150px;
 
   @include media.media-breakpoint-down(mobile) {
-    margin-left: 0;
+    margin: 0;
   }
 }
 
