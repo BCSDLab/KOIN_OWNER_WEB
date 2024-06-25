@@ -11,6 +11,7 @@ import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg'
 import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
 import DeleteAlertModal from 'component/common/Modal/alertModal';
+import useLogger from 'utils/hooks/useLogger';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
@@ -25,6 +26,7 @@ export default function EventTable() {
   const [isDeleteErrorModalOpen, setIsDeleteErrorModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const { mutate: deleteEvents } = useDeleteEvent(shopData!.id, selectedEventIds);
+  const logger = useLogger();
 
   const toggleSelectEvent = (id: number): void => {
     setSelectedEventIds((prev: number[]) => (
@@ -121,7 +123,10 @@ export default function EventTable() {
             <button
               type="button"
               className={styles['manage-event-button']}
-              onClick={() => navigate(`/owner/event-add/${shopData?.id}`)}
+              onClick={() => {
+                navigate(`/owner/event-add/${shopData?.id}`);
+                logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
+              }}
             >
               추가하기
               <AddEventIcon />
