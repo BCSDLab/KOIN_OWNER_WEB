@@ -6,6 +6,7 @@ import useMyShop from 'query/shop';
 import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
+import useLogger from 'utils/hooks/useLogger';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import MenuPrice from './components/MenuPrice';
@@ -28,6 +29,9 @@ export default function AddMenu() {
     setTrue: openGoMyShopModal,
     setFalse: closeGoMyShopModal,
   } = useBooleanState(false);
+
+  const logger = useLogger();
+
   const {
     categoryIds,
     description,
@@ -65,7 +69,8 @@ export default function AddMenu() {
     if (isComplete) {
       toggleConfirmClick();
     } else {
-      navigate('/owners');
+      navigate('/owner');
+      logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_cancel', value: '메뉴 추가 취소' });
     }
   };
 
@@ -73,9 +78,11 @@ export default function AddMenu() {
     if (isComplete) {
       if (!isMobile) {
         openGoMyShopModal();
+        logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_confirm', value: '메뉴 추가 완료' });
         return;
       }
       addMenuMutationEvent();
+      logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_confirm', value: '메뉴 추가 완료' });
     } else {
       toggleConfirmClick();
     }

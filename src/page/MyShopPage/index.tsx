@@ -9,6 +9,7 @@ import { Portal } from 'component/common/Modal/PortalProvider';
 import useModalPortal from 'utils/hooks/useModalPortal';
 import showToast from 'utils/ts/showToast';
 import ImageModal from 'component/common/Modal/ImageModal';
+import useLogger from 'utils/hooks/useLogger';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import ShopInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -33,6 +34,8 @@ export default function MyShopPage() {
     setFalse: closeEditShopInfoModal,
     value: isEditShopInfoModalOpen,
   } = useBooleanState(false);
+
+  const logger = useLogger();
 
   const [isSuccess, setIsSuccess] = useState(false);
   if (isSuccess) {
@@ -89,6 +92,9 @@ export default function MyShopPage() {
               <button
                 type="button"
                 className={styles['mobile-header__btn-add']}
+                onClick={() => {
+                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu', value: '메뉴 추가' });
+                }}
               >
                 메뉴추가
               </button>
@@ -146,6 +152,9 @@ export default function MyShopPage() {
               <button
                 type="button"
                 className={styles['header__btn-add']}
+                onClick={() => {
+                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
+                }}
               >
                 이벤트 추가
               </button>
@@ -154,6 +163,9 @@ export default function MyShopPage() {
               <button
                 type="button"
                 className={styles['header__btn-add']}
+                onClick={() => {
+                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu', value: '메뉴 추가' });
+                }}
               >
                 메뉴추가
               </button>

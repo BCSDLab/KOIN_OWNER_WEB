@@ -1,3 +1,4 @@
+import useLogger from 'utils/hooks/useLogger';
 import styles from './alertModal.module.scss';
 
 interface AlertModalProps {
@@ -12,6 +13,7 @@ interface AlertModalProps {
 export default function AlertModal({
   title, content, setIsOpen, callBack, cancelText, acceptText,
 }: AlertModalProps) {
+  const logger = useLogger();
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       setIsOpen(false);
@@ -52,6 +54,7 @@ export default function AlertModal({
               if (callBack) {
                 callBack();
               }
+              logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event_cancel', value: '이벤트 추가 취소' });
             }}
             onKeyDown={handleKeyDown}
           >

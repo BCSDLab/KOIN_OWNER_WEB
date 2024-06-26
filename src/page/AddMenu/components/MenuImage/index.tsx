@@ -8,6 +8,7 @@ import useAddMenuStore from 'store/addMenu';
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
+import useLogger from 'utils/hooks/useLogger';
 import styles from './MenuImage.module.scss';
 
 interface MenuImageProps {
@@ -15,6 +16,7 @@ interface MenuImageProps {
 }
 
 export default function MenuImage({ isComplete }: MenuImageProps) {
+  const logger = useLogger();
   const { isMobile } = useMediaQuery();
   const { imageUrl, setImageUrls, removeImageUrl } = useAddMenuStore();
   const {
@@ -39,6 +41,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
 
   const handleImageChange = async () => {
     await saveImgFile();
+    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_image', value: '메뉴 이미지 추가' });
   };
 
   useEffect(() => {

@@ -26,6 +26,7 @@ import cn from 'utils/ts/className';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import ErrorMessage from 'component/common/ErrorMessage';
 import BankList from 'page/MyShopPage/components/BankList';
+import useLogger from 'utils/hooks/useLogger';
 import styles from './EditShopInfoModal.module.scss';
 
 interface EditShopInfoModalProps {
@@ -40,6 +41,7 @@ export default function EditShopInfoModal({
   setIsSuccess,
 }: EditShopInfoModalProps) {
   const { isMobile } = useMediaQuery();
+  const logger = useLogger();
   const {
     setTrue: openOperateTimeModal,
     setFalse: closeOperateTimeModal,
@@ -179,6 +181,7 @@ export default function EditShopInfoModal({
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
+    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_confirm', value: '가게 정보 수정 완료' });
   };
 
   if (isMobile && isOperateTimeModalOpen) {
@@ -215,7 +218,10 @@ export default function EditShopInfoModal({
                   id="mainMenuImage"
                   className={styles['main-image__add-file']}
                   {...register('image_urls')}
-                  onChange={saveImgFile}
+                  onChange={() => {
+                    saveImgFile();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
+                  }}
                   ref={imgRef}
                 />
                 <ImgPlusIcon className={styles['main-image__add-image-icon']} />
@@ -263,42 +269,36 @@ export default function EditShopInfoModal({
               <span className={styles['mobile-main-info__header']}>운영시간</span>
               <div className={styles['mobile-operate-time']}>
                 <div className={styles['mobile-operate-time__content']}>
-                  {
-                    isAllSameTime && !hasClosedDay ? (
-                      <div>
-                        {operateTimeState.time}
-                      </div>
-                    )
-                      : null
-                  }
-                  {
-                    isSpecificDayClosedAndAllSameTime ? (
-                      <div>
-                        <div>{operateTimeState.time}</div>
-                        <div>{operateTimeState.holiday}</div>
-                      </div>
-                    ) : null
-                  }
-                  {
-                    !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
-                      <>
-                        {WEEK.map((day) => (
-                          <div key={day}>
-                            {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                          </div>
-                        ))}
-                      </>
-                    ) : null
-                  }
-                  {
-                    isAllClosed ? (
-                      <span>매일 휴무</span>
-                    ) : null
-                  }
+                  {isAllSameTime && !hasClosedDay && (
+                    <div>
+                      {operateTimeState.time}
+                    </div>
+                  )}
+                  {isSpecificDayClosedAndAllSameTime && (
+                    <div>
+                      <div>{operateTimeState.time}</div>
+                      <div>{operateTimeState.holiday}</div>
+                    </div>
+                  )}
+                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
+                    <>
+                      {WEEK.map((day) => (
+                        <div key={day}>
+                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                  {isAllClosed && (
+                    <span>매일 휴무</span>
+                  )}
                 </div>
                 <button
                   type="button"
-                  onClick={openOperateTimeModal}
+                  onClick={() => {
+                    openOperateTimeModal();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_time', value: '가게 정보 시간 수정' });
+                  }}
                   className={styles['mobile-operate-time__button']}
                 >
                   수정
@@ -431,7 +431,10 @@ export default function EditShopInfoModal({
                   id="mainMenuImage"
                   className={styles['main-image__add-file']}
                   {...register('image_urls')}
-                  onChange={saveImgFile}
+                  onChange={() => {
+                    saveImgFile();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
+                  }}
                   ref={imgRef}
                 />
                 <ImgPlusIcon className={styles['main-image__add-image-icon']} />
@@ -503,42 +506,36 @@ export default function EditShopInfoModal({
               <span className={styles['main-info__header']}>운영시간</span>
               <div className={styles['main-info__operate-time']}>
                 <div className={styles['main-info__operate-time--content']}>
-                  {
-                    isAllSameTime && !hasClosedDay ? (
-                      <div>
-                        {operateTimeState.time}
-                      </div>
-                    )
-                      : null
-                  }
-                  {
-                    isSpecificDayClosedAndAllSameTime ? (
-                      <div>
-                        <div>{operateTimeState.time}</div>
-                        <div>{operateTimeState.holiday}</div>
-                      </div>
-                    ) : null
-                  }
-                  {
-                    !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
-                      <>
-                        {WEEK.map((day) => (
-                          <div key={day}>
-                            {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                          </div>
-                        ))}
-                      </>
-                    ) : null
-                  }
-                  {
-                    isAllClosed ? (
-                      <span>매일 휴무</span>
-                    ) : null
-                  }
+                  {isAllSameTime && !hasClosedDay && (
+                    <div>
+                      {operateTimeState.time}
+                    </div>
+                  )}
+                  {isSpecificDayClosedAndAllSameTime && (
+                    <div>
+                      <div>{operateTimeState.time}</div>
+                      <div>{operateTimeState.holiday}</div>
+                    </div>
+                  )}
+                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
+                    <>
+                      {WEEK.map((day) => (
+                        <div key={day}>
+                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                        </div>
+                      ))}
+                    </>
+                  )}
+                  {isAllClosed && (
+                    <span>매일 휴무</span>
+                  )}
                 </div>
                 <button
                   type="button"
-                  onClick={openOperateTimeModal}
+                  onClick={() => {
+                    openOperateTimeModal();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_time', value: '가게 정보 시간 수정' });
+                  }}
                   className={styles['main-info__operate-time--button']}
                 >
                   시간수정
@@ -632,7 +629,16 @@ export default function EditShopInfoModal({
             )}
           </div>
           <div className={styles.container__buttons}>
-            <button type="button" onClick={closeModal} className={styles['container__buttons--cancel']}>취소</button>
+            <button
+              type="button"
+              onClick={() => {
+                closeModal();
+                logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_cancel', value: '가게 정보 수정 취소' });
+              }}
+              className={styles['container__buttons--cancel']}
+            >
+              취소
+            </button>
             <button type="submit" className={styles['container__buttons--confirm']}>확인</button>
           </div>
         </form>
