@@ -18,4 +18,18 @@
 .content {
   color: #8e8e8e;
   text-align: center;
+  height: calc(100vh - 40vh);
+
+  @include media.media-breakpoint-down(mobile) {
+    height: calc(100vh - 83vh);
+  }
+}
+
+.button {
+  width: 100%;
+  background-color: #175c8e;
+  height: 50px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: white;
 }
