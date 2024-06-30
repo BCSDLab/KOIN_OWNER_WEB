@@ -13,8 +13,6 @@ export default function Main({ onNext }:{ onNext: () => void }) {
     register, control, setValue, trigger, formState: { errors },
   } = useFormContext();
 
-  const name = useWatch({ control, name: 'name' });
-  const address = useWatch({ control, name: 'address' });
   const imageUrls = useWatch({ control, name: 'image_urls' });
 
   const {
@@ -97,7 +95,6 @@ export default function Main({ onNext }:{ onNext: () => void }) {
         <input
           type="text"
           id="shopName"
-          value={name}
           className={styles.form__input}
           {...register('name', { required: true })}
         />
@@ -116,7 +113,6 @@ export default function Main({ onNext }:{ onNext: () => void }) {
         <input
           type="text"
           id="shopAddress"
-          value={address}
           className={styles.form__input}
           {...register('address', { required: true })}
         />

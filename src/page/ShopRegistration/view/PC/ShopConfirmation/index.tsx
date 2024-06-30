@@ -19,7 +19,7 @@ import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
 import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
 import useMyShop from 'query/shop';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import CustomButton from 'page/Auth/Signup/CustomButton';
@@ -59,27 +59,17 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const { categoryList } = useMyShop();
 
   const {
-    register, control, setValue, handleSubmit, formState: { errors },
+    register, trigger, control, setValue, handleSubmit, formState: { errors },
   } = useFormContext<OwnerShop>();
 
   const {
     imageFile, imgRef, saveImgFile, uploadError, setImageFile,
   } = useImagesUpload();
 
-  const [isError, setIsError] = useState(false);
-
   const operateTimeState = useOperateTimeState();
 
   const imageUrls = useWatch({ control, name: 'image_urls' });
-  const name = useWatch({ control, name: 'name' });
   const categoryId = useWatch({ control, name: 'category_ids' });
-  const phone = useWatch({ control, name: 'phone' });
-  const address = useWatch({ control, name: 'address' });
-  const deliveryPrice = useWatch({ control, name: 'delivery_price' });
-  const description = useWatch({ control, name: 'description' });
-  const delivery = useWatch({ control, name: 'delivery' });
-  const payCard = useWatch({ control, name: 'pay_card' });
-  const payBank = useWatch({ control, name: 'pay_bank' });
   const selectedId = categoryList?.shop_categories[categoryId[0] - 1]?.name;
 
   useStoreTimeSetUp({ setValue });
@@ -95,12 +85,11 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     setValue('phone', formattedValue);
   };
 
-  const handleNextClick = () => {
-    if (imageUrls.length === 0 || name === '' || categoryId.length === 0
-      || address === '' || phone === '') {
-      setIsError(true);
-    } else {
-      setIsError(false);
+  const handleNextClick = async () => {
+    const isValid = await trigger(['image_urls', 'name', 'phone', 'address']);
+    console.log('isValid:', isValid); // 유효성 검사 결과 확인
+    if (isValid) {
+      console.log('Calling openConfirmPopup'); // openConfirmPopup 호출 여부 확인
       openConfirmPopup();
     }
   };
@@ -125,7 +114,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <Logo className={styles['container__koin-logo']} />
+        <Logo className={styles['container__koin-logo']} height="150px" />
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div>
             <span className={styles.form__title}>대표 이미지</span>
@@ -165,7 +154,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                   </>
                 )}
             </label>
-            {uploadError === '' && isError && imageUrls.length === 0
+            {uploadError === '' && errors.image_urls && imageUrls.length === 0
                   && <ErrorMessage message={ERRORMESSAGE.image} />}
             {uploadError !== '' && <ErrorMessage message={ERRORMESSAGE[uploadError]} />}
           </div>
@@ -186,7 +175,8 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
 
               <CustomButton content="카테고리 검색" buttonSize="small" onClick={openCategory} />
             </div>
-            {isError && categoryId.length === 0 && <ErrorMessage message={ERRORMESSAGE.category} />}
+            {errors.category_ids && categoryId.length === 0
+            && <ErrorMessage message={ERRORMESSAGE.category} />}
           </div>
           <CustomModal
             buttonText="다음"
@@ -205,12 +195,11 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
               <input
                 type="text"
                 className={styles.form__input}
-                value={name}
                 {...register('name', { required: true })}
               />
               <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
             </div>
-            {isError && name === '' && <ErrorMessage message={ERRORMESSAGE.name} />}
+            {errors.name && <ErrorMessage message={ERRORMESSAGE.name} />}
           </div>
           <CustomModal
             title="가게검색"
@@ -228,11 +217,10 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
               <input
                 type="text"
                 className={styles['form__input-large']}
-                value={address}
                 {...register('address', { required: true })}
               />
             </div>
-            {isError && address === '' && <ErrorMessage message={ERRORMESSAGE.address} />}
+            {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
           </div>
           <div>
             <span className={styles.form__title}>전화번호</span>
@@ -241,14 +229,13 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 type="text"
                 inputMode="numeric"
                 className={styles['form__input-large']}
-                value={phone}
                 {...register('phone', {
                   required: true,
                   onChange: handlePhoneChange,
                 })}
               />
             </div>
-            {isError && phone === '' && <ErrorMessage message={ERRORMESSAGE.phone} />}
+            {errors.phone && <ErrorMessage message={ERRORMESSAGE.phone} />}
           </div>
           <div>
             <span className={styles.form__title}>배달금액</span>
@@ -257,7 +244,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 type="number"
                 inputMode="numeric"
                 className={styles['form__input-large']}
-                value={deliveryPrice === 0 ? undefined : deliveryPrice}
                 {...register('delivery_price')}
                 onWheel={(e) => (e.target as HTMLElement).blur()}
               />
@@ -313,7 +299,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
               <input
                 type="text"
                 className={styles['form__input-large']}
-                value={description}
                 {...register('description')}
               />
             </div>
@@ -325,7 +310,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 id="delivery"
                 className={styles['form__checkbox-input']}
                 {...register('delivery')}
-                checked={delivery}
               />
               <span>배달 가능</span>
             </label>
@@ -335,7 +319,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 id="card"
                 className={styles['form__checkbox-input']}
                 {...register('pay_card')}
-                checked={payCard}
               />
               <span>카드 가능</span>
             </label>
@@ -345,7 +328,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
                 id="bank"
                 className={styles['form__checkbox-input']}
                 {...register('pay_bank')}
-                checked={payBank}
               />
               <span>계좌이체 가능</span>
             </label>
