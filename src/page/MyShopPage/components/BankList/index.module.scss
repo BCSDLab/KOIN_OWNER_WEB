@@ -58,11 +58,12 @@
 }
 
 .top {
-  height: 70px;
+  height: 80px;
   margin-top: 10px;
 
   &__account {
     font-weight: bold;
+    padding-top: 5px;
   }
 
   &__input {
@@ -71,6 +72,7 @@
     border-radius: 5px;
     border: 1px solid #cacaca;
     padding: 5px 10px;
+    font-size: 18px;
 
     @include media.media-breakpoint-up(mobile) {
       width: 680px;
@@ -84,13 +86,13 @@
   padding: 0 20px;
   box-sizing: border-box;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+  gap: calc((100vw - 75vw - 40px) / 2);
   height: calc(80vh - 200px);
   overflow-y: scroll;
 
   @include media.media-breakpoint-up(mobile) {
     width: 752px;
+    gap: calc((752px - 600px - 40px) / 6);
   }
 
   &__bank {
