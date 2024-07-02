@@ -6,6 +6,8 @@ export const OwnerShop = Shop.omit({ id: true }).extend({
   description: z.string(),
   delivery_price: z.number(),
   image_urls: z.array(z.string()),
+  bank: z.string().nullable(),
+  account_number: z.string().nullable(),
 });
 
 export type OwnerShop = z.infer<typeof OwnerShop>;
