@@ -146,7 +146,7 @@ export default function ShopInfo({
                   logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit', value: '가게 정보 수정' });
                 }}
               >
-                가게 정보 수정
+                가게 관리하기
               </button>
               {isEditShopInfoModalOpen && (
                 <CustomModal
