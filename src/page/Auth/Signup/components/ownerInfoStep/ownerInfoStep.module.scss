@@ -1,8 +1,15 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .owner-info-container {
   margin-top: 25px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: calc(100vh - 45vh);
+
+  @include media.media-breakpoint-down(mobile) {
+    height: calc(100vh - 40vh);
+  }
 }
 
 .owner-info-container input {
@@ -17,6 +24,16 @@
 
   &:focus {
     outline: 1px solid #4590bb;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.owner-info-container button {
+  &:hover {
+    cursor: pointer;
   }
 }
 

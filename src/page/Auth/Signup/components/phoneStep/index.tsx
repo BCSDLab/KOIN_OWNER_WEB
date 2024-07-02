@@ -80,7 +80,7 @@ const useCheckCode = (
 
 export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   const {
-    register, formState: { errors }, getValues, setError, clearErrors, watch,
+    register, formState: { errors }, getValues, setError, clearErrors, watch, setValue,
   } = useFormContext<Verify>();
 
   const [isSent, setIsSent] = useState(false);
@@ -101,6 +101,14 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   };
 
   const setCode = (e: ChangeEvent<HTMLInputElement>) => setCertificationCode(e.target.value);
+
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) {
+      value = value.slice(0, 11);
+    }
+    setValue('phone_number', value);
+  };
 
   const watchedValues = watch(['attachment_urls', 'verificationCode', 'password', 'passwordConfirm']);
 
@@ -132,6 +140,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
                 value: /^[0-9]+$/,
                 message: '숫자만 입력 가능합니다',
               },
+              onChange: handlePhoneNumberChange, // 전화번호 변경 핸들러 추가
             })}
             className={cn({
               [styles['phone-number__input']]: true,
@@ -139,9 +148,18 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             })}
             placeholder="-없이 번호를 입력해주세요."
           />
-          <button type="button" className={styles['phone-number__button']} onClick={sendCode} disabled={isCertified}>
-            중복 확인
+          <button
+            type="button"
+            className={cn({
+              [styles['verification-code__button']]: true,
+              [styles['verification-code__button--active']]: isSent,
+            })}
+            onClick={sendCode}
+            disabled={isCertified}
+          >
+            {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
+
         </div>
         <div className={styles['error-message']}>
           {errors.phone_number && <Error />}
@@ -171,18 +189,6 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             onChange={setCode}
             disabled={isCertified}
           />
-          <button
-            type="button"
-            className={cn({
-              [styles['verification-code__button']]: true,
-              [styles['verification-code__button--active']]: isSent,
-            })}
-            onClick={sendCode}
-            disabled={isCertified}
-          >
-            {isSent ? '인증번호 재발송' : '인증번호 발송'}
-          </button>
-
         </div>
         <div className={styles['error-message']}>
           {errors.verificationCode && (

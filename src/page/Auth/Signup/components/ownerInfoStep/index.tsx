@@ -31,8 +31,7 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { uploadFiles } = useUploadFile();
   const [fileNames, setFileNames] = useState<string[]>([]);
-  const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
-  const [disable, setDisable] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<{ file_url: string }[]>([]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -57,6 +56,16 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
     }
   };
 
+  const handleDeleteFile = (index: number) => {
+    const newUploadedFiles = [...uploadedFiles];
+    const newFileNames = [...fileNames];
+    newUploadedFiles.splice(index, 1);
+    newFileNames.splice(index, 1);
+    setUploadedFiles(newUploadedFiles);
+    setFileNames(newFileNames);
+    setValue('attachment_urls', newUploadedFiles);
+  };
+
   const formatCompanyNumber = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{0,3})(\d{0,2})(\d{0,5})$/);
@@ -73,8 +82,10 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
       const formattedValue = formatCompanyNumber(cleanedValue);
       setValue('company_number', formattedValue);
     }
-    if (cleanedValue.length === 10) {
-      setDisable(true);
+    if (cleanedValue.length > 10) {
+      e.target.value = cleanedValue.slice(0, 10);
+      const formattedValue = formatCompanyNumber(e.target.value);
+      setValue('company_number', formattedValue);
     }
   };
 
@@ -97,10 +108,6 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
             required: {
               value: true,
               message: '이름을 입력해주세요',
-            },
-            pattern: {
-              value: /^[가-힣a-zA-Z\s]+$/,
-              message: '유효한 이름을 입력해주세요',
             },
           })}
           placeholder="이름을 입력해주세요."
@@ -150,7 +157,6 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
           })}
           placeholder="숫자만 입력해주세요."
           onChange={handleCompanyNumberChange}
-          disabled={disable}
         />
         {errors.company_number && <span className={styles['error-message']}>{errors.company_number.message}</span>}
       </div>
@@ -166,11 +172,12 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
         </div>
         {fileNames.length > 0 && (
         <div className={styles['file-list']}>
-          {fileNames.map((name) => (
+          {fileNames.map((name, index) => (
             <div className={styles['file-card']} key={name}>
               <button
                 type="button"
                 className={styles['delete-button']}
+                onClick={() => handleDeleteFile(index)}
               >
                 <DeleteFile />
               </button>

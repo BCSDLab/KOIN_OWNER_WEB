@@ -1,4 +1,5 @@
 import { ReactComponent as Success } from 'assets/svg/auth/done.svg';
+import { useNavigate } from 'react-router-dom';
 import styles from './index.module.scss';
 
 const completeFindPassword = {
@@ -18,6 +19,7 @@ interface Props {
 }
 export default function Done({ isFindPassword }: Props) {
   const completeObject = isFindPassword ? completeFindPassword : completeRegister;
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <Success />
@@ -32,6 +34,13 @@ export default function Done({ isFindPassword }: Props) {
           {completeObject.final}
         </div>
       </div>
+      <button
+        type="button"
+        onClick={() => navigate('/login')}
+        className={styles.button}
+      >
+        {isFindPassword ? '로그인하러 가기' : '로그인 화면 바로가기'}
+      </button>
     </div>
   );
 }
