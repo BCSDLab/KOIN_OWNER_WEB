@@ -56,7 +56,8 @@
     justify-content: flex-end;
     margin-top: 32px;
     margin-bottom: 24px;
-    margin-right: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
 
     &--cancel {
       width: 114px;
