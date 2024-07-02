@@ -1,17 +1,31 @@
+import { OwnerShop } from 'model/shopInfo/ownerShop';
+import { UseFormSetValue, UseFormRegister } from 'react-hook-form';
 import { bank } from 'utils/constant/bank';
 import cn from 'utils/ts/className';
+import showToast from 'utils/ts/showToast';
 import styles from './index.module.scss';
 
 interface Props {
-  bankName: string;
-  account: string;
-  setBank: (name: string) => void;
-  setAccount: (account: string) => void;
   close: () => void;
+  register: UseFormRegister<OwnerShop>;
+  setValue: UseFormSetValue<OwnerShop>;
+  bankName: string | null;
+  account_number: string | null;
 }
 export default function BankList({
-  bankName, account, setBank, setAccount, close,
+  close, register, setValue, bankName, account_number,
 }: Props) {
+  const validation = () => {
+    if (account_number && !account_number.includes('-')) {
+      showToast('error', '-을 포함한 계좌번호를 입력해주세요');
+      return;
+    }
+    if ((bankName && !account_number) || (!bankName && account_number)) {
+      showToast('error', '모든 값을 입력해주세요');
+      return;
+    }
+    close();
+  };
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -20,8 +34,8 @@ export default function BankList({
           <input
             id="account"
             className={styles.top__input}
-            onChange={(e) => setAccount(e.target.value)}
-            value={account}
+            {...register('account_number')}
+            placeholder="-을 포함한 계좌번호를 입력해주세요"
           />
         </label>
         <hr className={styles.modal__divide} />
@@ -32,7 +46,13 @@ export default function BankList({
                 [styles.banks__bank]: true,
                 [styles['banks__bank--selected']]: item === bankName,
               })}
-              onClick={() => setBank(item)}
+              onClick={() => {
+                if (bankName === item) {
+                  setValue('bank', null);
+                  return;
+                }
+                setValue('bank', item);
+              }}
               role="button"
               aria-hidden
             >
@@ -40,7 +60,7 @@ export default function BankList({
             </div>
           ))}
         </div>
-        <button type="button" className={styles.button} onClick={close}>확인</button>
+        <button type="button" className={styles.button} onClick={validation}>확인</button>
       </div>
     </div>
   );

@@ -82,8 +82,6 @@ export default function EditShopInfoModal({
 
   const [isOpen, setIsOpen] = useState(false);
   const openBankList = () => setIsOpen(true);
-  const [bank, setBank] = useState('');
-  const [account, setAccount] = useState('');
 
   const imageUrls = useWatch({ control, name: 'image_urls' });
   const name = useWatch({ control, name: 'name' });
@@ -95,6 +93,8 @@ export default function EditShopInfoModal({
   const delivery = useWatch({ control, name: 'delivery' });
   const payCard = useWatch({ control, name: 'pay_card' });
   const payBank = useWatch({ control, name: 'pay_bank' });
+  const bank = useWatch({ control, name: 'bank' });
+  const account = useWatch({ control, name: 'account_number' });
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('category_ids', [Number(e.target.value), 0]);
@@ -341,18 +341,17 @@ export default function EditShopInfoModal({
               <input
                 type="text"
                 id="account"
-                placeholder="계좌번호를 추가할 수 있습니다."
                 className={styles['mobile-main-info__input']}
                 onFocus={openBankList}
-                value={`${bank} ${account} `}
+                value={account ? `${bank} ${account}` : '계좌번호를 추가할 수 있습니다'}
               />
             </label>
             {isOpen && (
               <BankList
+                register={register}
                 bankName={bank}
-                account={account}
-                setBank={setBank}
-                setAccount={setAccount}
+                account_number={account}
+                setValue={setValue}
                 close={() => setIsOpen(false)}
               />
             )}
@@ -612,18 +611,17 @@ export default function EditShopInfoModal({
               <input
                 type="text"
                 id="account"
-                placeholder="계좌번호를 추가할 수 있습니다."
                 className={styles['main-info__input']}
                 onFocus={openBankList}
-                value={`${bank} ${account} `}
+                value={account ? `${bank} ${account}` : '계좌번호를 추가할 수 있습니다'}
               />
             </label>
             {isOpen && (
               <BankList
+                register={register}
                 bankName={bank}
-                account={account}
-                setBank={setBank}
-                setAccount={setAccount}
+                account_number={account}
+                setValue={setValue}
                 close={() => setIsOpen(false)}
               />
             )}
