@@ -2,15 +2,16 @@
 
 @keyframes mobile-appearence {
   from {
-    transform: translateY(100%);    
+    transform: translateY(100%);
   }
+
   to {
     transform: translateY(0);
   }
 }
 
 .overlay {
-  background-color: rgba($color: #000000, $alpha: 0.8);
+  background-color: rgba($color: #000000, $alpha: 80%);
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -47,9 +48,8 @@
       width: 752px;
       border-radius: 0;
     }
-
   }
-  
+
   @include media.media-breakpoint-up(mobile) {
     animation: none;
     width: 752px;
@@ -111,7 +111,7 @@
     }
 
     &--selected {
-      background-color: #FCCC77;
+      background-color: #fccc77;
     }
   }
 }
