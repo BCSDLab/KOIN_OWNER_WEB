@@ -1,9 +1,10 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .container {
   display: flex;
   flex-direction: column;
   width: 752px;
   height: calc(80vh - 78px);
-  margin-left: 40px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
@@ -18,6 +19,7 @@
     color: #17518e;
     font-weight: bold;
     margin-top: 16px;
+    margin-right: 20px;
 
     &--warning {
       color: #a1a1a1;
@@ -30,23 +32,32 @@
   &__modify-main-image {
     display: flex;
     justify-content: flex-start;
-    width: 704px;
+    width: 100%;
     height: 136px;
     margin-top: 24px;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    @include media.media-breakpoint-down(mobile) {
+      height: 100px;
+      object-fit: cover;
+    }
   }
 
   &__horizontal-line {
-    width: 704px;
+    width: 100%;
     border-top: 1px solid #a1a1a1;
     margin-top: 34px;
   }
 
   &__buttons {
     display: flex;
-    width: 704px;
+    width: 100%;
     justify-content: flex-end;
     margin-top: 32px;
     margin-bottom: 24px;
+    padding-right: 20px;
+    box-sizing: border-box;
 
     &--cancel {
       width: 114px;
@@ -79,6 +90,12 @@
     height: 136px;
     box-shadow: 0 0 1px 0 #00000080;
     margin-left: 1px;
+
+    @include media.media-breakpoint-down(mobile) {
+      object-fit: contain;
+      width: 27vw;
+      height: 100px;
+    }
   }
 
   &__delete-button {
@@ -107,6 +124,12 @@
     height: 134px;
     border: 2px dashed #a1a1a1;
     cursor: pointer;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 27vw;
+      height: 100px;
+      box-sizing: border-box;
+    }
   }
 
   &__add-file {
@@ -129,6 +152,9 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 22px;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 
   &__label {
     display: flex;
@@ -294,15 +320,14 @@
   &__confirm-button-wrapper {
     display: flex;
     justify-content: flex-end;
-    max-width: 328px;
-    width: 100%;
+    width: 80vw;
   }
 
   &__confirm-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 106px;
+    width: 100%;
     height: 38px;
     background-color: #17518e;
     color: #ffffff;
@@ -319,7 +344,9 @@
 
   &__label {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 24px;
+    width: 80vw;
 
     &--error {
       margin-bottom: 0;
@@ -355,6 +382,7 @@
   &__checkboxes {
     display: flex;
     justify-content: space-between;
+    width: 80vw;
     margin-top: 8px;
   }
 
@@ -366,7 +394,6 @@
     color: #858585;
     height: 21px;
     box-sizing: content-box;
-    margin-right: 16px;
     margin-bottom: 24px;
     cursor: pointer;
 

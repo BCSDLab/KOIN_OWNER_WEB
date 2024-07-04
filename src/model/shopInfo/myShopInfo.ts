@@ -51,6 +51,8 @@ export const MyShopInfoRes = z.object({
   image_urls: z.array(z.string()),
   shop_categories: z.array(ShopCategory),
   menu_categories: z.array(MenuCategory),
+  bank: z.string().nullable(),
+  account_number: z.string().nullable(),
 });
 
 export type MyShopInfoRes = z.infer<typeof MyShopInfoRes>;
