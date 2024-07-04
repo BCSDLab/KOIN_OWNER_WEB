@@ -110,7 +110,7 @@ export default function EditShopInfoModal({
     return formattedPhoneNumber;
   };
 
-  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const formattingPhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhoneNumber(event.target.value);
     setValue('phone', formattedValue);
   };
@@ -122,7 +122,7 @@ export default function EditShopInfoModal({
       setImageFile(imageUrls);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageFile]);
+  }, [imageFile]); // imageFile만 추적함
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
@@ -262,7 +262,7 @@ export default function EditShopInfoModal({
                 id="phone"
                 value={phone}
                 className={styles['mobile-main-info__input']}
-                {...register('phone', { onChange: handlePhoneChange })}
+                {...register('phone', { onChange: formattingPhoneNumber })}
               />
             </label>
             <div className={styles['mobile-main-info__label']}>
@@ -484,7 +484,7 @@ export default function EditShopInfoModal({
                 id="phone"
                 value={phone}
                 className={styles['main-info__input']}
-                {...register('phone', { onChange: handlePhoneChange })}
+                {...register('phone', { onChange: formattingPhoneNumber })}
               />
             </label>
             <label htmlFor="deliveryPrice" className={styles['main-info__label']}>
