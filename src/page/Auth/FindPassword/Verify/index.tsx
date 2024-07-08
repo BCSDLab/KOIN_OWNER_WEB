@@ -44,6 +44,17 @@ const useCheckCode = (
   const [certificationCode, setCertificationCode] = useState<string>('');
   const [isCertified, setIsCertified] = useState<boolean>(false);
 
+  const setCode = (e: ChangeEvent<HTMLInputElement>) => {
+    setCertificationCode(e.target.value);
+    if (e.target.value.length < 6) {
+      setError('certification_code', { message: '필수 입력 항목입니다.' });
+      setIsCertified(false);
+      setIsStepComplete(false);
+      return;
+    }
+    clearErrors();
+  };
+
   useEffect(() => {
     if (certificationCode.length === 6) {
       verifyCode({
@@ -66,7 +77,7 @@ const useCheckCode = (
     }
   }, [certificationCode, setIsStepComplete, getValues, setError, clearErrors]);
 
-  return { setCertificationCode, isCertified };
+  return { certificationCode, setCode, isCertified };
 };
 
 interface Verify {
@@ -83,7 +94,7 @@ export default function Verify() {
   const debounce = useDebounce<SendCode>(code, { getValues, setError, setIsSent });
   const steps = useOutletContext<OutletProps>();
 
-  const { setCertificationCode, isCertified } = useCheckCode(
+  const { setCode, isCertified } = useCheckCode(
     steps.setIsStepComplete,
     getValues,
     setError,
@@ -98,8 +109,6 @@ export default function Verify() {
     debounce();
   };
 
-  const setCode = (e: ChangeEvent<HTMLInputElement>) => setCertificationCode(e.target.value);
-
   return (
     <form className={styles.container}>
       <section className={styles.section}>
@@ -111,12 +120,14 @@ export default function Verify() {
               value: true,
               message: '필수 입력 항목입니다.',
             },
-            maxLength: 11,
+            maxLength: {
+              value: 11,
+              message: '11자리의 숫자로 입력해주세요',
+            },
           })}
           type="text"
           placeholder="-없이 번호를 입력해주세요."
         />
-
         {errors.phone_number
           && (
             <div className={styles.error}>
@@ -135,17 +146,15 @@ export default function Verify() {
             placeholder="인증번호를 입력해주세요."
             maxLength={6}
             onChange={setCode}
-            disabled={isCertified}
           />
           <button
             className={cn({
-              [styles.button]: true,
+              [styles.button]: true || isCertified,
               [styles['button--active']]: watch('phone_number') && watch('phone_number').length === 11,
               [styles['button--error']]: !!errors.certification_code,
             })}
             type="button"
             onClick={sendCode}
-            disabled={isCertified}
           >
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
@@ -155,6 +164,13 @@ export default function Verify() {
             <div className={styles.error}>
               <Warning />
               {errors.certification_code.message}
+            </div>
+          )
+        }
+        {
+          isCertified && (
+            <div className={styles.error}>
+              인증되었습니다
             </div>
           )
         }
