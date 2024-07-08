@@ -64,7 +64,14 @@
 }
 
 .content {
-  height: calc(100vh - 40vh);
+  height: calc(100vh - 35vh);
+  box-sizing: border-box;
+  padding: 5px 0px;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include media.media-breakpoint-down(mobile) {
     height: calc(100vh - 28vh);

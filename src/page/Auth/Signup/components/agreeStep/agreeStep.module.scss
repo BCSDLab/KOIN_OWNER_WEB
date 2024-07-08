@@ -1,5 +1,16 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .id-input {
   font-size: 12px;
+}
+
+.step-one {
+  height: 100%;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .agree-all {
@@ -26,6 +37,12 @@
 
 .personal {
   margin-top: 4px;
+  height: 28vh;
+
+  @include media.media-breakpoint-down(mobile) {
+    height: 30vh;
+  }
+
 
   &__button {
     display: flex;
@@ -41,12 +58,17 @@
     border: 1px dashed #d2dae2;
     padding: 12px;
     height: 20vh;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
 
 .koin {
   margin-top: 4px;
+  height: 28vh;
+
+  @include media.media-breakpoint-down(mobile) {
+    height: 30vh;
+  }
 
   &__button {
     display: flex;
@@ -61,7 +83,6 @@
     margin-top: 5px;
     border: 1px dashed #d2dae2;
     padding: 12px;
-    height: 20vh;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 }
