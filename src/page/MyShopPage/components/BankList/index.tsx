@@ -12,12 +12,14 @@ interface Props {
   bankName: string | null;
   account_number: string | null;
 }
+
+const NUMBER_REGEX = /^[0-9-]+$/;
 export default function BankList({
   close, register, setValue, bankName, account_number,
 }: Props) {
   const validation = () => {
-    if (account_number && !account_number.includes('-')) {
-      showToast('error', '-을 포함한 계좌번호를 입력해주세요');
+    if (account_number && !NUMBER_REGEX.test(account_number)) {
+      showToast('error', '올바른 양식의 계좌번호를 입력해주세요');
       return;
     }
     if ((bankName && !account_number) || (!bankName && account_number)) {
@@ -27,15 +29,15 @@ export default function BankList({
     close();
   };
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={styles.overlay} onClick={validation} role="button" aria-hidden>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()} role="button" aria-hidden>
         <label htmlFor="account" className={styles.top}>
           <div className={styles.top__account}>계좌번호</div>
           <input
             id="account"
             className={styles.top__input}
             {...register('account_number')}
-            placeholder="-을 포함한 계좌번호를 입력해주세요"
+            placeholder="계좌번호를 숫자만 입력해주세요"
           />
         </label>
         <hr className={styles.modal__divide} />
