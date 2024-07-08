@@ -37,7 +37,7 @@ export default function BankList({
             id="account"
             className={styles.top__input}
             {...register('account_number')}
-            placeholder="계좌번호를 숫자만 입력해주세요"
+            placeholder="계좌번호를 입력해주세요"
           />
         </label>
         <hr className={styles.modal__divide} />
