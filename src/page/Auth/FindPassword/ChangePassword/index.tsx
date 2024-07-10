@@ -30,7 +30,7 @@ export default function ChangePassword() {
       <section className={styles.section}>
         <div className={styles.title}>새 비밀번호</div>
         <input
-          className={styles.input}
+          className={styles['password-input']}
           type="password"
           placeholder="새 비밀번호를 입력해주세요."
           {...register('password', {
@@ -62,7 +62,7 @@ export default function ChangePassword() {
       <section className={styles.section}>
         <div className={styles.title}>새 비밀번호 확인</div>
         <input
-          className={styles.input}
+          className={styles['password-input']}
           type="password"
           placeholder="새 비밀번호를 다시 입력해주세요."
           {...register('passwordCheck', {
