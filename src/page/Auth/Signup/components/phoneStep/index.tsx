@@ -1,6 +1,6 @@
 import { ReactComponent as Error } from 'assets/svg/auth/error-icon.svg';
 import {
-  useFormContext, UseFormClearErrors, UseFormGetValues, UseFormSetError,
+  useFormContext, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';
 import {
   useState, useEffect, ChangeEvent,
@@ -10,6 +10,7 @@ import { verificationAuthCode, getPhoneAuthCode } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useDebounce } from 'utils/hooks/useDebounce';
 import { PhoneNumberRegisterParam } from 'model/register';
+import showToast from 'utils/ts/showToast';
 import styles from './phoneStep.module.scss';
 
 interface PhoneStepProps {
@@ -21,7 +22,7 @@ interface Verify {
   attachment_urls: {
     file_url: string
   }[];
-  verificationCode:string;
+  verificationCode: string;
   password: string;
   passwordConfirm: string;
 }
@@ -30,14 +31,19 @@ interface SendCodeParams {
   getValues: UseFormGetValues<Verify>;
   setError: UseFormSetError<Verify>;
   setIsSent: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
+const code = ({
+  getValues, setError, setIsSent, setIsClick,
+}: SendCodeParams) => {
   const phoneNumber = getValues('phone_number');
   const phoneNumberParam: PhoneNumberRegisterParam = { phone_number: phoneNumber };
   getPhoneAuthCode(phoneNumberParam)
     .then(() => {
       setIsSent(true);
+      setIsClick(false);
+      showToast('success', '인증번호를 발송했습니다');
     })
     .catch((e) => {
       if (isKoinError(e)) {
@@ -49,12 +55,11 @@ const code = ({ getValues, setError, setIsSent }: SendCodeParams) => {
 const useCheckCode = (
   getValues: UseFormGetValues<Verify>,
   setError: UseFormSetError<Verify>,
-  clearErrors: UseFormClearErrors<Verify>,
 ) => {
-  const [certificationCode, setCertificationCode] = useState<string>('');
   const [isCertified, setIsCertified] = useState<boolean>(false);
 
-  useEffect(() => {
+  const checkCode = () => {
+    const certificationCode = getValues('verificationCode');
     if (certificationCode.length === 6) {
       verificationAuthCode({
         certification_code: certificationCode,
@@ -63,36 +68,39 @@ const useCheckCode = (
         .then((res) => {
           sessionStorage.setItem('access_token', res.token);
           setIsCertified(true);
-          clearErrors();
+          showToast('success', '인증번호 확인 성공');
         })
         .catch((e) => {
           if (isKoinError(e)) {
-            setError('attachment_urls', { type: 'error', message: e.message });
+            setError('verificationCode', { type: 'error', message: e.message });
           } else {
             sendClientError(e);
           }
         });
     }
-  }, [certificationCode, getValues, setError, clearErrors]);
+  };
 
-  return { setCertificationCode, isCertified };
+  return { checkCode, isCertified };
 };
 
 export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   const {
-    register, formState: { errors }, getValues, setError, clearErrors, watch, setValue,
+    register, formState: { errors }, getValues, setError, watch, setValue,
   } = useFormContext<Verify>();
 
   const [isSent, setIsSent] = useState(false);
-  const debounce = useDebounce<SendCodeParams>(code, { getValues, setError, setIsSent });
+  const [isClick, setIsClick] = useState(false);
+  const debounce = useDebounce<SendCodeParams>(code, {
+    getValues, setError, setIsSent, setIsClick,
+  });
 
-  const { setCertificationCode, isCertified } = useCheckCode(
+  const { checkCode, isCertified } = useCheckCode(
     getValues,
     setError,
-    clearErrors,
   );
 
   const sendCode = () => {
+    setIsClick(true);
     if (!getValues('phone_number')) {
       setError('phone_number', { type: 'custom', message: '필수 입력 항목입니다.' });
       return;
@@ -100,7 +108,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
     debounce();
   };
 
-  const setCode = (e: ChangeEvent<HTMLInputElement>) => setCertificationCode(e.target.value);
+  const setCode = (e: ChangeEvent<HTMLInputElement>) => setValue('verificationCode', e.target.value);
 
   const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, '');
@@ -151,11 +159,11 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
           <button
             type="button"
             className={cn({
-              [styles['verification-code__button']]: true,
-              [styles['verification-code__button--active']]: isSent,
+              [styles['verification-code__button']]: isClick,
+              [styles['verification-code__button--active']]: isSent || !isClick,
             })}
             onClick={sendCode}
-            disabled={isCertified}
+            disabled={isClick}
           >
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
@@ -180,15 +188,26 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
                 message: '인증번호를 입력해주세요',
               },
               pattern: {
-                value: /^[0-9]+$/,
-                message: '인증번호가 일치하지 않습니다.',
+                value: /^[0-9]{6}$/,
+                message: '인증번호는 6자리입니다.',
               },
+              onChange: setCode, // 인증번호 변경 핸들러 추가
             })}
             placeholder="인증번호를 입력해주세요."
             maxLength={6}
-            onChange={setCode}
-            disabled={isCertified}
           />
+          <button
+            type="button"
+            className={cn({
+              [styles['verification-code__button']]: true,
+              [styles['verification-code__button--active']]: isSent,
+              [styles['verification-code__button--error']]: !!errors.verificationCode,
+            })}
+            onClick={checkCode}
+            disabled={isCertified}
+          >
+            인증번호 확인
+          </button>
         </div>
         <div className={styles['error-message']}>
           {errors.verificationCode && (
