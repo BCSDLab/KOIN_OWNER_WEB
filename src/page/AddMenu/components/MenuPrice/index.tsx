@@ -39,7 +39,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
       }
     } else {
       setIsSingle(false);
-      setOptionPrices([...(optionPrices || []), { id: 0, option: '', price: 0 }]);
+      setOptionPrices([{ id: 0, option: '', price: 0 }]);
     }
   };
 
@@ -49,7 +49,7 @@ export default function MenuPrice({ isComplete }:MenuPriceProps) {
 
     if (updatedOptionPrices.length === 0) {
       setIsSingle(true);
-      setOptionPrices([]);
+      setOptionPrices([{ id: 0, option: '', price: 0 }]);
     }
   };
 
