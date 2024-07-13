@@ -165,6 +165,7 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
               [styles['verification-code__button--active']]: isSent || !isClick,
             })}
             onClick={sendCode}
+            disabled={isClick}
           >
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
