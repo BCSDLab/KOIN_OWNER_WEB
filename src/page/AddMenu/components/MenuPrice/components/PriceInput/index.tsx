@@ -74,6 +74,9 @@ export default function PriceInput({
                   inputMode="decimal"
                   value={input.price === 0 ? '' : input.price}
                   onChange={(e) => updatePriceInput(input.id, 'price', Number(e.target.value))}
+                  onWheel={(e) => {
+                    if (e.target instanceof HTMLElement) e.target.blur();
+                  }}
                 />
                 <p className={styles['inputs__price-input-won']}>
                   원
