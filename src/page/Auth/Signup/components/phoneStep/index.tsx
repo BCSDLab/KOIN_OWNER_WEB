@@ -85,7 +85,7 @@ const useCheckCode = (
 
 export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
   const {
-    register, formState: { errors }, getValues, setError, watch, setValue,
+    register, formState: { errors }, getValues, setError, watch, setValue, clearErrors,
   } = useFormContext<Verify>();
 
   const [isSent, setIsSent] = useState(false);
@@ -116,6 +116,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
       value = value.slice(0, 11);
     }
     setValue('phone_number', value);
+    setIsClick(false);
+    clearErrors();
   };
 
   const watchedValues = watch(['attachment_urls', 'verificationCode', 'password', 'passwordConfirm']);
@@ -163,7 +165,6 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
               [styles['verification-code__button--active']]: isSent || !isClick,
             })}
             onClick={sendCode}
-            disabled={isClick}
           >
             {isSent ? '인증번호 재발송' : '인증번호 발송'}
           </button>
@@ -204,7 +205,6 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
               [styles['verification-code__button--error']]: !!errors.verificationCode,
             })}
             onClick={checkCode}
-            disabled={isCertified}
           >
             인증번호 확인
           </button>
