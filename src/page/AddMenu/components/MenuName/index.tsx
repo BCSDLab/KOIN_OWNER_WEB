@@ -13,7 +13,8 @@ export default function MenuName({ isComplete }: MenuNameProps) {
   const { name, setName } = useAddMenuStore();
   const { menuError } = useErrorMessageStore();
 
-  const handleNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     setName(e.target.value);
   };
 
@@ -21,9 +22,7 @@ export default function MenuName({ isComplete }: MenuNameProps) {
     <div>
       {isMobile ? (
         <div className={styles.mobile__container}>
-          <div className={styles.mobile__caption}>
-            메뉴명
-          </div>
+          <div className={styles.mobile__caption}>메뉴명</div>
           {isComplete ? (
             <span className={styles['mobile__name-text']}>{name}</span>
           ) : (
@@ -33,17 +32,17 @@ export default function MenuName({ isComplete }: MenuNameProps) {
                 [styles['mobile__name-input--error']]: menuError,
               })}
               placeholder="예) 불족발 + 막국수 저녁 SET"
-              onChange={handleNameChange}
+              onChange={(e) => handleNameChange(e)}
               value={name}
             />
           )}
-          {menuError && <span className={styles['error-message']}>{menuError}</span>}
+          {menuError && (
+            <span className={styles['error-message']}>{menuError}</span>
+          )}
         </div>
       ) : (
         <div className={styles.container}>
-          <div className={styles.caption}>
-            메뉴명
-          </div>
+          <div className={styles.caption}>메뉴명</div>
           {isComplete ? (
             <span className={styles['name-text']}>{name}</span>
           ) : (
@@ -53,11 +52,13 @@ export default function MenuName({ isComplete }: MenuNameProps) {
                 [styles['name-input--error']]: menuError,
               })}
               placeholder="예) 불족발 + 막국수 저녁 SET"
-              onChange={handleNameChange}
+              onChange={(e) => handleNameChange(e)}
               value={name}
             />
           )}
-          {menuError && <span className={styles['error-message']}>{menuError}</span>}
+          {menuError && (
+            <span className={styles['error-message']}>{menuError}</span>
+          )}
         </div>
       )}
     </div>

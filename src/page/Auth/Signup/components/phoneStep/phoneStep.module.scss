@@ -1,0 +1,101 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.default-info {
+  width: 98%;
+  margin-left: 1%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  height: calc(100vh - 45vh);
+
+  @include media.media-breakpoint-down(mobile) {
+    height: calc(100vh - 40vh);
+  }
+}
+
+.default-info span {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.default-info input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: #f5f5f5;
+  padding: 12px 16px;
+  border: none;
+
+  &:focus {
+    outline: 1px solid #4590bb;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.default-info button {
+  width: 33.33%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: #eee;
+  color: #4b4b4b;
+  font-size: 13px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.phone-number__input {
+  width: 66.67% !important;
+
+  &::placeholder {
+    color: #8e8e8e;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.verification-code__input {
+  width: 66.67% !important;
+}
+
+.verification-code__button {
+  &--active {
+    background-color: #175c8e !important;
+    color: white !important;
+  }
+
+  &--error {
+    background-color: #f7941e !important;
+  }
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.error-border {
+  &:focus {
+    outline: 1px solid #f7941e !important;
+  }
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  color: #f7941e;
+  font-size: 12px;
+}

@@ -1,0 +1,242 @@
+@use "src/utils/styles/mediaQuery" as media;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    color: #175c8e;
+    font-size: 24px;
+    font-weight: 500;
+
+    @include media.media-breakpoint-down(mobile) {
+      color: #175c8e;
+      font-size: 15px;
+      font-weight: 500;
+    }
+  }
+}
+
+.price-box {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  @include media.media-breakpoint-down(mobile) {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.inputs {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+
+  @include media.media-breakpoint-down(mobile) {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__size-input {
+    box-sizing: border-box;
+    width: 335px;
+    height: 62px;
+    border: 0.5px solid #858585;
+    padding: 16px;
+    color: #252525;
+    font-size: 20px;
+    font-weight: 500;
+    outline: none;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 100%;
+      height: 35px;
+      border: 0.5px solid #898a8d;
+      padding: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    &--disabled {
+      box-sizing: border-box;
+      width: 335px;
+      height: 62px;
+      border: 0.5px solid #858585;
+      padding: 16px;
+      background-color: #898a8d;
+      outline: none;
+
+      @include media.media-breakpoint-down(mobile) {
+        width: 100%;
+        height: 35px;
+        border: 0.5px solid #898a8d;
+        background-color: #898a8d;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+    }
+
+    &::placeholder {
+      color: #a1a1a1;
+      font-size: 20px;
+      font-weight: 400;
+
+      @include media.media-breakpoint-down(mobile) {
+        color: #a1a1a1;
+        font-size: 13px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  &__price-input-box {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: 62px;
+    border: 0.5px solid #858585;
+
+    @include media.media-breakpoint-down(mobile) {
+      position: relative;
+      height: auto;
+      width: 100%;
+      border: none;
+    }
+  }
+
+  &__price-input {
+    text-align: right;
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 16px;
+    color: #252525;
+    font-size: 20px;
+    font-weight: 500;
+    border: 0;
+    outline: none;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 100%;
+      height: 35px;
+      border: 0.5px solid #898a8d;
+      padding: 8px;
+      text-align: left;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+  }
+
+  &__price-input-won {
+    position: absolute;
+    top: 32%;
+    right: 10px;
+    color: #a1a1a1;
+    font-size: 20px;
+    font-weight: 400;
+
+    @include media.media-breakpoint-down(mobile) {
+      box-sizing: border-box;
+      position: absolute;
+      right: 8px;
+      top: 32%;
+      color: #a1a1a1;
+      font-size: 13px;
+      font-weight: 400;
+    }
+  }
+}
+
+.cancle {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  cursor: pointer;
+
+  @include media.media-breakpoint-down(mobile) {
+    width: auto;
+    height: auto;
+    background-color: white;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 16px;
+      height: 16px;
+      margin-left: 4px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.add-price-button {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  gap: 8px;
+  height: 28px;
+  background-color: white;
+
+  @include media.media-breakpoint-down(mobile) {
+    display: flex;
+    margin-top: 16px;
+    gap: 8px;
+    background-color: white;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+
+    @include media.media-breakpoint-down(mobile) {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &__text {
+    display: flex;
+    align-items: center;
+    color: #f7941e;
+    font-size: 20px;
+    font-weight: 700;
+
+    @include media.media-breakpoint-down(mobile) {
+      font-size: 13px;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.price-info-input-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 7px;
+}

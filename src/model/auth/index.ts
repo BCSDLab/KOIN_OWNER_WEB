@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const LoginParams = z.object({
-  email: z.string(),
+  account: z.string(),
   password: z.string(),
 });
 
@@ -10,11 +10,6 @@ export type LoginParams = z.infer<typeof LoginParams>;
 export const LoginResponse = z.object({
   refresh_token: z.string(),
   token: z.string(),
-  user_type: z.union([
-    z.literal('OWNER'),
-    z.literal('COOP'),
-    z.null(),
-  ]),
 });
 
 export type LoginResponse = z.infer<typeof LoginResponse>;
@@ -50,7 +45,6 @@ export type OwnerShop = z.infer<typeof OwnerShop>;
 export const OwnerResponse = z.object({
   attachments: z.array(UserFile),
   company_number: z.string(),
-  email: z.string(),
   name: z.string(),
   shops: z.array(OwnerShop),
 });
@@ -76,4 +70,40 @@ export type User = z.infer<typeof User>;
 
 export interface LoginForm extends LoginParams {
   isAutoLogin: boolean;
+}
+
+export interface CertificationResponse {
+  token: string;
+}
+
+export interface ChangePasswordForm {
+  password: string;
+  passwordCheck: string;
+  phone_number: string;
+}
+
+interface FindPassword {
+  phone_number: string;
+  certification_code: string;
+  password: string;
+}
+
+export interface Register extends FindPassword {
+  company_number: string,
+  name: string,
+  shop_id: number | null,
+  shop_name: string,
+  attachment_urls: {
+    file_url: string
+  }[],
+}
+
+export interface RegisterUser {
+  phone_number: string;
+  password: string;
+  company_number: string,
+  name: string,
+  shop_id: number | null,
+  shop_name: string,
+  attachment_urls: { file_url: string }[];
 }

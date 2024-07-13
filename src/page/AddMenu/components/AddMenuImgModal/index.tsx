@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancle-icon.svg';
 import useAddMenuStore from 'store/addMenu';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { UploadError } from 'utils/hooks/useImagesUpload';
+import useLogger from 'utils/hooks/useLogger';
 import styles from './AddMenuImgModal.module.scss';
 
 interface AddMenuImgModalProps {
@@ -20,6 +21,7 @@ interface AddMenuImgModalProps {
 }
 
 export default function AddMenuImgModal({ isOpen, closeModal, imageObject }: AddMenuImgModalProps) {
+  const logger = useLogger();
   const { setImageUrls } = useAddMenuStore();
 
   const triggerFileInput = () => {
@@ -27,6 +29,7 @@ export default function AddMenuImgModal({ isOpen, closeModal, imageObject }: Add
   };
   const handleImageChange = async () => {
     await imageObject.saveImgFile();
+    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_image', value: '메뉴 이미지 추가' });
   };
   const triggerCameraInput = () => {
     imageObject.imgRef.current?.click();

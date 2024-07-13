@@ -6,6 +6,7 @@ import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
 import { Dispatch, SetStateAction, useState } from 'react';
+import useLogger from 'utils/hooks/useLogger';
 import styles from './ShopInfo.module.scss';
 
 interface ShopInfoProps {
@@ -28,6 +29,7 @@ export default function ShopInfo({
   const [closeTime, setCloseTime] = useState<string | null>(
     shopInfo.open[todayIndex].close_time,
   );
+  const logger = useLogger();
 
   const holidayIndex = shopInfo.open.filter((day) => day.closed)
     .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
@@ -88,7 +90,10 @@ export default function ShopInfo({
             <button
               type="button"
               className={styles['mobileshop__update-btn']}
-              onClick={openEditShopInfoModal}
+              onClick={() => {
+                openEditShopInfoModal();
+                logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit', value: '가게 정보 수정' });
+              }}
             >
               가게 관리하기
               <GearIcon />
@@ -136,13 +141,17 @@ export default function ShopInfo({
               <button
                 type="button"
                 className={styles['shop__update-btn']}
-                onClick={openEditShopInfoModal}
+                onClick={() => {
+                  openEditShopInfoModal();
+                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit', value: '가게 정보 수정' });
+                }}
               >
-                가게 정보 수정
+                가게 관리하기
               </button>
               {isEditShopInfoModalOpen && (
                 <CustomModal
                   title="가게 정보 수정"
+                  eventTitle="store_info_edit"
                   modalSize="extra-large"
                   hasFooter={false}
                   isOpen={isEditShopInfoModalOpen}

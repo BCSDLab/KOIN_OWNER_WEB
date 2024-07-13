@@ -1,32 +1,28 @@
-import useStepStore from 'store/useStepStore';
 import useMyShop from 'query/shop';
 import cn from 'utils/ts/className';
 import { Category as CategoryProps } from 'model/category/shopCategory';
-import useShopRegistrationStore from 'store/shopRegistration';
 import { useState } from 'react';
-import ErrorMessage from 'page/Auth/Signup/component/ErrorMessage';
+import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
+import { useFormContext, useWatch } from 'react-hook-form';
 import styles from './ShopCategory.module.scss';
 
-export default function ShopCategory() {
+export default function ShopCategory({ onNext }:{ onNext: () => void }) {
   const [isError, setIsError] = useState(false);
   const { categoryList } = useMyShop();
-  const { increaseStep } = useStepStore();
-  const {
-    category, setCategory, setCategoryId,
-  } = useShopRegistrationStore();
+  const { control, setValue } = useFormContext();
+  const categoryId = useWatch({ control, name: 'category_ids' });
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
-    setCategory(categoryInfo.name);
-    setCategoryId(categoryInfo.id);
+    setValue('category_ids', [categoryInfo.id, 0]);
   };
 
   const handleNextClick = () => {
-    if (category.length === 0) {
+    if (!categoryId) {
       setIsError(true);
     } else {
       setIsError(false);
-      increaseStep();
+      onNext();
     }
   };
 
@@ -38,7 +34,7 @@ export default function ShopCategory() {
           <button
             className={cn({
               [styles.category__menu]: true,
-              [styles['category__menu--selected']]: category === categoryInfo.name,
+              [styles['category__menu--selected']]: categoryId[0] === categoryInfo.id,
             })}
             type="button"
             onClick={() => handleCategoryClick(categoryInfo)}
@@ -53,10 +49,10 @@ export default function ShopCategory() {
           </button>
         ))}
       </div>
-      {category.length === 0 && isError && <ErrorMessage message={ERRORMESSAGE.category} />}
+      {isError && <ErrorMessage message={ERRORMESSAGE.category} />}
       <div className={cn({
         [styles.category__button]: true,
-        [styles['category__button--error']]: category.length === 0 && isError,
+        [styles['category__button--error']]: isError,
       })}
       >
         <button type="button" onClick={handleNextClick}>다음</button>

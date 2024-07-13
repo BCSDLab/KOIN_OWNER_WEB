@@ -48,8 +48,38 @@
   }
 
   &__main-menu {
+    display: flex;
+    overflow-y: hidden;
+    flex-direction: row;
+    white-space: nowrap;
     max-width: 295px;
     max-height: 200px;
+  }
+
+  &__main-menu-image {
+    object-fit: contain;
+    max-width: 295px;
+    height: 200px;
+  }
+
+  &__delete-img-button {
+    position: relative;
+    right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7941e;
+    border-radius: 50%;
+    height: 24px;
+
+    svg {
+      width: 24px;
+      height: 10px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   &__text {

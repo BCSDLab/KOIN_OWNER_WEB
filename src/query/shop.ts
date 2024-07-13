@@ -4,14 +4,18 @@ import {
 import {
   getMyShopList, getShopInfo, getMenuInfoList, addMenu, getShopEventList,
 } from 'api/shop';
+import { isKoinError } from '@bcsdlab/koin';
+import showToast from 'utils/ts/showToast';
 import useAddMenuStore from 'store/addMenu';
 import { NewMenu } from 'model/shopInfo/newMenu';
+import { useNavigate } from 'react-router-dom';
 import getShopCategory from 'api/category';
 import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
   let myShopQueryKey = '';
+  const navigate = useNavigate();
   const { data: user } = useSuspenseUser();
   if (user && 'company_number' in user) {
     myShopQueryKey = user.company_number;
@@ -57,6 +61,12 @@ const useMyShop = () => {
     onSuccess: () => {
       resetAddMenuStore();
       queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
+      navigate('/owner');
+    },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        showToast('error', e.message);
+      }
     },
   });
 

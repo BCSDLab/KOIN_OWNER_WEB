@@ -1,13 +1,15 @@
 import { ReactComponent as XClose } from 'assets/svg/shopRegistration/close-x.svg';
-import CustomButton from 'page/Auth/Signup/component/CustomButton';
+import CustomButton from 'page/Auth/Signup/CustomButton';
 import { createPortal } from 'react-dom';
 import cn from 'utils/ts/className';
 import { useEffect } from 'react';
+import useLogger from 'utils/hooks/useLogger';
 import styles from './CustomModal.module.scss';
 
 interface CustomModalProps {
   buttonText?: string;
   title: string;
+  eventTitle?:string;
   modalSize: string;
   hasFooter: boolean;
   isOpen: boolean;
@@ -17,8 +19,9 @@ interface CustomModalProps {
 }
 
 export default function CustomModal({
-  buttonText = '', title, modalSize, hasFooter, isOpen, isOverflowVisible, onCancel, children,
+  buttonText = '', title, eventTitle = '', modalSize, hasFooter, isOpen, isOverflowVisible, onCancel, children,
 }: CustomModalProps) {
+  const logger = useLogger();
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `
@@ -47,7 +50,12 @@ export default function CustomModal({
         <div className={styles[`container__header--${modalSize}`]}>
           <span className={styles.container__title}>{title}</span>
           <XClose
-            onClick={onCancel}
+            onClick={() => {
+              onCancel();
+              if (title === '가게 정보 수정') {
+                logger.actionEventClick({ actionTitle: 'OWNER', title: `${eventTitle}_close`, value: `${title} 닫기` });
+              }
+            }}
             className={styles['container__close-button']}
           />
         </div>
@@ -56,7 +64,11 @@ export default function CustomModal({
         </div>
         {hasFooter && (
           <div className={styles.container__footer}>
-            <CustomButton content={buttonText} buttonSize="large" onClick={onCancel} />
+            <CustomButton
+              content={buttonText}
+              buttonSize="large"
+              onClick={onCancel}
+            />
           </div>
         )}
       </div>

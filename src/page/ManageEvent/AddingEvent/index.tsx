@@ -14,6 +14,7 @@ import { ReactComponent as Picture } from 'assets/svg/common/picture.svg';
 import { ReactComponent as PictureDisalbe } from 'assets/svg/common/picture-disable.svg';
 import { createPortal } from 'react-dom';
 import AlertModal from 'component/common/Modal/alertModal';
+import useLogger from 'utils/hooks/useLogger';
 
 /* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -101,6 +102,7 @@ export default function AddingEvent() {
 
   const { mutate: addEvent, isPending } = useAddEvent(param.id!);
   const navigate = useNavigate();
+  const logger = useLogger();
 
   const changeInput = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
@@ -200,6 +202,7 @@ export default function AddingEvent() {
     };
 
     addEvent(requestData);
+    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event_register', value: '이벤트 추가' });
   };
 
   return (
