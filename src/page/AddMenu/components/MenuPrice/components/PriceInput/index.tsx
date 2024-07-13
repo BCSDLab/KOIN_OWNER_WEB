@@ -1,6 +1,8 @@
 import { OptionPrices } from 'store/addMenu';
 import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
+import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
 import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
+import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './PriceInput.module.scss';
 
 interface PriceInputProps {
@@ -22,6 +24,8 @@ export default function PriceInput({
   deletePriceInput,
   addPriceInput,
 }: PriceInputProps) {
+  const { isMobile } = useMediaQuery();
+
   return (
     <>
       <div className={styles.header}>
@@ -81,7 +85,9 @@ export default function PriceInput({
               className={styles.cancle}
               onClick={() => deletePriceInput(input.id)}
             >
-              <MobileDeleteIcon className={styles.cancel__icon} />
+              {isMobile
+                ? <MobileDeleteIcon className={styles.cancel__icon} />
+                : <DeleteIcon className={styles.cancel__icon} />}
             </button>
           </div>
         ))
