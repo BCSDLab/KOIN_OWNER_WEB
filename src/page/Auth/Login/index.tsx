@@ -72,6 +72,7 @@ export default function Login() {
               type={isBlind ? 'text' : 'password'}
               placeholder={isMobile ? '비밀번호' : '비밀번호 입력'}
               {...register('password')}
+              autoComplete="new-password"
             />
             <button
               type="button"
