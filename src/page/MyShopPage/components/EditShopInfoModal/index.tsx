@@ -65,7 +65,7 @@ export default function EditShopInfoModal({
   } = CheckSameTime();
 
   const {
-    register, control, handleSubmit, setValue, formState: { errors },
+    register, control, handleSubmit, setValue, formState: { errors }, setFocus,
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
     defaultValues: {
@@ -353,6 +353,7 @@ export default function EditShopInfoModal({
                 account_number={account}
                 setValue={setValue}
                 close={() => setIsOpen(false)}
+                setFocus={setFocus}
               />
             )}
             <label htmlFor="description" className={styles['mobile-main-info__label']}>
@@ -623,6 +624,7 @@ export default function EditShopInfoModal({
                 account_number={account}
                 setValue={setValue}
                 close={() => setIsOpen(false)}
+                setFocus={setFocus}
               />
             )}
           </div>

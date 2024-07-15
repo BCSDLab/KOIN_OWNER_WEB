@@ -1,6 +1,7 @@
 import { OwnerShop } from 'model/shopInfo/ownerShop';
-import { UseFormSetValue, UseFormRegister } from 'react-hook-form';
+import { UseFormSetValue, UseFormRegister, UseFormSetFocus } from 'react-hook-form';
 import { bank } from 'utils/constant/bank';
+import { useEffect } from 'react';
 import cn from 'utils/ts/className';
 import showToast from 'utils/ts/showToast';
 import styles from './index.module.scss';
@@ -11,11 +12,12 @@ interface Props {
   setValue: UseFormSetValue<OwnerShop>;
   bankName: string | null;
   account_number: string | null;
+  setFocus: UseFormSetFocus<OwnerShop>;
 }
 
 const NUMBER_REGEX = /^[0-9-]+$/;
 export default function BankList({
-  close, register, setValue, bankName, account_number,
+  close, register, setValue, bankName, account_number, setFocus,
 }: Props) {
   const validation = () => {
     if (account_number && !NUMBER_REGEX.test(account_number)) {
@@ -28,6 +30,12 @@ export default function BankList({
     }
     close();
   };
+
+  useEffect(() => {
+    setFocus('account_number');
+    // eslint-disable-next-line
+  }, []); // 마운트 시 한 번만 포커스
+
   return (
     <div className={styles.overlay} onClick={validation} role="button" aria-hidden>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()} role="button" aria-hidden>
