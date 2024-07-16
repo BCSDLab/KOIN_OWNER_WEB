@@ -9,7 +9,7 @@ import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMobileSidebar from 'component/common/Header/hooks/useMobileSidebar';
 import useUserTypeStore from 'store/useUserTypeStore';
-import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
+import { CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import useSuspenseUser from 'utils/hooks/useSuspenseUser';
 import styles from './MobilePanel.module.scss';
 
@@ -52,7 +52,7 @@ export default function MobilePanel() {
   const { logout } = useLogout();
   const { userType } = useUserTypeStore();
 
-  const targetCategory = userType === 'OWNER' ? CATEGORY_OWNER : CATEGORY_COOP;
+  const targetCategory = userType === 'OWNER' ? CATEGORY_OWNER : [];
 
   const {
     isExpanded: isMobileSidebarExpanded,
@@ -75,7 +75,7 @@ export default function MobilePanel() {
         className={styles['mobile-header']}
       >
         <span className={styles['mobile-header__title']}>
-          {pathname === '/owner' || pathname === '/coop' ? (
+          {pathname === '/owner' ? (
             <MobileLogoIcon title="코인 로고" />
           ) : (targetCategory
             .flatMap((categoryValue) => categoryValue.submenu)

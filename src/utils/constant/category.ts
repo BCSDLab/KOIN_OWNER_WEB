@@ -57,19 +57,3 @@ export const CATEGORY_OWNER: HeaderCategory[] = [
     ],
   },
 ];
-
-export const CATEGORY_COOP: HeaderCategory[] = [
-  {
-    title: '식단관리',
-    planFlag: true,
-    submenu: [
-      {
-        title: '식단정보',
-        link: '/coop',
-        newFlag: true,
-        planFlag: true,
-        tag: null,
-      },
-    ],
-  },
-];
