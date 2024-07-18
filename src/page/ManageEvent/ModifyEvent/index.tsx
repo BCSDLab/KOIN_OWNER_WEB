@@ -5,7 +5,7 @@ import {
 } from 'page/ManageEvent/AddingEvent/index';
 import AlertModal from 'component/common/Modal/alertModal';
 import showToast from 'utils/ts/showToast';
-import { getCoopUrl } from 'api/uploadFile';
+import { getOwnerUrl } from 'api/uploadFile';
 import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
 import cn from 'utils/ts/className';
 import styles from 'page/ManageEvent/index.module.scss';
@@ -125,7 +125,7 @@ export default function ModifyEvent() {
       }
 
       for (let i = 0; i < file.length; i += 1) {
-        getCoopUrl({
+        getOwnerUrl({
           content_length: file[i].size,
           content_type: file[i].type,
           file_name: file[i].name,
