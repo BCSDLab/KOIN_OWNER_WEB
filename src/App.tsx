@@ -2,7 +2,6 @@ import {
   Routes, Route, Navigate, Outlet,
 } from 'react-router-dom';
 import OwnerLayout from 'layout/OwnerLayout';
-import CoopLayout from 'layout/CoopLayout';
 import Login from 'page/Auth/Login';
 import Signup from 'page/Auth/Signup';
 import AuthLayout from 'layout/AuthLayout';
@@ -14,7 +13,6 @@ import ModifyMenu from 'page/ModifyMenu';
 import { Suspense } from 'react';
 import Toast from 'component/common/Toast';
 import { UserType } from 'model/auth';
-import Coop from 'page/Coop';
 import useUserTypeStore from 'store/useUserTypeStore';
 import AddingEvent from 'page/ManageEvent/AddingEvent';
 import ModifyEvent from 'page/ManageEvent/ModifyEvent';
@@ -33,9 +31,6 @@ function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
   if (userType !== userTypeRequired) {
     if (userType === 'OWNER') {
       return <Navigate to="/owner" replace />;
-    }
-    if (userType === 'COOP') {
-      return <Navigate to="/coop" replace />;
     }
     if (userType === null) {
       return <Navigate to="/login" replace />;
@@ -62,11 +57,6 @@ function App() {
             <Route path="/owner/sales-management" element={<PageNotFound />} />
             <Route path="/owner/event-add/:id" element={<AddingEvent />} />
             <Route path="/owner/event-modify/:id" element={<ModifyEvent />} />
-          </Route>
-        </Route>
-        <Route element={<ProtectedRoute userTypeRequired="COOP" />}>
-          <Route path="/coop" element={<CoopLayout />}>
-            <Route path="/coop" element={<Coop />} />
           </Route>
         </Route>
 

@@ -56,15 +56,12 @@ export type OwnerResponse = z.infer<typeof OwnerResponse>;
 export const User = z.nullable(OwnerResponse);
 
 export const UserTypeResponse = z.object({
-  user_type: z.union([
-    z.literal('OWNER'),
-    z.literal('COOP'),
-  ]),
+  user_type: z.literal('OWNER'),
 });
 
 export type UserTypeResponse = z.infer<typeof UserTypeResponse>;
 
-export type UserType = 'OWNER' | 'COOP' | null;
+export type UserType = 'OWNER' | null;
 
 export type User = z.infer<typeof User>;
 
