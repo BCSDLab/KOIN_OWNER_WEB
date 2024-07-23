@@ -38,14 +38,17 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginParams> = async (data) => {
     if (data.account === '') {
       setLoginError('전화번호를 입력해주세요.');
+      setIsFormError(true);
       return;
     }
     if (data.password === '') {
       setLoginError('비밀번호를 입력해주세요.');
+      setIsFormError(true);
       return;
     }
     if (!/^[0-9]*$/.test(data.account)) {
       setLoginError('올바른 전화번호 형식이 아닙니다.');
+      setIsFormError(true);
       return;
     }
     const hashedPassword = await sha256(data.password);
