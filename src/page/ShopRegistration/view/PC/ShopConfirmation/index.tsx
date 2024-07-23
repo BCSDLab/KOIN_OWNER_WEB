@@ -2,7 +2,6 @@ import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
 import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
 import Copyright from 'component/common/Copyright';
 import Category from 'page/ShopRegistration/component/Modal/Category';
-import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
 import ConfirmPopup from 'page/ShopRegistration/component/ConfirmPopup';
 import CustomModal from 'component/common/CustomModal';
@@ -35,11 +34,6 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     value: showOperateTime,
     setTrue: openOperateTime,
     setFalse: closeOperateTime,
-  } = useBooleanState(false);
-  const {
-    value: showSearchShop,
-    setTrue: openSearchShop,
-    setFalse: closeSearchShop,
   } = useBooleanState(false);
   const {
     value: showConfirmPopup,
@@ -204,24 +198,13 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
             <div className={styles.form__section}>
               <input
                 type="text"
-                className={styles.form__input}
+                className={styles['form__input-large']}
                 value={name}
                 {...register('name', { required: true })}
               />
-              <CustomButton content="가게검색" buttonSize="small" onClick={openSearchShop} />
             </div>
             {isError && name === '' && <ErrorMessage message={ERRORMESSAGE.name} />}
           </div>
-          <CustomModal
-            title="가게검색"
-            modalSize="large"
-            hasFooter={false}
-            isOverflowVisible={false}
-            isOpen={showSearchShop}
-            onCancel={closeSearchShop}
-          >
-            <SearchShop open={showSearchShop} onCancel={closeSearchShop} />
-          </CustomModal>
           <div>
             <span className={styles.form__title}>주소정보</span>
             <div className={styles.form__section}>
