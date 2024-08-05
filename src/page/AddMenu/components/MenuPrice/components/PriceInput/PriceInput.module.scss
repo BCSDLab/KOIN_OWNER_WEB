@@ -70,6 +70,7 @@
       height: 35px;
       border: 0.5px solid #898a8d;
       padding: 8px;
+      font-size: 14px;
       box-sizing: border-box;
     }
 
@@ -167,6 +168,7 @@
   width: 24px;
   height: 24px;
   background-color: white;
+  cursor: pointer;
 
   @include media.media-breakpoint-down(mobile) {
     width: auto;
@@ -230,4 +232,11 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.price-info-input-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 7px;
 }

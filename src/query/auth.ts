@@ -56,7 +56,7 @@ export const useLogin = () => {
         sessionStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         if (err.status === 400) {
-          setLoginError('아이디 혹은 비밀번호가 일치하지 않습니다.');
+          setLoginError(err.message);
           return;
         }
         if (err.status === 403) {
@@ -65,7 +65,7 @@ export const useLogin = () => {
           return;
         }
         if (err.status === 404) {
-          setLoginError('가입되지 않은 이메일입니다.');
+          setLoginError('가입되지 않은 전화번호입니다.');
           return;
         }
         if (err.status === 500) {

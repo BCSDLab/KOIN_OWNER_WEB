@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import {
+  Dispatch, SetStateAction, useEffect, useState,
+} from 'react';
 import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
@@ -23,6 +25,7 @@ import showToast from 'utils/ts/showToast';
 import cn from 'utils/ts/className';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import ErrorMessage from 'component/common/ErrorMessage';
+import BankList from 'page/MyShopPage/components/BankList';
 import useLogger from 'utils/hooks/useLogger';
 import styles from './EditShopInfoModal.module.scss';
 
@@ -62,7 +65,7 @@ export default function EditShopInfoModal({
   } = CheckSameTime();
 
   const {
-    register, control, handleSubmit, setValue, formState: { errors },
+    register, control, handleSubmit, setValue, formState: { errors }, setFocus,
   } = useForm<OwnerShop>({
     resolver: zodResolver(OwnerShop),
     defaultValues: {
@@ -77,6 +80,9 @@ export default function EditShopInfoModal({
     },
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+  const openBankList = () => setIsOpen(true);
+
   const imageUrls = useWatch({ control, name: 'image_urls' });
   const name = useWatch({ control, name: 'name' });
   const categoryId = useWatch({ control, name: 'category_ids' });
@@ -87,6 +93,8 @@ export default function EditShopInfoModal({
   const delivery = useWatch({ control, name: 'delivery' });
   const payCard = useWatch({ control, name: 'pay_card' });
   const payBank = useWatch({ control, name: 'pay_bank' });
+  const bank = useWatch({ control, name: 'bank' });
+  const account = useWatch({ control, name: 'account_number' });
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('category_ids', [Number(e.target.value), 0]);
@@ -96,13 +104,13 @@ export default function EditShopInfoModal({
     setImageFile(imageFile.filter((img) => img !== image));
   };
 
-  const formatPhoneNumber = (inputNumber:string) => {
+  const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
     const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
     return formattedPhoneNumber;
   };
 
-  const handlePhoneChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const formattingPhoneNumber = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhoneNumber(event.target.value);
     setValue('phone', formattedValue);
   };
@@ -113,8 +121,8 @@ export default function EditShopInfoModal({
     } else if (imageFile.length !== imageUrls.length) {
       setImageFile(imageUrls);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageFile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageFile]); // imageFile만 추적함
 
   const mutation = useMutation({
     mutationFn: (form: OwnerShop) => putShop(shopInfo.id, form),
@@ -189,38 +197,37 @@ export default function EditShopInfoModal({
     <div>
       {isMobile ? (
         <form className={styles['mobile-container']} onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles['mobile-container__image-content']}>
+          <div className={styles['container__modify-main-image']}>
             {imageUrls.map((image, index) => (
-              <div className={styles['mobile-container__image']}>
-                <img key={image} src={image} alt={`Selected ${index + 1}`} />
+              <div className={styles['main-image']} key={image}>
+                <img src={image} alt={`Selected ${index + 1}`} className={styles['main-image__image']} />
                 <button
                   type="button"
                   onClick={() => handleDeleteImage(image)}
-                  className={styles['mobile-container__delete-button']}
-                  aria-label="Delete image"
+                  className={styles['main-image__delete-button']}
                 >
-                  <DeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                  <DeleteImgIcon />
                 </button>
               </div>
             ))}
-          </div>
-          <div className={styles['mobile-container__add-button']}>
-            <label htmlFor="mainMenuImage">
-              <input
-                type="file"
-                accept="image/*"
-                id="mainMenuImage"
-                multiple
-                className={styles['mobile-container__add-file']}
-                {...register('image_urls')}
-                onChange={() => {
-                  saveImgFile();
-                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
-                }}
-                ref={imgRef}
-              />
-              <span className={styles['mobile-container__modify-image-caption']}>사진변경</span>
-            </label>
+            {imageUrls.length < 3 && (
+              <label className={styles['main-image__add-button']} htmlFor="mainMenuImage">
+                <input
+                  type="file"
+                  accept="image/*"
+                  id="mainMenuImage"
+                  className={styles['main-image__add-file']}
+                  {...register('image_urls')}
+                  onChange={() => {
+                    saveImgFile();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
+                  }}
+                  ref={imgRef}
+                />
+                <ImgPlusIcon className={styles['main-image__add-image-icon']} />
+                <span className={styles['main-image__add-caption']}>이미지 추가</span>
+              </label>
+            )}
           </div>
           <div className={styles['mobile-main-info']}>
             <label htmlFor="shopName" className={styles['mobile-main-info__label']}>
@@ -255,7 +262,7 @@ export default function EditShopInfoModal({
                 id="phone"
                 value={phone}
                 className={styles['mobile-main-info__input']}
-                {...register('phone', { onChange: handlePhoneChange })}
+                {...register('phone', { onChange: formattingPhoneNumber })}
               />
             </label>
             <div className={styles['mobile-main-info__label']}>
@@ -263,27 +270,27 @@ export default function EditShopInfoModal({
               <div className={styles['mobile-operate-time']}>
                 <div className={styles['mobile-operate-time__content']}>
                   {isAllSameTime && !hasClosedDay && (
-                  <div>
-                    {operateTimeState.time}
-                  </div>
+                    <div>
+                      {operateTimeState.time}
+                    </div>
                   )}
                   {isSpecificDayClosedAndAllSameTime && (
-                  <div>
-                    <div>{operateTimeState.time}</div>
-                    <div>{operateTimeState.holiday}</div>
-                  </div>
+                    <div>
+                      <div>{operateTimeState.time}</div>
+                      <div>{operateTimeState.holiday}</div>
+                    </div>
                   )}
                   {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
-                  <>
-                    {WEEK.map((day) => (
-                      <div key={day}>
-                        {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                      </div>
-                    ))}
-                  </>
+                    <>
+                      {WEEK.map((day) => (
+                        <div key={day}>
+                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                        </div>
+                      ))}
+                    </>
                   )}
                   {isAllClosed && (
-                  <span>매일 휴무</span>
+                    <span>매일 휴무</span>
                   )}
                 </div>
                 <button
@@ -329,6 +336,26 @@ export default function EditShopInfoModal({
             <div className={styles['mobile-main-info__error-message']}>
               {Number.isNaN(deliveryPrice) && <ErrorMessage message={ERRORMESSAGE.invalidPrice} />}
             </div>
+            <label htmlFor="account" className={styles['mobile-main-info__label']}>
+              <span className={styles['mobile-main-info__header']}>계좌번호</span>
+              <input
+                type="text"
+                id="account"
+                className={styles['mobile-main-info__input']}
+                onFocus={openBankList}
+                value={account ? `${bank} ${account}` : '계좌번호를 추가할 수 있습니다'}
+              />
+            </label>
+            {isOpen && (
+              <BankList
+                register={register}
+                bankName={bank}
+                account_number={account}
+                setValue={setValue}
+                close={() => setIsOpen(false)}
+                setFocus={setFocus}
+              />
+            )}
             <label htmlFor="description" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>기타정보</span>
               <input
@@ -458,7 +485,7 @@ export default function EditShopInfoModal({
                 id="phone"
                 value={phone}
                 className={styles['main-info__input']}
-                {...register('phone', { onChange: handlePhoneChange })}
+                {...register('phone', { onChange: formattingPhoneNumber })}
               />
             </label>
             <label htmlFor="deliveryPrice" className={styles['main-info__label']}>
@@ -480,27 +507,27 @@ export default function EditShopInfoModal({
               <div className={styles['main-info__operate-time']}>
                 <div className={styles['main-info__operate-time--content']}>
                   {isAllSameTime && !hasClosedDay && (
-                  <div>
-                    {operateTimeState.time}
-                  </div>
+                    <div>
+                      {operateTimeState.time}
+                    </div>
                   )}
                   {isSpecificDayClosedAndAllSameTime && (
-                  <div>
-                    <div>{operateTimeState.time}</div>
-                    <div>{operateTimeState.holiday}</div>
-                  </div>
+                    <div>
+                      <div>{operateTimeState.time}</div>
+                      <div>{operateTimeState.holiday}</div>
+                    </div>
                   )}
                   {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
-                  <>
-                    {WEEK.map((day) => (
-                      <div key={day}>
-                        {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                      </div>
-                    ))}
-                  </>
+                    <>
+                      {WEEK.map((day) => (
+                        <div key={day}>
+                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
+                        </div>
+                      ))}
+                    </>
                   )}
                   {isAllClosed && (
-                  <span>매일 휴무</span>
+                    <span>매일 휴무</span>
                   )}
                 </div>
                 <button
@@ -580,6 +607,26 @@ export default function EditShopInfoModal({
                 <span>계좌이체 가능</span>
               </label>
             </div>
+            <label htmlFor="account" className={styles['main-info__label']}>
+              <span className={styles['main-info__header']}>계좌번호</span>
+              <input
+                type="text"
+                id="account"
+                className={styles['main-info__input']}
+                onFocus={openBankList}
+                value={account ? `${bank} ${account}` : '계좌번호를 추가할 수 있습니다'}
+              />
+            </label>
+            {isOpen && (
+              <BankList
+                register={register}
+                bankName={bank}
+                account_number={account}
+                setValue={setValue}
+                close={() => setIsOpen(false)}
+                setFocus={setFocus}
+              />
+            )}
           </div>
           <div className={styles.container__buttons}>
             <button

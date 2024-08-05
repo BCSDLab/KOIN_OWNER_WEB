@@ -1,7 +1,8 @@
 @use "src/utils/styles/mediaQuery" as media;
 
 .default-info {
-  width: 100%;
+  width: 98%;
+  margin-left: 1%;
   margin-top: 25px;
   display: flex;
   flex-direction: column;
@@ -59,10 +60,18 @@
   }
 }
 
+.verification-code__input {
+  width: 66.67% !important;
+}
+
 .verification-code__button {
   &--active {
     background-color: #175c8e !important;
     color: white !important;
+  }
+
+  &--error {
+    background-color: #f7941e !important;
   }
 }
 

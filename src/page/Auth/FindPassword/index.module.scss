@@ -26,16 +26,17 @@
   height: 50px;
   padding: 2px 10px;
   box-sizing: border-box;
+  width: 55%;
+}
 
-  &--verify {
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    border: none;
-    height: 50px;
-    padding: 2px 10px;
-    box-sizing: border-box;
-    width: 55%;
-  }
+.password-input {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: none;
+  height: 50px;
+  padding: 2px 10px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .button {
@@ -43,6 +44,7 @@
   border-radius: 4px;
   height: 50px;
   width: 40%;
+  cursor: pointer;
 
   &--active {
     background-color: #175c8e;

@@ -1,16 +1,13 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getOwnerInfo } from 'api/auth';
-import { getCoopInfo } from 'api/coop';
 import { OwnerResponse } from 'model/auth';
-import { CoopResponse } from 'model/Coop';
 import { userKeys } from 'query/KeyFactory/userKeys';
 import useUserTypeStore from 'store/useUserTypeStore';
 
-type UserResponse = OwnerResponse | CoopResponse | null;
+type UserResponse = OwnerResponse | null;
 
 const userQuries = {
   OWNER: getOwnerInfo,
-  COOP: getCoopInfo,
 };
 
 export default function useSuspenseUser() {
