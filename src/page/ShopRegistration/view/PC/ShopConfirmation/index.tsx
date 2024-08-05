@@ -81,9 +81,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
 
   const handleNextClick = async () => {
     const isValid = await trigger(['image_urls', 'name', 'phone', 'address']);
-    console.log('isValid:', isValid); // 유효성 검사 결과 확인
     if (isValid) {
-      console.log('Calling openConfirmPopup'); // openConfirmPopup 호출 여부 확인
       openConfirmPopup();
     }
   };
@@ -188,7 +186,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
             <div className={styles.form__section}>
               <input
                 type="text"
-                className={styles.form__input}
+                className={styles['form__input-large']}
                 {...register('name', { required: true })}
               />
             </div>
