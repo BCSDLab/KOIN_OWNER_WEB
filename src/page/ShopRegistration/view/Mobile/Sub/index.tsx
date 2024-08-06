@@ -7,7 +7,7 @@ import useModalStore from 'store/modalStore';
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import styles from './Sub.module.scss';
@@ -30,15 +30,8 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
   const { shopClosedState } = useModalStore();
 
   const {
-    register, control, trigger, setValue, formState: { errors },
+    register, trigger, setValue, formState: { errors },
   } = useFormContext<OwnerShop>();
-
-  const phone = useWatch({ control, name: 'phone' });
-  const deliveryPrice = useWatch({ control, name: 'delivery_price' });
-  const description = useWatch({ control, name: 'description' });
-  const delivery = useWatch({ control, name: 'delivery' });
-  const payBank = useWatch({ control, name: 'pay_bank' });
-  const payCard = useWatch({ control, name: 'pay_card' });
 
   useStoreTimeSetUp({ setValue });
 
@@ -81,7 +74,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           type="text"
           inputMode="numeric"
           id="phone"
-          value={phone}
           className={styles.form__input}
           {...register('phone', {
             required: true,
@@ -105,7 +97,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           type="number"
           inputMode="numeric"
           id="deliveryPrice"
-          value={deliveryPrice}
           className={styles.form__input}
           {...register('delivery_price')}
           onWheel={(e) => (e.target as HTMLElement).blur()} // 마우스 스크롤로 숫자 변경 방지
@@ -161,7 +152,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           type="text"
           id="extra-info"
           className={styles.form__input}
-          value={description}
           {...register('description')}
         />
       </label>
@@ -171,7 +161,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
             type="checkbox"
             id="delivery"
             className={styles['form__checkbox-input']}
-            checked={delivery}
             {...register('delivery')}
           />
           <span>배달 가능</span>
@@ -181,7 +170,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
             type="checkbox"
             id="card"
             className={styles['form__checkbox-input']}
-            checked={payCard}
             {...register('pay_card')}
           />
           <span>카드 가능</span>
@@ -191,7 +179,6 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
             type="checkbox"
             id="bank"
             className={styles['form__checkbox-input']}
-            checked={payBank}
             {...register('pay_bank')}
           />
           <span>계좌이체 가능</span>

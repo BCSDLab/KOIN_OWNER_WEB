@@ -2,7 +2,7 @@ import Copyright from 'component/common/Copyright';
 import Complete from 'component/Auth/Complete';
 import { FormProvider, useForm } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
-import { useFunnel } from 'utils/hooks/useFunnel';
+import useStepStore from 'store/useStepStore';
 import styles from './ShopRegistrationPC.module.scss';
 import ShopEntry from './ShopEntry';
 import ShopConfirmation from './ShopConfirmation';
@@ -48,24 +48,18 @@ export default function ShopRegistrationPC() {
     },
   });
 
-  const { Funnel, Step, setStep } = useFunnel('가게 등록');
+  const { step, setStep } = useStepStore();
 
   return (
     <FormProvider {...methods}>
-      <Funnel>
-        <Step name="가게 등록">
-          <ShopEntry onNext={() => setStep('가게 정보 입력')} />
-        </Step>
-        <Step name="가게 정보 입력">
-          <ShopConfirmation onNext={() => setStep('가게 등록 완료')} />
-        </Step>
-        <Step name="가게 등록 완료">
-          <div className={styles.wrapper}>
-            <Complete title="가게 정보 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/login" linkText="메인화면으로 바로가기" />
-            <Copyright />
-          </div>
-        </Step>
-      </Funnel>
+      {step === 0 && <ShopEntry onNext={() => setStep(1)} />}
+      {step === 1 && <ShopConfirmation onNext={() => setStep(2)} />}
+      {step === 2 && (
+      <div className={styles.wrapper}>
+        <Complete title="가게 정보 등록 완료" topText="가게 등록이 완료되었습니다." bottomText="업체 정보 수정은 내 상점에서 가능합니다." link="/login" linkText="메인화면으로 바로가기" />
+        <Copyright />
+      </div>
+      )}
     </FormProvider>
   );
 }
