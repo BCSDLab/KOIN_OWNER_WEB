@@ -7,6 +7,7 @@ import useAddMenuStore from 'store/addMenu';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useLogger from 'utils/hooks/useLogger';
+import ROUTES from 'static/routes';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import MenuPrice from './components/MenuPrice';
@@ -69,7 +70,7 @@ export default function AddMenu() {
     if (isComplete) {
       toggleConfirmClick();
     } else {
-      navigate('/owner');
+      navigate(ROUTES.OWNER);
       logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_cancel', value: '메뉴 추가 취소' });
     }
   };

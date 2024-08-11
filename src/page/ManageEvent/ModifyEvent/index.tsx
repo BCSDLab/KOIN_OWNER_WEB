@@ -15,6 +15,7 @@ import { ReactComponent as Cancel } from 'assets/svg/common/cancel.svg';
 import { ReactComponent as Picture } from 'assets/svg/common/picture.svg';
 import { ReactComponent as PictureDisalbe } from 'assets/svg/common/picture-disable.svg';
 import { createPortal } from 'react-dom';
+import ROUTES from 'static/routes';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
@@ -349,7 +350,7 @@ export default function ModifyEvent() {
           setIsOpen={setIsAlertModalOpen}
           cancelText="이어쓰기"
           acceptText="취소하기"
-          callBack={() => navigate('/')}
+          callBack={() => navigate(ROUTES.MAIN)}
         />,
         document.body,
       )}

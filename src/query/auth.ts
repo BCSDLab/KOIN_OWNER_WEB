@@ -1,20 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import {
-  loginByPhone, postLogout, findPasswordVerify, findPassword, newPassword,
-} from 'api/auth';
-import axios, { AxiosError } from 'axios';
+import { loginByPhone, postLogout } from 'api/auth';
 import { LoginForm } from 'model/auth';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useErrorMessageStore } from 'store/errorMessageStore';
 import useUserTypeStore from 'store/useUserTypeStore';
 import useUserStore from 'store/user';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
-
-interface VerifyInput {
-  email: string;
-  verify: string;
-}
 
 export interface ErrorResponse {
   response: undefined | {
@@ -113,61 +103,4 @@ export const useLogout = () => {
   });
 
   return { logout: mutate, error, isError };
-};
-
-export const useVerifyEmail = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const { mutate, isPending, isSuccess } = useMutation({
-    mutationFn: (emailInput: string) => findPasswordVerify({ email: emailInput }),
-    onError: (error: AxiosError<ErrorResponse>) => {
-      if (axios.isAxiosError(error)) {
-        setErrorMessage(error.response?.data.message || error.message);
-      }
-    },
-  });
-  return {
-    verifyEmail: {
-      mutate, isPending, isSuccess, errorMessage,
-    },
-  };
-};
-
-export const useSubmit = () => {
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
-  const { mutate: submit, isSuccess, isError } = useMutation({
-    mutationFn: ({
-      email,
-      verify,
-    }: VerifyInput) => findPassword({ address: email, certificationCode: verify }),
-    onSuccess: () => {
-      navigate('/new-password', { state: { 'find-password': true }, replace: true });
-    },
-    onError: (error: ErrorResponse) => {
-      setErrorMessage(error.response?.data?.message || error.message);
-      if (axios.isAxiosError(error)) {
-        setErrorMessage(error.response?.data?.violations[0] || error.response?.data.message);
-      }
-    },
-  });
-  return {
-    authNumber: {
-      submit, isSuccess, isError, errorMessage,
-    },
-  };
-};
-
-export const useNewPassword = () => {
-  const navigate = useNavigate();
-  const { mutate: submit } = useMutation({
-    mutationFn: ({ email, password }: { email: string, password: string }) => newPassword(
-      { address: email, password },
-    ),
-    onSuccess: () => {
-      navigate('/complete-change-password', { state: { 'new-password': true }, replace: true });
-    },
-    onError: () => {
-    },
-  });
-  return submit;
 };

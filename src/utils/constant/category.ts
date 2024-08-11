@@ -1,3 +1,5 @@
+import ROUTES from 'static/routes';
+
 export interface SubMenu {
   title: string;
   link: string;
@@ -21,14 +23,14 @@ export const CATEGORY_OWNER: HeaderCategory[] = [
     submenu: [
       {
         title: '가게정보',
-        link: '/owner',
+        link: ROUTES.OWNER,
         newFlag: true,
         planFlag: true,
         tag: null,
       },
       {
         title: '가게추가',
-        link: '/owner/shop-registration',
+        link: ROUTES.OWNER_SHOPREGISTRATION,
         newFlag: true,
         planFlag: true,
         tag: null,

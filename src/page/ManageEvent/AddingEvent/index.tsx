@@ -15,6 +15,7 @@ import { ReactComponent as PictureDisalbe } from 'assets/svg/common/picture-disa
 import { createPortal } from 'react-dom';
 import AlertModal from 'component/common/Modal/alertModal';
 import useLogger from 'utils/hooks/useLogger';
+import ROUTES from 'static/routes';
 
 /* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -419,7 +420,7 @@ export default function AddingEvent() {
           setIsOpen={setIsAlertModalOpen}
           cancelText="이어쓰기"
           acceptText="취소하기"
-          callBack={() => navigate('/')}
+          callBack={() => navigate(ROUTES.MAIN)}
         />,
         document.body,
       )}

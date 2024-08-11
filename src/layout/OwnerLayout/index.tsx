@@ -2,6 +2,7 @@ import ErrorBoundary from 'component/common/ErrorBoundary';
 import Header from 'component/common/Header';
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import usePrevPathStore from 'store/path';
 import useUserStore from 'store/user';
 import useErrorBoundary from 'utils/hooks/useErrorBoundary';
@@ -18,8 +19,8 @@ export default function OwnerLayout() {
       setUser()
         .catch(handleErrorBoundary)
         .catch(() => {
-          setPrevPath('/owner/shop-registration');
-          navigate('/owner/shop-registration');
+          setPrevPath(ROUTES.OWNER_SHOPREGISTRATION);
+          navigate(ROUTES.OWNER_SHOPREGISTRATION);
         });
     }
   }, [handleErrorBoundary, setUser, setPrevPath, navigate, user]);
@@ -28,7 +29,7 @@ export default function OwnerLayout() {
     <div>
       {user && (
         <>
-          {location.pathname !== '/owner/shop-registration' && <Header />}
+          {location.pathname !== ROUTES.OWNER_SHOPREGISTRATION && <Header />}
           <ErrorBoundary message="에러가 발생했습니다.">
             <Outlet />
           </ErrorBoundary>

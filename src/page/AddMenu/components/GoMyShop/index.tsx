@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import styles from './GoMyShopModal.module.scss';
 
 interface CheckModalProps {
@@ -30,7 +31,7 @@ export default function GoMyShopModal({
       >
         <span className={styles['content__main-text']}>{mainMessage}</span>
         <span className={styles['content__sub-text']}>{subMessage}</span>
-        <Link to="/">
+        <Link to={ROUTES.MAIN}>
           <button
             type="button"
             className={styles['content__goMyShop-button']}

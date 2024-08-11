@@ -11,6 +11,7 @@ import { NewMenu } from 'model/shopInfo/newMenu';
 import { useNavigate } from 'react-router-dom';
 import getShopCategory from 'api/category';
 import useSuspenseUser from 'utils/hooks/useSuspenseUser';
+import ROUTES from 'static/routes';
 import { shopKeys } from './KeyFactory/shopKeys';
 
 const useMyShop = () => {
@@ -61,7 +62,7 @@ const useMyShop = () => {
     onSuccess: () => {
       resetAddMenuStore();
       queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
-      navigate('/owner');
+      navigate(ROUTES.OWNER);
     },
     onError: (e) => {
       if (isKoinError(e)) {

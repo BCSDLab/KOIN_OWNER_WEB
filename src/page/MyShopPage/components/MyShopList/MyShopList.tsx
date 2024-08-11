@@ -3,6 +3,7 @@ import CustomModal from 'component/common/CustomModal';
 import useMyShop from 'query/shop';
 import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import styles from './MyShopList.module.scss';
 
 const useSelectMyShop = () => {
@@ -13,7 +14,7 @@ const useSelectMyShop = () => {
   const selectShop = (myShopId: number) => {
     queryClient.invalidateQueries({ queryKey: ['myShop', myShopId] });
     localStorage.setItem('myShopId', String(myShopId));
-    navigate('/');
+    navigate(ROUTES.MAIN);
   };
 
   return { myShop, selectShop };

@@ -15,6 +15,7 @@ import GoMyShopModal from 'page/AddMenu/components/GoMyShop';
 import MobileDivide from 'page/AddMenu/components/MobileDivide';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useFormValidation from 'page/AddMenu/hook/useFormValidation';
+import ROUTES from 'static/routes';
 
 export default function ModifyMenu() {
   useScrollToTop();
@@ -26,22 +27,22 @@ export default function ModifyMenu() {
       setIsComplete((prevState) => !prevState);
     }
   };
-  const { menuId } = useParams();
+  const { id } = useParams();
 
-  assert(menuId != null, 'menuId가 없습니다.');
+  assert(id != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
-  const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(menuId));
+  const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(id));
   useEffect(() => {
     refetch();
   }, [refetch]);
   const goMyShop = () => {
-    navigate('/owner');
+    navigate(ROUTES.OWNER);
   };
 
   const { deleteMenuMutation } = useDeleteMenu();
 
   const handleMobileDeleteMenu = () => {
-    deleteMenuMutation(Number(menuId));
+    deleteMenuMutation(Number(id));
     goMyShop();
   };
 
@@ -116,7 +117,7 @@ export default function ModifyMenu() {
   };
 
   const handleDeleteMenu = () => {
-    deleteMenuMutation(Number(menuId));
+    deleteMenuMutation(Number(id));
     openGoMyShopModal();
   };
 
