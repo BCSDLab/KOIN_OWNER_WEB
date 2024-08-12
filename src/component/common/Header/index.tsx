@@ -11,9 +11,9 @@ function Header() {
   const { pathname } = useLocation();
   const { isMobile } = useMediaQuery();
 
-  if ((pathname === ROUTES.OWNER_ADDMENU
-    || pathname.startsWith(ROUTES.OWNER_MODIFYMENU)
-    || pathname.startsWith(ROUTES.OWNER_EVENT))
+  if ((pathname === ROUTES.OwnerAddMenu
+    || pathname.startsWith(ROUTES.OwnerModifyMenu.path)
+    || pathname.startsWith(ROUTES.OwnerEvent.path))
     && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
@@ -26,9 +26,9 @@ function Header() {
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
         <div className={styles['add-menu-header__caption']}>
-          {pathname === ROUTES.OWNER_ADDMENU && '메뉴추가'}
-          {pathname.startsWith(ROUTES.OWNER_MODIFYMENU) && '메뉴수정'}
-          {pathname.startsWith(ROUTES.OWNER_EVENT) && '이벤트/공지 작성하기'}
+          {pathname === ROUTES.OwnerAddMenu && '메뉴추가'}
+          {pathname.startsWith(ROUTES.OwnerModifyMenu.path) && '메뉴수정'}
+          {pathname.startsWith(ROUTES.OwnerEvent.path) && '이벤트/공지 작성하기'}
         </div>
       </header>
     );

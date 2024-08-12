@@ -36,7 +36,7 @@ export default function ModifyMenu() {
     refetch();
   }, [refetch]);
   const goMyShop = () => {
-    navigate(ROUTES.OWNER);
+    navigate(ROUTES.Owner);
   };
 
   const { deleteMenuMutation } = useDeleteMenu();

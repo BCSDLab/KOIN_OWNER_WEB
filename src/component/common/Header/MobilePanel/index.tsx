@@ -64,8 +64,8 @@ export default function MobilePanel() {
   const handleLogout = () => {
     logout(undefined, {
       onSettled: () => {
-        setPrevPath(ROUTES.LOGIN);
-        navigate(ROUTES.LOGIN);
+        setPrevPath(ROUTES.Login);
+        navigate(ROUTES.Login);
       },
     });
   };
@@ -76,7 +76,7 @@ export default function MobilePanel() {
         className={styles['mobile-header']}
       >
         <span className={styles['mobile-header__title']}>
-          {pathname === ROUTES.OWNER ? (
+          {pathname === ROUTES.Owner ? (
             <MobileLogoIcon title="코인 로고" />
           ) : (targetCategory
             .flatMap((categoryValue) => categoryValue.submenu)
@@ -120,7 +120,7 @@ export default function MobilePanel() {
               </div>
               <ul className={styles['mobile-header__auth-menu']}>
                 <li className={styles['mobile-header__my-info']}>
-                  <Link to={ROUTES.OWNER_MODIFYINFO}>
+                  <Link to={ROUTES.OwnerModifyInfo}>
                     내 정보
                   </Link>
                 </li>

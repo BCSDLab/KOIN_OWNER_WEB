@@ -23,7 +23,7 @@ export default function Complete() {
           가입 허가가 승인되면 로그인이 가능합니다.
         </span>
       </div>
-      <Link to={ROUTES.LOGIN} className={styles['link-button']} onClick={initialize}>로그인 화면 바로가기</Link>
+      <Link to={ROUTES.Login} className={styles['link-button']} onClick={initialize}>로그인 화면 바로가기</Link>
     </div>
   );
 }

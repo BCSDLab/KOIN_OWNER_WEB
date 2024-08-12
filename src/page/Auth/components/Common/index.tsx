@@ -94,7 +94,7 @@ export default function CommonLayout() {
   const progressPercentage = (index + 1) / totalStep * 100;
 
   const stepCheck = async () => {
-    if (isComplete) navigate(ROUTES.LOGIN);
+    if (isComplete) navigate(ROUTES.Login);
     if (!errors.root) {
       if (index + 1 === totalStep && isFindPassword) {
         setNewPassword(getValues('phone_number'), getValues('password'), setError);

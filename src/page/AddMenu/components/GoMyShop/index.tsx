@@ -31,7 +31,7 @@ export default function GoMyShopModal({
       >
         <span className={styles['content__main-text']}>{mainMessage}</span>
         <span className={styles['content__sub-text']}>{subMessage}</span>
-        <Link to={ROUTES.MAIN}>
+        <Link to={ROUTES.Main}>
           <button
             type="button"
             className={styles['content__goMyShop-button']}

@@ -95,8 +95,8 @@ export default function PCPanel() {
   const handleLogout = () => {
     logout(undefined, {
       onSettled: () => {
-        setPrevPath(ROUTES.LOGIN);
-        navigate(ROUTES.LOGIN);
+        setPrevPath(ROUTES.Login);
+        navigate(ROUTES.Login);
       },
     });
   };
@@ -105,7 +105,7 @@ export default function PCPanel() {
     <>
       <Link
         className={styles.header__logo}
-        to={ROUTES.MAIN}
+        to={ROUTES.Main}
         tabIndex={0}
       >
         <LogoIcon title="코인 로고" />

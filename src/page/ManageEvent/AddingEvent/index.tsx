@@ -420,7 +420,7 @@ export default function AddingEvent() {
           setIsOpen={setIsAlertModalOpen}
           cancelText="이어쓰기"
           acceptText="취소하기"
-          callBack={() => navigate(ROUTES.MAIN)}
+          callBack={() => navigate(ROUTES.Main)}
         />,
         document.body,
       )}

@@ -74,7 +74,7 @@ export default function EventTable() {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
                     )[0];
-                    navigate(`${ROUTES.OWNER_EVENT_MODIFY.replace(':id', String(selectedEventIds[0]))}`, {
+                    navigate(ROUTES.OwnerEventModify.general(selectedEventIds[0]), {
                       state: {
                         content: selected?.content,
                         event_id: selected?.event_id,
@@ -125,7 +125,7 @@ export default function EventTable() {
               type="button"
               className={styles['manage-event-button']}
               onClick={() => {
-                navigate(`${ROUTES.OWNER_EVENT.replace(':id', String(shopData?.id))}`);
+                navigate(ROUTES.OwnerEvent.general(shopData?.id!));
                 logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
               }}
             >

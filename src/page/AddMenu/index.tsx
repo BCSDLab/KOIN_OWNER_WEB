@@ -70,7 +70,7 @@ export default function AddMenu() {
     if (isComplete) {
       toggleConfirmClick();
     } else {
-      navigate(ROUTES.OWNER);
+      navigate(ROUTES.Owner);
       logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_cancel', value: '메뉴 추가 취소' });
     }
   };

@@ -37,7 +37,7 @@ export default function Done({ isFindPassword }: Props) {
       </div>
       <button
         type="button"
-        onClick={() => navigate(ROUTES.LOGIN)}
+        onClick={() => navigate(ROUTES.Login)}
         className={styles.button}
       >
         {isFindPassword ? '로그인하러 가기' : '로그인 화면 바로가기'}
