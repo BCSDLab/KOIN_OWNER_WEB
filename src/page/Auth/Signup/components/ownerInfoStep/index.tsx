@@ -124,7 +124,7 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
                 message: '가게명을 입력해주세요',
               },
               pattern: {
-                value: /^[가-힣a-zA-Z\s]+$/,
+                value: /^[가-힣a-zA-Z0-9\s\W]+$/,
                 message: '유효한 가게명을 입력해주세요',
               },
             })}
