@@ -6,6 +6,8 @@
   flex-direction: column;
   gap: 10px;
   height: calc(100vh - 45vh);
+  padding: 0 1px;
+  box-sizing: border-box;
 
   @include media.media-breakpoint-down(mobile) {
     height: calc(100vh - 40vh);
