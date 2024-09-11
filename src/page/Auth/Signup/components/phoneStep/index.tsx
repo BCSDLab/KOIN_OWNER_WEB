@@ -157,6 +157,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
               [styles['error-border']]: !!errors.phone_number,
             })}
             placeholder="-없이 번호를 입력해주세요."
+            type="text"
+            inputMode="numeric"
           />
           <button
             type="button"
@@ -197,6 +199,8 @@ export default function PhoneStep({ setIsStepComplete }: PhoneStepProps) {
             })}
             placeholder="인증번호를 입력해주세요."
             maxLength={6}
+            type="text"
+            inputMode="numeric"
           />
           <button
             type="button"
