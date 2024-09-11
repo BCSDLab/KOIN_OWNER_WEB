@@ -117,7 +117,7 @@
     cursor: pointer;
 
     @include media.media-breakpoint-down(mobile) {
-      display: none;
+      top: 0;
     }
   }
 
