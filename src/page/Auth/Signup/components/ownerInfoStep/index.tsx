@@ -141,7 +141,7 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
           <button
             type="button"
             className={styles['search-button']}
-            onClick={onSearch}
+            onClick={() => setTimeout(onSearch, 250)}
           >
             가게 검색
           </button>

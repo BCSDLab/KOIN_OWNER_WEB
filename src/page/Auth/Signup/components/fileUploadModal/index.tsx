@@ -34,6 +34,7 @@ export default function FileUploadModal({ onClose, onUpload }: FileUploadModalPr
           <input
             type="file"
             multiple
+            accept="image/*"
             className={styles['file-input']}
             onChange={handleFileChange}
             style={{ display: 'none' }}

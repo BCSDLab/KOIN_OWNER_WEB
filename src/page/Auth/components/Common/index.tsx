@@ -9,6 +9,7 @@ import { phoneRegisterUser } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
 import sha256 from 'utils/ts/SHA-256';
+import { useDebounce } from 'utils/hooks/useDebounce';
 // eslint-disable-next-line
 import Done from '../Done/index';
 import styles from './index.module.scss';
@@ -118,6 +119,8 @@ export default function CommonLayout() {
     }
   };
 
+  const debounce = useDebounce<null>(stepCheck, null);
+
   const handleSelectComplete = () => {
     setIsSearch(false);
     steps.setIsStepComplete(true);
@@ -165,7 +168,7 @@ export default function CommonLayout() {
           {!isComplete && !isSearch && (
             <button
               type="button"
-              onClick={stepCheck}
+              onClick={debounce}
               disabled={!isStepComplete}
               className={
                 cn({
