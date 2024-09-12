@@ -178,6 +178,10 @@
     width: 328px;
     height: 21px;
     padding: 8px 0 8px 12px;
+    box-sizing: content-box;
+    border: 1px solid #898a8d;
+    background: #fff;
+    text-align: left;
   }
 
   &__select {
@@ -371,6 +375,9 @@
     height: 21px;
     padding: 8px 0 8px 8px;
     border: 1px solid #898a8d;
+    background-color: #fff;
+    box-sizing: content-box;
+    text-align: left;
   }
 
   &__select {

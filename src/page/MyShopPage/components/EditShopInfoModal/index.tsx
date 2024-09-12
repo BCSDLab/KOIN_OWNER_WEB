@@ -339,7 +339,7 @@ export default function EditShopInfoModal({
             <label htmlFor="account" className={styles['mobile-main-info__label']}>
               <span className={styles['mobile-main-info__header']}>계좌번호</span>
               <input
-                type="text"
+                type="button"
                 id="account"
                 className={styles['mobile-main-info__input']}
                 onFocus={openBankList}
@@ -610,10 +610,10 @@ export default function EditShopInfoModal({
             <label htmlFor="account" className={styles['main-info__label']}>
               <span className={styles['main-info__header']}>계좌번호</span>
               <input
-                type="text"
+                type="button"
                 id="account"
                 className={styles['main-info__input']}
-                onFocus={openBankList}
+                onClick={openBankList}
                 value={account ? `${bank} ${account}` : '계좌번호를 추가할 수 있습니다'}
               />
             </label>
