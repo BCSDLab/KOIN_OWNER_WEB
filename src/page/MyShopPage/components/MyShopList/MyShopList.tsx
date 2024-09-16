@@ -14,7 +14,7 @@ const useSelectMyShop = () => {
   const selectShop = (myShopId: number) => {
     queryClient.invalidateQueries({ queryKey: ['myShop', myShopId] });
     localStorage.setItem('myShopId', String(myShopId));
-    navigate(ROUTES.Main);
+    navigate(ROUTES.Main());
   };
 
   return { myShop, selectShop };

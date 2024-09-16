@@ -9,8 +9,6 @@ import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { useStep } from 'page/Auth/hook/useStep';
 import sha256 from 'utils/ts/SHA-256';
 import { useDebounce } from 'utils/hooks/useDebounce';
-// eslint-disable-next-line
-import Done from '../Done/index';
 import ROUTES from 'static/routes';
 import Done from 'page/Auth/components/Done';
 import styles from './index.module.scss';
@@ -97,7 +95,7 @@ export default function CommonLayout() {
   const progressPercentage = (index + 1) / totalStep * 100;
 
   const stepCheck = async () => {
-    if (isComplete) navigate(ROUTES.Login);
+    if (isComplete) navigate(ROUTES.Login());
     if (!errors.root) {
       if (index + 1 === totalStep && isFindPassword) {
         setNewPassword(getValues('phone_number'), getValues('password'), setError);

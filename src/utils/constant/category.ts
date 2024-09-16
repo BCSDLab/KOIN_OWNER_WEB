@@ -23,14 +23,14 @@ export const CATEGORY_OWNER: HeaderCategory[] = [
     submenu: [
       {
         title: '가게정보',
-        link: ROUTES.Owner,
+        link: ROUTES.Owner(),
         newFlag: true,
         planFlag: true,
         tag: null,
       },
       {
         title: '가게추가',
-        link: ROUTES.OwnerShopRegistration,
+        link: ROUTES.OwnerShopRegistration(),
         newFlag: true,
         planFlag: true,
         tag: null,

@@ -130,7 +130,7 @@ export default function Login() {
             로그인
           </button>
           {isMobile && (
-            <button className={styles.form__button} type="button" onClick={() => navigate(ROUTES.Signup)}>
+            <button className={styles.form__button} type="button" onClick={() => navigate(ROUTES.Signup())}>
               회원가입
             </button>
           )}

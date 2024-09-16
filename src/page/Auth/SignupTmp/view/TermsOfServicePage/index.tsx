@@ -4,6 +4,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import TERMS from 'page/Auth/Signup/constant/terms';
 import React, { useEffect, useRef, useState } from 'react';
 
+import ROUTES from 'static/routes';
 import styles from './TermsOfService.module.scss';
 
 type ButtonClickEventProps = {
@@ -87,7 +88,7 @@ export default function TermsOfService({ clickEvent, termsRef }:ButtonClickEvent
       <div className={styles.buttons}>
         {isMobile ? (
           <>
-            <Link to="/login" className={styles['buttons__mobile-button']}>취소</Link>
+            <Link to={ROUTES.Login()} className={styles['buttons__mobile-button']}>취소</Link>
             <CustomButton buttonSize="mobile" content="확인" onClick={clickEvent} disable={!isAllAgree} />
           </>
         )

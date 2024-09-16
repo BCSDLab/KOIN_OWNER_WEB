@@ -16,7 +16,7 @@ export const useAddEvent = (id: string) => {
     mutationFn: (data: EventInfo) => addEvent(id, data),
     onSuccess: () => {
       showToast('success', '이벤트 추가에 성공했습니다.');
-      navigate(ROUTES.Owner);
+      navigate(ROUTES.Owner());
       queryClient.refetchQueries({ queryKey: shopKeys.eventList(Number(id)) });
     },
     onError: (e) => {
@@ -63,7 +63,7 @@ export const useModifyEvent = (shopId: number, eventId: number) => {
     onSuccess: () => {
       showToast('success', '이벤트 수정에 성공했습니다.');
       queryClient.invalidateQueries({ queryKey: shopKeys.eventList(shopId) });
-      navigate(ROUTES.Main);
+      navigate(ROUTES.Main());
     },
     onError: (e) => {
       if (isKoinError(e)) {

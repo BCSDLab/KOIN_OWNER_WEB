@@ -118,7 +118,7 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
                         />
                       </div>
                   )}
-                  <Link to={ROUTES.OwnerModifyMenu.general(menu.id)} className={styles['menu-info__modify']}>
+                  <Link to={ROUTES.OwnerModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                     <div className={styles['menu-info__card']}>
                       <span title={menu.name}>{menu.name}</span>
                       <span>
@@ -152,7 +152,7 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
                           />
                         </div>
                     )}
-                    <Link to={ROUTES.OwnerModifyMenu.general(menu.id)} className={styles['menu-info__modify']}>
+                    <Link to={ROUTES.OwnerModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                       <div className={styles['menu-info__card']}>
                         <span>{`${menu.name} - ${item.option}`}</span>
                         <span>

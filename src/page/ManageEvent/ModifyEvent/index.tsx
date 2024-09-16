@@ -350,7 +350,7 @@ export default function ModifyEvent() {
           setIsOpen={setIsAlertModalOpen}
           cancelText="이어쓰기"
           acceptText="취소하기"
-          callBack={() => navigate(ROUTES.Main)}
+          callBack={() => navigate(ROUTES.Main())}
         />,
         document.body,
       )}
