@@ -6,6 +6,7 @@ import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
+import { toast } from 'react-toastify';
 import styles from './ownerInfoStep.module.scss';
 
 interface OwnerInfo {
@@ -45,6 +46,10 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
       const response = await uploadFiles(formData);
       const { file_urls: fileUrls } = response.data;
       const formattedUrls = fileUrls.map((url: string) => ({ file_url: url }));
+      if (formattedUrls.length + uploadedFiles.length > 5) {
+        toast.error('파일은 최대 5개 등록할 수 있습니다');
+        return;
+      }
       setUploadedFiles((prev) => [...prev, ...formattedUrls]);
       setFileNames((prev) => [...prev, ...names]);
       setValue('attachment_urls', [...uploadedFiles, ...formattedUrls]);
@@ -124,7 +129,8 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
                 message: '가게명을 입력해주세요',
               },
               pattern: {
-                value: /^[가-힣a-zA-Z\s]+$/,
+                // eslint-disable-next-line no-useless-escape
+                value: /^[가-힣a-zA-Z\s\-\.\&]+$/,
                 message: '유효한 가게명을 입력해주세요',
               },
             })}
@@ -135,7 +141,7 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
           <button
             type="button"
             className={styles['search-button']}
-            onClick={onSearch}
+            onClick={() => setTimeout(onSearch, 250)}
           >
             가게 검색
           </button>
@@ -156,6 +162,8 @@ export default function OwnerInfoStep({ onSearch, setIsStepComplete }: OwnerInfo
             },
           })}
           placeholder="숫자만 입력해주세요."
+          type="text"
+          inputMode="numeric"
           onChange={handleCompanyNumberChange}
         />
         {errors.company_number && <span className={styles['error-message']}>{errors.company_number.message}</span>}

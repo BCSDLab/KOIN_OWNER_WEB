@@ -8,17 +8,17 @@ import { CustomAxiosError, KoinError } from 'model/error';
 
 const client = axios.create({
   baseURL: `${API_PATH}`,
-  timeout: 20000,
+  timeout: 50000,
 });
 
 const accessClient = axios.create({
   baseURL: `${API_PATH}`,
-  timeout: 20000,
+  timeout: 50000,
 });
 
 const multipartClient = axios.create({
   baseURL: `${API_PATH}`,
-  timeout: 20000,
+  timeout: 50000,
 });
 
 const refresh = async (config: InternalAxiosRequestConfig) => {

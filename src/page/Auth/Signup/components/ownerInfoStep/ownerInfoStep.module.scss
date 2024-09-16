@@ -6,6 +6,8 @@
   flex-direction: column;
   gap: 10px;
   height: calc(100vh - 45vh);
+  padding: 0 1px;
+  box-sizing: border-box;
 
   @include media.media-breakpoint-down(mobile) {
     height: calc(100vh - 40vh);
@@ -101,6 +103,11 @@
   color: #fff;
   font-size: 13px;
   font-weight: 500;
+  transition: scale 0.25s;
+
+  &:active {
+    scale: 0.95;
+  }
 }
 
 .shop-name,

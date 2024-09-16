@@ -75,6 +75,7 @@ export default function Login() {
                 [styles['form__input--error']]: isError,
               })}
               type="text"
+              inputMode="numeric"
               placeholder={isMobile ? '휴대폰번호' : '휴대폰 번호를 입력하세요'}
               {...register('account')}
             />

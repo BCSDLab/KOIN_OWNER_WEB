@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './fileUploadModal.module.scss';
 
@@ -7,6 +8,7 @@ interface FileUploadModalProps {
 }
 
 export default function FileUploadModal({ onClose, onUpload }: FileUploadModalProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       onUpload(event.target.files);
@@ -32,10 +34,12 @@ export default function FileUploadModal({ onClose, onUpload }: FileUploadModalPr
           <input
             type="file"
             multiple
+            accept="image/*"
             className={styles['file-input']}
             onChange={handleFileChange}
             style={{ display: 'none' }}
             id="file-upload"
+            ref={fileInputRef}
           />
           <button
             type="button"
@@ -47,7 +51,7 @@ export default function FileUploadModal({ onClose, onUpload }: FileUploadModalPr
           <button
             type="button"
             className={styles['upload-button--upload']}
-            onClick={() => document.getElementById('file-upload')?.click()}
+            onClick={() => fileInputRef.current?.click()}
           >
             첨부하기
           </button>

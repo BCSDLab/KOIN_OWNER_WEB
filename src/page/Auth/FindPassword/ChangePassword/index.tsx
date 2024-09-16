@@ -23,7 +23,7 @@ export default function ChangePassword() {
     } else {
       setIsStepComplete(false);
     }
-  });
+  }, [isValid, clearErrors, setIsStepComplete]);
 
   return (
     <form className={styles.container}>

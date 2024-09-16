@@ -90,6 +90,10 @@
   height: calc(80vh - 200px);
   overflow-y: scroll;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   @include media.media-breakpoint-up(mobile) {
     width: 752px;
     gap: calc((752px - 600px - 40px) / 6);
