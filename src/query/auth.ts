@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   loginByPhone, postLogout, findPasswordVerify, findPassword, newPassword,
 } from 'api/auth';
@@ -10,6 +10,7 @@ import { useErrorMessageStore } from 'store/errorMessageStore';
 import useUserTypeStore from 'store/useUserTypeStore';
 import useUserStore from 'store/user';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
+import { shopKeys } from './KeyFactory/shopKeys';
 
 interface VerifyInput {
   email: string;
@@ -86,6 +87,7 @@ export const useLogout = () => {
   const { updateUserType } = useUserTypeStore();
   const { removeUser } = useUserStore();
   const { setLogoutError, setLogoutErrorCode } = useErrorMessageStore();
+  const queryClient = useQueryClient();
 
   const { mutate, error, isError } = useMutation({
     mutationFn: async () => {
@@ -101,6 +103,7 @@ export const useLogout = () => {
       localStorage.removeItem('refresh_token');
       removeUser();
       updateUserType();
+      queryClient.invalidateQueries({ queryKey: shopKeys.all });
     },
     onError: (err) => {
       if (isKoinError(err)) {
