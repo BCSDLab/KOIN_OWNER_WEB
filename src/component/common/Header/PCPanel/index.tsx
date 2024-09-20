@@ -1,6 +1,6 @@
 import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
-import { CATEGORY_COOP, CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
+import { CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import cn from 'utils/ts/className';
 import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
@@ -89,7 +89,7 @@ export default function PCPanel() {
   const { logout } = useLogout();
   const { userType } = useUserTypeStore();
 
-  const targetCategory = userType === 'OWNER' ? CATEGORY_OWNER : CATEGORY_COOP;
+  const targetCategory = userType === 'OWNER' ? CATEGORY_OWNER : [];
 
   const handleLogout = () => {
     logout(undefined, {

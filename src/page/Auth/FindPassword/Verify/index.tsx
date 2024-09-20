@@ -107,6 +107,7 @@ export default function Verify() {
             })}
             maxLength={11}
             type="text"
+            inputMode="numeric"
             placeholder="-없이 번호를 입력해주세요."
           />
           <button
@@ -145,6 +146,7 @@ export default function Verify() {
               },
             })}
             type="text"
+            inputMode="numeric"
             placeholder="인증번호를 입력해주세요."
             maxLength={6}
           />

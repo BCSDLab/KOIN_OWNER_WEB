@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import { useAddEvent } from 'query/event';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FileResponse, getCoopUrl } from 'api/uploadFile';
+import { FileResponse, getOwnerUrl } from 'api/uploadFile';
 import axios from 'axios';
 import showToast from 'utils/ts/showToast';
 import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
@@ -173,7 +173,7 @@ export default function AddingEvent() {
       }
 
       for (let i = 0; i < file.length; i += 1) {
-        getCoopUrl({
+        getOwnerUrl({
           content_length: file[i].size,
           content_type: file[i].type,
           file_name: file[i].name,

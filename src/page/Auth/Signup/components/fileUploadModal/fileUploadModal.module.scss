@@ -56,6 +56,12 @@
     font-weight: 500;
     background-color: white;
     color: #4b4b4b;
+    transition: scale 0.25s;
+    cursor: pointer;
+
+    &:active {
+      scale: 0.95;
+    }
   }
 
   &--upload {
@@ -67,5 +73,11 @@
     font-weight: 500;
     background-color: #175c8e;
     color: white;
+    transition: scale 0.25s;
+    cursor: pointer;
+
+    &:active {
+      scale: 0.95;
+    }
   }
 }
