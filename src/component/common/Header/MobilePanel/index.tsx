@@ -76,7 +76,7 @@ export default function MobilePanel() {
         className={styles['mobile-header']}
       >
         <span className={styles['mobile-header__title']}>
-          {pathname === ROUTES.Owner() ? (
+          {pathname === ROUTES.Owner.Root() ? (
             <MobileLogoIcon title="코인 로고" />
           ) : (targetCategory
             .flatMap((categoryValue) => categoryValue.submenu)
@@ -120,7 +120,7 @@ export default function MobilePanel() {
               </div>
               <ul className={styles['mobile-header__auth-menu']}>
                 <li className={styles['mobile-header__my-info']}>
-                  <Link to={ROUTES.OwnerModifyInfo()}>
+                  <Link to={ROUTES.Owner.ModifyInfo()}>
                     내 정보
                   </Link>
                 </li>

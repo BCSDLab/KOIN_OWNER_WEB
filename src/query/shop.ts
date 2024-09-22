@@ -62,7 +62,7 @@ const useMyShop = () => {
     onSuccess: () => {
       resetAddMenuStore();
       queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
-      navigate(ROUTES.Owner());
+      navigate(ROUTES.Owner.Root());
     },
     onError: (e) => {
       if (isKoinError(e)) {

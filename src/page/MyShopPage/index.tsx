@@ -53,7 +53,7 @@ export default function MyShopPage() {
 
   useEffect(() => {
     if (!shopData && !isLoading) {
-      navigate(ROUTES.OwnerShopRegistration());
+      navigate(ROUTES.Owner.ShopRegistration());
     }
   }, [shopData, navigate, isLoading]);
 
@@ -81,7 +81,7 @@ export default function MyShopPage() {
       {isMobile ? (
         <>
           <div className={styles['mobile-header']}>
-            <Link to={ROUTES.OwnerShopRegistration()} className={styles['mobile-header__btn-add']}>가게 추가</Link>
+            <Link to={ROUTES.Owner.ShopRegistration()} className={styles['mobile-header__btn-add']}>가게 추가</Link>
             {myShop.shops.length >= 2
               && (
                 <>
@@ -89,7 +89,7 @@ export default function MyShopPage() {
                   {listOpen && <MyShopList isOpen={listOpen} onCancel={onCancel} />}
                 </>
               )}
-            <Link to={ROUTES.OwnerAddMenu()}>
+            <Link to={ROUTES.Owner.AddMenu()}>
               <button
                 type="button"
                 className={styles['mobile-header__btn-add']}
@@ -149,7 +149,7 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
-            <Link to={ROUTES.OwnerEvent({ id: String(shopData?.id), isLink: true })}>
+            <Link to={ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true })}>
               <button
                 type="button"
                 className={styles['header__btn-add']}
@@ -160,7 +160,7 @@ export default function MyShopPage() {
                 이벤트 추가
               </button>
             </Link>
-            <Link to={ROUTES.OwnerAddMenu()}>
+            <Link to={ROUTES.Owner.AddMenu()}>
               <button
                 type="button"
                 className={styles['header__btn-add']}

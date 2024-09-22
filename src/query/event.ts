@@ -16,7 +16,7 @@ export const useAddEvent = (id: string) => {
     mutationFn: (data: EventInfo) => addEvent(id, data),
     onSuccess: () => {
       showToast('success', '이벤트 추가에 성공했습니다.');
-      navigate(ROUTES.Owner());
+      navigate(ROUTES.Owner.Root());
       queryClient.refetchQueries({ queryKey: shopKeys.eventList(Number(id)) });
     },
     onError: (e) => {

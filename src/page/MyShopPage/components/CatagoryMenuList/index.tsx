@@ -8,7 +8,7 @@ import styles from './CatagoryMenuList.module.scss';
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
   const navigate = useNavigate();
   const handleMenuClick = (menuId: number) => {
-    navigate(ROUTES.OwnerModifyMenu({ id: String(menuId), isLink: true }));
+    navigate(ROUTES.Owner.ModifyMenu({ id: String(menuId), isLink: true }));
   };
   return (
     <div>

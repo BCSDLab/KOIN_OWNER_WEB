@@ -19,8 +19,8 @@ export default function OwnerLayout() {
       setUser()
         .catch(handleErrorBoundary)
         .catch(() => {
-          setPrevPath(ROUTES.OwnerShopRegistration());
-          navigate(ROUTES.OwnerShopRegistration());
+          setPrevPath(ROUTES.Owner.ShopRegistration());
+          navigate(ROUTES.Owner.ShopRegistration());
         });
     }
   }, [handleErrorBoundary, setUser, setPrevPath, navigate, user]);
@@ -29,7 +29,7 @@ export default function OwnerLayout() {
     <div>
       {user && (
         <>
-          {location.pathname !== ROUTES.OwnerShopRegistration() && <Header />}
+          {location.pathname !== ROUTES.Owner.ShopRegistration() && <Header />}
           <ErrorBoundary message="에러가 발생했습니다.">
             <Outlet />
           </ErrorBoundary>

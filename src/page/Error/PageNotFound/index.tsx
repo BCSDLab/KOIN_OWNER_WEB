@@ -21,7 +21,7 @@ export default function PageNotFound() {
         <button
           type="button"
           className={styles.content__button}
-          onClick={() => navigate(ROUTES.Owner())}
+          onClick={() => navigate(ROUTES.Owner.Root())}
         >
           메인 화면 바로가기
         </button>

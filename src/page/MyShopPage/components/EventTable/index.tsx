@@ -74,7 +74,7 @@ export default function EventTable() {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
                     )[0];
-                    navigate(ROUTES.OwnerEventModify({
+                    navigate(ROUTES.Owner.EventModify({
                       id: String(selectedEventIds[0]),
                       isLink: true,
                     }), {
@@ -128,7 +128,7 @@ export default function EventTable() {
               type="button"
               className={styles['manage-event-button']}
               onClick={() => {
-                navigate(ROUTES.OwnerEvent({ id: String(shopData?.id), isLink: true }));
+                navigate(ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true }));
                 logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
               }}
             >
