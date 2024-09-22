@@ -11,6 +11,7 @@ import useMobileSidebar from 'component/common/Header/hooks/useMobileSidebar';
 import useUserTypeStore from 'store/useUserTypeStore';
 import { CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import useSuspenseUser from 'utils/hooks/useSuspenseUser';
+import ROUTES from 'static/routes';
 import styles from './MobilePanel.module.scss';
 
 interface Prop {
@@ -63,8 +64,8 @@ export default function MobilePanel() {
   const handleLogout = () => {
     logout(undefined, {
       onSettled: () => {
-        setPrevPath('/login');
-        navigate('/login');
+        setPrevPath(ROUTES.Login());
+        navigate(ROUTES.Login());
       },
     });
   };
@@ -75,7 +76,7 @@ export default function MobilePanel() {
         className={styles['mobile-header']}
       >
         <span className={styles['mobile-header__title']}>
-          {pathname === '/owner' ? (
+          {pathname === ROUTES.Owner.Root() ? (
             <MobileLogoIcon title="코인 로고" />
           ) : (targetCategory
             .flatMap((categoryValue) => categoryValue.submenu)
@@ -119,7 +120,7 @@ export default function MobilePanel() {
               </div>
               <ul className={styles['mobile-header__auth-menu']}>
                 <li className={styles['mobile-header__my-info']}>
-                  <Link to="/owner/modify-info">
+                  <Link to={ROUTES.Owner.ModifyInfo()}>
                     내 정보
                   </Link>
                 </li>

@@ -12,6 +12,7 @@ import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
 import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
 import DeleteAlertModal from 'component/common/Modal/alertModal';
 import useLogger from 'utils/hooks/useLogger';
+import ROUTES from 'static/routes';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
@@ -73,7 +74,10 @@ export default function EventTable() {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
                     )[0];
-                    navigate(`/owner/event-modify/${selectedEventIds[0]}`, {
+                    navigate(ROUTES.Owner.EventModify({
+                      id: String(selectedEventIds[0]),
+                      isLink: true,
+                    }), {
                       state: {
                         content: selected?.content,
                         event_id: selected?.event_id,
@@ -124,7 +128,7 @@ export default function EventTable() {
               type="button"
               className={styles['manage-event-button']}
               onClick={() => {
-                navigate(`/owner/event-add/${shopData?.id}`);
+                navigate(ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true }));
                 logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
               }}
             >

@@ -13,6 +13,7 @@ import { LoginParams } from 'model/auth';
 import { useState } from 'react';
 import sha256 from 'utils/ts/SHA-256';
 import { useErrorMessageStore } from 'store/errorMessageStore';
+import ROUTES from 'static/routes';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 import ApprovalModal from './ApprovalModal';
@@ -129,7 +130,7 @@ export default function Login() {
             로그인
           </button>
           {isMobile && (
-            <button className={styles.form__button} type="button" onClick={() => navigate('/signup')}>
+            <button className={styles.form__button} type="button" onClick={() => navigate(ROUTES.Signup())}>
               회원가입
             </button>
           )}

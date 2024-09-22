@@ -10,6 +10,7 @@ import useModalPortal from 'utils/hooks/useModalPortal';
 import showToast from 'utils/ts/showToast';
 import ImageModal from 'component/common/Modal/ImageModal';
 import useLogger from 'utils/hooks/useLogger';
+import ROUTES from 'static/routes';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import ShopInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -52,7 +53,7 @@ export default function MyShopPage() {
 
   useEffect(() => {
     if (!shopData && !isLoading) {
-      navigate('/owner/shop-registration');
+      navigate(ROUTES.Owner.ShopRegistration());
     }
   }, [shopData, navigate, isLoading]);
 
@@ -80,7 +81,7 @@ export default function MyShopPage() {
       {isMobile ? (
         <>
           <div className={styles['mobile-header']}>
-            <Link to="shop-registration" className={styles['mobile-header__btn-add']}>가게 추가</Link>
+            <Link to={ROUTES.Owner.ShopRegistration()} className={styles['mobile-header__btn-add']}>가게 추가</Link>
             {myShop.shops.length >= 2
               && (
                 <>
@@ -88,7 +89,7 @@ export default function MyShopPage() {
                   {listOpen && <MyShopList isOpen={listOpen} onCancel={onCancel} />}
                 </>
               )}
-            <Link to="/owner/add-menu">
+            <Link to={ROUTES.Owner.AddMenu()}>
               <button
                 type="button"
                 className={styles['mobile-header__btn-add']}
@@ -148,7 +149,7 @@ export default function MyShopPage() {
         <div className={styles.container}>
           <div className={styles.header}>
             <h1 className={styles.header__title}>가게정보</h1>
-            <Link to={`/owner/event-add/${shopData?.id}`}>
+            <Link to={ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true })}>
               <button
                 type="button"
                 className={styles['header__btn-add']}
@@ -159,7 +160,7 @@ export default function MyShopPage() {
                 이벤트 추가
               </button>
             </Link>
-            <Link to="/owner/add-menu">
+            <Link to={ROUTES.Owner.AddMenu()}>
               <button
                 type="button"
                 className={styles['header__btn-add']}

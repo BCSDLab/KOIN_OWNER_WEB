@@ -6,6 +6,7 @@ import { useLogout } from 'query/auth';
 import usePrevPathStore from 'store/path';
 import useMegaMenu from 'component/common/Header/hooks/useMegaMenu';
 import useUserTypeStore from 'store/useUserTypeStore';
+import ROUTES from 'static/routes';
 import styles from './PCPanel.module.scss';
 
 const ID: { [key: string]: string; } = {
@@ -94,8 +95,8 @@ export default function PCPanel() {
   const handleLogout = () => {
     logout(undefined, {
       onSettled: () => {
-        setPrevPath('/login');
-        navigate('/login');
+        setPrevPath(ROUTES.Login());
+        navigate(ROUTES.Login());
       },
     });
   };
@@ -104,20 +105,13 @@ export default function PCPanel() {
     <>
       <Link
         className={styles.header__logo}
-        to="/"
+        to={ROUTES.Main()}
         tabIndex={0}
       >
         <LogoIcon title="코인 로고" />
       </Link>
       <HeaderContent categoryArray={targetCategory} />
-
       <ul className={styles['header__auth-menu']}>
-        {/* Auth 완료시 수정 필요 */}
-        {/* <li className={styles['header__auth-link']}>
-          <Link to="/owner/modify-info">
-            정보수정
-          </Link>
-        </li> */}
         <li className={styles['header__auth-link']}>
           <button type="button" onClick={handleLogout}>
             로그아웃

@@ -19,6 +19,7 @@ import ModifyEvent from 'page/ManageEvent/ModifyEvent';
 import LogPage from 'component/common/PageLog';
 import CommonLayout from 'page/Auth/components/Common';
 import FindPassword from 'page/Auth/FindPassword';
+import ROUTES from 'static/routes';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -30,10 +31,10 @@ function ProtectedRoute({ userTypeRequired }: ProtectedRouteProps) {
 
   if (userType !== userTypeRequired) {
     if (userType === 'OWNER') {
-      return <Navigate to="/owner" replace />;
+      return <Navigate to={ROUTES.Owner.Root()} replace />;
     }
     if (userType === null) {
-      return <Navigate to="/login" replace />;
+      return <Navigate to={ROUTES.Login()} replace />;
     }
   }
 
@@ -44,30 +45,30 @@ function App() {
   return (
     <Suspense fallback={<div />}>
       <Routes>
-        <Route path="/" element={<Navigate to="/owner" />} />
+        <Route path={ROUTES.Main()} element={<Navigate to={ROUTES.Owner.Root()} />} />
         <Route element={<ProtectedRoute userTypeRequired="OWNER" />}>
-          <Route path="/owner" element={<OwnerLayout />}>
-            <Route path="/owner" element={<MyShopPage />} />
-            <Route path="/owner/shop-registration" element={<ShopRegistration />} />
-            <Route path="/owner/add-menu" element={<AddMenu />} />
-            <Route path="/owner/modify-menu/:menuId" element={<ModifyMenu />} />
-            <Route path="/owner/modify-info" element={<PageNotFound />} />
-            <Route path="/owner/menu-management" element={<PageNotFound />} />
-            <Route path="/owner/order-management" element={<PageNotFound />} />
-            <Route path="/owner/sales-management" element={<PageNotFound />} />
-            <Route path="/owner/event-add/:id" element={<AddingEvent />} />
-            <Route path="/owner/event-modify/:id" element={<ModifyEvent />} />
+          <Route path={ROUTES.Owner.Root()} element={<OwnerLayout />}>
+            <Route path={ROUTES.Owner.Root()} element={<MyShopPage />} />
+            <Route path={ROUTES.Owner.ShopRegistration()} element={<ShopRegistration />} />
+            <Route path={ROUTES.Owner.AddMenu()} element={<AddMenu />} />
+            <Route path={ROUTES.Owner.ModifyMenu({ isLink: false })} element={<ModifyMenu />} />
+            <Route path={ROUTES.Owner.ModifyInfo()} element={<PageNotFound />} />
+            <Route path={ROUTES.Owner.MenuManagement()} element={<PageNotFound />} />
+            <Route path={ROUTES.Owner.OrderManagement()} element={<PageNotFound />} />
+            <Route path={ROUTES.Owner.SalesManagement()} element={<PageNotFound />} />
+            <Route path={ROUTES.Owner.Event({ isLink: false })} element={<AddingEvent />} />
+            <Route path={ROUTES.Owner.EventModify({ isLink: false })} element={<ModifyEvent />} />
           </Route>
         </Route>
 
         <Route element={<AuthLayout />}>
           <Route element={<ProtectedRoute userTypeRequired={null} />}>
-            <Route path="/login" element={<Login />} />
+            <Route path={ROUTES.Login()} element={<Login />} />
             <Route element={<CommonLayout />}>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/find-password" element={<FindPassword />} />
+              <Route path={ROUTES.Signup()} element={<Signup />} />
+              <Route path={ROUTES.FindPW()} element={<FindPassword />} />
             </Route>
-            <Route path="/find-id" element={<PageNotFound />} />
+            <Route path={ROUTES.FindId()} element={<PageNotFound />} />
           </Route>
         </Route>
       </Routes>

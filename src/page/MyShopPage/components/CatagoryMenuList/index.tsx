@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as EventMarkIcon } from 'assets/svg/myshop/event-menu-mark.svg';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
 import { ReactComponent as CUTLERY } from 'assets/svg/myshop/cutlery.svg';
+import ROUTES from 'static/routes';
 import styles from './CatagoryMenuList.module.scss';
 
 export default function CatagoryMenuList({ menuCategory }: { menuCategory: MenuCategory }) {
   const navigate = useNavigate();
   const handleMenuClick = (menuId: number) => {
-    navigate(`/owner/modify-menu/${menuId}`);
+    navigate(ROUTES.Owner.ModifyMenu({ id: String(menuId), isLink: true }));
   };
   return (
     <div>
