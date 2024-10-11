@@ -5,7 +5,7 @@ type GTagEvent = {
   value: string;
 };
 
-export const GA_TRACKING_ID = process.env.REACT_APP_GOOGLE_ANALYTICS_ID;
+export const GA_TRACKING_ID = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageView = (url: string, userId?: string) => {
