@@ -1,4 +1,4 @@
-import { ReactComponent as Error } from 'assets/svg/error/page-not-found-error.svg';
+import Error from 'assets/svg/error/page-not-found-error.svg?react';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from 'static/routes';
 import styles from './PageNotFound.module.scss';

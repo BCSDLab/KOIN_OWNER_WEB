@@ -1,6 +1,6 @@
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
-import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
+import ShowIcon from 'assets/svg/auth/show.svg?react';
+import BlindIcon from 'assets/svg/auth/blind.svg?react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import usePasswordConfirm from 'page/Auth/SignupTmp/hooks/usePasswordConfirm';
 import { User } from 'page/Auth/SignupTmp/types/User';

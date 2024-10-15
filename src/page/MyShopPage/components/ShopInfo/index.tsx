@@ -1,7 +1,7 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
-import { ReactComponent as CUTLERY } from 'assets/svg/myshop/cutlery.svg';
-import { ReactComponent as GearIcon } from 'assets/svg/myshop/gear.svg';
+import CUTLERY from 'assets/svg/myshop/cutlery.svg?react';
+import GearIcon from 'assets/svg/myshop/gear.svg?react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';

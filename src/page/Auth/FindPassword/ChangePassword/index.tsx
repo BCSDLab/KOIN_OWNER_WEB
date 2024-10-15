@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 import { ChangePasswordForm } from 'model/auth';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
-import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
+import Warning from 'assets/svg/auth/warning.svg?react';
 import styles from 'page/Auth/FindPassword/index.module.scss';
 
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/;

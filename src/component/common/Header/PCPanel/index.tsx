@@ -1,4 +1,4 @@
-import { ReactComponent as LogoIcon } from 'assets/svg/common/koin-logo.svg';
+import LogoIcon from 'assets/svg/common/koin-logo.svg?react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CATEGORY_OWNER, HeaderCategory } from 'utils/constant/category';
 import cn from 'utils/ts/className';

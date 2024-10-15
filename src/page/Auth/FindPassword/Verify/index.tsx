@@ -6,7 +6,7 @@ import {
 } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 import cn from 'utils/ts/className';
-import { ReactComponent as Warning } from 'assets/svg/auth/warning.svg';
+import Warning from 'assets/svg/auth/warning.svg?react';
 import styles from 'page/Auth/FindPassword/index.module.scss';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import { useDebounce } from 'utils/hooks/useDebounce';

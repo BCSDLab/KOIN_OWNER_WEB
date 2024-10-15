@@ -1,4 +1,4 @@
-import { ReactComponent as XClose } from 'assets/svg/shopRegistration/close-x.svg';
+import XClose from 'assets/svg/shopRegistration/close-x.svg?react';
 import CustomButton from 'page/Auth/Signup/CustomButton';
 import { createPortal } from 'react-dom';
 import cn from 'utils/ts/className';

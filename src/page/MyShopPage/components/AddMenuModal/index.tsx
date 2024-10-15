@@ -1,8 +1,8 @@
-import { ReactComponent as PlusIcon } from 'assets/svg/main/plus.svg';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
-import { ReactComponent as GearIcon } from 'assets/svg/myshop/gear.svg';
-import { ReactComponent as CancleIcon } from 'assets/svg/myshop/x-in-circle-cancle.svg';
-import { ReactComponent as CheckCircleIcon } from 'assets/svg/myshop/check-circle.svg';
+import PlusIcon from 'assets/svg/main/plus.svg?react';
+import ImgPlusIcon from 'assets/svg/myshop/imgplus.svg?react';
+import GearIcon from 'assets/svg/myshop/gear.svg?react';
+import CancleIcon from 'assets/svg/myshop/x-in-circle-cancle.svg?react';
+import CheckCircleIcon from 'assets/svg/myshop/check-circle.svg?react';
 import styles from './AddMenuModal.module.scss';
 
 type Props = {

@@ -2,7 +2,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import assert from 'assert';
 import useMenuInfo, { useDeleteMenu } from 'query/menu';
 import useAddMenuStore from 'store/addMenu';
 import MenuImage from 'page/AddMenu/components/MenuImage';
@@ -28,8 +27,10 @@ export default function ModifyMenu() {
     }
   };
   const { id } = useParams();
+  if (!id) {
+    throw new Error('menuId가 없습니다.');
+  }
 
-  assert(id != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
   const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(id));
   useEffect(() => {
