@@ -1,7 +1,7 @@
 import { OptionPrices } from 'store/addMenu';
-import { ReactComponent as MobileDeleteIcon } from 'assets/svg/addmenu/mobile-delete-icon.svg';
-import { ReactComponent as DeleteIcon } from 'assets/svg/addmenu/delete-icon.svg';
-import { ReactComponent as MobilePlusIcon } from 'assets/svg/addmenu/mobile-plus-icon.svg';
+import MobileDeleteIcon from 'assets/svg/addmenu/mobile-delete-icon.svg?react';
+import DeleteIcon from 'assets/svg/addmenu/delete-icon.svg?react';
+import MobilePlusIcon from 'assets/svg/addmenu/mobile-plus-icon.svg?react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './PriceInput.module.scss';
 

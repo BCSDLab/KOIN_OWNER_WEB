@@ -1,6 +1,6 @@
-import { ReactComponent as MobileLogoIcon } from 'assets/svg/common/mobile-koin-logo.svg';
-import { ReactComponent as MenuIcon } from 'assets/svg/common/hamburger-menu.svg';
-import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
+import MobileLogoIcon from 'assets/svg/common/mobile-koin-logo.svg?react';
+import MenuIcon from 'assets/svg/common/hamburger-menu.svg?react';
+import BackArrowIcon from 'assets/svg/common/back-arrow.svg?react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';

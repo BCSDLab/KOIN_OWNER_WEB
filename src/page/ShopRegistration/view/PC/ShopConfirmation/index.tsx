@@ -1,5 +1,5 @@
-import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as Cutlery } from 'assets/svg/shopRegistration/cutlery.svg';
+import Logo from 'assets/svg/auth/koin-logo.svg?react';
+import Cutlery from 'assets/svg/shopRegistration/cutlery.svg?react';
 import Copyright from 'component/common/Copyright';
 import Category from 'page/ShopRegistration/component/Modal/Category';
 import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
@@ -16,7 +16,7 @@ import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { usePostData } from 'page/ShopRegistration/view/Mobile/ShopConfirmation/index';
-import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
+import FileImage from 'assets/svg/auth/default-file.svg?react';
 import useMyShop from 'query/shop';
 import { useEffect } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';

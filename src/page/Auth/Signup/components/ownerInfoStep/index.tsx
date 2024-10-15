@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { useState, useEffect, ChangeEvent } from 'react';
-import { ReactComponent as FileIcon } from 'assets/svg/auth/file-icon.svg';
-import { ReactComponent as DeleteFile } from 'assets/svg/auth/delete-file.svg';
+import FileIcon from 'assets/svg/auth/file-icon.svg?react';
+import DeleteFile from 'assets/svg/auth/delete-file.svg?react';
 import FileUploadModal from 'page/Auth/Signup/components/fileUploadModal';
 import useUploadFile from 'query/upload';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';

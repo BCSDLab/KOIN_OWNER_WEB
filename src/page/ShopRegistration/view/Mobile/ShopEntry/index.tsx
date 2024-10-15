@@ -1,4 +1,4 @@
-import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
+import Memo from 'assets/svg/shopRegistration/memo.svg?react';
 import styles from './ShopEntry.module.scss';
 
 export default function ShopEntry({ onNext }:{ onNext: () => void }) {

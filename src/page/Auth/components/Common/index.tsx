@@ -1,4 +1,4 @@
-import { ReactComponent as BackArrow } from 'assets/svg/common/back-arrow.svg';
+import BackArrow from 'assets/svg/common/back-arrow.svg?react';
 import { FormProvider, useForm, UseFormSetError } from 'react-hook-form';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'utils/ts/className';

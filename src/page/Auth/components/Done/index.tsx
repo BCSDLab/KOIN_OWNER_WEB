@@ -1,4 +1,4 @@
-import { ReactComponent as Success } from 'assets/svg/auth/done.svg';
+import Success from 'assets/svg/auth/done.svg?react';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from 'static/routes';
 import styles from './index.module.scss';
