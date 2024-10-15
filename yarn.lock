@@ -4208,6 +4208,7 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     fsevents: "*"
     html-react-parser: ^5.1.10
+    postcss: ^8.4.47
     react: ^18.2.0
     react-dom: ^18.2.0
     react-hook-form: ^7.43.9
@@ -5034,7 +5035,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.19, postcss@npm:^8.4.43":
+"postcss@npm:^8.4.19, postcss@npm:^8.4.43, postcss@npm:^8.4.47":
   version: 8.4.47
   resolution: "postcss@npm:8.4.47"
   dependencies:
