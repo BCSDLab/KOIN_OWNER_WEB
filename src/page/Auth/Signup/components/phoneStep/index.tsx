@@ -1,4 +1,4 @@
-import { ReactComponent as Error } from 'assets/svg/auth/error-icon.svg';
+import Error from 'assets/svg/auth/error-icon.svg?react';
 import {
   useFormContext, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';

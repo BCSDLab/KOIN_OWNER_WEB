@@ -1,4 +1,4 @@
-import { ReactComponent as Memo } from 'assets/svg/shopRegistration/memo.svg';
+import Memo from 'assets/svg/shopRegistration/memo.svg?react';
 import Copyright from 'component/common/Copyright';
 import styles from './ShopEntry.module.scss';
 

@@ -6,14 +6,14 @@ import {
 import AlertModal from 'component/common/Modal/alertModal';
 import showToast from 'utils/ts/showToast';
 import { getOwnerUrl } from 'api/uploadFile';
-import { ReactComponent as Delete } from 'assets/svg/myshop/delete.svg';
+import Delete from 'assets/svg/myshop/delete.svg?react';
 import cn from 'utils/ts/className';
 import styles from 'page/ManageEvent/index.module.scss';
 import { useModifyEvent } from 'query/event';
-import { ReactComponent as CheckBox } from 'assets/svg/common/checkbox.svg';
-import { ReactComponent as Cancel } from 'assets/svg/common/cancel.svg';
-import { ReactComponent as Picture } from 'assets/svg/common/picture.svg';
-import { ReactComponent as PictureDisalbe } from 'assets/svg/common/picture-disable.svg';
+import CheckBox from 'assets/svg/common/checkbox.svg?react';
+import Cancel from 'assets/svg/common/cancel.svg?react';
+import Picture from 'assets/svg/common/picture.svg?react';
+import PictureDisalbe from 'assets/svg/common/picture-disable.svg?react';
 import { createPortal } from 'react-dom';
 import ROUTES from 'static/routes';
 

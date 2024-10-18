@@ -1,4 +1,4 @@
-import { ReactComponent as Warn } from 'assets/svg/auth/warning.svg';
+import Warn from 'assets/svg/auth/warning.svg?react';
 import styles from './ErrorMessage.module.scss';
 
 interface ErrorMessageProps {

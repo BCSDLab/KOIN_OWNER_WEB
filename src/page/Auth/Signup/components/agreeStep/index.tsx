@@ -1,5 +1,5 @@
-import { ReactComponent as NonCheck } from 'assets/svg/auth/non-check.svg';
-import { ReactComponent as Check } from 'assets/svg/auth/checked.svg';
+import NonCheck from 'assets/svg/auth/non-check.svg?react';
+import Check from 'assets/svg/auth/checked.svg?react';
 import TERMS from 'page/Auth/Signup/constant/terms';
 import styles from './agreeStep.module.scss';
 

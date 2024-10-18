@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 export const MyShop = z.object({
   id: z.number(),
@@ -62,7 +62,7 @@ export interface MyShopParam {
 }
 
 export interface EventListParam {
-  id : number;
+  id: number;
 }
 
 export const ShopEvent = z.object({

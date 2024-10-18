@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
+import Check from 'assets/svg/auth/check.svg?react';
 import useStepStore from 'store/useStepStore';
 import ROUTES from 'static/routes';
 import styles from './Complete.module.scss';

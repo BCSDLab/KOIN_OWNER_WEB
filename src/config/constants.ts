@@ -1,31 +1,19 @@
-import { EnvVar } from 'react-app-env';
+import { z } from 'zod';
 
-const number = (value: string) => {
-  const result = Number(value);
-  if (!Number.isNaN(result)) {
-    return result;
-  }
-  return null;
-};
+const Env = z.object({
+  VITE_API_PATH: z.string(),
+});
 
-const string = (value: string) => value;
+type EnvType = z.infer<typeof Env>;
 
-const typeConverter = { number, string };
-
-function checkEnv(key: keyof EnvVar, type: 'string'): string;
-function checkEnv(key: keyof EnvVar, type: 'number'): number;
-function checkEnv(key: keyof EnvVar, type: 'number' | 'string') {
-  const value = process.env[key];
-  if (value !== undefined) {
-    const result = typeConverter[type](value);
-    if (result !== undefined) {
-      return result;
-    }
-    throw new Error(`process.env.${key}에 적절한 값을 설정하지 않았습니다`);
-  }
-  throw new Error(`process.env.${key}에 할당할 값이 없습니다`);
+declare global {
+  interface ImportMetaEnv extends EnvType { }
 }
 
-const API_PATH = checkEnv('REACT_APP_API_PATH', 'string');
+function checkEnv(): EnvType {
+  return Env.parse(import.meta.env);
+}
 
-export default API_PATH;
+const env = checkEnv();
+
+export const API_PATH = env.VITE_API_PATH;

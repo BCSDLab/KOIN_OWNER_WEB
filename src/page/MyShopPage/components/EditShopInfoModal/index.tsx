@@ -1,9 +1,9 @@
 import {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
-import { ReactComponent as DeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
+import DeleteImgIcon from 'assets/svg/addmenu/mobile-delete-new-image.svg?react';
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
-import { ReactComponent as ImgPlusIcon } from 'assets/svg/myshop/imgplus.svg';
+import ImgPlusIcon from 'assets/svg/myshop/imgplus.svg?react';
 import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';

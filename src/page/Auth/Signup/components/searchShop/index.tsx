@@ -1,4 +1,4 @@
-import { ReactComponent as SearchIcon } from 'assets/svg/auth/search-icon.svg';
+import SearchIcon from 'assets/svg/auth/search-icon.svg?react';
 import useShopList from 'query/shops';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
