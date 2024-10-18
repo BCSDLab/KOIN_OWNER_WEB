@@ -7,11 +7,7 @@
     "@bcsdlab/koin": "^0.0.15",
     "@hookform/resolvers": "^3.1.0",
     "@tanstack/react-query": "^5.8.1",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
     "@types/gtag.js": "^0.0.19",
-    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
@@ -33,19 +29,11 @@
   },
   "scripts": {
     "start": "vite dev",
-    "build": "CI=false vites build",
-    "test": "vites test",
-    "eject": "vites eject",
+    "build": "CI=false vite build",
     "lint": "yarn lint:eslint && yarn lint:stylelint",
     "lint:eslint": "eslint src/ --ext .tsx,.ts",
     "lint:stylelint": "stylelint \"src/**/*.scss\" --config .stylelintrc.json",
     "typecheck": "tsc --project tsconfig.json"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
