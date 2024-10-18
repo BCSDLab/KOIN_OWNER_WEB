@@ -29,7 +29,7 @@
   },
   "scripts": {
     "start": "vite dev",
-    "build": "CI=false vite build",
+    "build": "tsc && vite build",
     "lint": "yarn lint:eslint && yarn lint:stylelint",
     "lint:eslint": "eslint src/ --ext .tsx,.ts",
     "lint:stylelint": "stylelint \"src/**/*.scss\" --config .stylelintrc.json",
