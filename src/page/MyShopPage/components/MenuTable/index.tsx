@@ -3,6 +3,7 @@ import { MenuCategory } from 'model/shopInfo/menuCategory';
 import cn from 'utils/ts/className';
 import MENU_CATEGORY from 'utils/constant/menu';
 import { Link } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import styles from './MenuTable.module.scss';
 
 interface MenuTableProps {
@@ -117,7 +118,7 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
                         />
                       </div>
                   )}
-                  <Link to={`/owner/modify-menu/${menu.id}`} className={styles['menu-info__modify']}>
+                  <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                     <div className={styles['menu-info__card']}>
                       <span title={menu.name}>{menu.name}</span>
                       <span>
@@ -151,7 +152,7 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
                           />
                         </div>
                     )}
-                    <Link to={`/owner/modify-menu/${menu.id}`} className={styles['menu-info__modify']}>
+                    <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                       <div className={styles['menu-info__card']}>
                         <span>{`${menu.name} - ${item.option}`}</span>
                         <span>

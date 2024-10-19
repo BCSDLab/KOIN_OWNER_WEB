@@ -4,14 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import useMyShop from 'query/shop';
 import { useDeleteEvent, useGetEventList } from 'query/event';
-import { ReactComponent as EditEventIcon } from 'assets/svg/myshop/edit-event-icon.svg';
-import { ReactComponent as AddEventIcon } from 'assets/svg/myshop/add-event-icon.svg';
-import { ReactComponent as NonCheckCircle } from 'assets/svg/myshop/non-check-circle.svg';
-import { ReactComponent as DeleteIcon } from 'assets/svg/myshop/delete-icon.svg';
-import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
-import { ReactComponent as CompleteIcon } from 'assets/svg/myshop/complete-icon.svg';
+import EditEventIcon from 'assets/svg/myshop/edit-event-icon.svg?react';
+import AddEventIcon from 'assets/svg/myshop/add-event-icon.svg?react';
+import NonCheckCircle from 'assets/svg/myshop/non-check-circle.svg?react';
+import DeleteIcon from 'assets/svg/myshop/delete-icon.svg?react';
+import Check from 'assets/svg/myshop/check.svg?react';
+import CompleteIcon from 'assets/svg/myshop/complete-icon.svg?react';
 import DeleteAlertModal from 'component/common/Modal/alertModal';
 import useLogger from 'utils/hooks/useLogger';
+import ROUTES from 'static/routes';
 import EventCard from './components/EventCard';
 import EventErrorModal from './components/EventErrorModal';
 import styles from './EventTable.module.scss';
@@ -73,7 +74,10 @@ export default function EventTable() {
                     const selected = eventList?.events.filter(
                       (event) => event.event_id === selectedEventIds[0],
                     )[0];
-                    navigate(`/owner/event-modify/${selectedEventIds[0]}`, {
+                    navigate(ROUTES.Owner.EventModify({
+                      id: String(selectedEventIds[0]),
+                      isLink: true,
+                    }), {
                       state: {
                         content: selected?.content,
                         event_id: selected?.event_id,
@@ -124,7 +128,7 @@ export default function EventTable() {
               type="button"
               className={styles['manage-event-button']}
               onClick={() => {
-                navigate(`/owner/event-add/${shopData?.id}`);
+                navigate(ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true }));
                 logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
               }}
             >

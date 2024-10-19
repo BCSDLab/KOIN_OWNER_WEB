@@ -2,7 +2,6 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import assert from 'assert';
 import useMenuInfo, { useDeleteMenu } from 'query/menu';
 import useAddMenuStore from 'store/addMenu';
 import MenuImage from 'page/AddMenu/components/MenuImage';
@@ -15,6 +14,7 @@ import GoMyShopModal from 'page/AddMenu/components/GoMyShop';
 import MobileDivide from 'page/AddMenu/components/MobileDivide';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useFormValidation from 'page/AddMenu/hook/useFormValidation';
+import ROUTES from 'static/routes';
 
 export default function ModifyMenu() {
   useScrollToTop();
@@ -26,22 +26,24 @@ export default function ModifyMenu() {
       setIsComplete((prevState) => !prevState);
     }
   };
-  const { menuId } = useParams();
+  const { id } = useParams();
+  if (!id) {
+    throw new Error('menuId가 없습니다.');
+  }
 
-  assert(menuId != null, 'menuId가 없습니다.');
   const navigate = useNavigate();
-  const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(menuId));
+  const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(id));
   useEffect(() => {
     refetch();
   }, [refetch]);
   const goMyShop = () => {
-    navigate('/owner');
+    navigate(ROUTES.Owner.Root());
   };
 
   const { deleteMenuMutation } = useDeleteMenu();
 
   const handleMobileDeleteMenu = () => {
-    deleteMenuMutation(Number(menuId));
+    deleteMenuMutation(Number(id));
     goMyShop();
   };
 
@@ -116,7 +118,7 @@ export default function ModifyMenu() {
   };
 
   const handleDeleteMenu = () => {
-    deleteMenuMutation(Number(menuId));
+    deleteMenuMutation(Number(id));
     openGoMyShopModal();
   };
 

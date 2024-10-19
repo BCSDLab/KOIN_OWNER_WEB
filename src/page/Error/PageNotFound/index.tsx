@@ -1,5 +1,6 @@
-import { ReactComponent as Error } from 'assets/svg/error/page-not-found-error.svg';
+import Error from 'assets/svg/error/page-not-found-error.svg?react';
 import { useNavigate } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import styles from './PageNotFound.module.scss';
 
 export default function PageNotFound() {
@@ -20,7 +21,7 @@ export default function PageNotFound() {
         <button
           type="button"
           className={styles.content__button}
-          onClick={() => navigate('/owner')}
+          onClick={() => navigate(ROUTES.Owner.Root())}
         >
           메인 화면 바로가기
         </button>

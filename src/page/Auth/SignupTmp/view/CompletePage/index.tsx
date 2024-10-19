@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as Check } from 'assets/svg/auth/check.svg';
+import Check from 'assets/svg/auth/check.svg?react';
 import useStepStore from 'store/useStepStore';
+import ROUTES from 'static/routes';
 import styles from './Complete.module.scss';
 
 export default function Complete() {
@@ -22,7 +23,7 @@ export default function Complete() {
           가입 허가가 승인되면 로그인이 가능합니다.
         </span>
       </div>
-      <Link to="/login" className={styles['link-button']} onClick={initialize}>로그인 화면 바로가기</Link>
+      <Link to={ROUTES.Login()} className={styles['link-button']} onClick={initialize}>로그인 화면 바로가기</Link>
     </div>
   );
 }

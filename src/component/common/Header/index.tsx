@@ -1,6 +1,7 @@
-import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
+import BackArrowIcon from 'assets/svg/common/back-arrow.svg?react';
 import { Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './Header.module.scss';
 import MobilePanel from './MobilePanel';
@@ -10,9 +11,9 @@ function Header() {
   const { pathname } = useLocation();
   const { isMobile } = useMediaQuery();
 
-  if ((pathname === '/owner/add-menu'
-    || pathname.startsWith('/owner/modify-menu/')
-    || pathname.startsWith('/owner/event-add/'))
+  if ((pathname === ROUTES.Owner.AddMenu()
+    || pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false }))
+    || pathname.startsWith(ROUTES.Owner.Event({ isLink: false })))
     && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
@@ -25,9 +26,9 @@ function Header() {
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
         <div className={styles['add-menu-header__caption']}>
-          {pathname === '/owner/add-menu' && '메뉴추가'}
-          {pathname.startsWith('/owner/modify-menu/') && '메뉴수정'}
-          {pathname.startsWith('/owner/event-add/') && '이벤트/공지 작성하기'}
+          {pathname === ROUTES.Owner.AddMenu() && '메뉴추가'}
+          {pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false })) && '메뉴수정'}
+          {pathname.startsWith(ROUTES.Owner.Event({ isLink: false })) && '이벤트/공지 작성하기'}
         </div>
       </header>
     );

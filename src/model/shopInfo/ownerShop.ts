@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 import { Shop } from './allShopInfo';
 
 export const OwnerShop = Shop.omit({ id: true }).extend({

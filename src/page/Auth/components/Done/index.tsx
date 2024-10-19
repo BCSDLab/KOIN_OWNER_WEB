@@ -1,5 +1,6 @@
-import { ReactComponent as Success } from 'assets/svg/auth/done.svg';
+import Success from 'assets/svg/auth/done.svg?react';
 import { useNavigate } from 'react-router-dom';
+import ROUTES from 'static/routes';
 import styles from './index.module.scss';
 
 const completeFindPassword = {
@@ -36,7 +37,7 @@ export default function Done({ isFindPassword }: Props) {
       </div>
       <button
         type="button"
-        onClick={() => navigate('/login')}
+        onClick={() => navigate(ROUTES.Login())}
         className={styles.button}
       >
         {isFindPassword ? '로그인하러 가기' : '로그인 화면 바로가기'}

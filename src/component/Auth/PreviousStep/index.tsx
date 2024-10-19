@@ -1,4 +1,4 @@
-import { ReactComponent as PreviousArrowIcon } from 'assets/svg/common/mobile-back-arrow.svg';
+import PreviousArrowIcon from 'assets/svg/common/mobile-back-arrow.svg?react';
 import styles from './PreviousStep.module.scss';
 
 interface PreviousStepProps {

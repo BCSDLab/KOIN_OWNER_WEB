@@ -2,10 +2,10 @@ import useBooleanState from 'utils/hooks/useBooleanState';
 import cn from 'utils/ts/className';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import { Link, useNavigate } from 'react-router-dom';
-import { ReactComponent as Logo } from 'assets/svg/auth/koin-logo.svg';
-import { ReactComponent as ShowIcon } from 'assets/svg/auth/show.svg';
-import { ReactComponent as BlindIcon } from 'assets/svg/auth/blind.svg';
-import { ReactComponent as LockIcon } from 'assets/svg/auth/lock.svg';
+import Logo from 'assets/svg/auth/koin-logo.svg?react';
+import ShowIcon from 'assets/svg/auth/show.svg?react';
+import BlindIcon from 'assets/svg/auth/blind.svg?react';
+import LockIcon from 'assets/svg/auth/lock.svg?react';
 import { useLogin } from 'query/auth';
 import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,6 +13,7 @@ import { LoginParams } from 'model/auth';
 import { useState } from 'react';
 import sha256 from 'utils/ts/SHA-256';
 import { useErrorMessageStore } from 'store/errorMessageStore';
+import ROUTES from 'static/routes';
 import styles from './Login.module.scss';
 import OPTION from './static/option';
 import ApprovalModal from './ApprovalModal';
@@ -129,7 +130,7 @@ export default function Login() {
             로그인
           </button>
           {isMobile && (
-            <button className={styles.form__button} type="button" onClick={() => navigate('/signup')}>
+            <button className={styles.form__button} type="button" onClick={() => navigate(ROUTES.Signup())}>
               회원가입
             </button>
           )}

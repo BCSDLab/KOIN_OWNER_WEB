@@ -3,7 +3,7 @@ import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CustomButton from 'page/Auth/Signup/CustomButton';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import SearchShop from 'page/ShopRegistration/component/Modal/SearchShop';
-import { ReactComponent as FileImage } from 'assets/svg/auth/default-file.svg';
+import FileImage from 'assets/svg/auth/default-file.svg?react';
 import CustomModal from 'component/common/CustomModal';
 import useCheckOwnerData from 'page/Auth/SignupTmp/hooks/useOwnerData';
 import ErrorMessage from 'page/Auth/Signup/ErrorMessage';
