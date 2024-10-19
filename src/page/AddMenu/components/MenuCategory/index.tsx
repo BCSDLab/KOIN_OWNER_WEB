@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ReactComponent as GearIcon } from 'assets/svg/myshop/gear.svg';
+import GearIcon from 'assets/svg/myshop/gear.svg?react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import useAddMenuStore from 'store/addMenu';
 import useMyShop from 'query/shop';

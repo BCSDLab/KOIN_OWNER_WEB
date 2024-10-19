@@ -1,4 +1,4 @@
-import { ReactComponent as Magnifier } from 'assets/svg/shopRegistration/magnifier.svg';
+import Magnifier from 'assets/svg/shopRegistration/magnifier.svg?react';
 import cn from 'utils/ts/className';
 import { ChangeEvent, useEffect, useState } from 'react';
 import ConfirmShop from 'page/ShopRegistration/component/Modal/ConfirmShop';

@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
-import API_PATH from 'config/constants';
+import { API_PATH } from 'config/constants';
 import { RefreshParams, RefreshResponse } from 'model/auth';
 import { CustomAxiosError, KoinError } from 'model/error';
 

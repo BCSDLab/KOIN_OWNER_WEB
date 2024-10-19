@@ -1,4 +1,4 @@
-import { ReactComponent as BackArrowIcon } from 'assets/svg/common/back-arrow.svg';
+import BackArrowIcon from 'assets/svg/common/back-arrow.svg?react';
 import { Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
 import ROUTES from 'static/routes';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { ReactComponent as CancelIcon } from 'assets/svg/addmenu/mobile-cancle-icon.svg';
+import CancelIcon from 'assets/svg/addmenu/mobile-cancle-icon.svg?react';
 import useAddMenuStore from 'store/addMenu';
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';

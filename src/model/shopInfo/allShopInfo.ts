@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 const Open = z.object({
   day_of_week: z.string(),

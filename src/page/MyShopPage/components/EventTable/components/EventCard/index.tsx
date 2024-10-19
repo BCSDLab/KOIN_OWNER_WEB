@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { ReactComponent as SeeInfoArrow } from 'assets/svg/myshop/see-info-arrow.svg';
-import { ReactComponent as HiddenInfoArrow } from 'assets/svg/myshop/hidden-info-arrow.svg';
-import { ReactComponent as NonCheck } from 'assets/svg/myshop/non-check.svg';
-import { ReactComponent as Check } from 'assets/svg/myshop/check.svg';
+import SeeInfoArrow from 'assets/svg/myshop/see-info-arrow.svg?react';
+import HiddenInfoArrow from 'assets/svg/myshop/hidden-info-arrow.svg?react';
+import NonCheck from 'assets/svg/myshop/non-check.svg?react';
+import Check from 'assets/svg/myshop/check.svg?react';
 import cn from 'utils/ts/className';
 import { ShopEvent } from 'model/shopInfo/myShopInfo';
 import EventContent from './components/EventContent';

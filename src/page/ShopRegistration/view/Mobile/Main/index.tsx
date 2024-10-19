@@ -1,5 +1,5 @@
-import { ReactComponent as EmptyImgIcon } from 'assets/svg/shopRegistration/mobile-empty-img.svg';
-import { ReactComponent as MobileDeleteImgIcon } from 'assets/svg/addmenu/mobile-delete-new-image.svg';
+import EmptyImgIcon from 'assets/svg/shopRegistration/mobile-empty-img.svg?react';
+import MobileDeleteImgIcon from 'assets/svg/addmenu/mobile-delete-new-image.svg?react';
 import { useEffect } from 'react';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import ErrorMessage from 'component/common/ErrorMessage';
