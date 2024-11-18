@@ -11,6 +11,7 @@ export default function Category() {
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setValue('category_ids', [categoryInfo.id, 0]);
+    setValue('main_category_id', categoryInfo.id);
   };
 
   return (
