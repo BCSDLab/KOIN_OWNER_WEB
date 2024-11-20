@@ -98,6 +98,7 @@ export default function EditShopInfoModal({
 
   const handleCategoryIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setValue('category_ids', [Number(e.target.value), 0]);
+    setValue('main_category_id', Number(e.target.value));
   };
 
   const handleDeleteImage = (image: string) => {

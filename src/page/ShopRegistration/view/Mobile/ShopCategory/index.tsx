@@ -15,6 +15,7 @@ export default function ShopCategory({ onNext }:{ onNext: () => void }) {
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setValue('category_ids', [categoryInfo.id, 0]);
+    setValue('main_category_id', categoryInfo.id);
   };
 
   const handleNextClick = () => {
