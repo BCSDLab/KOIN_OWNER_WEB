@@ -20,4 +20,4 @@ export const uploadFiles = (formData: FormData) => accessClient.post('/OWNERS/up
   headers: { 'Content-Type': 'multipart/form-data' },
 });
 
-export const getOwnerUrl = (fileName: File) => accessClient.post<FileResponse>('/owner/upload/url', fileName);
+export const getOwnerUrl = (fileName: File) => accessClient.post<FileResponse>('/owners/upload/url', fileName);
