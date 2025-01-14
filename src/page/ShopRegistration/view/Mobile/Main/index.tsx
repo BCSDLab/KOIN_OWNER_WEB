@@ -8,7 +8,9 @@ import useImagesUpload from 'utils/hooks/useImagesUpload';
 import { useFormContext, useWatch } from 'react-hook-form';
 import styles from './Main.module.scss';
 
-export default function Main({ onNext }:{ onNext: () => void }) {
+export default function Main({ onNext, onPrev }:{
+  onNext: () => void, onPrev: () => void
+}) {
   const {
     register, control, setValue, trigger, formState: { errors },
   } = useFormContext();
@@ -77,6 +79,7 @@ export default function Main({ onNext }:{ onNext: () => void }) {
             <>
               <EmptyImgIcon />
               <span className={styles.form__text}>등록된 이미지가 없습니다.</span>
+              <span className={styles['form__text--recommend']}>이곳을 눌러 이미지를 등록해 보세요!</span>
             </>
           )}
       </label>
@@ -120,8 +123,23 @@ export default function Main({ onNext }:{ onNext: () => void }) {
       <div className={styles['form__error-message']}>
         {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
       </div>
-      <div className={styles.form__button}>
-        <button type="button" onClick={handleNextClick}>다음</button>
+      <div className={styles.form__footer}>
+        <button
+          className={styles.form__cancel}
+          type="button"
+          onClick={onPrev}
+        >
+          취소
+        </button>
+        <button
+          className={cn({
+            [styles.form__next]: true,
+          })}
+          type="button"
+          onClick={handleNextClick}
+        >
+          확인
+        </button>
       </div>
     </div>
   );

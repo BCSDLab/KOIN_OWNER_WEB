@@ -15,7 +15,7 @@ interface UsePostDataProps {
   onNext?:() => void
 }
 
-export const usePostData = ({ onNext } : UsePostDataProps) => {
+export const usePostData = ({ onNext }: UsePostDataProps) => {
   const queryClient = useQueryClient();
   const { resetOperatingTime } = useModalStore();
   const mutation = useMutation({
@@ -36,7 +36,9 @@ export const usePostData = ({ onNext } : UsePostDataProps) => {
   return mutation;
 };
 
-export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
+export default function ShopConfirmation({ onNext, onPrev }:{
+  onNext: () => void, onPrev: () => void
+}) {
   const { categoryList } = useMyShop();
   const operateTimeState = useOperateTimeState();
 
@@ -120,8 +122,14 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
           </label>
         </div>
       </div>
-      <div className={styles.form__button}>
-        <button type="submit">등록</button>
+      <div className={styles.form__footer}>
+        <button className={styles.form__cancel} type="button" onClick={onPrev}>취소</button>
+        <button
+          className={styles.form__next}
+          type="submit"
+        >
+          확인
+        </button>
       </div>
     </form>
   );
