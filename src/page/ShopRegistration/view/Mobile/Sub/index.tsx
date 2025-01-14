@@ -12,7 +12,9 @@ import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import styles from './Sub.module.scss';
 
-export default function Sub({ onNext }:{ onNext: () => void }) {
+export default function Sub({ onNext, onPrev }:{
+  onNext: () => void, onPrev: () => void
+}) {
   const {
     value: showOperateTime,
     setTrue: openOperateTime,
@@ -104,7 +106,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
       </label>
       <div className={styles.form__label}>
         운영시간
-        <span>
+        <div className={styles['form__label--date']}>
           {
             isAllSameTime && !hasClosedDay ? (
               <div>
@@ -137,14 +139,14 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
               <span>매일 휴무</span>
             ) : null
           }
-        </span>
-        <button
-          type="button"
-          className={styles['form__label-button']}
-          onClick={openOperateTime}
-        >
-          수정
-        </button>
+          <button
+            type="button"
+            className={styles['form__label-button']}
+            onClick={openOperateTime}
+          >
+            수정
+          </button>
+        </div>
       </div>
       <label htmlFor="extra-info" className={styles.form__label}>
         기타정보
@@ -184,8 +186,23 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           <span>계좌이체 가능</span>
         </label>
       </div>
-      <div className={styles.form__button}>
-        <button type="button" onClick={handleNextClick}>다음</button>
+      <div className={styles.form__footer}>
+        <button
+          className={styles.form__cancel}
+          type="button"
+          onClick={onPrev}
+        >
+          취소
+        </button>
+        <button
+          className={cn({
+            [styles.form__next]: true,
+          })}
+          type="button"
+          onClick={handleNextClick}
+        >
+          확인
+        </button>
       </div>
     </div>
   );

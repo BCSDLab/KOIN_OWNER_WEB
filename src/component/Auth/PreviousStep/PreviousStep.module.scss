@@ -1,4 +1,6 @@
 .previous {
+  display: flex;
+  align-items: center;
   padding-left: 15px;
   margin-top: 30px;
   margin-bottom: 42px;
@@ -10,5 +12,10 @@
     &:disabled {
       cursor: default;
     }
+  }
+
+  &__title {
+    width: calc(100% - 28px);
+    text-align: center;
   }
 }
