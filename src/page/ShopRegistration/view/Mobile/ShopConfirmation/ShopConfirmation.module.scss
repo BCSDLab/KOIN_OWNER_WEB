@@ -139,10 +139,10 @@
     align-items: center;
     gap: 10px;
     border-radius: 8px;
-    border: 1px solid #CACACA;
-    background-color: #FFF;
+    border: 1px solid #cacaca;
+    background-color: #fff;
     cursor: pointer;
-    color: #CACACA;
+    color: #cacaca;
   }
 
   &__next {
@@ -155,17 +155,16 @@
     align-items: center;
     gap: 10px;
     border-radius: 8px;
-    background: #175C8E;
-    color: #FFF;
-    font-family: Pretendard;
+    background: #175c8e;
+    color: #fff;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 160%;
     border: none;
-  
+ 
     &--disable {
-      background-color: #CACACA;
+      background-color: #cacaca;
     }
   }
 }
