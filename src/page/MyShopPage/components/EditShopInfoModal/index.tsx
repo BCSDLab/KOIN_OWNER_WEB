@@ -77,7 +77,7 @@ export default function EditShopInfoModal({
         open_time: day.open_time,
         close_time: day.close_time,
       })),
-      main_category_id: shopInfo.shop_categories.map((category) => category.id)[0],
+      main_category_id: shopInfo.shop_categories.map((category) => category.id)[0] || 0,
     },
   });
 
