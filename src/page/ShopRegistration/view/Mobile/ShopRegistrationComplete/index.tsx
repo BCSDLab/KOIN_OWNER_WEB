@@ -42,6 +42,7 @@ export default function ShopRegistrationComplete({
     setPhone('');
     setAddress(''); // 전역 상태 초기화
   };
+
   return (
     <div className={styles.content}>
       <div className={styles.content__complete}>

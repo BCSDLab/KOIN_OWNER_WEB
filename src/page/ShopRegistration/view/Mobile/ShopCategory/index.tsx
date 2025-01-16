@@ -13,7 +13,7 @@ export default function ShopCategory({ onNext, onPrev }:{
   const [isError, setIsError] = useState(false);
   const { categoryList } = useMyShop();
   const { control, setValue } = useFormContext();
-  const categoryId = useWatch({ control, name: 'category_ids' });
+  const categoryId = useWatch({ control, name: 'category_ids', defaultValue: [] });
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setValue('category_ids', [categoryInfo.id, 0]);
