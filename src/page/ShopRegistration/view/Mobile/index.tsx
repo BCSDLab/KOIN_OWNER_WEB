@@ -1,6 +1,6 @@
 import PreviousStep from 'component/Auth/PreviousStep';
 import ProgressBar from 'component/Auth/ProgressBar';
-import Complete from 'component/Auth/Complete';
+import ShopRegistrationComplete from 'page/ShopRegistration/view/Mobile/ShopRegistrationComplete';
 import SubTitle from 'component/Auth/SubTitle';
 import PROGRESS_TITLE from 'utils/constant/progress';
 import ShopEntry from 'page/ShopRegistration/view/Mobile/ShopEntry';
@@ -139,12 +139,10 @@ export default function ShopRegistrationMobile() {
         </>
         )}
         {step === 5 && (
-        <Complete
+        <ShopRegistrationComplete
           title="가게 등록 완료"
           topText="가게 등록이 완료되었습니다."
-          bottomText="업체 정보 수정은 내 상점에서 가능합니다."
-          link="/"
-          linkText="메인 화면 바로가기"
+          bottomText="가게 정보 수정은 내 상점에서 가능합니다."
         />
         )}
       </div>

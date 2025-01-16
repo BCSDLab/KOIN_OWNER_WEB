@@ -22,13 +22,11 @@ export default function Main({ onNext, onPrev }:{
   } = useImagesUpload();
 
   const handleDeleteImage = (url: string) => {
-    setImageFile(imageFile.filter((img) => img !== url));
+    setImageFile((prevImages) => prevImages.filter((img) => img !== url));
   };
 
   useEffect(() => {
-    if (imageFile.length > 0) {
-      setValue('image_urls', imageFile);
-    }
+    setValue('image_urls', imageFile);
   }, [imageFile, setValue]);
 
   const handleNextClick = async () => {

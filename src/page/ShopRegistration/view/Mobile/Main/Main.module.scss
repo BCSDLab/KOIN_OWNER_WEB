@@ -64,13 +64,14 @@
 
   &__delete-img-button {
     position: relative;
-    right: 15px;
+    right: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f7941e;
     border-radius: 50%;
     height: 24px;
+    z-index: 999;
 
     svg {
       width: 24px;
