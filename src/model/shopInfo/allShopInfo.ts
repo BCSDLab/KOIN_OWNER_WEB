@@ -15,7 +15,7 @@ export const Shop = z.object({
   pay_bank: z.boolean(),
   pay_card: z.boolean(),
   open: z.array(Open),
-  main_category_id: z.number(),
+  main_category_id: z.number().optional(),
   category_ids: z.array(z.number()),
 });
 
