@@ -53,6 +53,7 @@ export const MyShopInfoRes = z.object({
   menu_categories: z.array(MenuCategory),
   bank: z.string().nullable(),
   account_number: z.string().nullable(),
+  main_category_id: z.number(),
 });
 
 export type MyShopInfoRes = z.infer<typeof MyShopInfoRes>;
