@@ -15,10 +15,11 @@
   background: #f5f5f5;
   padding: 12px 16px;
   border: none;
+  box-sizing: border-box;
 
   &::placeholder {
     color: #8E8E8E;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
   }
 }
