@@ -7,11 +7,13 @@ import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import { useFormContext, useWatch } from 'react-hook-form';
 import styles from './ShopCategory.module.scss';
 
-export default function ShopCategory({ onNext }:{ onNext: () => void }) {
+export default function ShopCategory({ onNext, onPrev }:{
+  onNext: () => void, onPrev: () => void
+}) {
   const [isError, setIsError] = useState(false);
   const { categoryList } = useMyShop();
   const { control, setValue } = useFormContext();
-  const categoryId = useWatch({ control, name: 'category_ids' });
+  const categoryId = useWatch({ control, name: 'category_ids', defaultValue: [] });
 
   const handleCategoryClick = (categoryInfo: CategoryProps) => {
     setValue('category_ids', [categoryInfo.id, 0]);
@@ -51,12 +53,20 @@ export default function ShopCategory({ onNext }:{ onNext: () => void }) {
         ))}
       </div>
       {isError && <ErrorMessage message={ERRORMESSAGE.category} />}
-      <div className={cn({
-        [styles.category__button]: true,
-        [styles['category__button--error']]: isError,
-      })}
-      >
-        <button type="button" onClick={handleNextClick}>다음</button>
+
+      <div className={styles.category__footer}>
+        <button className={styles.category__cancel} type="button" onClick={onPrev}>취소</button>
+        <button
+          className={cn({
+            [styles.category__next]: true,
+            [styles['category__next--disable']]: categoryId.length === 0,
+          })}
+          disabled={categoryId.length === 0}
+          type="button"
+          onClick={handleNextClick}
+        >
+          확인
+        </button>
       </div>
     </div>
   );
