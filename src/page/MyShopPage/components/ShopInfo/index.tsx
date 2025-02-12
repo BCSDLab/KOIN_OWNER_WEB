@@ -1,8 +1,7 @@
 import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CUTLERY from 'assets/svg/myshop/cutlery.svg?react';
-import GearIcon from 'assets/svg/myshop/gear.svg?react';
-import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import EditIcon from 'assets/svg/common/mobile-edit.svg?react';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -30,11 +29,6 @@ export default function ShopInfo({
     shopInfo.open[todayIndex].close_time,
   );
   const logger = useLogger();
-
-  const holidayIndex = shopInfo.open.filter((day) => day.closed)
-    .map((day) => DAY_OF_WEEK.indexOf(day.day_of_week));
-  const holiday = holidayIndex.map((day) => WEEK[day]);
-
   if (openTime === '24:00') setOpenTime('00:00');
   if (closeTime === '24:00') setCloseTime('00:00');
 
@@ -46,10 +40,6 @@ export default function ShopInfo({
     {
       title: '운영시간',
       data: `${openTime} ~ ${closeTime}`,
-    },
-    {
-      title: '휴무일',
-      data: holiday.length > 0 ? `매주 ${holiday.join('요일, ')}요일` : '없음',
     },
     {
       title: '주소정보',
@@ -86,22 +76,22 @@ export default function ShopInfo({
                 </div>
               ))}
           </div>
-          <div className={styles.mobileshop__btn}>
-            <button
-              type="button"
-              className={styles['mobileshop__update-btn']}
-              onClick={() => {
-                openEditShopInfoModal();
-                logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit', value: '가게 정보 수정' });
-              }}
-            >
-              가게 관리하기
-              <GearIcon />
-            </button>
-          </div>
           <div className={styles.mobileshop__info}>
             <div className={styles.mobileshop__title}>
               <h1 className={styles.mobileshop__name}>{shopInfo.name}</h1>
+              <div className={styles.mobileshop__btn}>
+                <button
+                  type="button"
+                  className={styles['mobileshop__edit-btn']}
+                  onClick={() => {
+                    openEditShopInfoModal();
+                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit', value: '가게 정보 수정' });
+                  }}
+                >
+                  <EditIcon />
+                  수정하기
+                </button>
+              </div>
             </div>
             <div className={styles.shop__content}>
               {content.map((item) => (
