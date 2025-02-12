@@ -1,7 +1,7 @@
 .content {
   display: flex;
-  margin: 0 auto;
-  width: 297px;
+  width: calc(100% - 48px);
+  padding: 0 24px;
   flex-direction: column;
   font-weight: 500;
   height: calc(100vh - 100px);
