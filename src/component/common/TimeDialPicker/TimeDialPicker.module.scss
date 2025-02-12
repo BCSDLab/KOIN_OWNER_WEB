@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-picker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.dayButton {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 9px 1px rgb(0 0 0 / 6%);
+}
+
+.dayButtonSat {
+  color: rgb(58 112 226 / 100%);
+}
+
+.dayButtonSun {
+  color: rgb(236 45 48 / 100%);
+}
+
+.dayButtonActive {
+  background: #4590bb;
+  color: white;
+}

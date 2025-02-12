@@ -1,12 +1,10 @@
-import PreviousStep from 'component/Auth/PreviousStep';
-import SubTitle from 'component/Auth/SubTitle';
-import TimePicker from 'page/ShopRegistration/component/TimePicker';
-import { WEEK } from 'utils/constant/week';
+// import TimePicker from 'page/ShopRegistration/component/TimePicker';
+// import { WEEK } from 'utils/constant/week';
 import { createPortal } from 'react-dom';
-import useModalStore, { OperatingTime } from 'store/modalStore';
-import cn from 'utils/ts/className';
-import { useFunnel } from 'utils/hooks/useFunnel';
-import PROGRESS_TITLE from 'utils/constant/progress';
+// import useModalStore, { OperatingTime } from 'store/modalStore';
+// import cn from 'utils/ts/className';
+
+import TimeDialPicker from 'component/common/TimeDialPicker';
 import styles from './OperateTimeMobile.module.scss';
 
 interface OperateTimeMobileProps {
@@ -15,43 +13,49 @@ interface OperateTimeMobileProps {
 }
 
 export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMobileProps) {
-  const { currentStep } = useFunnel('세부 정보 입력');
-  const currentIndex = PROGRESS_TITLE.findIndex((step) => step.title === currentStep);
+  // const { shopClosedState } = useModalStore();
 
-  const { shopClosedState } = useModalStore();
-
-  const handleShopClosedChange = (day: typeof WEEK[number]) => {
-    useModalStore.setState((prev) => {
-      const newState: {
-        openTimeState: OperatingTime;
-        closeTimeState: OperatingTime;
-        shopClosedState: { [key: string]: boolean }
-      } = {
-        ...prev,
-        shopClosedState: {
-          ...prev.shopClosedState,
-          [day]: !prev.shopClosedState[day],
-        },
-      };
-      if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
-        newState.openTimeState[day] = '00:00';
-        newState.closeTimeState[day] = '00:00';
-      }
-      return newState;
-    });
-  };
+  // const handleShopClosedChange = (day: typeof WEEK[number]) => {
+  //   useModalStore.setState((prev) => {
+  //     const newState: {
+  //       openTimeState: OperatingTime;
+  //       closeTimeState: OperatingTime;
+  //       shopClosedState: { [key: string]: boolean }
+  //     } = {
+  //       ...prev,
+  //       shopClosedState: {
+  //         ...prev.shopClosedState,
+  //         [day]: !prev.shopClosedState[day],
+  //       },
+  //     };
+  //     if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
+  //       newState.openTimeState[day] = '00:00';
+  //       newState.closeTimeState[day] = '00:00';
+  //     }
+  //     return newState;
+  //   });
+  // };
 
   if (!isOpen) return null;
   return createPortal(
-    <div>
-      <div className={styles.container}>
-        <div className={styles['chevron-left']}>
-          <PreviousStep step={currentIndex} clickEvent={closeModal} />
-        </div>
+    <div
+      className={styles.wrapper}
+      role="button"
+      tabIndex={0}
+      onClick={closeModal}
+      onKeyDown={(e) => e.key === 'Escape' && closeModal()}
+    >
+      <div
+        className={styles.container}
+        onClick={(e) => e.stopPropagation()}
+        role="presentation"
+      >
         <div className={styles.content}>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="시간 설정" bottomText="" />
-          <div className={styles.content__info}>평일/주말 운영시간</div>
-          <table className={styles.table}>
+          <div className={styles.content__title}>
+            운영시간 설정
+          </div>
+          <TimeDialPicker />
+          {/* <table className={styles.table}>
             <thead>
               <tr>
                 <th>요일</th>
@@ -83,10 +87,13 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
           <div className={styles.table__button}>
-            <button type="button" onClick={closeModal}>
-              다음
+            <button className={styles.cancel} type="button" onClick={closeModal}>
+              취소
+            </button>
+            <button className={styles.add} type="button" onClick={closeModal}>
+              추가하기
             </button>
           </div>
         </div>

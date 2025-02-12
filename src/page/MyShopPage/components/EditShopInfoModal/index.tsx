@@ -186,15 +186,6 @@ export default function EditShopInfoModal({
     logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_confirm', value: '가게 정보 수정 완료' });
   };
 
-  if (isMobile && isOperateTimeModalOpen) {
-    return (
-      <OperateTimeMobile
-        isOpen={isOperateTimeModalOpen}
-        closeModal={closeOperateTimeModal}
-      />
-    );
-  }
-
   return (
     <div>
       {isMobile ? (
@@ -645,6 +636,10 @@ export default function EditShopInfoModal({
           </div>
         </form>
       )}
+      {isMobile && isOperateTimeModalOpen && (
+        <OperateTimeMobile isOpen closeModal={closeOperateTimeModal} />
+      )}
+
     </div>
   );
 }
