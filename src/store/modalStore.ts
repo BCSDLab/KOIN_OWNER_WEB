@@ -17,7 +17,7 @@ interface ModalStore {
   resetOperatingTime: ()=> void;
 }
 
-const initialOperatingTime: OperatingTime = {
+export const initialOperatingTime: OperatingTime = {
   일: '00:00',
   월: '00:00',
   화: '00:00',

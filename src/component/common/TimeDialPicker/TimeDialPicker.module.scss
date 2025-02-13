@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .day-picker-container {
@@ -33,4 +34,76 @@
 .dayButtonActive {
   background: #4590bb;
   color: white;
+}
+
+.button {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 70px;
+  margin-right: 13px;
+
+  .cancel {
+    padding: 8px 40px;
+    background-color: #ffffff;
+    font-weight: 500;
+    font-size: 15px;
+    color: #cacaca;
+    border-radius: 8px;
+    border: 1px solid #cacaca;
+    width: 36%;
+    height: 44px;
+    cursor: pointer;
+  }
+
+  .add {
+    padding: 8px 40px;
+    background-color: #175c8e;
+    font-weight: 500;
+    font-size: 15px;
+    color: #ffffff;
+    width: 36%;
+    height: 44px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+.time-picker-container {
+  width: 100%;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.time-picker {
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  border-top: solid 1px #e1e1e1;
+
+  &__label {
+    margin-bottom: 8px;
+  }
+
+  &__dial {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.scrollable {
+  position: "relative";
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none;
 }

@@ -1,10 +1,10 @@
-// import TimePicker from 'page/ShopRegistration/component/TimePicker';
-// import { WEEK } from 'utils/constant/week';
 import { createPortal } from 'react-dom';
-// import useModalStore, { OperatingTime } from 'store/modalStore';
-// import cn from 'utils/ts/className';
-
+import DeleteIcon from 'assets/svg/myshop/time-delete-icon.svg?react';
+import AddTimeIcon from 'assets/svg/myshop/add-time-icon.svg?react';
 import TimeDialPicker from 'component/common/TimeDialPicker';
+import { useState } from 'react';
+import useModalStore from 'store/modalStore';
+import { WEEK } from 'utils/constant/week';
 import styles from './OperateTimeMobile.module.scss';
 
 interface OperateTimeMobileProps {
@@ -13,30 +13,89 @@ interface OperateTimeMobileProps {
 }
 
 export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMobileProps) {
-  // const { shopClosedState } = useModalStore();
+  const {
+    openTimeState,
+    closeTimeState,
+    shopClosedState,
+    setShopClosedState,
+  } = useModalStore();
+  const [step, setStep] = useState(0);
 
-  // const handleShopClosedChange = (day: typeof WEEK[number]) => {
-  //   useModalStore.setState((prev) => {
-  //     const newState: {
-  //       openTimeState: OperatingTime;
-  //       closeTimeState: OperatingTime;
-  //       shopClosedState: { [key: string]: boolean }
-  //     } = {
-  //       ...prev,
-  //       shopClosedState: {
-  //         ...prev.shopClosedState,
-  //         [day]: !prev.shopClosedState[day],
-  //       },
-  //     };
-  //     if (prev.shopClosedState[day] && !newState.shopClosedState[day]) {
-  //       newState.openTimeState[day] = '00:00';
-  //       newState.closeTimeState[day] = '00:00';
-  //     }
-  //     return newState;
-  //   });
-  // };
+  function handleSetHoliday(days: string[]) {
+    const newClosed = { ...shopClosedState };
+    days.forEach((day) => {
+      newClosed[day] = true;
+    });
+    setShopClosedState(newClosed);
+  }
+
+  /**
+   * 휴무/운영 요일을 div 배열로 만들어 반환
+   */
+  function matchDays() {
+    const closedDays = WEEK.filter((day) => shopClosedState[day]);
+    const closedDaysLine = closedDays.length > 0
+      ? `${closedDays.join(', ')} : `
+      : '';
+
+    const openDays = WEEK.filter((day) => !shopClosedState[day]);
+    const groupedOpenTimes: Record<string, string[]> = {};
+
+    openDays.forEach((day) => {
+      const open = openTimeState[day] || '00:00';
+      const close = closeTimeState[day] || '00:00';
+      const timeKey = `${open} ~ ${close}`;
+
+      if (!groupedOpenTimes[timeKey]) {
+        groupedOpenTimes[timeKey] = [];
+      }
+      groupedOpenTimes[timeKey].push(day);
+    });
+
+    const itemEls: JSX.Element[] = [];
+
+    if (closedDaysLine) {
+      itemEls.push(
+        <div key="closedDays" className={styles.item}>
+          <div className={styles.item__time}>
+            {closedDaysLine}
+            <span className={styles['item__time--close']}>휴무</span>
+          </div>
+          <DeleteIcon />
+        </div>,
+      );
+    }
+
+    Object.entries(groupedOpenTimes).forEach(([timeKey, daysArr]) => {
+      itemEls.push(
+        <div key={timeKey} className={styles.item}>
+          <div className={styles.item__time}>
+            {daysArr.join(', ')}
+            {' '}
+            :
+            <span className={styles['item__time--open']}>{timeKey}</span>
+          </div>
+          <DeleteIcon
+            onClick={() => handleSetHoliday(daysArr)}
+            className={styles.deleteIcon}
+          />
+        </div>,
+      );
+    });
+
+    return itemEls;
+  }
 
   if (!isOpen) return null;
+
+  const items = matchDays();
+  const itemCount = items.length;
+
+  const maxSlots = 5;
+  const emptySlotsCount = itemCount < maxSlots ? maxSlots - itemCount : 0;
+
+  const showRegisterButton = itemCount < 6;
+
   return createPortal(
     <div
       className={styles.wrapper}
@@ -54,48 +113,53 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
           <div className={styles.content__title}>
             운영시간 설정
           </div>
-          <TimeDialPicker />
-          {/* <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>요일</th>
-                <th>시간</th>
-                <th>휴무</th>
-              </tr>
-            </thead>
-            <tbody>
-              {WEEK.map((day) => (
-                <tr className={styles.table__data} key={day}>
-                  <td>{day}</td>
-                  <td className={cn({
-                    [styles['table__time-picker']]: true,
-                    [styles['table__time-picker--selected']]: shopClosedState[day],
-                  })}
-                  >
-                    <TimePicker operatingDay={day} isOpenTimePicker />
-                    {' ~ '}
-                    <TimePicker operatingDay={day} isOpenTimePicker={false} />
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      onChange={() => handleShopClosedChange(day)}
-                      className={styles.table__checkbox}
-                      checked={shopClosedState[day]}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
-          <div className={styles.table__button}>
-            <button className={styles.cancel} type="button" onClick={closeModal}>
-              취소
-            </button>
-            <button className={styles.add} type="button" onClick={closeModal}>
-              추가하기
-            </button>
-          </div>
+
+          {step === 0 && (
+            <div className={styles['time-group']}>
+              <div className={styles.list}>
+                {items}
+
+                {Array.from({ length: emptySlotsCount }).map(() => (
+                  <div className={styles.item}>
+                    <div className={styles.item__time} />
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className={styles['add-button']}
+                type="button"
+                onClick={() => setStep(1)}
+              >
+                설정 시간 추가
+                <AddTimeIcon />
+              </button>
+              <div className={styles.button}>
+                <button
+                  className={styles.cancel}
+                  type="button"
+                  onClick={() => closeModal()}
+                >
+                  취소
+                </button>
+
+                {showRegisterButton && (
+                <button
+                  className={styles.add}
+                  type="button"
+                  onClick={() => setStep(1)}
+                >
+                  등록하기
+                </button>
+                )}
+              </div>
+            </div>
+          )}
+          {step === 1 && (
+            <div>
+              <TimeDialPicker setStep={setStep} />
+            </div>
+          )}
         </div>
       </div>
     </div>,
