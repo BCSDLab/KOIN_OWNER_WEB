@@ -24,6 +24,8 @@ interface ButtonProps {
   onClick?: () => void;
   onSubmit?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  primary?: boolean;
+  secondary?: boolean;
 }
 
 interface ValidationMessageProps {
@@ -71,7 +73,7 @@ export function Input({
             value: pattern,
             message: patternMessage,
           } : undefined,
-          onChange, // 전화번호 변경 핸들러 추가
+          onChange,
         })}
         className={styles.input}
         placeholder={placeholder}
@@ -87,7 +89,7 @@ export function Input({
 }
 
 export function Button({
-  disabled = false, children, onClick, type = 'button', onSubmit,
+  disabled = false, children, onClick, type = 'button', onSubmit, primary = true, secondary = false,
 }: ButtonProps) {
   return (
     <button
@@ -100,7 +102,8 @@ export function Button({
       }) : undefined}
       disabled={disabled}
       className={cn({
-        [styles.button]: true,
+        [styles.button]: primary,
+        [styles.button__secondary]: secondary,
         [styles.button__disabled]: disabled,
       })}
     >

@@ -3,6 +3,7 @@
   font-size: 20px;
   line-height: 32px;
   margin: 25px 0;
+  white-space: pre-line;
 }
 
 .input-container {
@@ -38,6 +39,10 @@
   border-radius: 4px;
   padding: 12px 16px;
   cursor: pointer;
+
+  &__secondary {
+    background-color: #f7941e;
+  }
 
   &__disabled {
     background-color: #E1E1E1;
