@@ -12,8 +12,10 @@ function Header() {
   const { isMobile } = useMediaQuery();
 
   if ((pathname === ROUTES.Owner.AddMenu()
-    || pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false }))
-    || pathname.startsWith(ROUTES.Owner.Event({ isLink: false })))
+    || pathname.includes('modify-menu')
+    || pathname.startsWith(ROUTES.Owner.Event({ isLink: false }))
+    || pathname.startsWith(ROUTES.Owner.EditMenu())
+  )
     && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
@@ -26,9 +28,10 @@ function Header() {
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
         <div className={styles['add-menu-header__caption']}>
-          {pathname === ROUTES.Owner.AddMenu() && '메뉴추가'}
-          {pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false })) && '메뉴수정'}
+          {pathname === ROUTES.Owner.AddMenu() && '메뉴 추가'}
+          {pathname.includes('modify-menu') && '메뉴 수정'}
           {pathname.startsWith(ROUTES.Owner.Event({ isLink: false })) && '이벤트/공지 작성하기'}
+          {pathname.startsWith(ROUTES.Owner.EditMenu()) && '메뉴 편집'}
         </div>
       </header>
     );

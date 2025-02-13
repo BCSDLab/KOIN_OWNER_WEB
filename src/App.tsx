@@ -20,6 +20,7 @@ import LogPage from 'component/common/PageLog';
 import CommonLayout from 'page/Auth/components/Common';
 import FindPassword from 'page/Auth/FindPassword';
 import ROUTES from 'static/routes';
+import EditMenu from 'page/MyShopPage/components/EditMenu';
 
 interface ProtectedRouteProps {
   userTypeRequired: UserType;
@@ -51,6 +52,7 @@ function App() {
             <Route path={ROUTES.Owner.Root()} element={<MyShopPage />} />
             <Route path={ROUTES.Owner.ShopRegistration()} element={<ShopRegistration />} />
             <Route path={ROUTES.Owner.AddMenu()} element={<AddMenu />} />
+            <Route path={ROUTES.Owner.EditMenu()} element={<EditMenu />} />
             <Route path={ROUTES.Owner.ModifyMenu({ isLink: false })} element={<ModifyMenu />} />
             <Route path={ROUTES.Owner.ModifyInfo()} element={<PageNotFound />} />
             <Route path={ROUTES.Owner.MenuManagement()} element={<PageNotFound />} />

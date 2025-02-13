@@ -14,15 +14,13 @@ export const useStep = (type: Type) => {
   const [index, setIndex] = useState(0);
   const [isSearch, setIsSearch] = useState(false);
   const [isComplete, setIsComplete] = useState<boolean>(false);
-  const [isStepComplete, setIsStepComplete] = useState<boolean>(false);
   const [isShopSelect, setIsShopSelect] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const nextStep = () => {
-    if (isStepComplete && index + 1 < target.length) {
+    if (index + 1 < target.length) {
       setIndex((prev) => prev + 1);
-      setIsStepComplete(false);
-    } else if (isStepComplete && index + 1 === target.length) {
+    } else if (index + 1 === target.length) {
       setIsComplete(true);
     }
   };
@@ -33,7 +31,6 @@ export const useStep = (type: Type) => {
         setIsSearch(false);
       } else {
         setIndex((prev) => prev - 1);
-        setIsStepComplete(true); // step을 통과한 사람만 뒤로 갈 수 있음
       }
     } else navigate(-1);
   };
@@ -49,8 +46,6 @@ export const useStep = (type: Type) => {
     totalStep,
     isComplete,
     setIsComplete,
-    isStepComplete,
-    setIsStepComplete,
     isSearch,
     setIsSearch,
     isShopSelect,

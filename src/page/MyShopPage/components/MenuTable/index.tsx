@@ -2,19 +2,21 @@ import { useEffect, useState } from 'react';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
 import cn from 'utils/ts/className';
 import MENU_CATEGORY from 'utils/constant/menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ROUTES from 'static/routes';
 import styles from './MenuTable.module.scss';
 
 interface MenuTableProps {
   shopMenuCategories: MenuCategory[];
   onClickImage: (img: string[], index: number) => void;
+  isEdit?: boolean;
 }
 
 const HEADER_OFFSET = 133; // categories 높이
 
-function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
+function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTableProps) {
   const [categoryType, setCategoryType] = useState<string>(shopMenuCategories[0].name);
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     shopMenuCategories.forEach((menu) => {
@@ -27,6 +29,10 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
         }
       }
     });
+  };
+
+  const goEditPage = (id: number) => {
+    navigate(ROUTES.Owner.ModifyMenu({ id: String(id), isLink: true }));
   };
 
   useEffect(() => {
@@ -99,25 +105,6 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
             {menuCategories.menus.map((menu) => (
               menu.option_prices === null ? (
                 <div className={styles['menu-info']} key={menu.id}>
-                  {menu.image_urls.length > 0 ? (
-                    menu.image_urls.map((img, idx) => (
-                      <div key={`${img}`} className={styles.image}>
-                        <button
-                          className={styles.image__button}
-                          type="button"
-                          onClick={() => onClickImage(menu.image_urls, idx)}
-                        >
-                          <img src={`${img}`} alt={`${menu.name}`} />
-                        </button>
-                      </div>
-                    ))) : (
-                      <div className={styles['empty-image']}>
-                        <img
-                          src="https://static.koreatech.in/assets/img/mainlogo2.png"
-                          alt="KOIN service logo"
-                        />
-                      </div>
-                  )}
                   <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                     <div className={styles['menu-info__card']}>
                       <span title={menu.name}>{menu.name}</span>
@@ -129,6 +116,33 @@ function MenuTable({ shopMenuCategories, onClickImage }: MenuTableProps) {
                       </span>
                     </div>
                   </Link>
+                  {isEdit && (
+                  <button
+                    className={styles['menu-info__modify-button']}
+                    type="button"
+                    onClick={() => goEditPage(menu.id)}
+                  >
+                    변경
+                  </button>
+                  )}
+                  {menu.image_urls.length > 0 ? (
+                    <div key={`${menu.image_urls[0]}`} className={styles.image}>
+                      <button
+                        className={styles.image__button}
+                        type="button"
+                        onClick={() => onClickImage(menu.image_urls, 0)}
+                      >
+                        <img src={`${menu.image_urls[0]}`} alt={`${menu.name}`} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={styles['empty-image']}>
+                      <img
+                        src="https://static.koreatech.in/assets/img/mainlogo2.png"
+                        alt="KOIN service logo"
+                      />
+                    </div>
+                  )}
                 </div>
               ) : (
                 menu.option_prices.map((item) => (

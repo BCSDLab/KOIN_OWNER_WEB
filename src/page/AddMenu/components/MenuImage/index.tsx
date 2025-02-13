@@ -58,31 +58,32 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
             <div className={styles.mobile__header__condition}>(최대 이미지 3장)</div>
           </div>
           <div className={styles['mobile__new-image__container']}>
-            {!isComplete && (
-              <button
-                type="button"
-                className={styles['mobile__new-image__add-btn']}
-                onClick={openAddMenuImgModal}
-              >
-                <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
-                <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
-              </button>
-            )}
             {imageUrl.map((image, index) => (
               <div key={image} className={styles['mobile__new-image__item']}>
                 <img src={image} alt={`Selected ${index + 1}`} className={styles['mobile__new-image__selected']} />
                 {!isComplete && (
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteImage(image)}
-                    className={styles['mobile__delete-img-button']}
-                    aria-label="Delete image"
-                  >
-                    <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteImage(image)}
+                  className={styles['mobile__delete-img-button']}
+                  aria-label="Delete image"
+                >
+                  <MobileDeleteImgIcon className={styles['mobile__delete-img-icon']} />
+                </button>
                 )}
               </div>
             ))}
+            {!isComplete && (
+              Array.from({ length: 3 - imageUrl.length }).map(() => (
+                <button
+                  type="button"
+                  className={styles['mobile__new-image__add-btn']}
+                  onClick={openAddMenuImgModal}
+                >
+                  <ImgPlusIcon className={styles['mobile__new-image__plusIcon']} />
+                  <div className={styles['mobile__new-image__add-caption']}>이미지 추가</div>
+                </button>
+              )))}
           </div>
           <AddMenuImgModal
             isOpen={isAddMenuImgModal}

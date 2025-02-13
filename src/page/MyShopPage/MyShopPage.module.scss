@@ -112,3 +112,15 @@ a {
     }
   }
 }
+
+.edit-wrapper {
+  padding: 10px 20px;
+  border-bottom: 1.5px solid #eee;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
