@@ -35,6 +35,20 @@ export const CATEGORY_OWNER: HeaderCategory[] = [
         planFlag: true,
         tag: null,
       },
+      {
+        title: '메뉴 편집',
+        link: ROUTES.Owner.EditMenu(),
+        newFlag: true,
+        planFlag: true,
+        tag: null,
+      },
+      {
+        title: '메뉴 추가',
+        link: ROUTES.Owner.AddMenu(),
+        newFlag: true,
+        planFlag: true,
+        tag: null,
+      },
       // {
       //   title: '메뉴관리',
       //   link: '/owner/menu-management',

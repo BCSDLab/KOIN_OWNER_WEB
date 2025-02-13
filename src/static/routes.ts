@@ -15,6 +15,7 @@ const ROUTES = {
     Root: () => '/owner',
     ShopRegistration: () => '/owner/shop-registration',
     AddMenu: () => '/owner/add-menu',
+    EditMenu: () => '/owner/edit-menu',
     ModifyMenu: ({ id, isLink }: ROUTESParams<'id'>) => (isLink ? `/owner/modify-menu/${id}` : '/owner/modify-menu/:id'),
     ModifyInfo: () => '/owner/modify-info',
     MenuManagement: () => '/owner/menu-management',
