@@ -2,6 +2,7 @@
 
 .categories {
   display: flex;
+  justify-content: space-between;
   position: sticky;
   top: 77px;
   gap: 13px;
