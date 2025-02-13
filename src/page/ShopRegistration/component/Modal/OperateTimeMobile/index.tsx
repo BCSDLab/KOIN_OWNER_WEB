@@ -94,8 +94,6 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
   const maxSlots = 5;
   const emptySlotsCount = itemCount < maxSlots ? maxSlots - itemCount : 0;
 
-  const showRegisterButton = itemCount < 6;
-
   return createPortal(
     <div
       className={styles.wrapper}
@@ -126,14 +124,17 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
                 ))}
               </div>
 
-              <button
-                className={styles['add-button']}
-                type="button"
-                onClick={() => setStep(1)}
-              >
-                설정 시간 추가
-                <AddTimeIcon />
-              </button>
+              {itemCount < 6 && (
+                <button
+                  className={styles['add-button']}
+                  type="button"
+                  onClick={() => setStep(1)}
+                >
+                  설정 시간 추가
+                  <AddTimeIcon />
+                </button>
+              )}
+
               <div className={styles.button}>
                 <button
                   className={styles.cancel}
@@ -142,16 +143,13 @@ export default function OperateTimeMobile({ isOpen, closeModal }: OperateTimeMob
                 >
                   취소
                 </button>
-
-                {showRegisterButton && (
                 <button
                   className={styles.add}
                   type="button"
-                  onClick={() => setStep(1)}
+                  onClick={() => closeModal()}
                 >
                   등록하기
                 </button>
-                )}
               </div>
             </div>
           )}
