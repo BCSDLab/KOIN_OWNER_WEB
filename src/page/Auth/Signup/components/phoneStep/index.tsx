@@ -2,7 +2,7 @@ import {
   useFormContext, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';
 import {
-  useState, ChangeEvent, useEffect,
+  useState, ChangeEvent, useEffect, useRef,
 } from 'react';
 import { verificationAuthCode, getPhoneAuthCode } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
@@ -59,6 +59,9 @@ const useCheckCode = (
   setError: UseFormSetError<Register>,
 ) => {
   const [isCertified, setIsCertified] = useState<boolean>(false);
+  const usedCode = useRef<string>('');
+  const reset = () => setIsCertified(false);
+  const isLoading = useRef(false);
   const mutation = useMutation({
     mutationFn: () => verificationAuthCode({
       certification_code: verificationCode,
@@ -70,6 +73,7 @@ const useCheckCode = (
       } else {
         sendClientError(e);
       }
+      setIsCertified(false);
     },
     onSuccess: (res) => {
       sessionStorage.setItem('access_token', res.token);
@@ -77,7 +81,9 @@ const useCheckCode = (
     },
   });
 
-  return { mutation, isCertified };
+  return {
+    mutation, isCertified, isLoading, reset, usedCode,
+  };
 };
 
 function Timer({
@@ -144,6 +150,13 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const [seconds, setSeconds] = useState(180);
   const [hasConfilct, setHasConflict] = useState(false);
   const [phoneNumber, verificationCode] = watch(['phone_number', 'verificationCode']);
+  const {
+    mutation, isCertified, reset, usedCode,
+  } = useCheckCode(
+    verificationCode,
+    phoneNumber,
+    setError,
+  );
   const onSendCodeSucess = () => {
     setSteps((prev) => prev + 1);
     setHasConflict(false);
@@ -162,6 +175,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const onRevalidateCodeSuccess = () => {
     setSeconds(180);
     clearErrors();
+    reset();
   };
 
   const sendCode = useSendCode({
@@ -171,12 +185,6 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const revalidataCode = useSendCode({
     getValues, onError: onSendCodeError, onSucess: onRevalidateCodeSuccess,
   });
-
-  const { mutation, isCertified } = useCheckCode(
-    verificationCode,
-    phoneNumber,
-    setError,
-  );
 
   const setCode = (e: ChangeEvent<HTMLInputElement>) => setValue('verificationCode', e.target.value);
 
@@ -190,10 +198,18 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   };
 
   useEffect(() => {
-    if (verificationCode.length === 6 && mutation.isIdle && sendCode.isSuccess) {
+    if (verificationCode.length === 6
+      && usedCode.current !== verificationCode
+      && sendCode.isSuccess) {
+      usedCode.current = verificationCode;
       mutation.mutate();
     }
-  }, [verificationCode, mutation, sendCode]);
+
+    if (errors.verificationCode || verificationCode.length !== 6) {
+      usedCode.current = verificationCode;
+      reset();
+    }
+  }, [verificationCode, mutation, sendCode, usedCode, reset, errors]);
 
   return (
     <div className={styles['default-info']}>
@@ -256,6 +272,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
             onChange={setCode}
             placeholder="인증번호를 입력해주세요."
             inputMode="numeric"
+            maxLength={6}
             component={(
               <Timer
                 seconds={seconds}
