@@ -18,6 +18,7 @@ export default function CommonLayout() {
       company_number: '',
       name: '',
       password: '',
+      passwordConfirm: '',
       phone_number: '',
       shop_id: null,
       shop_name: '',

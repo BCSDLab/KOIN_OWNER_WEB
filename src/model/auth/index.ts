@@ -83,6 +83,7 @@ interface FindPassword {
   phone_number: string;
   certification_code: string;
   password: string;
+  passwordConfirm: string;
 }
 
 export interface Register extends FindPassword {

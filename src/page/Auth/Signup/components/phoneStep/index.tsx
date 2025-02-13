@@ -345,6 +345,7 @@ function PasswordStep({ nextStep }: Props) {
   const [password, passwordConfirm] = watch(['password', 'passwordConfirm']);
 
   const isValidPassword = password.length >= 6 && !errors.password;
+
   return (
     <div className={styles['default-info']}>
       <div>
@@ -369,15 +370,15 @@ function PasswordStep({ nextStep }: Props) {
           register={register}
           required
           requiredMessage="비밀번호를 확인해주세요."
-          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/}
+          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,18}$/}
           patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.passwordConfirm ? 'text' : 'password'}
           placeholder="비밀번호를 다시 입력해주세요."
           component={<BlindButton isBlind={!isBlind.passwordConfirm} onClick={() => toggleBlindState('passwordConfirm')} />}
         />
         <ValidationMessage
-          message={password.length >= 6 && password === passwordConfirm && !errors.passwordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : errors.passwordConfirm?.message}
-          isError={!!errors.passwordConfirm}
+          message={password.length >= 6 && password === passwordConfirm && !errors.passwordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : '비밀번호가 일치하지 않습니다.'}
+          isError={password !== passwordConfirm}
         />
       </div>
       <Button
