@@ -26,6 +26,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   primary?: boolean;
   secondary?: boolean;
+  info?: boolean;
 }
 
 interface ValidationMessageProps {
@@ -89,7 +90,7 @@ export function Input({
 }
 
 export function Button({
-  disabled = false, children, onClick, type = 'button', onSubmit, primary = true, secondary = false,
+  disabled = false, children, onClick, type = 'button', onSubmit, primary = true, secondary = false, info = false,
 }: ButtonProps) {
   return (
     <button
@@ -104,6 +105,7 @@ export function Button({
       className={cn({
         [styles.button]: primary,
         [styles.button__secondary]: secondary,
+        [styles.button__info]: info,
         [styles.button__disabled]: disabled,
       })}
     >

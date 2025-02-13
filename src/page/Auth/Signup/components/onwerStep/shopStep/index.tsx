@@ -46,6 +46,7 @@ export default function ShopStep({ nextStep }: DefaultProps) {
         />
         <Button
           onClick={() => setIsShowSearch(true)}
+          secondary
         >
           <div className={styles.center}>
             등록된 가게 검색
