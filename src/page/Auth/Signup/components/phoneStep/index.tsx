@@ -354,7 +354,7 @@ function PasswordStep({ nextStep }: Props) {
           register={register}
           required
           requiredMessage="비밀번호를 입력해주세요."
-          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/}
+          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,18}$/}
           patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.password ? 'text' : 'password'}
           placeholder="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
