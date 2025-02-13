@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
+import { useState } from 'react';
+import OwnerStep from './components/onwerStep';
 import AgreeStep from './components/agreeStep';
-import OwnerInfoStep from './components/ownerInfoStep';
-import PhoneStep from './components/phoneStep';
-import SearchShop from './components/searchShop';
+import AuthenticationStep from './components/phoneStep';
 
 interface SelectOptions {
   personal: boolean;
@@ -19,7 +18,6 @@ const initialSelectOption: SelectOptions = {
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
   const steps = useOutletContext<OutletProps >();
-  const [stepPhoneComplete, setStepPhoneComplete] = useState(false);
 
   const handleSelect = (option: keyof SelectOptions | 'all') => {
     if (option === 'all') {
@@ -36,44 +34,22 @@ export default function SignUp() {
     }
   };
 
-  useEffect(() => {
-    setSelectItems(initialSelectOption);
-  }, [steps.index]);
-
-  useEffect(() => {
-    if (selectItems.koin && selectItems.personal) {
-      steps.setIsStepComplete(true);
-    } else {
-      steps.setIsStepComplete(false);
-    }
-  }, [selectItems, steps]);
-
-  useEffect(() => {
-  }, [steps.setIsStepComplete]);
-
-  useEffect(() => {
-    if (stepPhoneComplete) {
-      steps.setIsStepComplete(true);
-    }
-  }, [stepPhoneComplete, steps]);
-
   return (
     <>
+
       {steps.index === 0 && (
-        <AgreeStep selectItems={selectItems} handleSelect={handleSelect} />
+        <AgreeStep
+          selectItems={selectItems}
+          handleSelect={handleSelect}
+          nextStep={steps.nextStep}
+        />
       )}
       {steps.index === 1 && (
-        <PhoneStep setIsStepComplete={setStepPhoneComplete} />
+        <AuthenticationStep nextStep={steps.nextStep} />
       )}
-      {steps.index === 2 && (steps.isSearch
-        ? (
-          <SearchShop />
-        ) : (
-          <OwnerInfoStep
-            onSearch={() => steps.setIsSearch(true)}
-            setIsStepComplete={setStepPhoneComplete}
-          />
-        )
+
+      {steps.index === 2 && (
+        <OwnerStep complete={() => steps.setIsComplete(true)} />
       )}
     </>
   );
