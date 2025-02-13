@@ -223,7 +223,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
             required
             requiredMessage="올바른 번호가 아닙니다. 다시 입력해주세요."
             pattern={/^\d{11}$/}
-            patternMessage="숫자만 입력 가능합니다"
+            patternMessage="올바른 번호가 아닙니다. 다시 입력해주세요."
             onChange={handlePhoneNumberChange}
             placeholder="-없이 번호를 입력해주세요."
             inputMode="numeric"
