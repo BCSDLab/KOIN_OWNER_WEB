@@ -68,7 +68,7 @@
     @include media.media-breakpoint-down(mobile) {
       width: 100%;
       height: 35px;
-      border: 0.5px solid #898a8d;
+      border: 0.5px solid #cacaca;
       padding: 8px;
       font-size: 14px;
       box-sizing: border-box;
@@ -136,11 +136,17 @@
     @include media.media-breakpoint-down(mobile) {
       width: 100%;
       height: 35px;
-      border: 0.5px solid #898a8d;
+      border: 0.5px solid #cacaca;
       padding: 8px;
       text-align: left;
       box-sizing: border-box;
       font-size: 14px;
+      border-radius: 8px;
+
+      &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
     }
   }
 

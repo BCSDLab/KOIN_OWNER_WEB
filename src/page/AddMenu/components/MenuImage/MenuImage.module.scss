@@ -132,6 +132,7 @@
       gap: 16px;
       white-space: nowrap;
       align-items: center;
+      justify-content: space-around;
       height: 170px;
     }
 
@@ -140,8 +141,8 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 137px;
-      height: 137px;
+      width: 100px;
+      height: 100px;
       flex-shrink: 0;
       border: 0.5px solid #a1a1a1;
       background-color: white;
@@ -168,13 +169,13 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      width: 137px;
-      height: 137px;
+      width: 100px;
+      height: 100px;
     }
 
     &__selected {
-      max-width: 137px;
-      max-height: 137px;
+      width: 100px;
+      height: 100px;
     }
   }
 

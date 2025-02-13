@@ -102,7 +102,7 @@ export default function PriceInput({
       >
         <MobilePlusIcon className={styles['add-price-button__icon']} />
         <span className={styles['add-price-button__text']}>
-          사이즈 추가
+          가격 추가
         </span>
       </button>
     </>

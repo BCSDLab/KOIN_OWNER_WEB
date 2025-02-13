@@ -53,8 +53,7 @@
 }
 
 .menu-info {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   padding: 20px;
   gap: 20px;
   border-bottom: 1px solid #eee;
@@ -85,7 +84,7 @@
 
       @include media.media-breakpoint-down(mobile) {
         padding-bottom: 12px;
-        width: 250px;
+        width: 200px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -101,15 +100,18 @@
       }
     }
   }
+
+  &__modify-button {
+    background: none;
+    color: #175c8e;
+    height: min-content;
+    cursor: pointer;
+  }
 }
 
 .image {
   display: flex;
   justify-content: center;
-
-  &:not(:first-child) {
-    display: none;
-  }
 
   &__button {
     border: none;
