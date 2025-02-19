@@ -360,6 +360,13 @@ function PasswordStep({ nextStep }: { nextStep: () => void }) {
           || !!errors.passwordConfirm
           || password.length < 6;
 
+  let message = '';
+  if (passwordConfirm !== '') {
+    message = !isValidPasswordConfirm
+      ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.'
+      : '비밀번호가 일치하지 않습니다.';
+  }
+
   return (
     <div className={styles['default-info']}>
       <div>
@@ -401,8 +408,8 @@ function PasswordStep({ nextStep }: { nextStep: () => void }) {
 )}
         />
         <ValidationMessage
-          message={!isValidPasswordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : '비밀번호가 일치하지 않습니다.'}
-          isError={isValidPasswordConfirm}
+          message={message}
+          isError={passwordConfirm === '' ? false : isValidPasswordConfirm}
         />
       </div>
       <Button

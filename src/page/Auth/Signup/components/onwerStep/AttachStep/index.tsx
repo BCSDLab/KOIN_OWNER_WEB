@@ -169,12 +169,15 @@ export default function AttachStep({ nextStep }: DefaultProps) {
           name="shop_number"
           inputMode="numeric"
           placeholder="-없이 가게 연락처를 입력해주세요."
+          pattern={/^\d{10,11}$/}
+          patternMessage="10~11자리의 숫자만 입력해주세요."
           required
-          requiredMessage="사업자 등록증을 첨부해주세요."
+          requiredMessage="가게 연락처를 입력해주세요."
+          maxLength={11}
         />
         <ValidationMessage
-          isError={!!errors.attachment_urls}
-          message={errors.attachment_urls?.message}
+          isError={!!errors.shop_number}
+          message={errors.shop_number?.message}
         />
         <UploadStep />
       </div>
