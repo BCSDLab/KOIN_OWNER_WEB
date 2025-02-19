@@ -7,7 +7,6 @@ import {
 import { verificationAuthCode, getPhoneAuthCode } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { PhoneNumberRegisterParam } from 'model/register';
-import showToast from 'utils/ts/showToast';
 import {
   Button, Input, Title, ValidationMessage,
 } from 'page/Auth/components/Common/form';
@@ -18,6 +17,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import ROUTES from 'static/routes';
 import { TopBar } from 'page/Auth/components/Common';
+import CommonModal from 'page/Auth/Signup/components/Modals/commonModal';
 import styles from './phoneStep.module.scss';
 
 interface SendCodeParams {
@@ -48,7 +48,6 @@ const useSendCode = ({
     onError: (e) => onError(e),
     onSuccess: () => {
       if (onSucess) onSucess();
-      showToast('success', '인증번호를 발송했습니다');
     },
   });
 
@@ -151,6 +150,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const [isShowInquiry, setIsShowInquiry] = useState(false);
   const [seconds, setSeconds] = useState(180);
   const [hasConfilct, setHasConflict] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
   const [phoneNumber, verificationCode] = watch(['phone_number', 'verificationCode']);
   const {
     mutation, isCertified, reset, usedCode,
@@ -162,6 +162,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const onSendCodeSucess = () => {
     setSteps((prev) => prev + 1);
     setHasConflict(false);
+    setIsShowModal(true);
   };
   const onSendCodeError = (e: unknown) => {
     if (isKoinError(e)) {
@@ -178,6 +179,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
     setSeconds(180);
     clearErrors();
     reset();
+    setIsShowModal(true);
   };
 
   const sendCode = useSendCode({
@@ -215,6 +217,12 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
 
   return (
     <div className={styles['default-info']}>
+      {isShowModal && (
+      <CommonModal
+        title={`인증번호가 발송되었습니다. ${'\n'}잠시만 기다려 주세요.`}
+        onClose={() => setIsShowModal(false)}
+      />
+      )}
       <div>
         {steps >= 0 && (
         <div className={styles['phone-number']}>
