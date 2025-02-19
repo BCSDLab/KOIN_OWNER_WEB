@@ -21,10 +21,6 @@
     position: absolute;
     left: 0;
     cursor: pointer;
-
-    @include media.media-breakpoint-up(mobile) {
-      display: none;
-    }
   }
 }
 
