@@ -347,6 +347,10 @@ function PasswordStep({ nextStep }: { nextStep: () => void }) {
   const [password, passwordConfirm] = watch(['password', 'passwordConfirm']);
 
   const isValidPassword = password.length >= 6 && !errors.password;
+  const isValidPasswordConfirm = password !== passwordConfirm
+          || !!errors.password
+          || !!errors.passwordConfirm
+          || password.length < 6;
 
   return (
     <div className={styles['default-info']}>
@@ -361,7 +365,13 @@ function PasswordStep({ nextStep }: { nextStep: () => void }) {
           patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.password ? 'text' : 'password'}
           placeholder="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
-          component={<BlindButton isBlind={!isBlind.password} onClick={() => toggleBlindState('password')} />}
+          component={(
+            <BlindButton
+              isBlind={!isBlind.password}
+              onClick={() => toggleBlindState('password')}
+              classname={styles.background}
+            />
+)}
         />
         <ValidationMessage
           message={password.length >= 6 && !errors.password ? '사용 가능한 비밀번호입니다.' : errors.password?.message}
@@ -372,22 +382,23 @@ function PasswordStep({ nextStep }: { nextStep: () => void }) {
           register={register}
           required
           requiredMessage="비밀번호를 확인해주세요."
-          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,18}$/}
-          patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.passwordConfirm ? 'text' : 'password'}
           placeholder="비밀번호를 다시 입력해주세요."
-          component={<BlindButton isBlind={!isBlind.passwordConfirm} onClick={() => toggleBlindState('passwordConfirm')} />}
+          component={(
+            <BlindButton
+              isBlind={!isBlind.passwordConfirm}
+              onClick={() => toggleBlindState('passwordConfirm')}
+              classname={styles.background}
+            />
+)}
         />
         <ValidationMessage
-          message={password.length >= 6 && password === passwordConfirm && !errors.passwordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : '비밀번호가 일치하지 않습니다.'}
-          isError={password !== passwordConfirm}
+          message={!isValidPasswordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : '비밀번호가 일치하지 않습니다.'}
+          isError={isValidPasswordConfirm}
         />
       </div>
       <Button
-        disabled={password !== passwordConfirm
-          || !!errors.password
-          || !!errors.passwordConfirm
-          || password.length < 6}
+        disabled={isValidPasswordConfirm}
         onClick={nextStep}
       >
         다음
