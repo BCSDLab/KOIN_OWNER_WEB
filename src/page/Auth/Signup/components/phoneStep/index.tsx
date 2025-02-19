@@ -14,8 +14,10 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import BlindButton from 'page/Auth/components/Common/BlindButton';
 import { Register } from 'model/auth';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
 import ROUTES from 'static/routes';
+import { TopBar } from 'page/Auth/components/Common';
 import styles from './phoneStep.module.scss';
 
 interface SendCodeParams {
@@ -326,7 +328,7 @@ interface PasswordParams {
   passwordConfirm: string;
 }
 
-function PasswordStep({ nextStep }: Props) {
+function PasswordStep({ nextStep }: { nextStep: () => void }) {
   const {
     register, formState: { errors }, watch,
   } = useFormContext<PasswordParams>();
@@ -395,13 +397,38 @@ function PasswordStep({ nextStep }: Props) {
 }
 
 export default function AuthenticationStep({ nextStep }: Props) {
-  const [steps, setSteps] = useState(0);
+  const [infoSteps, setInfoSteps] = useState(0);
+  const {
+    index, totalStep, currentStep, previousStep,
+  } = useOutletContext<OutletProps>();
 
-  if (steps === 0) {
+  if (infoSteps === 0) {
     return (
-      <PhoneStep nextStep={() => setSteps((prev) => prev + 1)} />
+      <>
+        <TopBar
+          previousStep={() => previousStep()}
+          index={index}
+          totalStep={totalStep}
+          currentStep={currentStep}
+        />
+        <div className={styles.content}>
+          <PhoneStep nextStep={() => setInfoSteps((prev) => prev + 1)} />
+        </div>
+      </>
     );
   }
 
-  return <PasswordStep nextStep={nextStep} />;
+  return (
+    <>
+      <TopBar
+        previousStep={() => setInfoSteps((prev) => prev - 1)}
+        index={index}
+        totalStep={totalStep}
+        currentStep={currentStep}
+      />
+      <div className={styles.content}>
+        <PasswordStep nextStep={nextStep} />
+      </div>
+    </>
+  );
 }

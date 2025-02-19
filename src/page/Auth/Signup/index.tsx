@@ -1,9 +1,11 @@
 import { useOutletContext } from 'react-router-dom';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import { useState } from 'react';
+import { TopBar } from 'page/Auth/components/Common';
 import OwnerStep from './components/onwerStep';
 import AgreeStep from './components/agreeStep';
 import AuthenticationStep from './components/phoneStep';
+import styles from './SignUp.module.scss';
 
 interface SelectOptions {
   personal: boolean;
@@ -17,7 +19,7 @@ const initialSelectOption: SelectOptions = {
 
 export default function SignUp() {
   const [selectItems, setSelectItems] = useState<SelectOptions>(initialSelectOption);
-  const steps = useOutletContext<OutletProps >();
+  const steps = useOutletContext<OutletProps>();
 
   const handleSelect = (option: keyof SelectOptions | 'all') => {
     if (option === 'all') {
@@ -36,16 +38,27 @@ export default function SignUp() {
 
   return (
     <>
-
       {steps.index === 0 && (
-        <AgreeStep
-          selectItems={selectItems}
-          handleSelect={handleSelect}
-          nextStep={steps.nextStep}
-        />
+        <div>
+          <TopBar
+            previousStep={() => steps.previousStep()}
+            index={steps.index}
+            totalStep={steps.totalStep}
+            currentStep={steps.currentStep}
+          />
+          <div className={styles.content}>
+            <AgreeStep
+              selectItems={selectItems}
+              handleSelect={handleSelect}
+              nextStep={steps.nextStep}
+            />
+          </div>
+        </div>
       )}
       {steps.index === 1 && (
-        <AuthenticationStep nextStep={steps.nextStep} />
+        <AuthenticationStep
+          nextStep={steps.nextStep}
+        />
       )}
 
       {steps.index === 2 && (

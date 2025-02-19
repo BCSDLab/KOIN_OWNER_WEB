@@ -95,7 +95,7 @@ export interface Register extends FindPassword {
     file_url: string
   }[],
   verificationCode: string;
-  shop_call: string;
+  shop_number: string;
 }
 
 export interface RegisterUser {

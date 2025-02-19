@@ -102,6 +102,7 @@ export default function SearchShop({ nextStep }: { nextStep: () => void }) {
       </div>
       <Button
         onClick={nextStep}
+        disabled={!watch('shop_name')}
       >
         다음
       </Button>
