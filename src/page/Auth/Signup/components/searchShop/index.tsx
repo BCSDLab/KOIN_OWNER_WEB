@@ -11,6 +11,23 @@ interface ShopInfo {
   shop_id: number | null;
 }
 
+interface ShopRes {
+  id: number;
+  name: string;
+  phone: string;
+  delivery: boolean;
+  pay_bank: boolean;
+  pay_card: boolean;
+  open: {
+    day_of_week: string;
+    closed: boolean;
+    open_time: string | null;
+    close_time: string | null;
+  }[];
+  category_ids: number[];
+  main_category_id?: number;
+}
+
 export default function SearchShop({ nextStep }: { nextStep: () => void }) {
   const { shopList, isError } = useShopList();
   const {
@@ -24,13 +41,33 @@ export default function SearchShop({ nextStep }: { nextStep: () => void }) {
   }
 
   const [filteredShopList, setFilteredShopList] = useState(shopList?.shops);
+  const [searchedShopList, setSearchedShopList] = useState<ShopRes[] | undefined>([]);
+  const [isFocus, setIsFocus] = useState(false);
 
   function handleChangeSearchText(e: ChangeEvent<HTMLInputElement>) {
+    if (!isFocus) {
+      setIsFocus(true);
+    }
     if (e.target.value !== '') {
-      setFilteredShopList(shopList?.shops.filter(({ name }) => name.includes(e.target.value)));
+      setSearchedShopList(shopList?.shops.filter(({ name }) => name.includes(e.target.value)));
     } else {
+      setSearchedShopList([]);
       setFilteredShopList(shopList?.shops);
     }
+  }
+
+  function handleKeydown(e: React.KeyboardEvent<HTMLInputElement>) {
+    const keyword = e.currentTarget.value;
+    if (e.key === 'Enter' && keyword) {
+      setFilteredShopList(shopList?.shops.filter((
+        { name },
+      ) => name.includes(keyword)));
+      setIsFocus(false);
+    }
+  }
+
+  function handleSearchShopClick(id: number) {
+    setFilteredShopList(shopList?.shops.filter((shop) => shop.id === id));
   }
 
   useEffect(() => {
@@ -48,11 +85,28 @@ export default function SearchShop({ nextStep }: { nextStep: () => void }) {
             className={styles['search-shop__input']}
             placeholder="가게를 검색해보세요"
             onChange={handleChangeSearchText}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            onKeyDown={handleKeydown}
           />
           <SearchIcon
             type="button"
             className={styles['search-shop__button']}
           />
+          {isFocus && (
+          <div className={styles['search-list']}>
+            {searchedShopList?.map((shop) => (
+              <button
+                type="button"
+                key={shop.id}
+                className={styles['search-list__item']}
+                onMouseDown={() => handleSearchShopClick(shop.id)}
+              >
+                {shop.name}
+              </button>
+            ))}
+          </div>
+          )}
         </div>
         <div className={styles['shop-list-container']}>
           {isError && <div>에러가 발생했습니다.</div>}
