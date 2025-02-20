@@ -58,9 +58,6 @@ export default function EditShopInfoModal({
   } = useModalStore();
 
   const {
-    isAllSameTime,
-    hasClosedDay,
-    isSpecificDayClosedAndAllSameTime,
     isAllClosed,
   } = CheckSameTime();
 
@@ -262,28 +259,10 @@ export default function EditShopInfoModal({
               <span className={styles['mobile-main-info__header']}>운영시간</span>
               <div className={styles['mobile-operate-time']}>
                 <div className={styles['mobile-operate-time__content']}>
-                  {isAllSameTime && !hasClosedDay && (
-                    <div>
-                      {operateTimeState.time}
-                    </div>
-                  )}
-                  {isSpecificDayClosedAndAllSameTime && (
-                    <div>
-                      <div>{operateTimeState.time}</div>
-                      <div>{operateTimeState.holiday}</div>
-                    </div>
-                  )}
-                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
-                    <>
-                      {WEEK.map((day) => (
-                        <div key={day}>
-                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                        </div>
-                      ))}
-                    </>
-                  )}
-                  {isAllClosed && (
+                  {isAllClosed ? (
                     <span>매일 휴무</span>
+                  ) : (
+                    <span className={styles.time}>{operateTimeState}</span>
                   )}
                 </div>
                 <button
@@ -499,28 +478,10 @@ export default function EditShopInfoModal({
               <span className={styles['main-info__header']}>운영시간</span>
               <div className={styles['main-info__operate-time']}>
                 <div className={styles['main-info__operate-time--content']}>
-                  {isAllSameTime && !hasClosedDay && (
-                    <div>
-                      {operateTimeState.time}
-                    </div>
-                  )}
-                  {isSpecificDayClosedAndAllSameTime && (
-                    <div>
-                      <div>{operateTimeState.time}</div>
-                      <div>{operateTimeState.holiday}</div>
-                    </div>
-                  )}
-                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
-                    <>
-                      {WEEK.map((day) => (
-                        <div key={day}>
-                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                        </div>
-                      ))}
-                    </>
-                  )}
-                  {isAllClosed && (
+                  {isAllClosed ? (
                     <span>매일 휴무</span>
+                  ) : (
+                    <span className={styles.time}>{operateTimeState}</span>
                   )}
                 </div>
                 <button

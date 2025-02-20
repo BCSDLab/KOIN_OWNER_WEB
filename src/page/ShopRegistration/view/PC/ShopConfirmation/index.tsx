@@ -6,8 +6,6 @@ import OperateTimePC from 'page/ShopRegistration/component/Modal/OperateTimePC';
 import ConfirmPopup from 'page/ShopRegistration/component/ConfirmPopup';
 import CustomModal from 'component/common/CustomModal';
 import cn from 'utils/ts/className';
-import useModalStore from 'store/modalStore';
-import { WEEK } from 'utils/constant/week';
 import { SubmitHandler, useFormContext, useWatch } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import useImagesUpload from 'utils/hooks/useImagesUpload';
@@ -41,12 +39,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     setFalse: closeConfirmPopup,
   } = useBooleanState(false);
 
-  const { shopClosedState } = useModalStore();
-
   const {
-    isAllSameTime,
-    hasClosedDay,
-    isSpecificDayClosedAndAllSameTime,
     isAllClosed,
   } = CheckSameTime();
 
@@ -235,28 +228,10 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
             <div className={styles.form__section}>
               <div className={styles['form__operate-time']}>
                 <div>
-                  {isAllSameTime && !hasClosedDay && (
-                    <div>
-                      {operateTimeState.time}
-                    </div>
-                  )}
-                  {isSpecificDayClosedAndAllSameTime && (
-                    <div>
-                      <div>{operateTimeState.time}</div>
-                      <div>{operateTimeState.holiday}</div>
-                    </div>
-                  )}
-                  {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed && (
-                    <>
-                      {WEEK.map((day) => (
-                        <div key={day}>
-                          {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                        </div>
-                      ))}
-                    </>
-                  )}
-                  {isAllClosed && (
+                  {isAllClosed ? (
                     <span>매일 휴무</span>
+                  ) : (
+                    <span className={styles.time}>{operateTimeState}</span>
                   )}
                 </div>
               </div>
