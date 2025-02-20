@@ -141,7 +141,7 @@ export default function AttachStep({ nextStep }: DefaultProps) {
   const {
     register, formState: { errors }, watch, handleSubmit,
   } = useFormContext<Register>();
-  const [shopCall, attachmentUrls] = watch(['shop_call', 'attachment_urls']);
+  const [shopNumber, attachmentUrls] = watch(['shop_number', 'attachment_urls']);
   const mutation = useRegister(nextStep);
   const onwerSignup = async (data: Register) => {
     const hashedPassword = await sha256(data.password);
@@ -155,6 +155,7 @@ export default function AttachStep({ nextStep }: DefaultProps) {
       shop_id: shopId,
       shop_name: data.shop_name,
       attachment_urls: data.attachment_urls,
+      shop_number: data.shop_number,
     };
     mutation.mutate(processedData);
   };
@@ -165,21 +166,24 @@ export default function AttachStep({ nextStep }: DefaultProps) {
         <Title title={`가게 연락처를 입력해주시고, ${'\n'}사업자 인증 파일을 첨부해주세요.`} />
         <Input
           register={register}
-          name="shop_call"
+          name="shop_number"
           inputMode="numeric"
           placeholder="-없이 가게 연락처를 입력해주세요."
+          pattern={/^\d{10,11}$/}
+          patternMessage="10~11자리의 숫자만 입력해주세요."
           required
-          requiredMessage="사업자 등록증을 첨부해주세요."
+          requiredMessage="가게 연락처를 입력해주세요."
+          maxLength={11}
         />
         <ValidationMessage
-          isError={!!errors.attachment_urls}
-          message={errors.attachment_urls?.message}
+          isError={!!errors.shop_number}
+          message={errors.shop_number?.message}
         />
         <UploadStep />
       </div>
       <Button
         onClick={handleSubmit(onwerSignup)}
-        disabled={!!errors.attachment_urls || !attachmentUrls.length || !shopCall}
+        disabled={!!errors.attachment_urls || !attachmentUrls.length || !shopNumber}
       >
         다음
       </Button>

@@ -8,6 +8,7 @@ import { useErrorMessageStore } from 'store/errorMessageStore';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useLogger from 'utils/hooks/useLogger';
 import ROUTES from 'static/routes';
+import { CommonModal } from 'page/Auth/Signup/components/Modals/commonModal';
 import MenuImage from './components/MenuImage';
 import MenuName from './components/MenuName';
 import MenuPrice from './components/MenuPrice';
@@ -22,6 +23,7 @@ export default function AddMenu() {
   useScrollToTop();
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const { resetMenuName, resetCategoryIds } = useAddMenuStore();
   const { setMenuError, setCategoryError } = useErrorMessageStore();
@@ -42,8 +44,11 @@ export default function AddMenu() {
     optionPrices,
     singlePrice,
   } = useAddMenuStore();
+  const onError = () => {
+    setIsShowModal(true);
+  };
   const { addMenuMutation } = useMyShop();
-  const { validateFields } = useFormValidation();
+  const { validateFields, menuError, categoryError } = useFormValidation(onError);
   const toggleConfirmClick = () => {
     if (validateFields()) {
       setIsComplete((prevState) => !prevState);
@@ -51,6 +56,7 @@ export default function AddMenu() {
   };
 
   const addMenuMutationEvent = () => {
+    const singlePriceValue = isSingle ? singlePrice : null;
     const newMenuData = {
       category_ids: categoryIds,
       description,
@@ -61,7 +67,7 @@ export default function AddMenu() {
         option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
       })) || null,
-      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
+      single_price: typeof singlePriceValue === 'string' ? parseInt(singlePriceValue, 10) : singlePriceValue,
     };
     addMenuMutation(newMenuData);
   };
@@ -99,6 +105,12 @@ export default function AddMenu() {
 
   return (
     <div>
+      {isShowModal && (
+      <CommonModal
+        title={menuError || categoryError}
+        onClose={() => setIsShowModal(false)}
+      />
+      )}
       {isMobile ? (
         <div>
           <div className={styles['mobile__menu-info']}>

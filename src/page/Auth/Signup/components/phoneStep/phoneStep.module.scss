@@ -70,3 +70,11 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.content {
+  height: calc(94vh - 120px);
+}
+
+.background {
+  background: none;
+}

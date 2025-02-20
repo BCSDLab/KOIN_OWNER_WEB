@@ -5,15 +5,21 @@ import {
 import { useFormContext } from 'react-hook-form';
 import SearchIcon from 'assets/svg/auth/search-glasses.svg?url';
 import styles from 'page/Auth/Signup/components/onwerStep/common/common.module.scss';
-import { DefaultProps } from 'page/Auth/Signup/components/onwerStep/common/model';
 import { useEffect, useState } from 'react';
 import SearchShop from 'page/Auth/Signup/components/searchShop';
+import { TopBar } from 'page/Auth/components/Common';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
+import { useOutletContext } from 'react-router-dom';
 
-export default function ShopStep({ nextStep }: DefaultProps) {
+interface ShopNameProps {
+  openSearch: () => void;
+  nextStep: () => void;
+}
+
+function ShopNameStep({ nextStep, openSearch }: ShopNameProps) {
   const {
     register, formState: { errors }, watch, clearErrors, setValue,
   } = useFormContext<Register>();
-  const [isShowSearch, setIsShowSearch] = useState(false);
   const shopName = watch('shop_name');
 
   const onChange = () => {
@@ -25,8 +31,6 @@ export default function ShopStep({ nextStep }: DefaultProps) {
       clearErrors('shop_name');
     }
   }, [shopName, clearErrors]);
-
-  if (isShowSearch) return <SearchShop nextStep={() => setIsShowSearch(false)} />;
 
   return (
     <div className={styles.container}>
@@ -45,7 +49,7 @@ export default function ShopStep({ nextStep }: DefaultProps) {
           message={errors.shop_name?.message}
         />
         <Button
-          onClick={() => setIsShowSearch(true)}
+          onClick={openSearch}
           secondary
         >
           <div className={styles.center}>
@@ -61,5 +65,50 @@ export default function ShopStep({ nextStep }: DefaultProps) {
         다음
       </Button>
     </div>
+  );
+}
+
+interface Props {
+  nextStep: () => void;
+  previousStep: () => void;
+}
+
+export default function ShopStep({ nextStep, previousStep }: Props) {
+  const [isSearch, setIsSearch] = useState(false);
+  const {
+    index, totalStep, currentStep,
+  } = useOutletContext<OutletProps>();
+
+  if (isSearch) {
+    return (
+      <>
+        <TopBar
+          index={index}
+          totalStep={totalStep}
+          currentStep={currentStep}
+          previousStep={() => setIsSearch(false)}
+        />
+        <div className={styles.content}>
+          <SearchShop nextStep={() => setIsSearch(false)} />
+        </div>
+        ;
+      </>
+    );
+  }
+  return (
+    <>
+      <TopBar
+        index={index}
+        totalStep={totalStep}
+        currentStep={currentStep}
+        previousStep={previousStep}
+      />
+      <div className={styles.content}>
+        <ShopNameStep
+          nextStep={nextStep}
+          openSearch={() => setIsSearch(true)}
+        />
+      </div>
+    </>
   );
 }

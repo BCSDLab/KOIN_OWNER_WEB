@@ -2,20 +2,22 @@ import {
   useFormContext, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';
 import {
-  useState, ChangeEvent, useEffect,
+  useState, ChangeEvent, useEffect, useRef,
 } from 'react';
 import { verificationAuthCode, getPhoneAuthCode } from 'api/register';
 import { isKoinError, sendClientError } from '@bcsdlab/koin';
 import { PhoneNumberRegisterParam } from 'model/register';
-import showToast from 'utils/ts/showToast';
 import {
   Button, Input, Title, ValidationMessage,
 } from 'page/Auth/components/Common/form';
 import { useMutation } from '@tanstack/react-query';
 import BlindButton from 'page/Auth/components/Common/BlindButton';
 import { Register } from 'model/auth';
-import { Link } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
+import { OutletProps } from 'page/Auth/FindPassword/entity';
 import ROUTES from 'static/routes';
+import { TopBar } from 'page/Auth/components/Common';
+import { CommonModal } from 'page/Auth/Signup/components/Modals/commonModal';
 import styles from './phoneStep.module.scss';
 
 interface SendCodeParams {
@@ -46,7 +48,6 @@ const useSendCode = ({
     onError: (e) => onError(e),
     onSuccess: () => {
       if (onSucess) onSucess();
-      showToast('success', '인증번호를 발송했습니다');
     },
   });
 
@@ -59,6 +60,9 @@ const useCheckCode = (
   setError: UseFormSetError<Register>,
 ) => {
   const [isCertified, setIsCertified] = useState<boolean>(false);
+  const usedCode = useRef<string>('');
+  const reset = () => setIsCertified(false);
+  const isLoading = useRef(false);
   const mutation = useMutation({
     mutationFn: () => verificationAuthCode({
       certification_code: verificationCode,
@@ -70,6 +74,7 @@ const useCheckCode = (
       } else {
         sendClientError(e);
       }
+      setIsCertified(false);
     },
     onSuccess: (res) => {
       sessionStorage.setItem('access_token', res.token);
@@ -77,7 +82,9 @@ const useCheckCode = (
     },
   });
 
-  return { mutation, isCertified };
+  return {
+    mutation, isCertified, isLoading, reset, usedCode,
+  };
 };
 
 function Timer({
@@ -143,10 +150,19 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const [isShowInquiry, setIsShowInquiry] = useState(false);
   const [seconds, setSeconds] = useState(180);
   const [hasConfilct, setHasConflict] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
   const [phoneNumber, verificationCode] = watch(['phone_number', 'verificationCode']);
+  const {
+    mutation, isCertified, reset, usedCode,
+  } = useCheckCode(
+    verificationCode,
+    phoneNumber,
+    setError,
+  );
   const onSendCodeSucess = () => {
     setSteps((prev) => prev + 1);
     setHasConflict(false);
+    setIsShowModal(true);
   };
   const onSendCodeError = (e: unknown) => {
     if (isKoinError(e)) {
@@ -162,6 +178,8 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const onRevalidateCodeSuccess = () => {
     setSeconds(180);
     clearErrors();
+    reset();
+    setIsShowModal(true);
   };
 
   const sendCode = useSendCode({
@@ -171,12 +189,6 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   const revalidataCode = useSendCode({
     getValues, onError: onSendCodeError, onSucess: onRevalidateCodeSuccess,
   });
-
-  const { mutation, isCertified } = useCheckCode(
-    verificationCode,
-    phoneNumber,
-    setError,
-  );
 
   const setCode = (e: ChangeEvent<HTMLInputElement>) => setValue('verificationCode', e.target.value);
 
@@ -190,13 +202,27 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
   };
 
   useEffect(() => {
-    if (verificationCode.length === 6 && mutation.isIdle && sendCode.isSuccess) {
+    if (verificationCode.length === 6
+      && usedCode.current !== verificationCode
+      && sendCode.isSuccess) {
+      usedCode.current = verificationCode;
       mutation.mutate();
     }
-  }, [verificationCode, mutation, sendCode]);
+
+    if (errors.verificationCode || verificationCode.length !== 6) {
+      usedCode.current = verificationCode;
+      reset();
+    }
+  }, [verificationCode, mutation, sendCode, usedCode, reset, errors]);
 
   return (
     <div className={styles['default-info']}>
+      {isShowModal && (
+      <CommonModal
+        title={`인증번호가 발송되었습니다. ${'\n'}잠시만 기다려 주세요.`}
+        onClose={() => setIsShowModal(false)}
+      />
+      )}
       <div>
         {steps >= 0 && (
         <div className={styles['phone-number']}>
@@ -207,7 +233,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
             required
             requiredMessage="올바른 번호가 아닙니다. 다시 입력해주세요."
             pattern={/^\d{11}$/}
-            patternMessage="숫자만 입력 가능합니다"
+            patternMessage="올바른 번호가 아닙니다. 다시 입력해주세요."
             onChange={handlePhoneNumberChange}
             placeholder="-없이 번호를 입력해주세요."
             inputMode="numeric"
@@ -256,6 +282,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
             onChange={setCode}
             placeholder="인증번호를 입력해주세요."
             inputMode="numeric"
+            maxLength={6}
             component={(
               <Timer
                 seconds={seconds}
@@ -309,7 +336,7 @@ interface PasswordParams {
   passwordConfirm: string;
 }
 
-function PasswordStep({ nextStep }: Props) {
+function PasswordStep({ nextStep }: { nextStep: () => void }) {
   const {
     register, formState: { errors }, watch,
   } = useFormContext<PasswordParams>();
@@ -328,6 +355,18 @@ function PasswordStep({ nextStep }: Props) {
   const [password, passwordConfirm] = watch(['password', 'passwordConfirm']);
 
   const isValidPassword = password.length >= 6 && !errors.password;
+  const isValidPasswordConfirm = password !== passwordConfirm
+          || !!errors.password
+          || !!errors.passwordConfirm
+          || password.length < 6;
+
+  let message = '';
+  if (passwordConfirm !== '') {
+    message = !isValidPasswordConfirm
+      ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.'
+      : '비밀번호가 일치하지 않습니다.';
+  }
+
   return (
     <div className={styles['default-info']}>
       <div>
@@ -337,11 +376,17 @@ function PasswordStep({ nextStep }: Props) {
           register={register}
           required
           requiredMessage="비밀번호를 입력해주세요."
-          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/}
+          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#^])[A-Za-z\d@$!%*?&#^]{6,18}$/}
           patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.password ? 'text' : 'password'}
           placeholder="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
-          component={<BlindButton isBlind={!isBlind.password} onClick={() => toggleBlindState('password')} />}
+          component={(
+            <BlindButton
+              isBlind={!isBlind.password}
+              onClick={() => toggleBlindState('password')}
+              classname={styles.background}
+            />
+)}
         />
         <ValidationMessage
           message={password.length >= 6 && !errors.password ? '사용 가능한 비밀번호입니다.' : errors.password?.message}
@@ -352,22 +397,23 @@ function PasswordStep({ nextStep }: Props) {
           register={register}
           required
           requiredMessage="비밀번호를 확인해주세요."
-          pattern={/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/}
-          patternMessage="특수문자 포함 영어와 숫자 6~18 자리로 입력해주세요."
           type={isBlind.passwordConfirm ? 'text' : 'password'}
           placeholder="비밀번호를 다시 입력해주세요."
-          component={<BlindButton isBlind={!isBlind.passwordConfirm} onClick={() => toggleBlindState('passwordConfirm')} />}
+          component={(
+            <BlindButton
+              isBlind={!isBlind.passwordConfirm}
+              onClick={() => toggleBlindState('passwordConfirm')}
+              classname={styles.background}
+            />
+)}
         />
         <ValidationMessage
-          message={password.length >= 6 && password === passwordConfirm && !errors.passwordConfirm ? '비밀번호가 일치합니다. 다음으로 넘어가주세요.' : errors.passwordConfirm?.message}
-          isError={!!errors.passwordConfirm}
+          message={message}
+          isError={passwordConfirm === '' ? false : isValidPasswordConfirm}
         />
       </div>
       <Button
-        disabled={password !== passwordConfirm
-          || !!errors.password
-          || !!errors.passwordConfirm
-          || password.length < 6}
+        disabled={isValidPasswordConfirm}
         onClick={nextStep}
       >
         다음
@@ -377,13 +423,38 @@ function PasswordStep({ nextStep }: Props) {
 }
 
 export default function AuthenticationStep({ nextStep }: Props) {
-  const [steps, setSteps] = useState(0);
+  const [infoSteps, setInfoSteps] = useState(0);
+  const {
+    index, totalStep, currentStep, previousStep,
+  } = useOutletContext<OutletProps>();
 
-  if (steps === 0) {
+  if (infoSteps === 0) {
     return (
-      <PhoneStep nextStep={() => setSteps((prev) => prev + 1)} />
+      <>
+        <TopBar
+          previousStep={() => previousStep()}
+          index={index}
+          totalStep={totalStep}
+          currentStep={currentStep}
+        />
+        <div className={styles.content}>
+          <PhoneStep nextStep={() => setInfoSteps((prev) => prev + 1)} />
+        </div>
+      </>
     );
   }
 
-  return <PasswordStep nextStep={nextStep} />;
+  return (
+    <>
+      <TopBar
+        previousStep={() => setInfoSteps((prev) => prev - 1)}
+        index={index}
+        totalStep={totalStep}
+        currentStep={currentStep}
+      />
+      <div className={styles.content}>
+        <PasswordStep nextStep={nextStep} />
+      </div>
+    </>
+  );
 }
