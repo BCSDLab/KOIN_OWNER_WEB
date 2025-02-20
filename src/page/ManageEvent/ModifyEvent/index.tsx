@@ -17,7 +17,7 @@ import PictureDisalbe from 'assets/svg/common/picture-disable.svg?react';
 import { createPortal } from 'react-dom';
 import ROUTES from 'static/routes';
 import CalenderIcon from 'assets/svg/common/calender.svg?react';
-import Calender from 'page/ShopRegistration/component/Modal/\bCalender';
+import Calender from 'page/ShopRegistration/component/Modal/Calender';
 import useBooleanState from 'utils/hooks/useBooleanState';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */

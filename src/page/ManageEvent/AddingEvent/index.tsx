@@ -18,7 +18,7 @@ import AlertModal from 'component/common/Modal/alertModal';
 import useLogger from 'utils/hooks/useLogger';
 import ROUTES from 'static/routes';
 import useBooleanState from 'utils/hooks/useBooleanState';
-import Calender from 'page/ShopRegistration/component/Modal/\bCalender';
+import Calender from 'page/ShopRegistration/component/Modal/Calender';
 
 /* eslint-disable no-await-in-loop */
 /* eslint-disable jsx-a11y/label-has-associated-control */
