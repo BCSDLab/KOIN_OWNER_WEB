@@ -32,6 +32,10 @@
   white-space: pre-wrap;
   text-align: center;
   line-height: 1.5;
+
+  &__name {
+    color: red;;
+  }
 }
 
 .button {
@@ -40,4 +44,29 @@
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+
+  &__common {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  &__confirm {
+    background: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  &__container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+  }
 }
