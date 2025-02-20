@@ -10,6 +10,8 @@ import { WEEK } from 'utils/constant/week';
 import useModalStore, { OperatingTime } from 'store/modalStore';
 import cn from 'utils/ts/className';
 import { HOURS, MINUTES } from 'utils/constant/time';
+import EmptyCheckBox from 'assets/svg/common/time-check-box-empty.svg?react';
+import CheckedCheckBox from 'assets/svg/common/time-check-box-check.svg?react';
 import styles from './TimeDialPicker.module.scss';
 
 const BUTTON_HEIGHT = 40;
@@ -49,11 +51,13 @@ function makeInfiniteArray(values: string[], multiply = 3) {
 function fixScrollPosition(currentIndex: number, originalLength: number, multiplied: number) {
   const totalLength = originalLength * multiplied;
   let fixedIndex = currentIndex;
+
   if (fixedIndex < originalLength) {
     fixedIndex += originalLength;
   } else if (fixedIndex >= originalLength * (multiplied - 1)) {
     fixedIndex -= originalLength;
   }
+
   return Math.max(0, Math.min(fixedIndex, totalLength - 1));
 }
 
@@ -79,6 +83,7 @@ function ScrollTimePicker({
   const infiniteItems = makeInfiniteArray(items, multiplied);
   const centerOffset = ((visibleCount - 1) / 2) * itemHeight;
   const [selectedInfiniteIndex, setSelectedInfiniteIndex] = useState(items.length + initialIndex);
+
   const handleScrollStop = debounce((offsetY: number) => {
     let idx = getIndexFromOffset(offsetY + centerOffset);
     idx = fixScrollPosition(idx, items.length, multiplied);
@@ -89,27 +94,32 @@ function ScrollTimePicker({
       listRef.current.scrollTop = getCenterPositionFromIndex(idx) - centerOffset;
     }
   }, 100);
+
   function onScroll(e: UIEvent<HTMLDivElement>) {
     handleScrollStop.cancel();
     const offsetY = e.currentTarget.scrollTop;
     handleScrollStop(offsetY);
   }
+
   function onScrollEnd(e: UIEvent<HTMLDivElement>) {
     const offsetY = e.currentTarget.scrollTop;
     handleScrollStop(offsetY);
   }
+
   useEffect(() => {
     if (listRef.current) {
       const startIndex = items.length + initialIndex;
       listRef.current.scrollTop = getCenterPositionFromIndex(startIndex) - centerOffset;
     }
   }, [initialIndex, items, centerOffset]);
+
   const containerHeight = itemHeight * visibleCount;
+
   return (
     <div
       role="listbox"
       tabIndex={0}
-      className={`${styles.scrollable}`}
+      className={styles.scrollable}
       style={{
         ...style,
         height: containerHeight,
@@ -146,17 +156,47 @@ interface TimeDialPickerProps {
 }
 
 export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
-  // const { shopClosedState } = useModalStore();
   const [openHourIndex, setOpenHourIndex] = useState(0);
   const [openMinuteIndex, setOpenMinuteIndex] = useState(0);
   const [closeHourIndex, setCloseHourIndex] = useState(0);
   const [closeMinuteIndex, setCloseMinuteIndex] = useState(0);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [isClosed, setIsClosed] = useState(false);
+  const [isAllDay, setIsAllDay] = useState(false);
+
   const handleDayClick = useCallback((day: string) => {
-    setSelectedDays(
-      (prev) => (prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]),
-    );
+    setSelectedDays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day)
+      : [...prev, day]));
   }, []);
+
+  function handleClosedClick() {
+    setIsClosed((prev) => {
+      const next = !prev;
+      if (next) {
+        setIsAllDay(false);
+        setOpenHourIndex(0);
+        setOpenMinuteIndex(0);
+        setCloseHourIndex(0);
+        setCloseMinuteIndex(0);
+      }
+      return next;
+    });
+  }
+
+  function handleAllDayClick() {
+    setIsAllDay((prev) => {
+      const next = !prev;
+      if (next) {
+        setIsClosed(false);
+        setOpenHourIndex(0);
+        setOpenMinuteIndex(0);
+        setCloseHourIndex(0);
+        setCloseMinuteIndex(0);
+      }
+      return next;
+    });
+  }
+
   function handleAdd() {
     const openHour = openHourIndex;
     const openMin = openMinuteIndex * 10;
@@ -166,16 +206,25 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
     const closeTimeString = `${String(closeHour).padStart(2, '0')}:${String(closeMin).padStart(2, '0')}`;
 
     useModalStore.setState((prev) => {
-      // 기존 상태를 복사하고 선택된 날짜에 대해서만 업데이트
       const newOpenTimeState: OperatingTime = { ...prev.openTimeState };
       const newCloseTimeState: OperatingTime = { ...prev.closeTimeState };
       const newShopClosedState = { ...prev.shopClosedState };
 
       WEEK.forEach((day) => {
         if (selectedDays.includes(day)) {
-          newOpenTimeState[day] = openTimeString;
-          newCloseTimeState[day] = closeTimeString;
-          newShopClosedState[day] = false;
+          if (isClosed) {
+            newOpenTimeState[day] = '00:00';
+            newCloseTimeState[day] = '00:00';
+            newShopClosedState[day] = true;
+          } else if (isAllDay) {
+            newOpenTimeState[day] = '00:00';
+            newCloseTimeState[day] = '00:00';
+            newShopClosedState[day] = false;
+          } else {
+            newOpenTimeState[day] = openTimeString;
+            newCloseTimeState[day] = closeTimeString;
+            newShopClosedState[day] = false;
+          }
         }
       });
 
@@ -211,8 +260,8 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
             </button>
           );
         })}
-
       </div>
+
       <div className={styles['time-picker-container']}>
         <div className={styles['time-picker']}>
           <div className={styles['time-picker__label']}>개점 시간</div>
@@ -229,6 +278,7 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
             />
           </div>
         </div>
+
         <div className={styles['time-picker']}>
           <div className={styles['time-picker__label']}>폐점 시간</div>
           <div className={styles['time-picker__dial']}>
@@ -245,6 +295,26 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
           </div>
         </div>
       </div>
+
+      <div className={styles.checkbox__container}>
+        <button
+          type="button"
+          className={styles.checkbox__box}
+          onClick={handleClosedClick}
+        >
+          휴무
+          {isClosed ? <CheckedCheckBox /> : <EmptyCheckBox />}
+        </button>
+        <button
+          type="button"
+          className={styles.checkbox__box}
+          onClick={handleAllDayClick}
+        >
+          24시간
+          {isAllDay ? <CheckedCheckBox /> : <EmptyCheckBox />}
+        </button>
+      </div>
+
       <div className={styles.button}>
         <button
           className={styles.cancel}

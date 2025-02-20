@@ -18,23 +18,23 @@ interface ModalStore {
 }
 
 export const initialOperatingTime: OperatingTime = {
-  일: '00:00',
   월: '00:00',
   화: '00:00',
   수: '00:00',
   목: '00:00',
   금: '00:00',
   토: '00:00',
+  일: '00:00',
 };
 
 const initialShopClosed = {
-  일: false,
   월: false,
   화: false,
   수: false,
   목: false,
   금: false,
   토: false,
+  일: false,
 };
 
 const useModalStore = create<ModalStore>((set) => ({
