@@ -16,6 +16,9 @@ import Picture from 'assets/svg/common/picture.svg?react';
 import PictureDisalbe from 'assets/svg/common/picture-disable.svg?react';
 import { createPortal } from 'react-dom';
 import ROUTES from 'static/routes';
+import CalenderIcon from 'assets/svg/common/calender.svg?react';
+import Calender from 'page/ShopRegistration/component/Modal/\bCalender';
+import useBooleanState from 'utils/hooks/useBooleanState';
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
@@ -55,6 +58,14 @@ export default function ModifyEvent() {
 
   const { mutate: modifyEvent, isPending } = useModifyEvent(event.shop_id, event.event_id);
   const navigate = useNavigate();
+
+  const {
+    setTrue: openCalenderModal,
+    setFalse: closeCalendeModal,
+    value: isCalendeModalOpen,
+  } = useBooleanState(false);
+
+  const [whichDate, setWhichDate] = useState<'start' | 'end' | null>(null);
 
   const changeInput = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
@@ -261,67 +272,43 @@ export default function ModifyEvent() {
           <p className={styles.event__paragraph}>이벤트/공지 등록 기간</p>
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>시작일</div>
-            <input
-              placeholder="2999"
-              value={eventInfo.start_date.year}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'start', 'year')}
-            />
-            /
-            <input
-              placeholder="01"
-              value={eventInfo.start_date.month}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'start', 'month')}
-            />
-            /
-            <input
-              placeholder="01"
-              value={eventInfo.start_date.date}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'start', 'date')}
-            />
+            <button
+              type="button"
+              className={styles['calender-button']}
+              onClick={() => {
+                setWhichDate('start');
+                openCalenderModal();
+              }}
+            >
+              <div className={styles['calender-button__text']}>
+                {eventInfo.start_date.year}
+                /
+                {eventInfo.start_date.month}
+                /
+                {eventInfo.start_date.date}
+              </div>
+              <CalenderIcon />
+            </button>
           </div>
           <div className={styles['event-day']}>
             <div className={styles['event-day__paragraph']}>종료일</div>
-            <input
-              placeholder="2999"
-              value={eventInfo.end_date.year}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'end', 'year')}
-            />
-            /
-            <input
-              placeholder="01"
-              value={eventInfo.end_date.month}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'end', 'month')}
-            />
-            /
-            <input
-              placeholder="01"
-              value={eventInfo.end_date.date}
-              className={cn({
-                [styles['error-border']]: error.date,
-                [styles['event-day__input']]: true,
-              })}
-              onChange={(e) => changeInput(e, 'end', 'date')}
-            />
+            <button
+              type="button"
+              className={styles['calender-button']}
+              onClick={() => {
+                setWhichDate('end');
+                openCalenderModal();
+              }}
+            >
+              <div className={styles['calender-button__text']}>
+                {eventInfo.end_date.year}
+                /
+                {eventInfo.end_date.month}
+                /
+                {eventInfo.end_date.date}
+              </div>
+              <CalenderIcon />
+            </button>
           </div>
           {error.date && <div className={styles['error-message']}>필수 입력 항목입니다.</div>}
         </div>
@@ -353,6 +340,17 @@ export default function ModifyEvent() {
           callBack={() => navigate(ROUTES.Main())}
         />,
         document.body,
+      )}
+      {isCalendeModalOpen && (
+      <Calender
+        onClose={closeCalendeModal}
+        startDate={eventInfo.start_date}
+        endDate={eventInfo.end_date}
+        setStartDate={(newStart) => setEventInfo((prev) => ({ ...prev, start_date: newStart }))}
+        setEndDate={(newEnd) => setEventInfo((prev) => ({ ...prev, end_date: newEnd }))}
+        whichDate={whichDate}
+      />
+
       )}
     </div>
   );

@@ -415,8 +415,6 @@ export default function AddingEvent() {
       {isCalendeModalOpen && (
       <Calender
         onClose={closeCalendeModal}
-        startDate={eventInfo.start_date}
-        endDate={eventInfo.end_date}
         setStartDate={(newStart) => setEventInfo((prev) => ({ ...prev, start_date: newStart }))}
         setEndDate={(newEnd) => setEventInfo((prev) => ({ ...prev, end_date: newEnd }))}
         whichDate={whichDate}

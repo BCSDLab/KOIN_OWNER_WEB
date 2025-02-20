@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import Calendar from 'react-calendar';
@@ -27,26 +28,55 @@ interface CalenderProps {
 
 export default function Calender({
   onClose,
-  // startDate,
-  // endDate,
+  startDate,
+  endDate,
   setStartDate,
   setEndDate,
   whichDate,
 }: CalenderProps) {
-  const initialCalendarValue: [Date | null, Date | null] | null = null;
-  // eslint-disable-next-line max-len
-  const [selectedValue, setSelectedValue] = useState<[Date | null, Date | null] | null>(initialCalendarValue);
+  const initialCalendarValue = (() => {
+    if (startDate) {
+      const s = new Date(
+        parseInt(startDate.year, 10),
+        parseInt(startDate.month, 10) - 1,
+        parseInt(startDate.date, 10),
+      );
+      if (endDate) {
+        const e = new Date(
+          parseInt(endDate.year, 10),
+          parseInt(endDate.month, 10) - 1,
+          parseInt(endDate.date, 10),
+        );
+        return [s, e] as [Date, Date];
+      }
+      return [s, null] as [Date, null];
+    }
+    return null;
+  })();
 
-  // Calendar가 보여줄 현재 연,월 상태(모달로 바꿀 때도 동기화)
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const initialCurrentDate = (() => {
+    if (startDate) {
+      return new Date(
+        parseInt(startDate.year, 10),
+        parseInt(startDate.month, 10) - 1,
+        parseInt(startDate.date, 10),
+      );
+    }
+    if (endDate) {
+      return new Date(
+        parseInt(endDate.year, 10),
+        parseInt(endDate.month, 10) - 1,
+        parseInt(endDate.date, 10),
+      );
+    }
+    return new Date();
+  })();
+
+  const [selectedValue, setSelectedValue] = useState<[Date | null, Date | null] | null>(initialCalendarValue);
+  const [currentDate, setCurrentDate] = useState(initialCurrentDate);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
-
-  const {
-    setTrue: openYearMonthSelectModal,
-    setFalse: closeYearMonthSelectModal,
-    value: isYearMonthSelectModalOpen,
-  } = useBooleanState(false);
+  const { setTrue: openYearMonthSelectModal, setFalse: closeYearMonthSelectModal, value: isYearMonthSelectModalOpen } = useBooleanState(false);
 
   const handleDateChange = (value: Date | [Date | null, Date | null] | null) => {
     setSelectedValue(value as [Date | null, Date | null]);
@@ -73,26 +103,24 @@ export default function Calender({
   };
 
   const handleSubmit = () => {
-    if (selectedValue === null) {
+    if (!selectedValue) {
       showToast('info', '날짜를 선택해주세요.');
       return;
     }
     const [start, end] = selectedValue;
     if (start && end) {
-      const startObj: DateObj = {
+      setStartDate({
         year: String(start.getFullYear()),
         month: String(start.getMonth() + 1).padStart(2, '0'),
         date: String(start.getDate()).padStart(2, '0'),
-      };
-      const endObj: DateObj = {
+      });
+      setEndDate({
         year: String(end.getFullYear()),
         month: String(end.getMonth() + 1).padStart(2, '0'),
         date: String(end.getDate()).padStart(2, '0'),
-      };
-      setStartDate(startObj);
-      setEndDate(endObj);
+      });
     } else if (start && !end) {
-      const dateObj: DateObj = {
+      const dateObj = {
         year: String(start.getFullYear()),
         month: String(start.getMonth() + 1).padStart(2, '0'),
         date: String(start.getDate()).padStart(2, '0'),
@@ -122,9 +150,7 @@ export default function Calender({
         onClick={(e) => e.stopPropagation()}
         role="presentation"
       >
-        <div className={styles.content__title}>
-          이벤트/공지 등록 기간을 설정해 주세요.
-        </div>
+        <div className={styles.content__title}>이벤트/공지 등록 기간을 설정해 주세요.</div>
         <div className={styles['custom-nav']}>
           <button type="button" onClick={handlePrevMonth} className={styles['custom-nav__button']}>
             <PreIcon />
@@ -160,7 +186,6 @@ export default function Calender({
           </button>
         </div>
       </div>
-
       {isYearMonthSelectModalOpen && (
         <YearMonthSelectModal
           onClose={closeYearMonthSelectModal}

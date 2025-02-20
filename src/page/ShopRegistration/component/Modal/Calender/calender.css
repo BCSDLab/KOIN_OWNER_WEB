@@ -81,3 +81,7 @@
   border: none;
   box-shadow: none;
 }
+
+.react-calendar__tile--now.react-calendar__tile--active {
+  background-color: #175c8e;
+}
