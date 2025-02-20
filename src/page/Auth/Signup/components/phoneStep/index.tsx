@@ -254,7 +254,6 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
           <Button
             disabled={!!errors.phone_number?.message
               || phoneNumber.length !== 11
-              || steps !== 0
                || sendCode.isPending}
             onClick={sendCode.mutate}
           >
