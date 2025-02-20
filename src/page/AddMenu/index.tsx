@@ -51,6 +51,7 @@ export default function AddMenu() {
   };
 
   const addMenuMutationEvent = () => {
+    const singlePriceValue = isSingle ? singlePrice : null;
     const newMenuData = {
       category_ids: categoryIds,
       description,
@@ -61,7 +62,7 @@ export default function AddMenu() {
         option: option === '' ? name : option,
         price: typeof price === 'string' ? parseInt(price, 10) : price,
       })) || null,
-      single_price: typeof singlePrice === 'string' ? parseInt(singlePrice, 10) : singlePrice || 0,
+      single_price: typeof singlePriceValue === 'string' ? parseInt(singlePriceValue, 10) : singlePriceValue,
     };
     addMenuMutation(newMenuData);
   };

@@ -15,6 +15,7 @@ import MobileDivide from 'page/AddMenu/components/MobileDivide';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useFormValidation from 'page/AddMenu/hook/useFormValidation';
 import ROUTES from 'static/routes';
+import showToast from 'utils/ts/showToast';
 
 export default function ModifyMenu() {
   useScrollToTop();
@@ -32,7 +33,9 @@ export default function ModifyMenu() {
   }
 
   const navigate = useNavigate();
-  const { menuData, refetch, modifyMenuMutation } = useMenuInfo(Number(id));
+  const {
+    menuData, refetch, modifyMenuMutation, modifyMenuError, modifyMenuSuccess,
+  } = useMenuInfo(Number(id));
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -41,11 +44,6 @@ export default function ModifyMenu() {
   };
 
   const { deleteMenuMutation } = useDeleteMenu();
-
-  const handleMobileDeleteMenu = () => {
-    deleteMenuMutation(Number(id));
-    goMyShop();
-  };
 
   const {
     value: isGoMyShopModal,
@@ -81,7 +79,7 @@ export default function ModifyMenu() {
         is_single: isSingle,
         name,
         single_price: typeof singlePrice === 'string' ? Number(singlePrice) : singlePrice || 0,
-        option_prices: [],
+        option_prices: null,
       };
     }
 
@@ -91,7 +89,7 @@ export default function ModifyMenu() {
       image_urls: imageUrl,
       is_single: isSingle,
       name,
-      single_price: 0,
+      single_price: null,
       option_prices: optionPrices?.map(({ option, price }) => ({
         option: option === '' ? name : option,
         price: typeof price === 'string' ? Number(price) : price,
@@ -111,7 +109,6 @@ export default function ModifyMenu() {
         return;
       }
       modifyMenu();
-      goMyShop();
       return;
     }
     toggleConfirmClick();
@@ -122,20 +119,21 @@ export default function ModifyMenu() {
     openGoMyShopModal();
   };
 
+  useEffect(() => {
+    if (modifyMenuSuccess) {
+      goMyShop();
+    }
+    if (modifyMenuError) {
+      showToast('error', '메뉴 수정에 실패했습니다.');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modifyMenuSuccess, modifyMenuError]);
+
   return (
     <div>
       {isMobile ? (
         <div className={styles.mobile__container}>
           <div className={styles['mobile__menu-info']}>
-            <div className={styles['mobile__delete-menu--container']}>
-              <button
-                className={styles['mobile__delete-menu--button']}
-                type="button"
-                onClick={handleMobileDeleteMenu}
-              >
-                메뉴 삭제
-              </button>
-            </div>
             <div className={styles.mobile__caption}>
               메뉴 정보
             </div>
