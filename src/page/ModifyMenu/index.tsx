@@ -16,12 +16,18 @@ import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useFormValidation from 'page/AddMenu/hook/useFormValidation';
 import ROUTES from 'static/routes';
 import showToast from 'utils/ts/showToast';
+import { CommonModal } from 'page/Auth/Signup/components/Modals/commonModal';
 
 export default function ModifyMenu() {
   useScrollToTop();
   const { isMobile } = useMediaQuery();
   const [isComplete, setIsComplete] = useState<boolean>(false);
-  const { validateFields } = useFormValidation();
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const {
+    validateFields,
+    menuError,
+    categoryError,
+  } = useFormValidation(() => setIsShowModal(true));
   const toggleConfirmClick = () => {
     if (validateFields()) {
       setIsComplete((prevState) => !prevState);
@@ -131,6 +137,12 @@ export default function ModifyMenu() {
 
   return (
     <div>
+      {isShowModal && (
+        <CommonModal
+          title={menuError || categoryError}
+          onClose={() => setIsShowModal(false)}
+        />
+      )}
       {isMobile ? (
         <div className={styles.mobile__container}>
           <div className={styles['mobile__menu-info']}>
