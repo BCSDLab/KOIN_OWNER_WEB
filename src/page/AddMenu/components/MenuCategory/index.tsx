@@ -66,10 +66,9 @@ export default function MenuCategory({ isComplete }:MenuCategoryProps) {
                     메뉴 카테고리
                   </div>
                   <div className={styles['mobile__category-header__condition']}>
-                    (최대 선택 n개)
+                    (1개 이상 선택)
                   </div>
                 </div>
-                <GearIcon className={styles['mobile__category-header__icon']} />
               </div>
               <div className={styles['mobile__category-button-container']}>
                 {shopData && shopData.menu_categories.map((category) => (

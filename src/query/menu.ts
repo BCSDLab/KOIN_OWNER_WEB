@@ -15,7 +15,11 @@ const useMenuInfo = (menuId:number) => {
     },
   );
 
-  const { mutate: modifyMenuMutation, isError: modifyMenuError } = useMutation({
+  const {
+    mutate: modifyMenuMutation,
+    isError: modifyMenuError,
+    isSuccess: modifyMenuSuccess,
+  } = useMutation({
     mutationFn: (param: NewMenu) => modifyMenu(menuId, param),
     onSuccess: () => {
       resetAddMenuStore();
@@ -23,7 +27,7 @@ const useMenuInfo = (menuId:number) => {
     },
   });
   return {
-    menuData, refetch, modifyMenuMutation, modifyMenuError,
+    menuData, refetch, modifyMenuMutation, modifyMenuError, modifyMenuSuccess,
   };
 };
 

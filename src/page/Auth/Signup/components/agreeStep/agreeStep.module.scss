@@ -6,7 +6,9 @@
 
 .step-one {
   height: 100%;
-  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   &::-webkit-scrollbar {
     display: none;
@@ -41,7 +43,6 @@
 }
 
 .personal {
-  margin-top: 4px;
   height: 28vh;
 
   @include media.media-breakpoint-down(mobile) {
@@ -62,16 +63,22 @@
   }
 
   &__content {
-    margin-top: 5px;
     border: 1px dashed #d2dae2;
     padding: 12px;
-    height: 20vh;
-    overflow-y: scroll;
+
+    &--text {
+      overflow-y: auto;
+      font-size: 11px;
+      height: 20vh;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 }
 
 .koin {
-  margin-top: 4px;
   height: 28vh;
 
   @include media.media-breakpoint-down(mobile) {
