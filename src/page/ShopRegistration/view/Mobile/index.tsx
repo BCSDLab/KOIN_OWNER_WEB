@@ -10,6 +10,8 @@ import Sub from 'page/ShopRegistration/view/Mobile/Sub';
 import ShopConfirmation from 'page/ShopRegistration/view/Mobile/ShopConfirmation';
 import { FormProvider, useForm } from 'react-hook-form';
 import useStepStore from 'store/useStepStore';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { registerdStore } from 'api/auth';
 import styles from './ShopRegistrationMobile.module.scss';
 
 const OPEN_DEFAULT_VALUES = [
@@ -36,10 +38,20 @@ const OPEN_DEFAULT_VALUES = [
   },
 ];
 
+const useDefaultValues = () => {
+  const { data } = useSuspenseQuery({
+    queryFn: registerdStore,
+    queryKey: ['registerdStore'],
+  });
+
+  return data;
+};
+
 export default function ShopRegistrationMobile() {
   // const {
   //   Funnel, Step, setStep, currentStep,
   // } = useFunnel('가게 등록');
+  const data = useDefaultValues();
 
   const { step, setStep, decreaseStep } = useStepStore();
 
@@ -57,7 +69,7 @@ export default function ShopRegistrationMobile() {
       delivery_price: 0,
       description: '',
       image_urls: [],
-      name: '',
+      name: data.shopName || '',
       phone: '',
       address: '',
       delivery: false,

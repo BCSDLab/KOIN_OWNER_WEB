@@ -3,9 +3,7 @@ import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postShop } from 'api/shop';
-import { WEEK } from 'utils/constant/week';
 import useModalStore from 'store/modalStore';
-import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
 import { isKoinError } from '@bcsdlab/koin';
 import showToast from 'utils/ts/showToast';
 import useMyShop from 'query/shop';
@@ -50,9 +48,6 @@ export default function ShopConfirmation({ onNext, onPrev }:{
     mutation.mutate(data);
   };
 
-  const { shopClosedState } = useModalStore();
-  const { isAllSameTime, hasClosedDay, isSpecificDayClosedAndAllSameTime } = CheckSameTime();
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.form}>
@@ -80,26 +75,7 @@ export default function ShopConfirmation({ onNext, onPrev }:{
           <span className={styles.form__title}>운영시간</span>
           <span className={styles.form__value}>
             <span>
-              {isAllSameTime && !hasClosedDay && (
-                <div>
-                  {operateTimeState.time}
-                </div>
-              )}
-              {isSpecificDayClosedAndAllSameTime && (
-                <div>
-                  <div>{operateTimeState.time}</div>
-                  <div>{operateTimeState.holiday}</div>
-                </div>
-              )}
-              {!isAllSameTime && !isSpecificDayClosedAndAllSameTime && (
-                <>
-                  {WEEK.map((day) => (
-                    <div key={day}>
-                      {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                    </div>
-                  ))}
-                </>
-              )}
+              <span className={styles.time}>{operateTimeState}</span>
             </span>
           </span>
         </div>

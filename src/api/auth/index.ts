@@ -57,3 +57,13 @@ export const loginByPhone = async (param: LoginParams) => {
 
   return LoginResponse.parse(data);
 };
+
+interface RegisterStoreResponse {
+  shopName: string,
+  shopNumber: string
+}
+
+export const registerdStore = async () => {
+  const { data } = await accessClient.get<RegisterStoreResponse>('/owner/registered-store');
+  return data;
+};
