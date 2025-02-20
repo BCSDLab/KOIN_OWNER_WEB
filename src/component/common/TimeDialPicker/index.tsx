@@ -175,7 +175,6 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
         if (selectedDays.includes(day)) {
           newOpenTimeState[day] = openTimeString;
           newCloseTimeState[day] = closeTimeString;
-          // 선택한 날은 영업중이므로 shopClosedState는 false로 업데이트
           newShopClosedState[day] = false;
         }
       });
@@ -189,7 +188,6 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
     });
 
     setStep(0);
-    console.log('Selected days:', selectedDays);
   }
 
   return (

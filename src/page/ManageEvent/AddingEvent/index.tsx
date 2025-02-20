@@ -114,6 +114,9 @@ export default function AddingEvent() {
     setFalse: closeCalendeModal,
     value: isCalendeModalOpen,
   } = useBooleanState(false);
+
+  const [whichDate, setWhichDate] = useState<'start' | 'end' | null>(null);
+
   const changeInput = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
     type: 'title' | 'start' | 'end' | 'content',
@@ -343,14 +346,17 @@ export default function AddingEvent() {
             <button
               type="button"
               className={styles['calender-button']}
-              onClick={openCalenderModal}
+              onClick={() => {
+                setWhichDate('start');
+                openCalenderModal();
+              }}
             >
               <div className={styles['calender-button__text']}>
-                {initialState.start_date.year}
+                {eventInfo.start_date.year}
                 /
-                {initialState.start_date.month}
+                {eventInfo.start_date.month}
                 /
-                {initialState.start_date.date}
+                {eventInfo.start_date.date}
               </div>
               <CalenderIcon />
             </button>
@@ -360,14 +366,17 @@ export default function AddingEvent() {
             <button
               type="button"
               className={styles['calender-button']}
-              onClick={() => console.log('')}
+              onClick={() => {
+                setWhichDate('end');
+                openCalenderModal();
+              }}
             >
               <div className={styles['calender-button__text']}>
-                {initialState.end_date.year}
+                {eventInfo.end_date.year}
                 /
-                {initialState.end_date.month}
+                {eventInfo.end_date.month}
                 /
-                {initialState.end_date.date}
+                {eventInfo.end_date.date}
               </div>
               <CalenderIcon />
             </button>
@@ -410,6 +419,7 @@ export default function AddingEvent() {
         endDate={eventInfo.end_date}
         setStartDate={(newStart) => setEventInfo((prev) => ({ ...prev, start_date: newStart }))}
         setEndDate={(newEnd) => setEventInfo((prev) => ({ ...prev, end_date: newEnd }))}
+        whichDate={whichDate}
       />
 
       )}

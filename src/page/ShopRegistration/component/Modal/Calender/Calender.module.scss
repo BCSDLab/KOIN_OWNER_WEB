@@ -14,7 +14,7 @@
   left: 0;
   box-sizing: border-box;
   width: 100dvw;
-  height: 60dvh;
+  height: 58dvh;
   background-color: #fff;
   border-radius: 20px 20px 0 0;
 }
@@ -45,23 +45,62 @@
   }
 }
 
-.datePickers {
+.custom-nav {
+  margin-top: 18px;
+  margin-bottom: 10px;
   width: 100%;
-}
-
-.customCalendar {
-  width: 100% !important;
-}
-
-.customHeader {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: #175c8e;
-  font-size: 18px;
-  font-weight: 500;
+
+  &__button {
+    width: 100%;
+    background-color: white;
+  }
+
+  &__label {
+    width: 100%;
+    background-color: white;
+    color: #175c8e;
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 
-.customHeader button {
-  background-color: white;
+.button {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding: 16px 5% 0;
+    gap: 32px;
+  }
+
+  &__cancel {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #cacaca;
+    background: white;
+    padding: 4px 32px;
+    font-size: 16px;
+    color: #cacaca;
+    font-weight: 500;
+  }
+
+  &__submit {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #175c8e;
+    padding: 4px 32px;
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+  }
 }
