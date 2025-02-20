@@ -95,7 +95,6 @@ export default function ShopInfo({
   isEditShopInfoModalOpen,
   onClickImage,
 }: ShopInfoProps) {
-  console.log(shopInfo.open);
   const { isMobile } = useMediaQuery();
   const today = new Date().getDay();
   const todayIndex = today === 0 ? 6 : today - 1;
