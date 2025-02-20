@@ -17,7 +17,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import ROUTES from 'static/routes';
 import { TopBar } from 'page/Auth/components/Common';
-import CommonModal from 'page/Auth/Signup/components/Modals/commonModal';
+import { CommonModal } from 'page/Auth/Signup/components/Modals/commonModal';
 import styles from './phoneStep.module.scss';
 
 interface SendCodeParams {

@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MenuCategory } from 'model/shopInfo/menuCategory';
 import cn from 'utils/ts/className';
 import MENU_CATEGORY from 'utils/constant/menu';
 import { Link, useNavigate } from 'react-router-dom';
 import ROUTES from 'static/routes';
+import { useDeleteMenu } from 'query/menu';
+import { ConfirmModal } from 'page/Auth/Signup/components/Modals/commonModal';
 import styles from './MenuTable.module.scss';
 
 interface MenuTableProps {
@@ -15,8 +17,25 @@ interface MenuTableProps {
 const HEADER_OFFSET = 133; // categories 높이
 
 function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTableProps) {
-  const [categoryType, setCategoryType] = useState<string>(shopMenuCategories[0].name);
+  const [categoryType, setCategoryType] = useState<string>(shopMenuCategories.length > 0 ? shopMenuCategories[0].name : '');
+  const [isShowConfirmModal, setIsShowConfirmModal] = useState<boolean>(false);
+  const shopId = useRef('');
+  const shopName = useRef('');
   const navigate = useNavigate();
+  const { deleteMenuMutation } = useDeleteMenu();
+
+  const onClickDeleteButton = (id: number, name: string) => {
+    setIsShowConfirmModal(true);
+    shopId.current = String(id);
+    shopName.current = name;
+  };
+
+  const onConfirmDelete = () => {
+    deleteMenuMutation(Number(shopId.current));
+    setIsShowConfirmModal(false);
+    shopId.current = '';
+    shopName.current = '';
+  };
 
   const handleScroll = () => {
     shopMenuCategories.forEach((menu) => {
@@ -67,6 +86,13 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
 
   return (
     <>
+      {isShowConfirmModal && (
+      <ConfirmModal
+        onConfirm={onConfirmDelete}
+        onClose={() => setIsShowConfirmModal(false)}
+        title={shopName.current}
+      />
+      )}
       <ul className={styles.categories}>
         {MENU_CATEGORY.map((menuCategories) => (
           <li key={menuCategories.id}>
@@ -107,7 +133,33 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
                 <div className={styles['menu-info']} key={menu.id}>
                   <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
                     <div className={styles['menu-info__card']}>
-                      <span title={menu.name}>{menu.name}</span>
+                      <span
+                        className={styles['menu-info__card--name']}
+                        title={menu.name}
+                      >
+                        {menu.name}
+                        {isEdit && (
+                        <div>
+                          <button
+                            className={styles['menu-info__modify-button']}
+                            type="button"
+                            onClick={() => goEditPage(menu.id)}
+                          >
+                            변경
+                          </button>
+                          <button
+                            className={styles['menu-info__modify-button--delete']}
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              onClickDeleteButton(menu.id, menu.name);
+                            }}
+                          >
+                            삭제
+                          </button>
+                        </div>
+                        )}
+                      </span>
                       <span>
                         {!!menu.single_price && (
                           menu.single_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -116,15 +168,6 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
                       </span>
                     </div>
                   </Link>
-                  {isEdit && (
-                  <button
-                    className={styles['menu-info__modify-button']}
-                    type="button"
-                    onClick={() => goEditPage(menu.id)}
-                  >
-                    변경
-                  </button>
-                  )}
                   {menu.image_urls.length > 0 ? (
                     <div key={`${menu.image_urls[0]}`} className={styles.image}>
                       <button
@@ -147,6 +190,38 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
               ) : (
                 menu.option_prices.map((item) => (
                   <div className={styles['menu-info']} key={menu.id + item.option}>
+                    <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
+                      <div className={styles['menu-info__card']}>
+                        <span className={styles['menu-info__card--name']}>
+                          {`${menu.name} - ${item.option}`}
+                          {isEdit && (
+                          <div>
+                            <button
+                              className={styles['menu-info__modify-button']}
+                              type="button"
+                              onClick={() => goEditPage(menu.id)}
+                            >
+                              변경
+                            </button>
+                            <button
+                              className={styles['menu-info__modify-button--delete']}
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                deleteMenuMutation(menu.id);
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                          )}
+                        </span>
+                        <span>
+                          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          원
+                        </span>
+                      </div>
+                    </Link>
                     {menu.image_urls.length > 0 ? (
                       menu.image_urls.map((img, idx) => (
                         <div key={`${img}`} className={styles.image}>
@@ -166,15 +241,6 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
                           />
                         </div>
                     )}
-                    <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
-                      <div className={styles['menu-info__card']}>
-                        <span>{`${menu.name} - ${item.option}`}</span>
-                        <span>
-                          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          원
-                        </span>
-                      </div>
-                    </Link>
                   </div>
                 ))
               )

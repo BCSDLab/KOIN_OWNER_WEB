@@ -55,6 +55,7 @@
 
 .menu-info {
   display: flex;
+  justify-content: space-between;
   padding: 20px;
   gap: 20px;
   border-bottom: 1px solid #eee;
@@ -71,6 +72,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &--name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     &:nth-child(2) {
       justify-content: center;
@@ -105,8 +112,22 @@
   &__modify-button {
     background: none;
     color: #175c8e;
-    height: min-content;
+    border: 1px solid #175c8e;
+    border-radius: 8px;
+    padding: 3px 6px;
+    font-size: 12px;
     cursor: pointer;
+    margin-right: 3px;
+
+    &--delete {
+      background: none;
+      color: #ff0000;
+      border: 1px solid #ff0000;
+      border-radius: 8px;
+      padding: 3px 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
   }
 }
 
