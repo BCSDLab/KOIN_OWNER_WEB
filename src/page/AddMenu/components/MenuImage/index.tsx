@@ -15,6 +15,12 @@ interface MenuImageProps {
   isComplete: boolean;
 }
 
+/*
+imageUrl: 실제 서버로 전송될 값, url이고 문자열
+imageFile: 파일 객체를 s3에 업로드하고 난 후 저장한 url
+즉 imageUrl === imageFile
+*/
+
 export default function MenuImage({ isComplete }: MenuImageProps) {
   const logger = useLogger();
   const { isMobile } = useMediaQuery();
@@ -45,10 +51,13 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
   };
 
   useEffect(() => {
-    if (imageFile) {
+    if (imageUrl.length > imageFile.length) {
+      setImageFile(imageUrl);
+    } else {
       setImageUrls(imageFile);
-    }
-  }, [imageFile, setImageUrls]);
+    } // 두 값을 항상 동일해야 함
+  }, [imageUrl, imageFile, setImageFile, setImageUrls]);
+
   return (
     <div>
       {isMobile ? (
