@@ -38,7 +38,7 @@ const OPEN_DEFAULT_VALUES = [
   },
 ];
 
-const useDefaultValues = () => {
+export const useDefaultValues = () => {
   const { data } = useSuspenseQuery({
     queryFn: registerdStore,
     queryKey: ['registerdStore'],
@@ -69,8 +69,8 @@ export default function ShopRegistrationMobile() {
       delivery_price: 0,
       description: '',
       image_urls: [],
-      name: data.shopName || '',
-      phone: '',
+      name: data.shop_name || '',
+      phone: data.shop_number.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3') || '',
       address: '',
       delivery: false,
       pay_bank: false,

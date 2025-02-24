@@ -59,11 +59,18 @@ export const loginByPhone = async (param: LoginParams) => {
 };
 
 interface RegisterStoreResponse {
-  shopName: string,
-  shopNumber: string
+  shop_name: string,
+  shop_number: string
 }
 
 export const registerdStore = async () => {
   const { data } = await accessClient.get<RegisterStoreResponse>('/owner/registered-store');
+  return data;
+};
+
+export const validateCompanyNumber = async (number: string) => {
+  const { data } = await accessClient.post('owners/exists/company-number', {
+    company_number: number,
+  });
   return data;
 };
