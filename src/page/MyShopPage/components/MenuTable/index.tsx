@@ -12,11 +12,14 @@ interface MenuTableProps {
   shopMenuCategories: MenuCategory[];
   onClickImage: (img: string[], index: number) => void;
   isEdit?: boolean;
+  headerOffset?: number;
 }
 
 const HEADER_OFFSET = 133; // categories 높이
 
-function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTableProps) {
+function MenuTable({
+  shopMenuCategories, onClickImage, isEdit = false, headerOffset,
+}: MenuTableProps) {
   const [categoryType, setCategoryType] = useState<string>(shopMenuCategories.length > 0 ? shopMenuCategories[0].name : '');
   const [isShowConfirmModal, setIsShowConfirmModal] = useState<boolean>(false);
   const shopId = useRef('');
@@ -70,12 +73,13 @@ function MenuTable({ shopMenuCategories, onClickImage, isEdit = false }: MenuTab
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shopMenuCategories]);
-
   const scrollToTarget = (name: string) => {
     const element = document.getElementById(name);
     if (element) {
       const elementPosistion = element.getBoundingClientRect().top;
-      const categoryPosition = elementPosistion + window.scrollY - HEADER_OFFSET;
+      const categoryPosition = headerOffset
+        ? elementPosistion + window.scrollY - headerOffset
+        : elementPosistion + window.scrollY - HEADER_OFFSET;
 
       window.scrollTo({
         top: categoryPosition,

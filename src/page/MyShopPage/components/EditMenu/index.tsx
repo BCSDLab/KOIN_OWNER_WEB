@@ -23,6 +23,7 @@ export default function EditMenu() {
         shopMenuCategories={menusData?.menu_categories || []}
         onClickImage={onClickImage}
         isEdit
+        headerOffset={74}
       />
     </div>
   );
