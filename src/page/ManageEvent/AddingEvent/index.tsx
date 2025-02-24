@@ -303,7 +303,7 @@ export default function AddingEvent() {
           </div>
           <input
             type="text"
-            placeholder="이벤트/공지 제목을 입력해주세요."
+            placeholder="이벤트 이름이 학생들에게 알림으로 전송 돼요."
             className={cn({
               [styles['error-border']]: error.title,
               [styles.event__input]: true,
