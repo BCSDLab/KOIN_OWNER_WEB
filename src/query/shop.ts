@@ -11,6 +11,7 @@ import { NewMenu } from 'model/shopInfo/newMenu';
 import { useNavigate } from 'react-router-dom';
 import getShopCategory from 'api/category';
 import useSuspenseUser from 'utils/hooks/useSuspenseUser';
+import useMediaQuery from 'utils/hooks/useMediaQuery';
 import ROUTES from 'static/routes';
 import { shopKeys } from './KeyFactory/shopKeys';
 
@@ -21,6 +22,7 @@ const useMyShop = () => {
   if (user && 'company_number' in user) {
     myShopQueryKey = user.company_number;
   }
+  const { isMobile } = useMediaQuery();
   const queryClient = useQueryClient();
   const { resetAddMenuStore } = useAddMenuStore();
   const { data: myShop } = useSuspenseQuery({
@@ -62,7 +64,8 @@ const useMyShop = () => {
     onSuccess: () => {
       resetAddMenuStore();
       queryClient.invalidateQueries({ queryKey: shopKeys.myMenuInfo(shopId) });
-      navigate(ROUTES.Owner.Root());
+      if (isMobile) navigate(ROUTES.Owner.EditMenu());
+      else navigate(ROUTES.Owner.Root());
     },
     onError: (e) => {
       if (isKoinError(e)) {

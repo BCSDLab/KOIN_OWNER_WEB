@@ -36,13 +36,18 @@ export default function PriceInput({
           <div className={styles.inputs}>
             <div className={styles['inputs__price-input-box']}>
               <input
-                type="number"
+                type="string"
                 className={styles['inputs__price-input']}
                 inputMode="decimal"
                 value={
                   singlePrice === 0 || singlePrice === null ? '' : singlePrice
                 }
-                onChange={(e) => setSinglePrice(e.target.value === '' ? 0 : Number(e.target.value))}
+                onChange={(e) => {
+                  const { value } = e.target;
+                  const onlyNumbersRegex = /^[0-9]+$/;
+                  if (value !== '' && !onlyNumbersRegex.test(value)) return;
+                  setSinglePrice(value === '' ? 0 : Number(value));
+                }}
                 onWheel={(e) => {
                   if (e.target instanceof HTMLElement) e.target.blur();
                 }}

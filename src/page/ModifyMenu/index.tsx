@@ -14,9 +14,9 @@ import GoMyShopModal from 'page/AddMenu/components/GoMyShop';
 import MobileDivide from 'page/AddMenu/components/MobileDivide';
 import useScrollToTop from 'utils/hooks/useScrollToTop';
 import useFormValidation from 'page/AddMenu/hook/useFormValidation';
-import ROUTES from 'static/routes';
 import showToast from 'utils/ts/showToast';
 import { CommonModal } from 'page/Auth/Signup/components/Modals/commonModal';
+import ROUTES from 'static/routes';
 
 export default function ModifyMenu() {
   useScrollToTop();
@@ -45,9 +45,6 @@ export default function ModifyMenu() {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  const goMyShop = () => {
-    navigate(ROUTES.Owner.Root());
-  };
 
   const { deleteMenuMutation } = useDeleteMenu();
 
@@ -127,7 +124,7 @@ export default function ModifyMenu() {
 
   useEffect(() => {
     if (modifyMenuSuccess) {
-      goMyShop();
+      navigate(ROUTES.Owner.EditMenu());
     }
     if (modifyMenuError) {
       showToast('error', '메뉴 수정에 실패했습니다.');
@@ -190,7 +187,7 @@ export default function ModifyMenu() {
                 <button
                   className={styles['mobile__button-cancel']}
                   type="button"
-                  onClick={goMyShop}
+                  onClick={() => navigate(-1)}
                 >
                   취소
                 </button>
@@ -233,7 +230,7 @@ export default function ModifyMenu() {
                   <button
                     className={styles['header__button-cancel']}
                     type="button"
-                    onClick={goMyShop}
+                    onClick={() => navigate(-1)}
                   >
                     취소
                   </button>

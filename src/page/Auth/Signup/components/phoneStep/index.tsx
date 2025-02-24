@@ -1,4 +1,5 @@
 import {
+  FieldError,
   useFormContext, UseFormGetValues, UseFormSetError,
 } from 'react-hook-form';
 import {
@@ -33,7 +34,7 @@ interface TimerProps {
   time?: number;
   timeOut?: () => void;
   onMid?: () => void;
-  stop?: boolean;
+  error?: FieldError
 }
 
 const useSendCode = ({
@@ -88,12 +89,12 @@ const useCheckCode = (
 };
 
 function Timer({
-  seconds, setSeconds, time = 180, timeOut, onMid, stop,
+  seconds, setSeconds, time = 180, timeOut, onMid, error,
 }: TimerProps) {
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
-    if (seconds <= 0 && timeOut) {
+    if (seconds === 0 && !error && timeOut) {
       timeOut();
     }
 
@@ -102,14 +103,14 @@ function Timer({
       onMid();
     }
 
-    if (seconds > 0 && !stop) {
+    if (seconds > 0) {
       interval = setInterval(() => {
         setSeconds((prev) => prev - 1);
       }, 1000);
     }
 
     return () => clearInterval(interval);
-  }, [seconds, setSeconds, timeOut, time, onMid, stop]);
+  }, [seconds, setSeconds, timeOut, time, onMid, error]);
 
   return (
     <div>
@@ -177,7 +178,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
 
   const onRevalidateCodeSuccess = () => {
     setSeconds(180);
-    clearErrors();
+    clearErrors('verificationCode');
     reset();
     setIsShowModal(true);
   };
@@ -288,7 +289,7 @@ function PhoneStep({ nextStep }: { nextStep: () => void }) {
                 setSeconds={setSeconds}
                 timeOut={() => setError('verificationCode', { type: 'error', message: '유효시간이 지났습니다. 인증번호를 재발송 해주세요.' })}
                 onMid={() => setIsShowInquiry(true)}
-                stop={isCertified}
+                error={errors.verificationCode}
               />
 )}
           />
