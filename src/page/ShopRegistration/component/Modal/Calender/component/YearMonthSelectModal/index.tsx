@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable max-len */
 import {
   useState, useRef, useEffect, UIEvent, CSSProperties,
@@ -132,6 +133,7 @@ export default function YearMonthSelectModal({
                 const isActive = idx === selectedInfiniteYearIndex;
                 return (
                   <div
+                    key={`year-${yearValue}-${idx}`}
                     className={`${styles.dialItem} ${isActive ? styles.active : ''}`}
                     style={{ height: BUTTON_HEIGHT } as CSSProperties}
                   >
@@ -152,6 +154,7 @@ export default function YearMonthSelectModal({
                 const isActive = idx === selectedInfiniteMonthIndex;
                 return (
                   <div
+                    key={`month-${monthValue}-${idx}`}
                     className={`${styles.dialItem} ${isActive ? styles.active : ''}`}
                     style={{ height: BUTTON_HEIGHT } as CSSProperties}
                   >
