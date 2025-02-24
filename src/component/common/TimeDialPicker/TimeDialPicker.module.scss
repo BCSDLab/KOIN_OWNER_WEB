@@ -127,3 +127,45 @@
     align-items: center;
   }
 }
+
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 70%);
+  z-index: 50;
+}
+
+.modal-container {
+  position: absolute;
+  bottom: 40dvh;
+  left: 10dvw;
+  box-sizing: border-box;
+  width: 80dvw;
+  height: 15dvh;
+  background-color: #fff;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.warn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 500;
+
+  &__button {
+    border-radius: 4px;
+    background: #175c8e;
+    width: 50%;
+    color: white;
+    padding: 12px;
+  }
+}

@@ -12,6 +12,8 @@ import cn from 'utils/ts/className';
 import { HOURS, MINUTES } from 'utils/constant/time';
 import EmptyCheckBox from 'assets/svg/common/time-check-box-empty.svg?react';
 import CheckedCheckBox from 'assets/svg/common/time-check-box-check.svg?react';
+import useBooleanState from 'utils/hooks/useBooleanState';
+import { createPortal } from 'react-dom';
 import styles from './TimeDialPicker.module.scss';
 
 const BUTTON_HEIGHT = 40;
@@ -163,6 +165,11 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [isClosed, setIsClosed] = useState(false);
   const [isAllDay, setIsAllDay] = useState(false);
+  const {
+    setTrue: openWarnModal,
+    setFalse: closeWarnModal,
+    value: isWarnModalOpen,
+  } = useBooleanState(false);
 
   const handleDayClick = useCallback((day: string) => {
     setSelectedDays((prev) => (prev.includes(day) ? prev.filter((d) => d !== day)
@@ -198,6 +205,10 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
   }
 
   function handleAdd() {
+    if (selectedDays.length === 0) {
+      openWarnModal();
+      return;
+    }
     const openHour = openHourIndex;
     const openMin = openMinuteIndex * 10;
     const closeHour = closeHourIndex;
@@ -331,6 +342,28 @@ export default function TimeDialPicker({ setStep }: TimeDialPickerProps) {
           추가하기
         </button>
       </div>
+      {isWarnModalOpen
+        && createPortal(
+          <div
+            className={styles.wrapper}
+            role="button"
+            tabIndex={0}
+            onClick={closeWarnModal}
+            onKeyDown={(e) => e.key === 'Escape' && closeWarnModal()}
+          >
+            <div
+              className={styles['modal-container']}
+              onClick={(e) => e.stopPropagation()}
+              role="presentation"
+            >
+              <div className={styles.warn}>요일을 선택해 주세요.</div>
+              <button className={styles.warn__button} type="button" onClick={closeWarnModal}>
+                닫기
+              </button>
+            </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

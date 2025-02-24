@@ -127,6 +127,7 @@ export default function MyShopPage() {
               이벤트/공지
             </button>
           </div>
+          {tapType === '메뉴' && (
           <div className={styles['edit-wrapper']}>
             <Button
               info
@@ -138,6 +139,7 @@ export default function MyShopPage() {
               </div>
             </Button>
           </div>
+          )}
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
               <MenuTable
