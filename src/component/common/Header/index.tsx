@@ -16,6 +16,7 @@ function Header() {
     || pathname.startsWith(ROUTES.Owner.Event({ isLink: false }))
     || pathname.startsWith(ROUTES.Owner.EditMenu())
     || pathname.includes('event-add')
+    || pathname.includes('event-modify')
   )
     && isMobile) {
     return (
@@ -34,6 +35,7 @@ function Header() {
           {pathname.startsWith(ROUTES.Owner.Event({ isLink: false })) && '이벤트/공지 작성하기'}
           {pathname.startsWith(ROUTES.Owner.EditMenu()) && '메뉴 편집'}
           {pathname.includes('event-add') && '이벤트 추가'}
+          {pathname.includes('event-modify') && '이벤트 수정'}
         </div>
       </header>
     );
