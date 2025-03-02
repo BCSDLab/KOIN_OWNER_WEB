@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
+import { Dispatch, SetStateAction, useState } from 'react';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import CUTLERY from 'assets/svg/myshop/cutlery.svg?react';
 import EditIcon from 'assets/svg/common/mobile-edit.svg?react';
 import CustomModal from 'component/common/CustomModal';
 import EditShopInfoModal from 'page/MyShopPage/components/EditShopInfoModal';
-import { Dispatch, SetStateAction, useState } from 'react';
 import useLogger from 'utils/hooks/useLogger';
 import cn from 'utils/ts/className';
-import { DAY_OF_WEEK, WEEK } from 'utils/constant/week';
+import { MyShopInfoRes } from 'model/shopInfo/myShopInfo';
+import useShopTimeInfoMapping, { OperatingTimeGroup } from 'page/MyShopPage/hooks/useShopTimeInfoMapping';
 import styles from './ShopInfo.module.scss';
 
 interface ShopInfoProps {
@@ -18,68 +18,6 @@ interface ShopInfoProps {
   setIsSuccess: Dispatch<SetStateAction<boolean>>;
   isEditShopInfoModalOpen: boolean;
   onClickImage: (img: string[], index: number) => void;
-}
-interface OpenTimeType {
-  day_of_week: string;
-  closed: boolean;
-  open_time: string | null;
-  close_time: string | null;
-}
-
-type OperatingTimeGroup = {
-  dayNames: string;
-  label: string;
-  status: 'closed' | '24h' | 'time';
-};
-
-function getKoreanDay(day_of_week: string): string {
-  const idx = DAY_OF_WEEK.indexOf(day_of_week);
-  return WEEK[(idx) % 7];
-}
-
-function groupOperatingTime(weekData: OpenTimeType[]): OperatingTimeGroup[] {
-  if (!weekData || weekData.length === 0) return [];
-
-  const groups: Record<string, OpenTimeType[]> = {};
-
-  weekData.forEach((day) => {
-    if (day.closed) {
-      const key = 'CLOSED';
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(day);
-    } else {
-      const open = day.open_time ?? 'null';
-      const close = day.close_time ?? 'null';
-      const key = `${open}-${close}`;
-      if (!groups[key]) groups[key] = [];
-      groups[key].push(day);
-    }
-  });
-
-  const result: OperatingTimeGroup[] = Object.keys(groups).map((key) => {
-    const dayList = groups[key];
-    const dayNames = dayList.map((d) => getKoreanDay(d.day_of_week)).join(', ');
-
-    if (key === 'CLOSED') {
-      return { dayNames, label: '휴무', status: 'closed' };
-    }
-    const [first] = dayList;
-    if (first.open_time === '00:00' && first.close_time === '00:00') {
-      return { dayNames, label: '24시간 운영', status: '24h' };
-    }
-    return { dayNames, label: `${first.open_time} ~ ${first.close_time}`, status: 'time' };
-  });
-
-  result.sort((a, b) => {
-    const order = (s: OperatingTimeGroup['status']) => {
-      if (s === '24h') return 1;
-      if (s === 'time') return 2;
-      return 3; // 'closed'
-    };
-    return order(a.status) - order(b.status);
-  });
-
-  return result;
 }
 
 type ContentItem = {
@@ -96,16 +34,16 @@ export default function ShopInfo({
   onClickImage,
 }: ShopInfoProps) {
   const { isMobile } = useMediaQuery();
+  const logger = useLogger();
   const today = new Date().getDay();
   const todayIndex = today === 0 ? 6 : today - 1;
   const [openTime, setOpenTime] = useState<string | null>(shopInfo.open[todayIndex].open_time);
   const [closeTime, setCloseTime] = useState<string | null>(shopInfo.open[todayIndex].close_time);
-  const logger = useLogger();
 
   if (openTime === '24:00') setOpenTime('00:00');
   if (closeTime === '24:00') setCloseTime('00:00');
 
-  const operatingTimeList = groupOperatingTime(shopInfo.open);
+  const operatingTimeList = useShopTimeInfoMapping(shopInfo.open);
 
   const content: ContentItem[] = [
     { title: '전화번호', data: shopInfo.phone },
@@ -171,11 +109,13 @@ export default function ShopInfo({
                         <div className={styles.lineItem} key={time.dayNames}>
                           <span className={styles.dayNames}>{time.dayNames}</span>
                           {' '}
-                          <span className={cn({
-                            [styles.time]: true,
-                            [styles['time--close']]: time.status === 'closed',
-                          })}
+                          <span
+                            className={cn({
+                              [styles.time]: true,
+                              [styles['time--close']]: time.status === 'closed',
+                            })}
                           >
+                            <span className={styles.dayNames}>: </span>
                             {time.label}
                           </span>
                         </div>
@@ -184,14 +124,11 @@ export default function ShopInfo({
                   </div>
                 </div>
               ))}
-
             </div>
             <div className={styles['mobileshop__keyword-part']}>
               {shopInfo.delivery && <div className={styles.mobileshop__keywords}>#배달 가능</div>}
               {shopInfo.pay_card && <div className={styles.mobileshop__keywords}>#카드 가능</div>}
-              {shopInfo.pay_bank && (
-                <div className={styles.mobileshop__keywords}>#계좌이체 가능</div>
-              )}
+              {shopInfo.pay_bank && <div className={styles.mobileshop__keywords}>#계좌이체 가능</div>}
             </div>
           </div>
         </div>
@@ -216,11 +153,12 @@ export default function ShopInfo({
                         <div className={styles.lineItem} key={time.dayNames}>
                           <span className={styles.dayNames}>{time.dayNames}</span>
                           {' '}
-                          <span className={cn({
-                            [styles.time]: true,
-                            [styles['time--close']]: time.status === 'closed',
-                            [styles['time--all']]: time.status === '24h',
-                          })}
+                          <span
+                            className={cn({
+                              [styles.time]: true,
+                              [styles['time--close']]: time.status === 'closed',
+                              [styles['time--all']]: time.status === '24h',
+                            })}
                           >
                             {time.label}
                           </span>

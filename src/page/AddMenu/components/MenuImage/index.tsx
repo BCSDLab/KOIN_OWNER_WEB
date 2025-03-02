@@ -122,6 +122,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
                 )}
               </div>
             ))}
+            {imageUrl.length < 3 && (
             <button
               type="button"
               className={styles['new-image__add-btn']}
@@ -130,6 +131,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
               <ImgPlusIcon className={styles.plusIcon} />
               <div className={styles['new-image__add-caption']}>이미지 추가</div>
             </button>
+            )}
             <input
               type="file"
               accept="image/*"

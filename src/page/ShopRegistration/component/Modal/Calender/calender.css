@@ -38,6 +38,7 @@
 }
 
 .react-calendar__tile {
+  position: relative;
   box-sizing: border-box;
   background-color: white;
   font-size: 14px;
