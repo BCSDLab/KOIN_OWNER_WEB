@@ -3,6 +3,7 @@ import Complete from 'component/Auth/Complete';
 import { FormProvider, useForm } from 'react-hook-form';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import useStepStore from 'store/useStepStore';
+import { useDefaultValues } from 'page/ShopRegistration/view/Mobile';
 import styles from './ShopRegistrationPC.module.scss';
 import ShopEntry from './ShopEntry';
 import ShopConfirmation from './ShopConfirmation';
@@ -32,14 +33,15 @@ const OPEN_DEFAULT_VALUES = [
 ];
 
 export default function ShopRegistrationPC() {
+  const data = useDefaultValues();
   const methods = useForm<OwnerShop>({
     defaultValues: {
       category_ids: [],
       delivery_price: 0,
       description: '',
       image_urls: [],
-      name: '',
-      phone: '',
+      name: data.shop_name || '',
+      phone: data.shop_number.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3') || '',
       address: '',
       delivery: false,
       pay_bank: false,

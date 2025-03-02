@@ -33,13 +33,14 @@
     width: 94px;
     height: 43px;
     flex-shrink: 0;
-    border: 1px solid #f7941e;
+    border: 1px solid #cacaca;
     background-color: white;
-    color: #f7941e;
+    color: #cacaca;
     text-align: center;
     font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 18px;
     font-weight: 500;
+    border-radius: 8px;
 
     &:hover {
       cursor: pointer;
@@ -56,6 +57,7 @@
     font-family: "Noto Sans CJK KR", sans-serif;
     font-size: 18px;
     font-weight: 500;
+    border-radius: 8px;
 
     &:hover {
       cursor: pointer;

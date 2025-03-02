@@ -1,6 +1,6 @@
 import PreviousStep from 'component/Auth/PreviousStep';
 import ProgressBar from 'component/Auth/ProgressBar';
-import Complete from 'component/Auth/Complete';
+import ShopRegistrationComplete from 'page/ShopRegistration/view/Mobile/ShopRegistrationComplete';
 import SubTitle from 'component/Auth/SubTitle';
 import PROGRESS_TITLE from 'utils/constant/progress';
 import ShopEntry from 'page/ShopRegistration/view/Mobile/ShopEntry';
@@ -10,6 +10,8 @@ import Sub from 'page/ShopRegistration/view/Mobile/Sub';
 import ShopConfirmation from 'page/ShopRegistration/view/Mobile/ShopConfirmation';
 import { FormProvider, useForm } from 'react-hook-form';
 import useStepStore from 'store/useStepStore';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { registerdStore } from 'api/auth';
 import styles from './ShopRegistrationMobile.module.scss';
 
 const OPEN_DEFAULT_VALUES = [
@@ -36,10 +38,20 @@ const OPEN_DEFAULT_VALUES = [
   },
 ];
 
+export const useDefaultValues = () => {
+  const { data } = useSuspenseQuery({
+    queryFn: registerdStore,
+    queryKey: ['registerdStore'],
+  });
+
+  return data;
+};
+
 export default function ShopRegistrationMobile() {
   // const {
   //   Funnel, Step, setStep, currentStep,
   // } = useFunnel('가게 등록');
+  const data = useDefaultValues();
 
   const { step, setStep, decreaseStep } = useStepStore();
 
@@ -57,8 +69,8 @@ export default function ShopRegistrationMobile() {
       delivery_price: 0,
       description: '',
       image_urls: [],
-      name: '',
-      phone: '',
+      name: data.shop_name || '',
+      phone: data.shop_number.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3') || '',
       address: '',
       delivery: false,
       pay_bank: false,
@@ -69,13 +81,13 @@ export default function ShopRegistrationMobile() {
 
   return (
     <FormProvider {...methods}>
-      {step !== 0 && <PreviousStep step={step} clickEvent={decreaseStep} />}
+      {step !== 0 && <PreviousStep step={step} clickEvent={decreaseStep} title="가게 등록" />}
       <div className={styles.content}>
         {step === 0 && <ShopEntry onNext={() => setStep(1)} />}
         {step === 1 && (
         <>
           <SubTitle
-            topTitle="가게 등록"
+            topTitle=""
             bottomTitle=""
             topText="등록 하시려는 업체의"
             bottomText="메인 정보를 입력해 주세요."
@@ -85,13 +97,13 @@ export default function ShopRegistrationMobile() {
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[1].title}
           />
-          <ShopCategory onNext={() => setStep(2)} />
+          <ShopCategory onNext={() => setStep(2)} onPrev={decreaseStep} />
         </>
         )}
         {step === 2 && (
         <>
           <SubTitle
-            topTitle="가게 등록"
+            topTitle=""
             bottomTitle=""
             topText="등록 하시려는 업체의"
             bottomText="메인 정보를 입력해 주세요."
@@ -101,13 +113,13 @@ export default function ShopRegistrationMobile() {
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[2].title}
           />
-          <Main onNext={() => setStep(3)} />
+          <Main onNext={() => setStep(3)} onPrev={decreaseStep} />
         </>
         )}
         {step === 3 && (
         <>
           <SubTitle
-            topTitle="가게 등록"
+            topTitle=""
             bottomTitle=""
             topText="등록 하시려는 업체의"
             bottomText="세부 정보를 입력해 주세요."
@@ -117,29 +129,32 @@ export default function ShopRegistrationMobile() {
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[3].title}
           />
-          <Sub onNext={() => setStep(4)} />
+          <Sub onNext={() => setStep(4)} onPrev={decreaseStep} />
         </>
         )}
         {step === 4 && (
         <>
-          <SubTitle topTitle="가게 등록" bottomTitle="" topText="입력하신 정보가 맞습니까?" bottomText="" />
+          <SubTitle
+            topTitle=""
+            bottomTitle=""
+            topText="입력하신 정보가 맞습니까?"
+            bottomText=""
+          />
           <div className={styles.margin} />
           <ProgressBar
             step={PROGRESS_TITLE[4].step}
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[4].title}
           />
-          <ShopConfirmation onNext={() => setStep(5)} />
+          <ShopConfirmation onNext={() => setStep(5)} onPrev={decreaseStep} />
 
         </>
         )}
         {step === 5 && (
-        <Complete
+        <ShopRegistrationComplete
           title="가게 등록 완료"
           topText="가게 등록이 완료되었습니다."
-          bottomText="업체 정보 수정은 내 상점에서 가능합니다."
-          link="/"
-          linkText="메인 화면 바로가기"
+          bottomText="가게 정보 수정은 내 상점에서 가능합니다."
         />
         )}
       </div>

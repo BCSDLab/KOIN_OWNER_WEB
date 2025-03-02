@@ -440,6 +440,7 @@
   &__content {
     color: #858585;
     font-size: 14px;
+    white-space: pre-line;
   }
 
   &__button {
@@ -449,4 +450,8 @@
     color: #ffffff;
     cursor: pointer;
   }
+}
+
+.time {
+  white-space: "pre-line";
 }

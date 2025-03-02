@@ -1,0 +1,111 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 70%);
+  z-index: 100;
+}
+
+.container {
+  position: absolute;
+  bottom: 40dvh;
+  left: 0;
+  box-sizing: border-box;
+  width: 100dvw;
+  height: fit-content;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 12px 11px;
+}
+
+.modalContainer {
+  margin-left: 8%;
+  width: 84%;
+}
+
+.select {
+  color: #727272;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.dialContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.dialWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dial {
+  width: 80%;
+  height: 120px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dial::-webkit-scrollbar {
+  display: none;
+}
+
+.dialItem {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cacaca;
+  font-size: 16px;
+  border-top: none;
+  border-bottom: none;
+}
+
+.dialItem.active {
+  color: #000;
+  font-weight: bold;
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.buttonContainer button {
+  flex: 1;
+  margin-right: 8px;
+  padding: 8px 20px;
+  max-width: 128px;
+  box-sizing: border-box;
+}
+
+.cancel {
+  background-color: #ffffff;
+  border: 1px solid #cacaca;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #cacaca;
+  cursor: pointer;
+}
+
+.submit {
+  background-color: #175c8e;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+}

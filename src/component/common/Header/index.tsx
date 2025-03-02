@@ -1,6 +1,6 @@
 import BackArrowIcon from 'assets/svg/common/back-arrow.svg?react';
 import { Suspense } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ROUTES from 'static/routes';
 import useMediaQuery from 'utils/hooks/useMediaQuery';
 import styles from './Header.module.scss';
@@ -10,10 +10,23 @@ import PCPanel from './PCPanel';
 function Header() {
   const { pathname } = useLocation();
   const { isMobile } = useMediaQuery();
+  const navigate = useNavigate();
+
+  const backHandler = () => {
+    if (pathname.startsWith(ROUTES.Owner.EditMenu())) {
+      navigate(ROUTES.Owner.Root());
+      return;
+    }
+    navigate(-1);
+  };
 
   if ((pathname === ROUTES.Owner.AddMenu()
-    || pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false }))
-    || pathname.startsWith(ROUTES.Owner.Event({ isLink: false })))
+    || pathname.includes('modify-menu')
+    || pathname.startsWith(ROUTES.Owner.Event({ isLink: false }))
+    || pathname.startsWith(ROUTES.Owner.EditMenu())
+    || pathname.includes('event-add')
+    || pathname.includes('event-modify')
+  )
     && isMobile) {
     return (
       <header className={styles['add-menu-header']}>
@@ -21,14 +34,17 @@ function Header() {
           title="뒤로 가기 버튼"
           className={styles['add-menu-header__prev-button']}
           type="button"
-          onClick={() => window.history.back()}
+          onClick={backHandler}
         >
           <BackArrowIcon title="뒤로 가기 버튼" />
         </button>
         <div className={styles['add-menu-header__caption']}>
-          {pathname === ROUTES.Owner.AddMenu() && '메뉴추가'}
-          {pathname.startsWith(ROUTES.Owner.ModifyMenu({ isLink: false })) && '메뉴수정'}
+          {pathname === ROUTES.Owner.AddMenu() && '메뉴 추가'}
+          {pathname.includes('modify-menu') && '메뉴 수정'}
           {pathname.startsWith(ROUTES.Owner.Event({ isLink: false })) && '이벤트/공지 작성하기'}
+          {pathname.startsWith(ROUTES.Owner.EditMenu()) && '메뉴 편집'}
+          {pathname.includes('event-add') && '이벤트 추가'}
+          {pathname.includes('event-modify') && '이벤트 수정'}
         </div>
       </header>
     );

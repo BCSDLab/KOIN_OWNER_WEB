@@ -1,20 +1,50 @@
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, UseFormSetError } from 'react-hook-form';
 import { useOutletContext } from 'react-router-dom';
 import { ChangePasswordForm } from 'model/auth';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import Warning from 'assets/svg/auth/warning.svg?react';
 import styles from 'page/Auth/FindPassword/index.module.scss';
+import { isKoinError, sendClientError } from '@bcsdlab/koin';
+import { Button } from 'page/Auth/components/Common/form';
+import sha256 from 'utils/ts/SHA-256';
+import { changePassword } from 'api/auth';
+import { useMutation } from '@tanstack/react-query';
+
+interface ChangePasswordProps {
+  setError: UseFormSetError<ChangePasswordForm>;
+  nextStep: () => void;
+}
+
+const useChangePassword = ({ setError, nextStep } : ChangePasswordProps) => {
+  const mutate = useMutation({
+    mutationFn: async (data: { phone_number: string, password: string }) => {
+      const hashPassword = await sha256(data.password);
+      changePassword({ phone_number: data.phone_number, password: hashPassword });
+    },
+    onError: (e) => {
+      if (isKoinError(e)) {
+        setError('password', { type: 'custom', message: e.message });
+      } else {
+        sendClientError(e);
+      }
+    },
+    onSuccess: () => nextStep(),
+  });
+
+  return mutate;
+};
 
 const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,18}$/;
 
 export default function ChangePassword() {
   const {
-    register, formState: { errors, isValid }, getValues, clearErrors,
+    register, formState: { errors, isValid }, getValues, clearErrors, setError,
   } = useFormContext<ChangePasswordForm>();
 
   const steps = useOutletContext<OutletProps>();
   const { setIsStepComplete } = steps;
+  const mutation = useChangePassword({ setError, nextStep: steps.nextStep });
 
   useEffect(() => {
     if (isValid) {
@@ -57,7 +87,6 @@ export default function ChangePassword() {
               </div>
             )
         }
-
       </section>
       <section className={styles.section}>
         <div className={styles.title}>새 비밀번호 확인</div>
@@ -78,6 +107,15 @@ export default function ChangePassword() {
           )
         }
       </section>
+      <Button
+        disabled={!isValid}
+        onClick={() => {
+          const data = { phone_number: getValues('phone_number'), password: getValues('password') };
+          mutation.mutate(data);
+        }}
+      >
+        완료
+      </Button>
     </form>
   );
 }

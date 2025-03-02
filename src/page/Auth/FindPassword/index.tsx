@@ -8,7 +8,7 @@ export default function FindPassword() {
   const { index } = steps;
   return (
     <>
-      {index === 0 && <Verify />}
+      {index === 0 && <Verify nextStep={steps.nextStep} />}
       {index === 1 && <ChangePassword />}
     </>
   );

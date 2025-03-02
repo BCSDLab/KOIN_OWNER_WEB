@@ -5,12 +5,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import { useEffect, useState } from 'react';
 import cn from 'utils/ts/className';
-import { Portal } from 'component/common/Modal/PortalProvider';
-import useModalPortal from 'utils/hooks/useModalPortal';
 import showToast from 'utils/ts/showToast';
-import ImageModal from 'component/common/Modal/ImageModal';
 import useLogger from 'utils/hooks/useLogger';
 import ROUTES from 'static/routes';
+import { Button } from 'page/Auth/components/Common/form';
+import EditEventIcon from 'assets/svg/myshop/edit-event-icon.svg?react';
+import { useClickImage } from 'utils/hooks/useClickImage';
 import CatagoryMenuList from './components/CatagoryMenuList';
 import ShopInfo from './components/ShopInfo';
 import styles from './MyShopPage.module.scss';
@@ -35,6 +35,7 @@ export default function MyShopPage() {
     setFalse: closeEditShopInfoModal,
     value: isEditShopInfoModalOpen,
   } = useBooleanState(false);
+  const { onClickImage } = useClickImage();
 
   const logger = useLogger();
 
@@ -45,7 +46,6 @@ export default function MyShopPage() {
   }
 
   const [tapType, setTapType] = useState('메뉴');
-  const portalManager = useModalPortal();
 
   useEffect(() => {
     refetchShopData();
@@ -56,12 +56,6 @@ export default function MyShopPage() {
       navigate(ROUTES.Owner.ShopRegistration());
     }
   }, [shopData, navigate, isLoading]);
-
-  const onClickImage = (img: string[], index: number) => {
-    portalManager.open((portalOption: Portal) => (
-      <ImageModal imageList={img} imageIndex={index} onClose={portalOption.close} />
-    ));
-  };
 
   if (isMobile && shopData && isEditShopInfoModalOpen) {
     return (
@@ -133,6 +127,19 @@ export default function MyShopPage() {
               이벤트/공지
             </button>
           </div>
+          {tapType === '메뉴' && (
+          <div className={styles['edit-wrapper']}>
+            <Button
+              info
+              onClick={() => navigate(ROUTES.Owner.EditMenu())}
+            >
+              <div className={styles.center}>
+                <EditEventIcon />
+                메뉴 편집하기
+              </div>
+            </Button>
+          </div>
+          )}
           {tapType === '메뉴' ? (
             menusData && menusData.menu_categories.length > 0 && (
               <MenuTable

@@ -13,7 +13,7 @@ export const NewMenu = z.object({
   is_single: z.boolean(),
   name: z.string(),
   option_prices: z.array(OptionPrice).nullable(),
-  single_price: z.number(),
+  single_price: z.number().nullable(),
 });
 
 export type NewMenu = z.infer<typeof NewMenu>;

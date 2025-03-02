@@ -2,8 +2,6 @@ import OperateTimeMobile from 'page/ShopRegistration/component/Modal/OperateTime
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useOperateTimeState from 'page/ShopRegistration/hooks/useOperateTimeState';
 import CheckSameTime from 'page/ShopRegistration/hooks/CheckSameTime';
-import { WEEK } from 'utils/constant/week';
-import useModalStore from 'store/modalStore';
 import ErrorMessage from 'component/common/ErrorMessage';
 import { ERRORMESSAGE } from 'page/ShopRegistration/constant/errorMessage';
 import cn from 'utils/ts/className';
@@ -12,7 +10,10 @@ import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import { OwnerShop } from 'model/shopInfo/ownerShop';
 import styles from './Sub.module.scss';
 
-export default function Sub({ onNext }:{ onNext: () => void }) {
+export default function Sub({ onNext, onPrev }: {
+  onNext: () => void;
+  onPrev: () => void;
+}) {
   const {
     value: showOperateTime,
     setTrue: openOperateTime,
@@ -20,14 +21,8 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
   } = useBooleanState(false);
 
   const operateTimeState = useOperateTimeState();
-  const {
-    isAllSameTime,
-    hasClosedDay,
-    isSpecificDayClosedAndAllSameTime,
-    isAllClosed,
-  } = CheckSameTime();
 
-  const { shopClosedState } = useModalStore();
+  const { isAllClosed } = CheckSameTime();
 
   const {
     register, trigger, setValue, formState: { errors },
@@ -35,13 +30,12 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
 
   useStoreTimeSetUp({ setValue });
 
-  const formatPhoneNumber = (inputNumber:string) => {
+  const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
-    const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
-    return formattedPhoneNumber;
+    return phoneNumber.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
   };
 
-  const handlePhoneChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formattedValue = formatPhoneNumber(event.target.value);
     setValue('phone', formattedValue);
   };
@@ -88,6 +82,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
       <div className={styles['form__error-message']}>
         {errors.phone && <ErrorMessage message={ERRORMESSAGE.phone} />}
       </div>
+
       <label
         htmlFor="deliveryPrice"
         className={styles.form__label}
@@ -99,53 +94,34 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           id="deliveryPrice"
           className={styles.form__input}
           {...register('delivery_price')}
-          onWheel={(e) => (e.target as HTMLElement).blur()} // 마우스 스크롤로 숫자 변경 방지
+          onInput={(e) => {
+            if (parseInt(e.currentTarget.value, 10) > 9999999) {
+              setValue('delivery_price', 9999999);
+            }
+          }}
+          max={100000}
+          onWheel={(e) => (e.target as HTMLElement).blur()}
         />
       </label>
+
       <div className={styles.form__label}>
         운영시간
-        <span>
-          {
-            isAllSameTime && !hasClosedDay ? (
-              <div>
-                {operateTimeState.time}
-              </div>
-            )
-              : null
-          }
-          {
-            isSpecificDayClosedAndAllSameTime ? (
-              <div>
-                <div>{operateTimeState.time}</div>
-                <div>{operateTimeState.holiday}</div>
-              </div>
-            ) : null
-          }
-          {
-            !isAllSameTime && !isSpecificDayClosedAndAllSameTime && !isAllClosed ? (
-              <>
-                {WEEK.map((day) => (
-                  <div key={day}>
-                    {shopClosedState[day] ? `${operateTimeState[day]}` : `${day} : ${operateTimeState[day]}`}
-                  </div>
-                ))}
-              </>
-            ) : null
-          }
-          {
-            isAllClosed ? (
-              <span>매일 휴무</span>
-            ) : null
-          }
-        </span>
-        <button
-          type="button"
-          className={styles['form__label-button']}
-          onClick={openOperateTime}
-        >
-          수정
-        </button>
+        <div className={styles['form__label--date']}>
+          {isAllClosed ? (
+            <span>매일 휴무</span>
+          ) : (
+            <span className={styles.time}>{operateTimeState}</span>
+          )}
+          <button
+            type="button"
+            className={styles['form__label-button']}
+            onClick={openOperateTime}
+          >
+            수정
+          </button>
+        </div>
       </div>
+
       <label htmlFor="extra-info" className={styles.form__label}>
         기타정보
         <input
@@ -155,6 +131,7 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           {...register('description')}
         />
       </label>
+
       <div className={styles.form__checkbox}>
         <label htmlFor="delivery" className={styles['form__checkbox-label']}>
           <input
@@ -184,8 +161,24 @@ export default function Sub({ onNext }:{ onNext: () => void }) {
           <span>계좌이체 가능</span>
         </label>
       </div>
-      <div className={styles.form__button}>
-        <button type="button" onClick={handleNextClick}>다음</button>
+
+      <div className={styles.form__footer}>
+        <button
+          className={styles.form__cancel}
+          type="button"
+          onClick={onPrev}
+        >
+          취소
+        </button>
+        <button
+          className={cn({
+            [styles.form__next]: true,
+          })}
+          type="button"
+          onClick={handleNextClick}
+        >
+          확인
+        </button>
       </div>
     </div>
   );

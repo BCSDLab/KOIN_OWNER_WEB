@@ -11,6 +11,7 @@ import styles from 'page/Auth/FindPassword/index.module.scss';
 import { OutletProps } from 'page/Auth/FindPassword/entity';
 import { useDebounce } from 'utils/hooks/useDebounce';
 import showToast from 'utils/ts/showToast';
+import { Button } from 'page/Auth/components/Common/form';
 
 interface SendCode {
   getValues: UseFormGetValues<Verify>;
@@ -43,7 +44,7 @@ interface Verify {
   certification_code: string;
 }
 
-export default function Verify() {
+export default function Verify({ nextStep }: { nextStep: () => void }) {
   const {
     register, getValues, setError, formState: { errors }, watch, clearErrors,
   } = useFormContext<Verify>();
@@ -90,79 +91,80 @@ export default function Verify() {
 
   return (
     <form className={styles.container}>
-      <section className={styles.section}>
-        <div className={styles.title}>휴대폰 번호</div>
-        <div className={styles.verify}>
-          <input
-            className={styles.input}
-            {...register('phone_number', {
-              required: {
-                value: true,
-                message: '필수 입력 항목입니다.',
-              },
-              minLength: {
-                value: 11,
-                message: '11자리의 숫자로 입력해주세요',
-              },
-            })}
-            maxLength={11}
-            type="text"
-            inputMode="numeric"
-            placeholder="-없이 번호를 입력해주세요."
-          />
-          <button
-            className={cn({
-              [styles.button]: true,
-              [styles['button--active']]: watch('phone_number') && watch('phone_number').length === 11,
-              [styles['button--error']]: !!errors.certification_code,
-            })}
-            type="button"
-            onClick={sendCode}
-          >
-            {isSent ? '인증번호 재발송' : '인증번호 발송'}
-          </button>
-        </div>
-        {errors.phone_number
+      <div>
+        <section className={styles.section}>
+          <div className={styles.title}>휴대폰 번호</div>
+          <div className={styles.verify}>
+            <input
+              className={styles.input}
+              {...register('phone_number', {
+                required: {
+                  value: true,
+                  message: '필수 입력 항목입니다.',
+                },
+                minLength: {
+                  value: 11,
+                  message: '11자리의 숫자로 입력해주세요',
+                },
+              })}
+              maxLength={11}
+              type="text"
+              inputMode="numeric"
+              placeholder="-없이 번호를 입력해주세요."
+            />
+            <button
+              className={cn({
+                [styles.button]: true,
+                [styles['button--active']]: watch('phone_number') && watch('phone_number').length === 11,
+                [styles['button--error']]: !!errors.certification_code,
+              })}
+              type="button"
+              onClick={sendCode}
+            >
+              {isSent ? '인증번호 재발송' : '인증번호 발송'}
+            </button>
+          </div>
+          {errors.phone_number
           && (
             <div className={styles.error}>
               <Warning />
               {errors.phone_number.message}
             </div>
           )}
-      </section>
-      <section className={styles.section}>
-        <div className={styles.title}>인증번호</div>
-        <div className={styles.verify}>
-          <input
-            className={styles.input}
-            {...register('certification_code', {
-              required: {
-                value: true,
-                message: '인증번호를 입력해주세요',
-              },
-              minLength: {
-                value: 6,
-                message: '6자리의 인증번호를 입력해주세요',
-              },
-            })}
-            type="text"
-            inputMode="numeric"
-            placeholder="인증번호를 입력해주세요."
-            maxLength={6}
-          />
-          <button
-            className={cn({
-              [styles.button]: true,
-              [styles['button--active']]: watch('phone_number') && watch('phone_number').length === 11,
-              [styles['button--error']]: !!errors.certification_code,
-            })}
-            type="button"
-            onClick={verify}
-          >
-            인증번호 확인
-          </button>
-        </div>
-        {
+        </section>
+        <section className={styles.section}>
+          <div className={styles.title}>인증번호</div>
+          <div className={styles.verify}>
+            <input
+              className={styles.input}
+              {...register('certification_code', {
+                required: {
+                  value: true,
+                  message: '인증번호를 입력해주세요',
+                },
+                minLength: {
+                  value: 6,
+                  message: '6자리의 인증번호를 입력해주세요',
+                },
+              })}
+              type="text"
+              inputMode="numeric"
+              placeholder="인증번호를 입력해주세요."
+              maxLength={6}
+            />
+            <button
+              className={cn({
+                [styles.button]: true,
+                [styles['button--active']]: watch('phone_number') && watch('phone_number').length === 11,
+                [styles['button--error']]: !!errors.certification_code,
+              })}
+              type="button"
+              onClick={verify}
+            >
+              인증번호 확인
+            </button>
+          </div>
+          {
           errors.certification_code && (
             <div className={styles.error}>
               <Warning />
@@ -170,14 +172,21 @@ export default function Verify() {
             </div>
           )
         }
-        {
+          {
           isCertified && watch('certification_code').length === 6 && (
             <div className={styles.error}>
               인증되었습니다
             </div>
           )
         }
-      </section>
+        </section>
+      </div>
+      <Button
+        disabled={!!errors.certification_code || !!errors.phone_number || !isCertified}
+        onClick={nextStep}
+      >
+        다음
+      </Button>
     </form>
   );
 }

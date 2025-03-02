@@ -2,8 +2,9 @@
 
 .categories {
   display: flex;
+  justify-content: space-between;
   position: sticky;
-  top: 77px;
+  top: 70px;
   gap: 13px;
   background-color: #ffff;
   padding: 10px;
@@ -53,10 +54,8 @@
 }
 
 .menu-info {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   padding: 20px;
-  gap: 20px;
   border-bottom: 1px solid #eee;
 
   &:last-child {
@@ -67,16 +66,15 @@
     background-color: #eee;
   }
 
+  &__modify {
+    flex-grow: 2;
+  }
+
   &__card {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 10px;
 
-    &:nth-child(2) {
-      justify-content: center;
-    }
-
-    span:nth-child(1) {
+    &--name {
       font-size: 16px;
       font-weight: 600;
       padding-bottom: 20px;
@@ -85,12 +83,16 @@
 
       @include media.media-breakpoint-down(mobile) {
         padding-bottom: 12px;
-        width: 250px;
+        max-width: 150px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         word-break: break-all;
       }
+    }
+
+    &:nth-child(2) {
+      justify-content: center;
     }
 
     span:nth-child(2) {
@@ -101,15 +103,32 @@
       }
     }
   }
+
+  &__modify-button {
+    background: none;
+    color: #175c8e;
+    border: 1px solid #175c8e;
+    border-radius: 8px;
+    padding: 3px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-right: 3px;
+
+    &--delete {
+      background: none;
+      color: #ff0000;
+      border: 1px solid #ff0000;
+      border-radius: 8px;
+      padding: 3px 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
 }
 
 .image {
   display: flex;
   justify-content: center;
-
-  &:not(:first-child) {
-    display: none;
-  }
 
   &__button {
     border: none;

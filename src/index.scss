@@ -37,3 +37,30 @@ button {
 ul {
   list-style: none;
 }
+
+.react-datepicker__header {
+  width: 100% !important;
+  background-color: #fff !important;
+}
+
+.react-datepicker__month-container {
+  width: 100% !important;
+}
+
+.react-datepicker__day-names {
+  width: 100% !important;
+}
+
+.react-datepicker__day-name {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.react-datepicker {
+  border: none !important;
+}
+
+.react-datepicker div {
+  border: none !important;
+}

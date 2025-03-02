@@ -1,0 +1,116 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 70%);
+  z-index: 50;
+}
+
+.container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100dvw;
+  height: 58dvh;
+  background-color: #fff;
+  border-radius: 20px 20px 0 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__info {
+    display: flex;
+    align-items: center;
+    background-color: #f6f8f9;
+    color: #a1a1a1;
+    padding-left: 21px;
+    font-size: 13px;
+    height: 35px;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 0;
+    border-bottom: 0.5px solid #e1e1e1;
+  }
+}
+
+.custom-nav {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  &__button {
+    width: 100%;
+    background-color: white;
+  }
+
+  &__label {
+    width: 100%;
+    background-color: white;
+    color: #175c8e;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+.button {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    padding: 16px 5% 0;
+    gap: 32px;
+  }
+
+  &__cancel {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid #cacaca;
+    background: white;
+    padding: 4px 32px;
+    font-size: 16px;
+    color: #cacaca;
+    font-weight: 500;
+  }
+
+  &__submit {
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #175c8e;
+    padding: 4px 32px;
+    font-size: 16px;
+    color: white;
+    font-weight: 500;
+  }
+}
+
+.date-condition {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 400;
+}
