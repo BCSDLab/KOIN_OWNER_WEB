@@ -4,6 +4,8 @@ import MenuTable from 'page/MyShopPage/components/MenuTable';
 import { useClickImage } from 'utils/hooks/useClickImage';
 import styles from './index.module.scss';
 
+// 모바일만 고려함
+
 export default function EditMenu() {
   const { menusData } = useMyShop();
   const { onClickImage } = useClickImage();
@@ -11,7 +13,7 @@ export default function EditMenu() {
   if (!menusData) return null;
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.menu__add}>
         <Link to="/owner/add-menu">
           <div className={styles['menu__add--button']}>

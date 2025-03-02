@@ -1,3 +1,5 @@
+@use "src/utils/styles/mediaQuery" as media;
+
 .menu__add {
   display: flex;
   width: 100%;
@@ -7,6 +9,11 @@
   background: #fff;
   position: fixed;
   top: 52px;
+
+  @include media.media-breakpoint-up(mobile) {
+    top: 62px;
+  }
+  
 
   &--button {
     color: #175c8e;
