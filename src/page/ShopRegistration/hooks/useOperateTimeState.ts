@@ -6,6 +6,19 @@ export default function useOperateTimeState() {
   const { openTimeState, closeTimeState, shopClosedState } = useModalStore();
   const [groupedOperateTime, setGroupedOperateTime] = useState<string>('');
 
+  function groupByLabel(daysInfo: { day: string; label: string }[]) {
+    const groupMap: Record<string, string[]> = {};
+    daysInfo.forEach(({ day, label }) => {
+      if (!groupMap[label]) {
+        groupMap[label] = [];
+      }
+      groupMap[label].push(day);
+    });
+    return Object.entries(groupMap)
+      .map(([label, days]) => `${days.join(', ')} : ${label}`)
+      .join('\n');
+  }
+
   useEffect(() => {
     const dayInfos = WEEK.map((day) => {
       if (shopClosedState[day]) {
@@ -19,19 +32,30 @@ export default function useOperateTimeState() {
       return { day, label: `${open} ~ ${close}` };
     });
 
-    const groupMap: Record<string, string[]> = {};
-    dayInfos.forEach(({ day, label }) => {
-      if (!groupMap[label]) {
-        groupMap[label] = [];
-      }
-      groupMap[label].push(day);
-    });
+    const weekdayInfos = dayInfos.slice(0, 5);
+    const weekendInfos = dayInfos.slice(5);
 
-    const result = Object.entries(groupMap)
-      .map(([timeLabel, days]) => `${days.join(', ')} : ${timeLabel}`)
-      .join('\n');
+    const weekdayLabels = weekdayInfos.map(({ label }) => label);
+    const weekendLabels = weekendInfos.map(({ label }) => label);
 
-    setGroupedOperateTime(result);
+    const isWeekdaySame = weekdayLabels.every((label) => label === weekdayLabels[0]);
+    const isWeekendSame = weekendLabels.every((label) => label === weekendLabels[0]);
+
+    const result: string[] = [];
+
+    if (isWeekdaySame) {
+      result.push(`평일 : ${weekdayLabels[0]}`);
+    } else {
+      result.push(groupByLabel(weekdayInfos));
+    }
+
+    if (isWeekendSame) {
+      result.push(`주말 : ${weekendLabels[0]}`);
+    } else {
+      result.push(groupByLabel(weekendInfos));
+    }
+
+    setGroupedOperateTime(result.join('\n'));
   }, [openTimeState, closeTimeState, shopClosedState]);
 
   return groupedOperateTime;

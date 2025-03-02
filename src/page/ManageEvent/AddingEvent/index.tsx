@@ -417,9 +417,10 @@ export default function AddingEvent() {
         onClose={closeCalendeModal}
         setStartDate={(newStart) => setEventInfo((prev) => ({ ...prev, start_date: newStart }))}
         setEndDate={(newEnd) => setEventInfo((prev) => ({ ...prev, end_date: newEnd }))}
+        startDate={eventInfo.start_date}
+        endDate={eventInfo.end_date}
         whichDate={whichDate}
       />
-
       )}
 
     </div>

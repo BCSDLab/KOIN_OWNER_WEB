@@ -1,8 +1,7 @@
-/* eslint-disable max-len */
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import Calendar from 'react-calendar';
-import { format } from 'date-fns';
+import { format, getTime, isSameDay } from 'date-fns';
 import PreIcon from 'assets/svg/common/pre-month-arrow.svg?react';
 import NextIcon from 'assets/svg/common/next-month-arrow.svg?react';
 import showToast from 'utils/ts/showToast';
@@ -26,6 +25,28 @@ interface CalenderProps {
   whichDate: 'start' | 'end' | null;
 }
 
+function parseDateObj(dateObj?: DateObj) {
+  if (!dateObj) return null;
+  return new Date(
+    parseInt(dateObj.year, 10),
+    parseInt(dateObj.month, 10) - 1,
+    parseInt(dateObj.date, 10),
+  );
+}
+
+function formatDateObj(date: Date): DateObj {
+  return {
+    year: String(date.getFullYear()),
+    month: String(date.getMonth() + 1).padStart(2, '0'),
+    date: String(date.getDate()).padStart(2, '0'),
+  };
+}
+
+function isInRange(date: Date, start: Date, end: Date) {
+  const t = getTime(date);
+  return t >= getTime(start) && t <= getTime(end);
+}
+
 export default function Calender({
   onClose,
   startDate,
@@ -34,52 +55,37 @@ export default function Calender({
   setEndDate,
   whichDate,
 }: CalenderProps) {
-  const initialCalendarValue = (() => {
-    if (startDate) {
-      const s = new Date(
-        parseInt(startDate.year, 10),
-        parseInt(startDate.month, 10) - 1,
-        parseInt(startDate.date, 10),
-      );
-      if (endDate) {
-        const e = new Date(
-          parseInt(endDate.year, 10),
-          parseInt(endDate.month, 10) - 1,
-          parseInt(endDate.date, 10),
-        );
-        return [s, e] as [Date, Date];
-      }
-      return [s, null] as [Date, null];
-    }
-    return null;
-  })();
+  const parsedStartDate = parseDateObj(startDate);
+  const parsedEndDate = parseDateObj(endDate);
 
-  const initialCurrentDate = (() => {
-    if (startDate) {
-      return new Date(
-        parseInt(startDate.year, 10),
-        parseInt(startDate.month, 10) - 1,
-        parseInt(startDate.date, 10),
-      );
-    }
-    if (endDate) {
-      return new Date(
-        parseInt(endDate.year, 10),
-        parseInt(endDate.month, 10) - 1,
-        parseInt(endDate.date, 10),
-      );
-    }
-    return new Date();
-  })();
-
-  const [selectedValue, setSelectedValue] = useState<[Date | null, Date | null] | null>(initialCalendarValue);
-  const [currentDate, setCurrentDate] = useState(initialCurrentDate);
+  const initialFocus = parsedStartDate || parsedEndDate || new Date();
+  const [currentDate, setCurrentDate] = useState<Date>(initialFocus);
   const [year, setYear] = useState(currentDate.getFullYear());
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
-  const { setTrue: openYearMonthSelectModal, setFalse: closeYearMonthSelectModal, value: isYearMonthSelectModalOpen } = useBooleanState(false);
 
-  const handleDateChange = (value: Date | [Date | null, Date | null] | null) => {
-    setSelectedValue(value as [Date | null, Date | null]);
+  const {
+    setTrue: openYearMonthSelectModal,
+    setFalse: closeYearMonthSelectModal,
+    value: isYearMonthSelectModalOpen,
+  } = useBooleanState(false);
+
+  const handleClickDay = (clickedDate: Date) => {
+    if (whichDate === 'start') {
+      setStartDate(formatDateObj(clickedDate));
+      return;
+    }
+
+    if (whichDate === 'end') {
+      if (!parsedStartDate) {
+        showToast('info', '먼저 시작일을 선택해 주세요.');
+        return;
+      }
+      if (clickedDate < parsedStartDate) {
+        showToast('info', '시작일 이후 날짜만 선택할 수 있습니다.');
+        return;
+      }
+      setEndDate(formatDateObj(clickedDate));
+    }
   };
 
   const handlePrevMonth = () => {
@@ -103,38 +109,33 @@ export default function Calender({
   };
 
   const handleSubmit = () => {
-    if (!selectedValue) {
-      showToast('info', '날짜를 선택해주세요.');
-      return;
-    }
-    const [start, end] = selectedValue;
-    if (start && end) {
-      setStartDate({
-        year: String(start.getFullYear()),
-        month: String(start.getMonth() + 1).padStart(2, '0'),
-        date: String(start.getDate()).padStart(2, '0'),
-      });
-      setEndDate({
-        year: String(end.getFullYear()),
-        month: String(end.getMonth() + 1).padStart(2, '0'),
-        date: String(end.getDate()).padStart(2, '0'),
-      });
-    } else if (start && !end) {
-      const dateObj = {
-        year: String(start.getFullYear()),
-        month: String(start.getMonth() + 1).padStart(2, '0'),
-        date: String(start.getDate()).padStart(2, '0'),
-      };
-      if (whichDate === 'start') {
-        setStartDate(dateObj);
-      } else if (whichDate === 'end') {
-        setEndDate(dateObj);
-      }
-    } else {
-      showToast('info', '날짜를 다시 선택해주세요.');
-      return;
-    }
     onClose();
+  };
+
+  const getTileClass = (date: Date) => {
+    if (!parsedStartDate && !parsedEndDate) return undefined;
+
+    if (whichDate === 'start') {
+      if (parsedStartDate && getTime(parsedStartDate) === getTime(date)) {
+        return 'react-calendar__tile--rangeStart react-calendar__tile--active';
+      }
+      return undefined;
+    }
+
+    if (whichDate === 'end' && parsedStartDate && parsedEndDate) {
+      const start = parsedStartDate;
+      const end = parsedEndDate;
+      if (getTime(date) === getTime(start)) {
+        return 'react-calendar__tile--rangeStart react-calendar__tile--active';
+      }
+      if (getTime(date) === getTime(end)) {
+        return 'react-calendar__tile--rangeEnd react-calendar__tile--active';
+      }
+      if (isInRange(date, start, end) && getTime(date) !== getTime(end)) {
+        return 'react-calendar__tile--active';
+      }
+    }
+    return undefined;
   };
 
   return createPortal(
@@ -151,32 +152,50 @@ export default function Calender({
         role="presentation"
       >
         <div className={styles.content__title}>이벤트/공지 등록 기간을 설정해 주세요.</div>
+
         <div className={styles['custom-nav']}>
           <button type="button" onClick={handlePrevMonth} className={styles['custom-nav__button']}>
             <PreIcon />
           </button>
-          <button type="button" onClick={handleHeaderClick} className={styles['custom-nav__label']}>
+          <button
+            type="button"
+            onClick={handleHeaderClick}
+            className={styles['custom-nav__label']}
+          >
             {format(new Date(year, month - 1), 'yyyy년 M월')}
           </button>
           <button type="button" onClick={handleNextMonth} className={styles['custom-nav__button']}>
             <NextIcon />
           </button>
         </div>
+
         <Calendar
           calendarType="gregory"
-          onChange={handleDateChange}
-          selectRange
-          returnValue="range"
-          value={selectedValue}
-          defaultValue={null}
           locale="ko-KR"
+          selectRange={false}
+          onClickDay={handleClickDay}
+          activeStartDate={new Date(year, month - 1)}
           prevLabel={null}
           nextLabel={null}
           prev2Label={null}
           next2Label={null}
-          activeStartDate={new Date(year, month - 1)}
           className="custom-calendar"
+          tileClassName={({ date, view }) => {
+            if (view !== 'month') return undefined;
+            return getTileClass(date);
+          }}
+          tileContent={({ date, view }) => {
+            if (view !== 'month') return null;
+            if (parsedStartDate && isSameDay(date, parsedStartDate)) {
+              return <div className={styles['date-condition']}>시작일</div>;
+            }
+            if (parsedEndDate && isSameDay(date, parsedEndDate)) {
+              return <div className={styles['date-condition']}>종료일</div>;
+            }
+            return null;
+          }}
         />
+
         <div className={styles.button__container}>
           <button type="button" className={styles.button__cancel} onClick={onClose}>
             취소
@@ -186,6 +205,7 @@ export default function Calender({
           </button>
         </div>
       </div>
+
       {isYearMonthSelectModalOpen && (
         <YearMonthSelectModal
           onClose={closeYearMonthSelectModal}
