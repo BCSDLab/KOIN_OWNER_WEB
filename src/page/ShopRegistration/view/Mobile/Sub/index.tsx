@@ -32,7 +32,7 @@ export default function Sub({ onNext, onPrev }: {
 
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
-    return phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    return phoneNumber.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
   };
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +94,12 @@ export default function Sub({ onNext, onPrev }: {
           id="deliveryPrice"
           className={styles.form__input}
           {...register('delivery_price')}
+          onInput={(e) => {
+            if (parseInt(e.currentTarget.value, 10) > 9999999) {
+              setValue('delivery_price', 9999999);
+            }
+          }}
+          max={100000}
           onWheel={(e) => (e.target as HTMLElement).blur()}
         />
       </label>

@@ -25,7 +25,7 @@ export default function AddMenu() {
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { resetMenuName, resetCategoryIds } = useAddMenuStore();
+  const { resetAddMenuStore } = useAddMenuStore();
   const { setMenuError, setCategoryError } = useErrorMessageStore();
   const {
     value: isGoMyShopModal,
@@ -96,8 +96,7 @@ export default function AddMenu() {
   };
 
   useEffect(() => {
-    resetMenuName();
-    resetCategoryIds();
+    resetAddMenuStore();
     setMenuError('');
     setCategoryError('');
     // eslint-disable-next-line react-hooks/exhaustive-deps

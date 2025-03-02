@@ -46,7 +46,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const { categoryList } = useMyShop();
 
   const {
-    register, trigger, control, setValue, handleSubmit, formState: { errors },
+    register, trigger, control, setValue, handleSubmit, formState: { errors }, getValues,
   } = useFormContext<OwnerShop>();
 
   const {
@@ -57,13 +57,16 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
 
   const imageUrls = useWatch({ control, name: 'image_urls' });
   const categoryId = useWatch({ control, name: 'category_ids' });
-  const selectedId = categoryList?.shop_categories[categoryId[0] - 1]?.name;
+  const values = getValues();
+  const selectedId = categoryList?.shop_categories.find(
+    (shop) => shop.id === values.category_ids[0],
+  )?.name;
 
   useStoreTimeSetUp({ setValue });
 
   const formatPhoneNumber = (inputNumber: string) => {
     const phoneNumber = inputNumber.replace(/\D/g, '');
-    const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+    const formattedPhoneNumber = phoneNumber.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3');
     return formattedPhoneNumber;
   };
 

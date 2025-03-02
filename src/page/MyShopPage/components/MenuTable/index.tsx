@@ -136,40 +136,44 @@ function MenuTable({
               menu.option_prices === null ? (
                 <div className={styles['menu-info']} key={menu.id}>
                   <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
-                    <div className={styles['menu-info__card']}>
-                      <span
-                        className={styles['menu-info__card--name']}
-                        title={menu.name}
-                      >
-                        {menu.name}
-                        {isEdit && (
-                        <div>
-                          <button
-                            className={styles['menu-info__modify-button']}
-                            type="button"
-                            onClick={() => goEditPage(menu.id)}
-                          >
-                            변경
-                          </button>
-                          <button
-                            className={styles['menu-info__modify-button--delete']}
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              onClickDeleteButton(menu.id, menu.name);
-                            }}
-                          >
-                            삭제
-                          </button>
+                    <div>
+                      <div className={styles['menu-info__card']}>
+                        <div
+                          className={styles['menu-info__card--name']}
+                          title={menu.name}
+                        >
+                          {menu.name}
                         </div>
-                        )}
-                      </span>
-                      <span>
-                        {!!menu.single_price && (
+                        <div>
+                          {isEdit && (
+                          <div>
+                            <button
+                              className={styles['menu-info__modify-button']}
+                              type="button"
+                              onClick={() => goEditPage(menu.id)}
+                            >
+                              변경
+                            </button>
+                            <button
+                              className={styles['menu-info__modify-button--delete']}
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                onClickDeleteButton(menu.id, menu.name);
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      {
                           menu.single_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                        )}
-                        원
-                      </span>
+                        }
+                      원
                     </div>
                   </Link>
                   {menu.image_urls.length > 0 ? (
@@ -195,35 +199,42 @@ function MenuTable({
                 menu.option_prices.map((item) => (
                   <div className={styles['menu-info']} key={menu.id + item.option}>
                     <Link to={ROUTES.Owner.ModifyMenu({ id: String(menu.id), isLink: true })} className={styles['menu-info__modify']}>
-                      <div className={styles['menu-info__card']}>
-                        <span className={styles['menu-info__card--name']}>
-                          {`${menu.name} - ${item.option}`}
-                          {isEdit && (
-                          <div>
-                            <button
-                              className={styles['menu-info__modify-button']}
-                              type="button"
-                              onClick={() => goEditPage(menu.id)}
-                            >
-                              변경
-                            </button>
-                            <button
-                              className={styles['menu-info__modify-button--delete']}
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                deleteMenuMutation(menu.id);
-                              }}
-                            >
-                              삭제
-                            </button>
+                      <div>
+                        <div className={styles['menu-info__card']}>
+                          <div
+                            className={styles['menu-info__card--name']}
+                            title={menu.name}
+                          >
+                            {`${menu.name} - ${item.option}`}
                           </div>
-                          )}
-                        </span>
-                        <span>
-                          {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          원
-                        </span>
+                          <div>
+                            {isEdit && (
+                            <div>
+                              <button
+                                className={styles['menu-info__modify-button']}
+                                type="button"
+                                onClick={() => goEditPage(menu.id)}
+                              >
+                                변경
+                              </button>
+                              <button
+                                className={styles['menu-info__modify-button--delete']}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  onClickDeleteButton(menu.id, menu.name);
+                                }}
+                              >
+                                삭제
+                              </button>
+                            </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        원
                       </div>
                     </Link>
                     {menu.image_urls.length > 0 ? (

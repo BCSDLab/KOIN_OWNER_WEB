@@ -55,9 +55,7 @@
 
 .menu-info {
   display: flex;
-  justify-content: space-between;
   padding: 20px;
-  gap: 20px;
   border-bottom: 1px solid #eee;
 
   &:last-child {
@@ -68,22 +66,15 @@
     background-color: #eee;
   }
 
+  &__modify {
+    flex-grow: 2;
+  }
+
   &__card {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    gap: 10px;
 
     &--name {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    &:nth-child(2) {
-      justify-content: center;
-    }
-
-    span:nth-child(1) {
       font-size: 16px;
       font-weight: 600;
       padding-bottom: 20px;
@@ -92,12 +83,16 @@
 
       @include media.media-breakpoint-down(mobile) {
         padding-bottom: 12px;
-        width: 200px;
+        max-width: 150px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         word-break: break-all;
       }
+    }
+
+    &:nth-child(2) {
+      justify-content: center;
     }
 
     span:nth-child(2) {

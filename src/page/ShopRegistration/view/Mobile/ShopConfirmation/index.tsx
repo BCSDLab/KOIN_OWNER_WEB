@@ -42,7 +42,9 @@ export default function ShopConfirmation({ onNext, onPrev }:{
 
   const { handleSubmit, getValues } = useFormContext<OwnerShop>();
   const values = getValues();
-  const categoryId = categoryList?.shop_categories[values.category_ids[0] - 1].name;
+  const categoryId = categoryList?.shop_categories.find(
+    (shop) => shop.id === values.category_ids[0],
+  )?.name;
   const mutation = usePostData({ onNext });
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
