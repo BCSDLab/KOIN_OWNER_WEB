@@ -70,7 +70,7 @@ export default function ShopRegistrationMobile() {
       description: '',
       image_urls: [],
       name: data.shop_name || '',
-      phone: data.shop_number.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3') || '',
+      phone: data.shop_number.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3') || '',
       address: '',
       delivery: false,
       pay_bank: false,
