@@ -88,8 +88,8 @@ export default function ShopInfo({
                   onClick={() => {
                     openEditShopInfoModal();
                     logger.actionEventClick({
-                      actionTitle: 'OWNER',
-                      title: 'store_info_edit',
+                      team: 'OWNER',
+                      event_label: 'store_info_edit',
                       value: '가게 정보 수정',
                     });
                   }}
@@ -174,8 +174,8 @@ export default function ShopInfo({
                 onClick={() => {
                   openEditShopInfoModal();
                   logger.actionEventClick({
-                    actionTitle: 'OWNER',
-                    title: 'store_info_edit',
+                    team: 'OWNER',
+                    event_label: 'store_info_edit',
                     value: '가게 정보 수정',
                   });
                 }}
