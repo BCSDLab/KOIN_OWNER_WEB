@@ -77,7 +77,11 @@ export default function AddMenu() {
       toggleConfirmClick();
     } else {
       navigate(ROUTES.Owner.Root());
-      logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu_cancel', value: '메뉴 추가 취소' });
+      logger.actionEventClick({
+        team: 'OWNER',
+        event_label: 'add_menu_cancel',
+        value: '메뉴 추가 취소',
+      });
     }
   };
 
