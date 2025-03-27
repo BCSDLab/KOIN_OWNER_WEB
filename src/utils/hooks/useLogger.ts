@@ -1,51 +1,23 @@
 import * as gtag from 'lib/gtag';
 
-export type ClickLoggerProps = {
-  title: string,
-  value: string,
-};
-
-type ScrollLoggerProps = {
-  title: string,
-};
-
 type ActionClickLoggerProps = {
-  actionTitle: string,
-  title: string,
+  team: string,
+  event_label: string,
   value: string,
 };
 
 const useLogger = () => {
-  const click = ({
-    title,
-    value,
-  } : ClickLoggerProps) => {
-    gtag.event({
-      action: 'click', category: 'button', label: title, value,
-    });
-  };
-
-  const scroll = ({
-    title,
-  }: ScrollLoggerProps) => {
-    gtag.event({
-      action: 'BUSINESS', category: 'scroll', label: title, value: title,
-    });
-  };
-
   const actionEventClick = ({
-    actionTitle,
-    title,
+    team,
+    event_label,
     value,
   }: ActionClickLoggerProps) => {
     gtag.event({
-      action: actionTitle, category: 'button', label: title, value,
+      team, event_category: 'click', event_label, value,
     });
   };
 
   return {
-    click,
-    scroll,
     actionEventClick,
   };
 };

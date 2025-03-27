@@ -29,7 +29,7 @@ export default function AddMenuImgModal({ isOpen, closeModal, imageObject }: Add
   };
   const handleImageChange = async () => {
     await imageObject.saveImgFile();
-    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_image', value: '메뉴 이미지 추가' });
+    logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu_image', value: '메뉴 이미지 추가' });
   };
   const triggerCameraInput = () => {
     imageObject.imgRef.current?.click();

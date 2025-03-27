@@ -77,7 +77,11 @@ export default function AddMenu() {
       toggleConfirmClick();
     } else {
       navigate(ROUTES.Owner.Root());
-      logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_cancel', value: '메뉴 추가 취소' });
+      logger.actionEventClick({
+        team: 'OWNER',
+        event_label: 'add_menu_cancel',
+        value: '메뉴 추가 취소',
+      });
     }
   };
 
@@ -85,11 +89,11 @@ export default function AddMenu() {
     if (isComplete) {
       if (!isMobile) {
         openGoMyShopModal();
-        logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_confirm', value: '메뉴 추가 완료' });
+        logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu_confirm', value: '메뉴 추가 완료' });
         return;
       }
       addMenuMutationEvent();
-      logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_confirm', value: '메뉴 추가 완료' });
+      logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu_confirm', value: '메뉴 추가 완료' });
     } else {
       toggleConfirmClick();
     }

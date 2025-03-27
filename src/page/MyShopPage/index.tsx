@@ -88,7 +88,7 @@ export default function MyShopPage() {
                 type="button"
                 className={styles['mobile-header__btn-add']}
                 onClick={() => {
-                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu', value: '메뉴 추가' });
+                  logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu', value: '메뉴 추가' });
                 }}
               >
                 메뉴추가
@@ -161,7 +161,7 @@ export default function MyShopPage() {
                 type="button"
                 className={styles['header__btn-add']}
                 onClick={() => {
-                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
+                  logger.actionEventClick({ team: 'OWNER', event_label: 'add_event', value: '이벤트 추가' });
                 }}
               >
                 이벤트 추가
@@ -172,7 +172,7 @@ export default function MyShopPage() {
                 type="button"
                 className={styles['header__btn-add']}
                 onClick={() => {
-                  logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu', value: '메뉴 추가' });
+                  logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu', value: '메뉴 추가' });
                 }}
               >
                 메뉴추가

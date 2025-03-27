@@ -54,7 +54,7 @@ export default function AlertModal({
               if (callBack) {
                 callBack();
               }
-              logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event_cancel', value: '이벤트 추가 취소' });
+              logger.actionEventClick({ team: 'OWNER', event_label: 'add_event_cancel', value: '이벤트 추가 취소' });
             }}
             onKeyDown={handleKeyDown}
           >
