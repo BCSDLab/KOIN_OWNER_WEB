@@ -20,6 +20,8 @@ import { useEffect } from 'react';
 import useBooleanState from 'utils/hooks/useBooleanState';
 import useStoreTimeSetUp from 'page/ShopRegistration/hooks/useStoreTimeSetUp';
 import CustomButton from 'page/Auth/Signup/CustomButton';
+import AddressSearch from 'page/ShopRegistration/component/Modal/AddressSearch';
+import { Juso } from 'model/shopInfo/address';
 import styles from './ShopConfirmation.module.scss';
 
 export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
@@ -37,6 +39,11 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
     value: showConfirmPopup,
     setTrue: openConfirmPopup,
     setFalse: closeConfirmPopup,
+  } = useBooleanState(false);
+  const {
+    value: showAddressSearch,
+    setTrue: openAddressSearch,
+    setFalse: closeAddressSearch,
   } = useBooleanState(false);
 
   const {
@@ -76,7 +83,7 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   };
 
   const handleNextClick = async () => {
-    const isValid = await trigger(['image_urls', 'name', 'phone', 'address']);
+    const isValid = await trigger(['image_urls', 'name', 'phone', 'address', 'address_detail']);
     if (isValid) {
       openConfirmPopup();
     }
@@ -85,6 +92,16 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const handleDeleteImage = (e: React.MouseEvent<HTMLDivElement>, imageUrl: string) => {
     e.preventDefault();
     setImageFile(imageFile.filter((img) => img !== imageUrl));
+  };
+
+  const handleAddressSelect = (address: Juso) => {
+    const main = address.road_address && address.road_address.trim() !== ''
+      ? address.road_address
+      : address.jibun_address;
+
+    setValue('address', main, { shouldValidate: true, shouldDirty: true });
+    setValue('address_detail', '', { shouldValidate: true, shouldDirty: true });
+    closeAddressSearch();
   };
 
   useEffect(() => {
@@ -96,7 +113,13 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
   const mutation = usePostData({ onNext });
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
-    mutation.mutate(data);
+    const fullAddress = [data.address, data.address_detail].filter(Boolean).join(' ').trim();
+
+    const payload = {
+      ...data,
+      address: fullAddress,
+    };
+    mutation.mutate(payload);
   };
 
   return (
@@ -193,11 +216,34 @@ export default function ShopConfirmation({ onNext }:{ onNext: () => void }) {
             <div className={styles.form__section}>
               <input
                 type="text"
-                className={styles['form__input-large']}
+                className={styles.form__input}
                 {...register('address', { required: true })}
+                readOnly
               />
+              <CustomButton content="주소 검색" buttonSize="small" onClick={openAddressSearch} />
             </div>
             {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
+          </div>
+          <CustomModal
+            buttonText="다음"
+            title="주소 검색"
+            modalSize="extra-large"
+            hasFooter={false}
+            isOverflowVisible={false}
+            isOpen={showAddressSearch}
+            onCancel={closeAddressSearch}
+          >
+            <AddressSearch onSelect={handleAddressSelect} onClose={closeAddressSearch} />
+          </CustomModal>
+          <div>
+            <span className={styles.form__title}>상세주소</span>
+            <div className={styles.form__section}>
+              <input
+                type="text"
+                className={styles['form__input-large']}
+                {...register('address_detail', { required: true })}
+              />
+            </div>
           </div>
           <div>
             <span className={styles.form__title}>전화번호</span>
