@@ -26,7 +26,7 @@ export default function AddressSearch({ onSelect, onClose }: AddressSearchProps)
     }
   };
 
-  const addresses: Juso[] = addressData?.addresses ?? [];
+  const jusoList: Juso[] = addressData?.addresses ?? [];
 
   return (
     <div className={styles['address-search']}>
@@ -52,9 +52,9 @@ export default function AddressSearch({ onSelect, onClose }: AddressSearchProps)
 
       {searchedKeyword && (
         <div className={styles['address-search__result-list']}>
-          {addresses.length > 0 ? (
+          {jusoList.length > 0 ? (
             <ul className={styles['address-search__result-list-ul']}>
-              {addresses.map((address) => {
+              {jusoList.map((address) => {
                 const title = address.bd_nm === '' ? address.road_address : address.bd_nm;
                 const subtitle = address.road_address;
                 const key = `${address.zip_no}-${address.road_address}`;

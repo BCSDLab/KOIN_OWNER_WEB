@@ -23,11 +23,11 @@ export const Juso = z.object({
 
 export type Juso = z.infer<typeof Juso>;
 
-export const Address = z.object({
+export const AddressSearchResponse = z.object({
   addresses: z.array(Juso),
   count_per_page: z.number(),
   current_page: z.number(),
   total_count: z.string(),
 });
 
-export type Address = z.infer<typeof Address>;
+export type AddressSearchResponse = z.infer<typeof AddressSearchResponse>;
