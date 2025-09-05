@@ -6,7 +6,7 @@ import styles from './AddressSearch.module.scss';
 
 interface AddressSearchProps {
   onSelect: (address: Juso) => void;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export default function AddressSearch({ onSelect, onClose }: AddressSearchProps) {
@@ -21,7 +21,9 @@ export default function AddressSearch({ onSelect, onClose }: AddressSearchProps)
 
   const handlePick = (addr: Juso) => {
     onSelect(addr);
-    onClose();
+    if (onClose) {
+      onClose();
+    }
   };
 
   const addresses: Juso[] = addressData?.addresses ?? [];
