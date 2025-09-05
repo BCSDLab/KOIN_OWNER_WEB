@@ -6,9 +6,12 @@ import cn from 'utils/ts/className';
 import { useFormContext } from 'react-hook-form';
 import styles from './ShopAddress.module.scss';
 
-export default function AddressStep({ onNext, onPrev }:{
-  onNext: () => void; onPrev: () => void;
-}) {
+interface AddressSearchProps {
+  onNext: () => void,
+  onPrev: () => void
+}
+
+export default function AddressStep({ onNext, onPrev } : AddressSearchProps) {
   const {
     register, setValue, trigger, formState: { errors },
   } = useFormContext();
