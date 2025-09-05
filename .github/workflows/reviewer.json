@@ -1,54 +1,44 @@
 {
   "reviewers": [
     {
-      "name": "채승윤",
-      "githubName": "chaeseungyun",
-      "team" : "business"
+      "name": "정해성",
+      "githubName": "junghaesung79"
     },
     {
-      "name": "최정훈",
-      "githubName": "hoooooony",
-      "team" : "business"
-    },
-    {
-      "name": "김대의",
-      "githubName": "kimeodml",
-      "team" : "business"
-    },
-    {
-      "name": "김대관",
-      "githubName": "daepan",
-      "team" : "business"
+      "name": "강성훈",
+      "githubName": "kang-s-h"
     },
     {
       "name": "김혜준",
-      "githubName": "hyejun0228",
-      "team" : "user"
+      "githubName": "hyejun0228"
     },
     {
-      "name": "서예진",
-      "githubName": "Yejin0070",
-      "team" : "user"
+      "name": "조정원",
+      "githubName": "JeongWon-CHO"
     },
     {
-      "name": "곽승주",
-      "githubName": "Gwak-Seungju",
-      "team" : "user"
+      "name": "김도훈",
+      "githubName": "dooohun"
     },
     {
-      "name": "정민구",
-      "githubName": "MinGu-Jeong",
-      "team" : "campus"
+      "name": "이준영",
+      "githubName": "ff1451"
     },
     {
-      "name": "정해성",
-      "githubName": "junghaesung79",
-      "team" : "campus"
-    },
-     {
       "name": "김민재",
-      "githubName": "D0Dam",
-      "team" : "campus"
+      "githubName": "D0Dam"
+    },
+    {
+      "name": "김아영",
+      "githubName": "gimadud"
+    },
+    {
+      "name": "이동훈",
+      "githubName": "pcasfs"
+    },
+    {
+      "name": "이재익",
+      "githubName": "JAEIK-23"
     }
   ]
 }
