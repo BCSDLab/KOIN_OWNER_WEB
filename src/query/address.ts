@@ -1,16 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { getAddress } from 'api/address';
-import { AddressSearchResponse } from 'model/shopInfo/address';
-import { addressKeys } from './KeyFactory/addressKeys';
+import type { AddressSearchResponse } from 'model/shopInfo/address';
 
-const useAddress = (keyword: string) => {
-  const { data: addressData } = useQuery<AddressSearchResponse>({
-    queryKey: addressKeys.search(keyword),
-    queryFn: () => getAddress({ keyword, currentPage: '1', countPerPage: '10' }),
-    enabled: keyword.length > 0,
-  });
+export default function useAddress() {
+  const [address, setAddress] = useState('');
+  const [addressData, setAddressData] = useState<AddressSearchResponse | undefined>(undefined);
 
-  return { addressData };
-};
+  const changeAddress = (keyword: string) => setAddress(keyword);
 
-export default useAddress;
+  const search = async () => {
+    if (!address.trim()) return;
+    const data = await getAddress({
+      keyword: address,
+      currentPage: '1',
+      countPerPage: '10',
+    });
+    setAddressData(data);
+  };
+
+  return {
+    address,
+    changeAddress,
+    search,
+    addressData,
+  };
+}
