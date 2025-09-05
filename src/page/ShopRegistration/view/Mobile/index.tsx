@@ -12,6 +12,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import useStepStore from 'store/useStepStore';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { registerdStore } from 'api/auth';
+import ShopAddress from 'page/ShopRegistration/view/Mobile/ShopAddress';
 import styles from './ShopRegistrationMobile.module.scss';
 
 const OPEN_DEFAULT_VALUES = [
@@ -72,6 +73,7 @@ export default function ShopRegistrationMobile() {
       name: data.shop_name || '',
       phone: data.shop_number.replace(/^(\d{3})(\d{3,4})(\d{4})$/, '$1-$2-$3') || '',
       address: '',
+      address_detail: '',
       delivery: false,
       pay_bank: false,
       pay_card: false,
@@ -122,6 +124,22 @@ export default function ShopRegistrationMobile() {
             topTitle=""
             bottomTitle=""
             topText="등록 하시려는 업체의"
+            bottomText="주소 정보를 입력해 주세요."
+          />
+          <ProgressBar
+            step={PROGRESS_TITLE[3].step}
+            total={PROGRESS_TITLE.length}
+            progressTitle={PROGRESS_TITLE[3].title}
+          />
+          <ShopAddress onNext={() => setStep(4)} onPrev={decreaseStep} />
+        </>
+        )}
+        {step === 4 && (
+        <>
+          <SubTitle
+            topTitle=""
+            bottomTitle=""
+            topText="등록 하시려는 업체의"
             bottomText="세부 정보를 입력해 주세요."
           />
           <ProgressBar
@@ -129,10 +147,10 @@ export default function ShopRegistrationMobile() {
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[3].title}
           />
-          <Sub onNext={() => setStep(4)} onPrev={decreaseStep} />
+          <Sub onNext={() => setStep(5)} onPrev={decreaseStep} />
         </>
         )}
-        {step === 4 && (
+        {step === 5 && (
         <>
           <SubTitle
             topTitle=""
@@ -146,11 +164,11 @@ export default function ShopRegistrationMobile() {
             total={PROGRESS_TITLE.length}
             progressTitle={PROGRESS_TITLE[4].title}
           />
-          <ShopConfirmation onNext={() => setStep(5)} onPrev={decreaseStep} />
+          <ShopConfirmation onNext={() => setStep(6)} onPrev={decreaseStep} />
 
         </>
         )}
-        {step === 5 && (
+        {step === 6 && (
         <ShopRegistrationComplete
           title="가게 등록 완료"
           topText="가게 등록이 완료되었습니다."
