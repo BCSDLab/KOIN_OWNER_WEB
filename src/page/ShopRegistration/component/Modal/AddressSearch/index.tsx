@@ -30,16 +30,25 @@ export default function AddressSearch({ onSelect, onClose }: AddressSearchProps)
 
   return (
     <div className={styles['address-search']}>
-      <div className={styles['address-search__form']}>
+      <form
+        className={styles['address-search__form']}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearchClick();
+        }}
+      >
         <input
           className={styles['address-search__input']}
           placeholder="주소를 입력해주세요"
           value={keywordInput}
           onChange={(e) => setKeywordInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearchClick()}
         />
-        <CustomButton content="검색" buttonSize="small" onClick={handleSearchClick} />
-      </div>
+        <CustomButton
+          submit
+          content="검색"
+          buttonSize="small"
+        />
+      </form>
 
       {searchedKeyword && (
         <div className={styles['address-search__result-list']}>
