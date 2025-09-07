@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import useAddress from 'query/address';
-import { Juso } from 'model/shopInfo/address';
+import type { AddressSearchResponse, Juso } from 'model/shopInfo/address';
 import CustomButton from 'page/Auth/Signup/CustomButton';
 import styles from './AddressSearch.module.scss';
 
@@ -9,9 +10,8 @@ interface AddressSearchProps {
 }
 
 export default function AddressSearch({ onSelect, onClose }: AddressSearchProps) {
-  const {
-    address, changeAddress, search, addressData,
-  } = useAddress();
+  const { address, changeAddress, search } = useAddress();
+  const [addressData, setAddressData] = useState<AddressSearchResponse | null>(null);
 
   const jusoList: Juso[] = addressData?.addresses ?? [];
 
@@ -20,14 +20,17 @@ export default function AddressSearch({ onSelect, onClose }: AddressSearchProps)
     onClose?.();
   };
 
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    const data = await search();
+    setAddressData(data ?? null);
+  };
+
   return (
     <div className={styles['address-search']}>
       <form
         className={styles['address-search__form']}
-        onSubmit={(e) => {
-          e.preventDefault();
-          search();
-        }}
+        onSubmit={handleSubmit}
       >
         <input
           className={styles['address-search__input']}
