@@ -47,7 +47,9 @@ export default function ShopConfirmation({ onNext, onPrev }:{
   )?.name;
   const mutation = usePostData({ onNext });
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
-    mutation.mutate(data);
+    const fullAddress = [data.address, data.address_detail].filter(Boolean).join(' ').trim();
+    const payload = { ...data, address: fullAddress };
+    mutation.mutate(payload);
   };
 
   return (

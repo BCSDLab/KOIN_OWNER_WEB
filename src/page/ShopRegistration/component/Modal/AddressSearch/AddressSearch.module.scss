@@ -1,0 +1,77 @@
+.address-search {
+  position: relative;
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+}
+
+.address-search__form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+  padding-bottom: 8px;
+}
+
+.address-search__input {
+  width: 380px;
+  border: 1px solid #d2dae2;
+  height: 22px;
+  padding: 13px 16px;
+
+  &:focus {
+    border-bottom: 1px solid black;
+  }
+}
+
+.address-search__result-list {
+  margin-top: 12px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.address-search__result-list-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.address-search__result-list-item {
+  margin-bottom: 8px;
+}
+
+.address-search__result-list-button {
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}
+
+.address-search__result-list-empty {
+  padding: 16px;
+  font-size: 14px;
+  color: #888;
+}
+
+.address-search__result-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 160%;
+}
+
+.address-search__result-subtitle {
+  font-size: 12px;
+  line-height: 160%;
+  font-weight: 400;
+  color: #6b7280;
+}
