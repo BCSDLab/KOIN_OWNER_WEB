@@ -71,6 +71,10 @@ export default function Calender({
 
   const handleClickDay = (clickedDate: Date) => {
     if (whichDate === 'start') {
+      if (parsedEndDate && clickedDate > parsedEndDate) {
+        showToast('info', '종료일 이전 날짜만 시작일로 선택할 수 있습니다.');
+        return;
+      }
       setStartDate(formatDateObj(clickedDate));
       return;
     }
