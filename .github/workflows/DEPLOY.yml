@@ -1,0 +1,139 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Deploy branch"
+        required: true
+        default: "develop"
+        type: choice
+        options:
+          - develop
+          - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: ${{ github.ref_name != 'main' }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run lint
+        run: yarn lint
+
+  build-and-deploy:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: ${{ github.ref_name == 'main' && 'production' || 'stage' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Set deploy config
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ARCHIVE_NAME=dist-production.tar.gz" >> $GITHUB_ENV
+            echo "DEPLOY_PATH=/usr/local/koin/web-owner" >> $GITHUB_ENV
+          else
+            echo "ARCHIVE_NAME=dist-stage.tar.gz" >> $GITHUB_ENV
+            echo "DEPLOY_PATH=/usr/local/koin/web-owner" >> $GITHUB_ENV
+          fi
+
+      - name: Create .env
+        env:
+          VITE_API_PATH: ${{ vars.VITE_API_PATH }}
+          VITE_GOOGLE_ANALYTICS_ID: ${{ vars.VITE_GOOGLE_ANALYTICS_ID }}
+        run: |
+          echo "VITE_API_PATH=$VITE_API_PATH" >> .env
+          echo "VITE_GOOGLE_ANALYTICS_ID=$VITE_GOOGLE_ANALYTICS_ID" >> .env
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build
+        run: yarn build
+
+      - name: Create deploy package
+        run: |
+          cd build && tar -czf ../$ARCHIVE_NAME *
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy
+        run: |
+          scp -o ConnectTimeout=30 -P ${{ secrets.SSH_PORT }} $ARCHIVE_NAME ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:${{ env.DEPLOY_PATH }}/
+          ssh -o ConnectTimeout=30 -p ${{ secrets.SSH_PORT }} ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "tar -xvzf ${{ env.DEPLOY_PATH }}/$ARCHIVE_NAME -C ${{ env.DEPLOY_PATH }}"
+
+  notify:
+    needs: [build-and-deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve actor name
+        id: resolve_actor
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const developers = JSON.parse(fs.readFileSync(`${{ github.workspace }}/.github/workflows/reviewer.json`));
+            const matched = developers.reviewers.find(p => p.githubName === '${{ github.actor }}');
+            core.setOutput('actorName', JSON.stringify(matched?.name ?? '${{ github.actor }}'));
+
+      - name: Send Slack Notification
+        run: |
+          STATUS="${{ needs.build-and-deploy.result }}"
+          ENVIRONMENT=$([[ "${{ github.ref_name }}" == "main" ]] && echo "Production" || echo "Stage")
+          COMMIT_MSG=$(echo "${{ github.event.head_commit.message }}" | head -1)
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          ACTOR=${{ steps.resolve_actor.outputs.actorName }}
+
+          BODY=$(jq -n \
+            --arg status "$STATUS" \
+            --arg environment "$ENVIRONMENT" \
+            --arg repository "${{ github.repository }}" \
+            --arg branch "${{ github.ref_name }}" \
+            --arg actor "$ACTOR" \
+            --arg commitMessage "$COMMIT_MSG" \
+            --arg runUrl "$RUN_URL" \
+            '{status: $status, environment: $environment, repository: $repository, branch: $branch, actor: $actor, commitMessage: $commitMessage, runUrl: $runUrl}')
+
+          curl -X POST https://api-slack.internal.bcsdlab.com/api/deploy/frontend \
+          -H 'Content-Type: application/json' \
+          -d "$BODY"
