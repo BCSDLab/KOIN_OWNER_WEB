@@ -180,7 +180,7 @@ export default function EditShopInfoModal({
 
   const onSubmit: SubmitHandler<OwnerShop> = (data) => {
     mutation.mutate(data);
-    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_confirm', value: '가게 정보 수정 완료' });
+    logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_confirm', value: '가게 정보 수정 완료' });
   };
 
   return (
@@ -210,7 +210,7 @@ export default function EditShopInfoModal({
                   {...register('image_urls')}
                   onChange={() => {
                     saveImgFile();
-                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
+                    logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
                   }}
                   ref={imgRef}
                 />
@@ -269,7 +269,7 @@ export default function EditShopInfoModal({
                   type="button"
                   onClick={() => {
                     openOperateTimeModal();
-                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_time', value: '가게 정보 시간 수정' });
+                    logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_time', value: '가게 정보 시간 수정' });
                   }}
                   className={styles['mobile-operate-time__button']}
                 >
@@ -405,7 +405,7 @@ export default function EditShopInfoModal({
                   {...register('image_urls')}
                   onChange={() => {
                     saveImgFile();
-                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
+                    logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_add_image', value: '가게 정보 이미지 추가' });
                   }}
                   ref={imgRef}
                 />
@@ -488,7 +488,7 @@ export default function EditShopInfoModal({
                   type="button"
                   onClick={() => {
                     openOperateTimeModal();
-                    logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_time', value: '가게 정보 시간 수정' });
+                    logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_time', value: '가게 정보 시간 수정' });
                   }}
                   className={styles['main-info__operate-time--button']}
                 >
@@ -587,7 +587,7 @@ export default function EditShopInfoModal({
               type="button"
               onClick={() => {
                 closeModal();
-                logger.actionEventClick({ actionTitle: 'OWNER', title: 'store_info_edit_cancel', value: '가게 정보 수정 취소' });
+                logger.actionEventClick({ team: 'OWNER', event_label: 'store_info_edit_cancel', value: '가게 정보 수정 취소' });
               }}
               className={styles['container__buttons--cancel']}
             >

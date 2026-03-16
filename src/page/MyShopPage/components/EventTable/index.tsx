@@ -129,7 +129,7 @@ export default function EventTable() {
               className={styles['manage-event-button']}
               onClick={() => {
                 navigate(ROUTES.Owner.Event({ id: String(shopData?.id), isLink: true }));
-                logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event', value: '이벤트 추가' });
+                logger.actionEventClick({ team: 'OWNER', event_label: 'add_event', value: '이벤트 추가' });
               }}
             >
               추가하기

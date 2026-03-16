@@ -47,7 +47,7 @@ export default function MenuImage({ isComplete }: MenuImageProps) {
 
   const handleImageChange = async () => {
     await saveImgFile();
-    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_menu_image', value: '메뉴 이미지 추가' });
+    logger.actionEventClick({ team: 'OWNER', event_label: 'add_menu_image', value: '메뉴 이미지 추가' });
   };
 
   useEffect(() => {

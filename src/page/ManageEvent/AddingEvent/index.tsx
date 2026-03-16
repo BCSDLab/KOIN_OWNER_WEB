@@ -215,7 +215,7 @@ export default function AddingEvent() {
     };
 
     addEvent(requestData);
-    logger.actionEventClick({ actionTitle: 'OWNER', title: 'add_event_register', value: '이벤트 추가' });
+    logger.actionEventClick({ team: 'OWNER', event_label: 'add_event_register', value: '이벤트 추가' });
   };
 
   return (

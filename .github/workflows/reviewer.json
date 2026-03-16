@@ -1,14 +1,6 @@
 {
   "reviewers": [
     {
-      "name": "정해성",
-      "githubName": "junghaesung79"
-    },
-    {
-      "name": "강성훈",
-      "githubName": "kang-s-h"
-    },
-    {
       "name": "김혜준",
       "githubName": "hyejun0228"
     },
@@ -25,20 +17,8 @@
       "githubName": "ff1451"
     },
     {
-      "name": "김민재",
-      "githubName": "D0Dam"
-    },
-    {
-      "name": "김아영",
-      "githubName": "gimadud"
-    },
-    {
-      "name": "이동훈",
-      "githubName": "pcasfs"
-    },
-    {
-      "name": "이재익",
-      "githubName": "JAEIK-23"
+      "name": "박성주",
+      "githubName": "ParkSungju01"
     }
   ]
 }

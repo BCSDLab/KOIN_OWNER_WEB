@@ -53,7 +53,7 @@ export default function CustomModal({
             onClick={() => {
               onCancel();
               if (title === '가게 정보 수정') {
-                logger.actionEventClick({ actionTitle: 'OWNER', title: `${eventTitle}_close`, value: `${title} 닫기` });
+                logger.actionEventClick({ team: 'OWNER', event_label: `${eventTitle}_close`, value: `${title} 닫기` });
               }
             }}
             className={styles['container__close-button']}

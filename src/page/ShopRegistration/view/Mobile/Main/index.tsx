@@ -107,24 +107,6 @@ export default function Main({ onNext, onPrev }:{
       <div className={styles['form__error-message']}>
         {errors.name && <ErrorMessage message={ERRORMESSAGE.name} />}
       </div>
-      <label
-        htmlFor="shopAddress"
-        className={cn({
-          [styles.form__label]: true,
-          [styles['form__label--error']]: errors.address !== undefined,
-        })}
-      >
-        주소정보
-        <input
-          type="text"
-          id="shopAddress"
-          className={styles.form__input}
-          {...register('address', { required: true })}
-        />
-      </label>
-      <div className={styles['form__error-message']}>
-        {errors.address && <ErrorMessage message={ERRORMESSAGE.address} />}
-      </div>
       <div className={styles.form__footer}>
         <button
           className={styles.form__cancel}
